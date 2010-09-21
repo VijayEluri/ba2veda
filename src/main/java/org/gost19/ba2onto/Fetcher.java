@@ -1,12 +1,7 @@
 package org.gost19.ba2onto;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -15,9 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.AttributeType;
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.EntityType;
-import ru.magnetosoft.objects.organization.Department;
+import magnetico.objects.organization.Department;
+import magnetico.ws.organization.AttributeType;
+import magnetico.ws.organization.EntityType;
+
+import org.gost19.ba2onto.OrganizationUtil;
 
 public class Fetcher
 {
@@ -46,11 +43,7 @@ public class Fetcher
 		if (args.length == 1)
 		{
 
-			if (args[0].equals("dir"))
-			{
-				// fetchDirectives(args[0] + ".nt");
-			}
-			else if (args[0].equals("org"))
+			if (args[0].equals("organization"))
 			{
 				fetchOrganization(args[0] + ".nt");
 			}
@@ -103,8 +96,8 @@ public class Fetcher
 
 			}
 
-			OrganizationUtil organizationUtil = new OrganizationUtil(properties.getProperty("organizationUrl"), properties
-					.getProperty("organizationNameSpace"), properties.getProperty("organizationName"));
+			OrganizationUtil organizationUtil = new OrganizationUtil(properties.getProperty("organizationUrl"),
+					properties.getProperty("organizationNameSpace"), properties.getProperty("organizationName"));
 
 			List<Department> deps = organizationUtil.getDepartments();
 
@@ -137,8 +130,7 @@ public class Fetcher
 					childToParent.put(child.getExtId(), department.getExtId());
 				}
 				// childs.put(department.getId(), breed);
-			
-				
+
 				departmentsOfExtIdMap.put(department.getExtId(), department);
 				buCounter++;
 			}
@@ -146,33 +138,31 @@ public class Fetcher
 			// установим для каждого из подразделений его организацию
 			for (Department department : deps)
 			{
-				
+
 				String parent = childToParent.get(department.getExtId());
-				
-				if (parent == null) continue;
-				
+
+				if (parent == null)
+					continue;
+
 				String up_department = null;
-				
-				while (parent != null) 
+
+				while (parent != null)
 				{
 					up_department = parent;
-					
+
 					parent = childToParent.get(parent);
 				}
 
-				department.setOrganizationId(up_department);								
+				department.setOrganizationId(up_department);
 			}
-				
-			
-			
-			
+
 			// выгружаем штатное расписание и сотрудников
 			buCounter = 0;
 
-			writeTriplet(p.f_zdb, p.owl__imports, p.docs19, false, out);
-			writeTriplet(p.f_zdb, p.owl__imports, p.f_swrc, false, out);
-			writeTriplet(p.f_zdb, p.owl__imports, p.gost19, false, out);
-			writeTriplet(p.f_zdb, p.rdf__type, p.owl__Ontology, false, out);
+			writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.docs19, false, out);
+			writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.f_swrc, false, out);
+			writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.gost19, false, out);
+			writeTriplet(Predicate.f_zdb, Predicate.rdf__type, Predicate.owl__Ontology, false, out);
 
 			for (Department department : deps)
 			{
@@ -197,33 +187,39 @@ public class Fetcher
 				if (isOrganization == false)
 				{
 					// String subject = blankNodePrefix + buCounter++;
-					writeTriplet(p.zdb + "dep_" + department.getExtId(), p.rdf__type, p.swrc__Department, false, out);
-					writeTriplet(p.zdb + "doc_" + department.getId(), p.rdf__type, p.docs19__department_card, false, out);
-					writeTriplet(p.zdb + "doc_" + department.getId(), p.swrc__name, department.getName(), true, out, "ru");
-					writeTriplet(p.zdb + "doc_" + department.getId(), p.docs19__department, p.zdb + "dep_" + department.getExtId(),
+					writeTriplet(Predicate.zdb + "dep_" + department.getExtId(), Predicate.rdf__type, Predicate.swrc__Department, false,
+							out);
+					writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.rdf__type, Predicate.docs19__department_card,
 							false, out);
-					writeTriplet(p.zdb + "doc_" + department.getId(), p.swrc__organization, p.zdb + "org_" + department.getOrganizationId(),
-							false, out);
+					writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.swrc__name, department.getName(), true, out, "ru");
+					writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.docs19__department, Predicate.zdb + "dep_"
+							+ department.getExtId(), false, out);
+					writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.swrc__organization, Predicate.zdb + "org_"
+							+ department.getOrganizationId(), false, out);
 
-					writeTriplet(p.zdb + "doc_" + department.getId(), p.gost19__externalIdentifer, department.getExtId(), true, out);
+					writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.gost19__externalIdentifer, department.getExtId(),
+							true, out);
 
 					if (parent != null && parent.length() > 1)
 					{
-						writeTriplet(p.zdb + "doc_" + department.getId(), p.docs19__parentDepartment, p.zdb + "dep_" + parent, false,
-								out);
-						write_add_info_of_attribute(p.zdb + "doc_" + department.getId(), p.docs19__parentDepartment, p.zdb + "dep_"
-								+ parent, p.swrc__name, departmentsOfExtIdMap.get(parent).getName(), out);
+						writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.docs19__parentDepartment, Predicate.zdb
+								+ "dep_" + parent, false, out);
+						write_add_info_of_attribute(Predicate.zdb + "doc_" + department.getId(), Predicate.docs19__parentDepartment,
+								Predicate.zdb + "dep_" + parent, Predicate.swrc__name, departmentsOfExtIdMap.get(parent).getName(), out);
 					}
 
 				}
 				else
 				{
-					writeTriplet(p.zdb + "org_" + department.getExtId(), p.rdf__type, p.swrc__Organization, false, out);
-					writeTriplet(p.zdb + "doc_" + department.getId(), p.rdf__type, p.docs19__organization_card, false, out);
-					writeTriplet(p.zdb + "doc_" + department.getId(), p.gost19__externalIdentifer, department.getExtId(), true, out);
-					writeTriplet(p.zdb + "doc_" + department.getId(), p.swrc__name, department.getName(), true, out, "ru");
-					writeTriplet(p.zdb + "doc_" + department.getId(), p.swrc__organization, p.zdb + "org_" + department.getExtId(), false,
+					writeTriplet(Predicate.zdb + "org_" + department.getExtId(), Predicate.rdf__type, Predicate.swrc__Organization, false,
 							out);
+					writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.rdf__type, Predicate.docs19__organization_card,
+							false, out);
+					writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.gost19__externalIdentifer, department.getExtId(),
+							true, out);
+					writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.swrc__name, department.getName(), true, out, "ru");
+					writeTriplet(Predicate.zdb + "doc_" + department.getId(), Predicate.swrc__organization, Predicate.zdb + "org_"
+							+ department.getExtId(), false, out);
 
 				}
 
@@ -254,35 +250,35 @@ public class Fetcher
 
 				String userId = userEntity.getUid();
 
-				writeTriplet(p.zdb + "person_" + userId, p.rdf__type, p.swrc__Person, false, out);
-				writeTriplet(p.zdb + "doc_" + userId, p.rdf__type, p.docs19__employee_card, false, out);
-				writeTriplet(p.zdb + "doc_" + userId, p.docs19__employee, p.zdb + "person_" + userId, false, out);
+				writeTriplet(Predicate.zdb + "person_" + userId, Predicate.rdf__type, Predicate.swrc__Person, false, out);
+				writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.rdf__type, Predicate.docs19__employee_card, false, out);
+				writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.docs19__employee, Predicate.zdb + "person_" + userId, false, out);
 
 				for (AttributeType a : userEntity.getAttributes().getAttributeList())
 				{
 					if (a.getName().equalsIgnoreCase("firstNameRu"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.swrc__firstName, a.getValue(), true, "ru", out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__firstName, a.getValue(), true, "ru", out);
 					}
 					else if (a.getName().equalsIgnoreCase("firstNameEn"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.swrc__firstName, a.getValue(), true, "en", out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__firstName, a.getValue(), true, "en", out);
 					}
 					else if (a.getName().equalsIgnoreCase("secondnameRu"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.gost19__middlename, a.getValue(), true, "ru", out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.gost19__middlename, a.getValue(), true, "ru", out);
 					}
 					else if (a.getName().equalsIgnoreCase("secondnameEn"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.gost19__middlename, a.getValue(), true, "en", out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.gost19__middlename, a.getValue(), true, "en", out);
 					}
 					else if (a.getName().equalsIgnoreCase("surnameRu"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.swrc__lastName, a.getValue(), true, "ru", out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__lastName, a.getValue(), true, "ru", out);
 					}
 					else if (a.getName().equalsIgnoreCase("surnameEn"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.swrc__lastName, a.getValue(), true, "en", out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__lastName, a.getValue(), true, "en", out);
 					}
 					else if (a.getName().equals("domainName"))
 					{
@@ -299,7 +295,7 @@ public class Fetcher
 					}
 					else if (a.getName().equals("email"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.swrc__email, a.getValue(), true, out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__email, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("id"))
 					{
@@ -313,11 +309,11 @@ public class Fetcher
 					}
 					else if (a.getName().equalsIgnoreCase("pager"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.docs19__pager, a.getValue(), true, out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.docs19__pager, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("phone"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.swrc__phone, a.getValue(), true, out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("offlineDateBegin"))
 					{
@@ -339,24 +335,24 @@ public class Fetcher
 							System.out.println("dep is null for user (id = " + userId + ")");
 						else
 						{
-							writeTriplet(p.zdb + "doc_" + userId, p.docs19__department, p.zdb + "dep_" + department.getExtId(), false,
-									out);
-							write_add_info_of_attribute(p.zdb + "doc_" + userId, p.docs19__department, p.zdb + "dep_"
-									+ department.getExtId(), p.swrc__name, department.getName(), out);
+							writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.docs19__department,
+									Predicate.zdb + "dep_" + department.getExtId(), false, out);
+							write_add_info_of_attribute(Predicate.zdb + "doc_" + userId, Predicate.docs19__department, Predicate.zdb
+									+ "dep_" + department.getExtId(), Predicate.swrc__name, department.getName(), out);
 						}
 
 					}
 					else if (a.getName().equalsIgnoreCase("mobilePrivate"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.swrc__phone, a.getValue(), true, out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("phoneExt"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.swrc__phone, a.getValue(), true, out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("mobile"))
 					{
-						writeTriplet(p.zdb + "doc_" + userId, p.swrc__phone, a.getValue(), true, out);
+						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("active"))
 					{
@@ -431,8 +427,7 @@ public class Fetcher
 				out.close();
 			}
 
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 
 			System.out.println("Error !");
@@ -461,8 +456,7 @@ public class Fetcher
 			dbPassword = properties.getProperty("dbPassword", "123456");
 			dbUrl = properties.getProperty("dbUrl", "localhost:3306");
 			dbSuffix = properties.getProperty("dbSuffix", "");
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			writeDefaultProperties();
 		}
@@ -491,8 +485,7 @@ public class Fetcher
 		try
 		{
 			properties.store(new FileOutputStream("ba2onto.properties"), null);
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 		}
 	}
@@ -646,10 +639,10 @@ public class Fetcher
 	{
 		String addinfo_subject = subject + "_add_info_" + System.currentTimeMillis();
 
-		writeTriplet(addinfo_subject, p.rdf__type, p.rdf__Statement, false, bw);
-		writeTriplet(addinfo_subject, p.rdf__subject, subject, false, bw);
-		writeTriplet(addinfo_subject, p.rdf__predicate, predicate, false, bw);
-		writeTriplet(addinfo_subject, p.rdf__object, object, false, bw);
+		writeTriplet(addinfo_subject, Predicate.rdf__type, Predicate.rdf__Statement, false, bw);
+		writeTriplet(addinfo_subject, Predicate.rdf__subject, subject, false, bw);
+		writeTriplet(addinfo_subject, Predicate.rdf__predicate, predicate, false, bw);
+		writeTriplet(addinfo_subject, Predicate.rdf__object, object, false, bw);
 		writeTriplet(addinfo_subject, addInfo_predicate, addInfo_value, true, bw);
 
 	}

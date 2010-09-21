@@ -11,16 +11,16 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.AdjacencyTypeEnum;
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.EntityContainerType;
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.EntityType;
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.OrganizationEntityEndpoint;
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.OrganizationEntityService;
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.OrganizationServiceException_Exception;
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.ParameterType;
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.PreparedQueryType;
-import ru.magnetosoft.bigarch.wsclient.bl.organizationservice.PreparedQueryType.Parameters;
-import ru.magnetosoft.objects.organization.Department;
+import magnetico.ws.organization.AdjacencyTypeEnum;
+import magnetico.ws.organization.EntityContainerType;
+import magnetico.ws.organization.EntityType;
+import magnetico.ws.organization.OrganizationEntityEndpoint;
+import magnetico.ws.organization.OrganizationEntityService;
+import magnetico.ws.organization.OrganizationServiceException_Exception;
+import magnetico.ws.organization.ParameterType;
+import magnetico.ws.organization.PreparedQueryType;
+import magnetico.ws.organization.PreparedQueryType.Parameters;
+import magnetico.objects.organization.Department;
 
 public class OrganizationUtil {
 
@@ -28,8 +28,8 @@ public class OrganizationUtil {
 	private String locale = "Ru";
 	private static final String USER_DEPARTMENT_RELATION = "contact-department";
 
-	private OrganizationUtil() {
-
+	private OrganizationUtil() 
+	{
 	}
 
 	public OrganizationUtil(String url, String namespace, String name) {
