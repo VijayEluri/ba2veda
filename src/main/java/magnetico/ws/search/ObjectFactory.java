@@ -49,67 +49,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BigArchiveServerException }
+     * Create an instance of {@link IsSearchReadyResponse }
      * 
      */
-    public BigArchiveServerException createBigArchiveServerException() {
-        return new BigArchiveServerException();
-    }
-
-    /**
-     * Create an instance of {@link SearchSyncResponse }
-     * 
-     */
-    public SearchSyncResponse createSearchSyncResponse() {
-        return new SearchSyncResponse();
-    }
-
-    /**
-     * Create an instance of {@link SearchSync }
-     * 
-     */
-    public SearchSync createSearchSync() {
-        return new SearchSync();
-    }
-
-    /**
-     * Create an instance of {@link IsSearchReady }
-     * 
-     */
-    public IsSearchReady createIsSearchReady() {
-        return new IsSearchReady();
-    }
-
-    /**
-     * Create an instance of {@link HashMapEntryType }
-     * 
-     */
-    public HashMapEntryType createHashMapEntryType() {
-        return new HashMapEntryType();
-    }
-
-    /**
-     * Create an instance of {@link SearchAsync }
-     * 
-     */
-    public SearchAsync createSearchAsync() {
-        return new SearchAsync();
-    }
-
-    /**
-     * Create an instance of {@link SearchResultsResponseType }
-     * 
-     */
-    public SearchResultsResponseType createSearchResultsResponseType() {
-        return new SearchResultsResponseType();
-    }
-
-    /**
-     * Create an instance of {@link SearchResponseType }
-     * 
-     */
-    public SearchResponseType createSearchResponseType() {
-        return new SearchResponseType();
+    public IsSearchReadyResponse createIsSearchReadyResponse() {
+        return new IsSearchReadyResponse();
     }
 
     /**
@@ -121,27 +65,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SearchResultResponseType }
+     * Create an instance of {@link IsSearchReady }
      * 
      */
-    public SearchResultResponseType createSearchResultResponseType() {
-        return new SearchResultResponseType();
+    public IsSearchReady createIsSearchReady() {
+        return new IsSearchReady();
     }
 
     /**
-     * Create an instance of {@link SearchAsyncResponse }
+     * Create an instance of {@link MapDataType }
      * 
      */
-    public SearchAsyncResponse createSearchAsyncResponse() {
-        return new SearchAsyncResponse();
+    public MapDataType createMapDataType() {
+        return new MapDataType();
     }
 
     /**
-     * Create an instance of {@link IsSearchReadyResponse }
+     * Create an instance of {@link HashMapType }
      * 
      */
-    public IsSearchReadyResponse createIsSearchReadyResponse() {
-        return new IsSearchReadyResponse();
+    public HashMapType createHashMapType() {
+        return new HashMapType();
+    }
+
+    /**
+     * Create an instance of {@link SearchSync }
+     * 
+     */
+    public SearchSync createSearchSync() {
+        return new SearchSync();
+    }
+
+    /**
+     * Create an instance of {@link HashMapEntryType }
+     * 
+     */
+    public HashMapEntryType createHashMapEntryType() {
+        return new HashMapEntryType();
     }
 
     /**
@@ -169,14 +129,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link HashMapType }
-     * 
-     */
-    public HashMapType createHashMapType() {
-        return new HashMapType();
-    }
-
-    /**
      * Create an instance of {@link SearchResultsRequestType }
      * 
      */
@@ -185,11 +137,59 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link MapDataType }
+     * Create an instance of {@link SearchResultsResponseType }
      * 
      */
-    public MapDataType createMapDataType() {
-        return new MapDataType();
+    public SearchResultsResponseType createSearchResultsResponseType() {
+        return new SearchResultsResponseType();
+    }
+
+    /**
+     * Create an instance of {@link SearchResultResponseType }
+     * 
+     */
+    public SearchResultResponseType createSearchResultResponseType() {
+        return new SearchResultResponseType();
+    }
+
+    /**
+     * Create an instance of {@link SearchAsyncResponse }
+     * 
+     */
+    public SearchAsyncResponse createSearchAsyncResponse() {
+        return new SearchAsyncResponse();
+    }
+
+    /**
+     * Create an instance of {@link SearchSyncResponse }
+     * 
+     */
+    public SearchSyncResponse createSearchSyncResponse() {
+        return new SearchSyncResponse();
+    }
+
+    /**
+     * Create an instance of {@link SearchResponseType }
+     * 
+     */
+    public SearchResponseType createSearchResponseType() {
+        return new SearchResponseType();
+    }
+
+    /**
+     * Create an instance of {@link SearchAsync }
+     * 
+     */
+    public SearchAsync createSearchAsync() {
+        return new SearchAsync();
+    }
+
+    /**
+     * Create an instance of {@link BigArchiveServerException }
+     * 
+     */
+    public BigArchiveServerException createBigArchiveServerException() {
+        return new BigArchiveServerException();
     }
 
     /**

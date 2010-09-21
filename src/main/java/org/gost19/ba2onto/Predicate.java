@@ -16,7 +16,7 @@ public class Predicate
 	public static final String owl = "http://www.w3.org/2002/07/owl#";
 	public static final String swrc = "http://swrc.ontoware.org/ontology#";
 	public static final String f_swrc = "http://swrc.ontoware.org/ontology-07";
-	public static final String docs19 = "http://gost19.org/dos#";
+	public static final String docs19 = "http://gost19.org/docs#";
 	public static final String gost19 = "http://gost19.org/base#";
 	public static final String zdb = "http://user-db#";
 	public static final String f_zdb = "http://user-db";

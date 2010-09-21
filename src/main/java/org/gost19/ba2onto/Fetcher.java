@@ -1,7 +1,9 @@
 package org.gost19.ba2onto;
 
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -10,11 +12,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import magnetico.objects.organization.Department;
+import magnetico.ws.document.DocumentTemplateType;
+import magnetico.ws.document.DocumentTemplateType.Attributes;
+import magnetico.ws.document.TypeAttributeType;
 import magnetico.ws.organization.AttributeType;
 import magnetico.ws.organization.EntityType;
-
-import org.gost19.ba2onto.OrganizationUtil;
 
 public class Fetcher
 {
@@ -51,9 +56,9 @@ public class Fetcher
 			{
 				// fetchAllDocuments(args[0] + ".nt");
 			}
-			else if (args[0].equals("dtp"))
+			else if (args[0].equals("document_types"))
 			{
-				// fetchDocumentTypes(args[0] + ".nt");
+				fetchDocumentTypes(args[0] + ".nt");
 			}
 			else if (args[0].equals("att"))
 			{
@@ -64,6 +69,114 @@ public class Fetcher
 				// fetchAuthorizationData(args[0] + ".nt");
 			}
 
+		}
+
+	}
+
+	/**
+	 * Выгружает данные структуры документов в виде пользовательских онтологий
+	 * (пример: onto/user-onto.n3)
+	 */
+
+	private static void fetchDocumentTypes(String name_file)
+	{
+
+		try
+		{
+
+			long fetchStart = System.nanoTime();
+
+			BufferedWriter out = null;
+			if (!fake)
+			{
+				out = new BufferedWriter(new FileWriter(pathToDump + java.io.File.separatorChar + name_file));
+			}
+
+			List<DocumentTemplateType> types = DocumentUtil.getInstance().listDocumentTypes(DOCUMENT_URL, ticketId);
+
+			System.out.println("Got " + types.size() + " docTypes");
+
+			for (DocumentTemplateType documentTypeType : types)
+			{
+				
+				String authorId = documentTypeType.getAuthorId();
+				XMLGregorianCalendar dateCreated = documentTypeType.getDateCreated();
+				String id = documentTypeType.getId();
+				XMLGregorianCalendar lastModifiedTime = documentTypeType.getLastModifiedTime();
+				String name = documentTypeType.getName();
+				String systemInformation = documentTypeType.getSystemInformation();
+
+				String activeStatusLabel = "";
+				if (documentTypeType.isActive() == false)
+					activeStatusLabel = "удален";
+				
+				String draftStatusLabel = "";
+				if (documentTypeType.isInDraftState() == true)
+					draftStatusLabel = "черновик";
+				
+				System.out.println(String.format("\n%s:[%s] %s %s", documentTypeType.getId(), name, activeStatusLabel, draftStatusLabel));				
+				
+				
+				String[] si_elements = null;
+
+				if (systemInformation != null)
+					si_elements = systemInformation.split(";");
+
+				List<magnetico.ws.document.AttributeType> att_list = null;
+
+				try
+				{
+					DocumentTemplateType doc_template = DocumentUtil.getInstance().getDocumentTemplate(DOCUMENT_URL, id, ticketId);
+
+					Attributes attributes = doc_template.getAttributes();
+
+					att_list = attributes.getAttributes();
+				} catch (Exception ex)
+				{
+
+				}
+
+				if (att_list != null)
+					for (magnetico.ws.document.AttributeType att_list_element : att_list)
+					{
+						String att_name = att_list_element.getName();
+						String sysinfo = att_list_element.getSystemInformation();
+						String code = att_list_element.getCode();
+						String descr = att_list_element.getDescription();
+						att_list_element.isMultiSelect();
+						att_list_element.isObligatory();
+						att_list_element.getDateCreated();
+						TypeAttributeType type = att_list_element.getType();
+						
+						//type.BOOLEAN;
+
+						if (sysinfo != null)
+						{
+							System.out.println("sysinfo="+sysinfo);
+						}
+
+						System.out.println("\n	att_name=[" + att_name + "]");
+						System.out.println("	code=[" + code + "]");
+						System.out.println("	description=[" + descr + "]");
+						att_list_element.isMultiSelect();
+					}
+				
+			}
+
+			if (!fake)
+			{
+				out.close();
+			}
+
+			System.out.println("TOTAL: Finished in " + ((System.nanoTime() - fetchStart) / 1000000000.0) + " s. for " + types.size()
+					+ " docs.");
+
+			System.out.println("TOTAL: Averall extracting speed  = " + types.size() / ((System.nanoTime() - fetchStart) / 1000000000.0)
+					+ " docs/s");
+
+		} catch (Exception ex)
+		{
+			ex.printStackTrace();
 		}
 
 	}
