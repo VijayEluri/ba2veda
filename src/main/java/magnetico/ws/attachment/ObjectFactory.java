@@ -46,27 +46,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CreateAttachmentResponse }
+     * Create an instance of {@link AttachmentType }
      * 
      */
-    public CreateAttachmentResponse createCreateAttachmentResponse() {
-        return new CreateAttachmentResponse();
-    }
-
-    /**
-     * Create an instance of {@link ListAttachments }
-     * 
-     */
-    public ListAttachments createListAttachments() {
-        return new ListAttachments();
-    }
-
-    /**
-     * Create an instance of {@link GetAttachmentResponse }
-     * 
-     */
-    public GetAttachmentResponse createGetAttachmentResponse() {
-        return new GetAttachmentResponse();
+    public AttachmentType createAttachmentType() {
+        return new AttachmentType();
     }
 
     /**
@@ -78,22 +62,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetAttachment }
-     * 
-     */
-    public GetAttachment createGetAttachment() {
-        return new GetAttachment();
-    }
-
-    /**
-     * Create an instance of {@link GetVersionResponse }
-     * 
-     */
-    public GetVersionResponse createGetVersionResponse() {
-        return new GetVersionResponse();
-    }
-
-    /**
      * Create an instance of {@link BigArchiveServerException }
      * 
      */
@@ -102,27 +70,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AccessDeniedException }
+     * Create an instance of {@link CreateAttachmentResponse }
      * 
      */
-    public AccessDeniedException createAccessDeniedException() {
-        return new AccessDeniedException();
-    }
-
-    /**
-     * Create an instance of {@link CreateAttachment }
-     * 
-     */
-    public CreateAttachment createCreateAttachment() {
-        return new CreateAttachment();
-    }
-
-    /**
-     * Create an instance of {@link GetVersion }
-     * 
-     */
-    public GetVersion createGetVersion() {
-        return new GetVersion();
+    public CreateAttachmentResponse createCreateAttachmentResponse() {
+        return new CreateAttachmentResponse();
     }
 
     /**
@@ -142,11 +94,59 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AttachmentType }
+     * Create an instance of {@link CreateAttachment }
      * 
      */
-    public AttachmentType createAttachmentType() {
-        return new AttachmentType();
+    public CreateAttachment createCreateAttachment() {
+        return new CreateAttachment();
+    }
+
+    /**
+     * Create an instance of {@link GetAttachmentResponse }
+     * 
+     */
+    public GetAttachmentResponse createGetAttachmentResponse() {
+        return new GetAttachmentResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetVersion }
+     * 
+     */
+    public GetVersion createGetVersion() {
+        return new GetVersion();
+    }
+
+    /**
+     * Create an instance of {@link ListAttachments }
+     * 
+     */
+    public ListAttachments createListAttachments() {
+        return new ListAttachments();
+    }
+
+    /**
+     * Create an instance of {@link AccessDeniedException }
+     * 
+     */
+    public AccessDeniedException createAccessDeniedException() {
+        return new AccessDeniedException();
+    }
+
+    /**
+     * Create an instance of {@link GetVersionResponse }
+     * 
+     */
+    public GetVersionResponse createGetVersionResponse() {
+        return new GetVersionResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAttachment }
+     * 
+     */
+    public GetAttachment createGetAttachment() {
+        return new GetAttachment();
     }
 
     /**

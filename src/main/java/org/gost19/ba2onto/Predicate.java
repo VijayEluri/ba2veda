@@ -20,11 +20,13 @@ public class Predicate
 	public static final String gost19 = "http://gost19.org/base#";
 	public static final String zdb = "http://user-db#";
 	public static final String f_zdb = "http://user-db";
+	public static final String user_onto = "http://user-onto.org#";
 		
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	////////////////////////////////////////////////////////////////////////////////////////////////////		
 	public static final String owl__Ontology = owl + "Ontology";
 	public static final String owl__imports = owl + "imports";
+	public static final String owl__Restriction = owl + "Restriction"; 
+	
 	public static final String xsd__string = xsd + "string";
 
 	public static final String rdf__type = rdf + "type";
@@ -32,6 +34,9 @@ public class Predicate
 	public static final String rdf__predicate = rdf + "predicate";
 	public static final String rdf__object = rdf + "object";
 	public static final String rdf__Statement = rdf + "Statement";
+	
+	public static final String rdfs__subClassOf = rdfs + "subClassOf";
+	public static final String rdfs__Class = rdfs + "Class";
 
 	public static final String dc__creator = dc + "creator";
 	public static final String dc__identifier = dc + "identifier";
@@ -60,5 +65,6 @@ public class Predicate
 	public static final String docs19__employee = docs19 + "employee";
 	public static final String docs19__organization_card = docs19 + "organization_card";
 	public static final String docs19__pager = docs19 + "pager";
+	public static final String docs19__Document = docs19 + "Document";
 
 }

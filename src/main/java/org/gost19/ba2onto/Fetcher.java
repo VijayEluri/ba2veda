@@ -17,6 +17,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import magnetico.objects.organization.Department;
 import magnetico.ws.document.DocumentTemplateType;
 import magnetico.ws.document.DocumentTemplateType.Attributes;
+import magnetico.ws.document.AttributeLinkType;
 import magnetico.ws.document.TypeAttributeType;
 import magnetico.ws.organization.AttributeType;
 import magnetico.ws.organization.EntityType;
@@ -86,10 +87,11 @@ public class Fetcher
 
 			long fetchStart = System.nanoTime();
 
-			BufferedWriter out = null;
+			OutputStreamWriter out = null;
 			if (!fake)
 			{
-				out = new BufferedWriter(new FileWriter(pathToDump + java.io.File.separatorChar + name_file));
+				FileOutputStream fw = new FileOutputStream(pathToDump + java.io.File.separatorChar + name_file);
+				out = new OutputStreamWriter(fw, "UTF8");
 			}
 
 			List<DocumentTemplateType> types = DocumentUtil.getInstance().listDocumentTypes(DOCUMENT_URL, ticketId);
@@ -135,27 +137,86 @@ public class Fetcher
 				{
 
 				}
-
+				
+//				<http://user-onto.org#internal_memo> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://gost19.org/base#Document> .				
+				writeTriplet(Predicate.user_onto + id, Predicate.rdfs__subClassOf, Predicate.docs19__Document, false, out);
+				
+//				<http://user-onto.org#internal_memo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .				
+				writeTriplet(Predicate.user_onto + id, Predicate.rdf__type, Predicate.rdfs__Class, false, out);
+				
+				int ii = 0;
+				
 				if (att_list != null)
 					for (magnetico.ws.document.AttributeType att_list_element : att_list)
 					{
+						ii++;
+						
+//						_:AX2dX3eaab3feX3aX12b3991c651X3aXX2dX79a6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+						writeTriplet("_:" + id + "_" + ii, Predicate.rdf__type, Predicate.owl__Restriction, false, out);
+						
 						String att_name = att_list_element.getName();
 						String sysinfo = att_list_element.getSystemInformation();
 						String code = att_list_element.getCode();
 						String descr = att_list_element.getDescription();
-						att_list_element.isMultiSelect();
-						att_list_element.isObligatory();
+						
+						String multi_select_label = "";
+						String obligatory_label = "";
+						
+						if (att_list_element.isMultiSelect())
+							multi_select_label = "[множественное]";
+						
+						if (att_list_element.isObligatory())
+							obligatory_label = "[обязательное]";							
+						
 						att_list_element.getDateCreated();
+						
 						TypeAttributeType type = att_list_element.getType();
 						
-						//type.BOOLEAN;
+						String typeLabel = null;
+						
+						if (type == TypeAttributeType.BOOLEAN)
+						{							
+							typeLabel = "boolean";
+						}
+						else if (type == TypeAttributeType.DATE)
+						{
+							typeLabel = "date";							
+						}
+						else if (type == TypeAttributeType.DATEINTERVAL)
+						{
+							typeLabel = "date_interval";							
+						}
+						else if (type == TypeAttributeType.DICTIONARY)
+						{
+							typeLabel = "dictionary";							
+						}
+						else if (type == TypeAttributeType.FILE)
+						{
+							typeLabel = "attachment";							
+						}
+						else if (type == TypeAttributeType.LINK)
+						{
+							typeLabel = "document_link";							
+						}
+						else if (type == TypeAttributeType.NUMBER)
+						{
+							typeLabel = "number";							
+						}
+						else if (type == TypeAttributeType.ORGANIZATION)
+						{
+							typeLabel = "organization";							
+						}
+						else if (type == TypeAttributeType.TEXT)
+						{
+							typeLabel = "text";							
+						}
 
 						if (sysinfo != null)
 						{
 							System.out.println("sysinfo="+sysinfo);
 						}
 
-						System.out.println("\n	att_name=[" + att_name + "]");
+						System.out.println("\n	att_name=[" + att_name + "]:" + typeLabel + " " + obligatory_label + " " + multi_select_label);
 						System.out.println("	code=[" + code + "]");
 						System.out.println("	description=[" + descr + "]");
 						att_list_element.isMultiSelect();
@@ -195,18 +256,12 @@ public class Fetcher
 			// prepareRoles();
 			// populateAdmins();
 
-			// BufferedWriter out = null;
 			OutputStreamWriter out = null;
 
 			if (!fake)
 			{
 				FileOutputStream fw = new FileOutputStream(pathToDump + java.io.File.separatorChar + name_file);
-				// FileWriter fw = new FileWriter (pathToDump +
-				// java.io.File.separatorChar + name_file);
-
-				// out = new BufferedWriter(fw);
 				out = new OutputStreamWriter(fw, "UTF8");
-
 			}
 
 			OrganizationUtil organizationUtil = new OrganizationUtil(properties.getProperty("organizationUrl"),
@@ -520,7 +575,7 @@ public class Fetcher
 					}
 					// else if (!writeRole(prefix, a, out))
 					// {
-					// writeTriplet(prefix, "magnet-ontology#unknown"
+					// writeTriplet(prefix, "magnet-ontology#chunknown"
 					// + a.getName(), a.getValue(), true, out);
 					// }
 				}
@@ -650,10 +705,18 @@ public class Fetcher
 	{
 		if (object != null && object.length() > 0)
 		{
-			StringBuilder builder = new StringBuilder("<");
-
+			StringBuilder builder = new StringBuilder();
+			
+			if (subject.indexOf("_:") < 0)
+				builder.append("<");
+				
 			builder.append(subject.trim());
-			builder.append("> <");
+
+			if (subject.indexOf("_:") < 0)
+			builder.append(">");
+			
+			
+			builder.append (" <");
 			builder.append(predicate.trim());
 			builder.append("> ");
 
