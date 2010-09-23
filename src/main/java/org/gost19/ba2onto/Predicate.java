@@ -26,8 +26,14 @@ public class Predicate
 	public static final String owl__Ontology = owl + "Ontology";
 	public static final String owl__imports = owl + "imports";
 	public static final String owl__Restriction = owl + "Restriction"; 
+	public static final String owl__onProperty = owl + "onProperty"; 
+	public static final String owl__allValuesFrom = owl + "allValuesFrom"; 
 	
 	public static final String xsd__string = xsd + "string";
+	public static final String xsd__boolean = xsd + "boolean";
+	public static final String xsd__date = xsd + "date";
+	public static final String xsd__decimal = xsd + "decimal";
+	public static final String xsd__integer = xsd + "integer";
 
 	public static final String rdf__type = rdf + "type";
 	public static final String rdf__subject = rdf + "subject";
@@ -37,12 +43,15 @@ public class Predicate
 	
 	public static final String rdfs__subClassOf = rdfs + "subClassOf";
 	public static final String rdfs__Class = rdfs + "Class";
+	public static final String rdfs__label = rdfs + "label";
 
 	public static final String dc__creator = dc + "creator";
 	public static final String dc__identifier = dc + "identifier";
+	public static final String dc__subject = dc + "subject";
+	public static final String dc__title = dc + "title";
+	public static final String dc__type = dc + "type";
 
 	public static final String swrc__Department = swrc + "Department";
-	public static final String swrc__creationDate = swrc + "creationDate";
 	public static final String swrc__Person = swrc + "Person";
 	public static final String swrc__name = swrc + "name";
 	public static final String swrc__lastName = swrc + "lastName";
@@ -51,6 +60,9 @@ public class Predicate
 	public static final String swrc__Organization = swrc + "Organization";
 	public static final String swrc__email = swrc + "email";
 	public static final String swrc__phone = swrc + "phone";
+	public static final String swrc__creationDate = swrc + "creationDate";
+	public static final String swrc__endDate = swrc + "endDate";
+	public static final String swrc__startDate = swrc + "startDate";
 
 	public static final String gost19__middlename = gost19 + "middlename";
 	public static final String gost19__externalIdentifer = gost19 + "externalIdentifer";	
@@ -66,5 +78,7 @@ public class Predicate
 	public static final String docs19__organization_card = docs19 + "organization_card";
 	public static final String docs19__pager = docs19 + "pager";
 	public static final String docs19__Document = docs19 + "Document";
+	public static final String docs19__carbon_copy = docs19 + "carbon_copy";
+	public static final String docs19__dateInterval = docs19 + "dateInterval"; 
 
 }

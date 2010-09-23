@@ -1,15 +1,14 @@
 package org.gost19.ba2onto;
 
-import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -17,7 +16,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import magnetico.objects.organization.Department;
 import magnetico.ws.document.DocumentTemplateType;
 import magnetico.ws.document.DocumentTemplateType.Attributes;
-import magnetico.ws.document.AttributeLinkType;
 import magnetico.ws.document.TypeAttributeType;
 import magnetico.ws.organization.AttributeType;
 import magnetico.ws.organization.EntityType;
@@ -81,6 +79,39 @@ public class Fetcher
 
 	private static void fetchDocumentTypes(String name_file)
 	{
+		HashMap<String, String> code_onto = new HashMap<String, String>();
+		{
+			code_onto.put("Название", Predicate.swrc__name);
+			code_onto.put("Наименование", Predicate.swrc__name);
+			code_onto.put("name", Predicate.swrc__name);
+			code_onto.put("Полное название", Predicate.swrc__name);
+			code_onto.put("Тема", Predicate.dc__subject);
+			code_onto.put("Заголовок", Predicate.dc__title);
+			code_onto.put("Тип", Predicate.dc__type);
+			code_onto.put("Подразделение", Predicate.docs19__department);
+			code_onto.put("Дата окончания", Predicate.swrc__endDate);
+			code_onto.put("Дата начала", Predicate.swrc__startDate);
+			code_onto.put("В копию", Predicate.docs19__carbon_copy);
+
+			/*
+			 * [Связанные документы]:19 [Цех]:15 [Вложения]:13 [Дата
+			 * регистрации]:13 [status]:13 [Разработчик]:12 [Объект ТОРО]:11
+			 * [Содержание]:10 [Конструкторская заявка]:10 [Раздел]:10
+			 * [Регистрационный номер]:9 [Тип работ]:9 [status_history]:9
+			 * [Подписывающий]:9 [Проект]:8 [Ключевые слова]:8 [Дата старта
+			 * маршрута]:8 [Дата получения]:8 [Количество листов]:8 [Инв.№]:8
+			 * [Обозначение]:8 [Инициатор]:7 [Номер]:7 [Лист]:6 [Шифр]:6
+			 * [Исполнитель]:5 [Вид документа]:5 [Регистрационный номер 1]:5
+			 * [Код]:4 [Ответственное лицо]:4 [Список рассылки]:4 [Контрагент
+			 * (название/ страна/ город)]:3 [Сопровождающие документы]:3
+			 * [Руководитель проекта]:3 [Источник финансирования]:3
+			 * [Конструкторский проект]:3 [Предмет договора]:3 [Краткое
+			 * содержание]:3 [Дата заключения]:3 [Ссылка на документ]:3
+			 * [Объект]:3 [Контрагент]:3
+			 */
+		}
+
+		HashMap<String, Integer> code_stat = new HashMap<String, Integer>();
 
 		try
 		{
@@ -100,7 +131,7 @@ public class Fetcher
 
 			for (DocumentTemplateType documentTypeType : types)
 			{
-				
+
 				String authorId = documentTypeType.getAuthorId();
 				XMLGregorianCalendar dateCreated = documentTypeType.getDateCreated();
 				String id = documentTypeType.getId();
@@ -111,14 +142,13 @@ public class Fetcher
 				String activeStatusLabel = "";
 				if (documentTypeType.isActive() == false)
 					activeStatusLabel = "удален";
-				
+
 				String draftStatusLabel = "";
 				if (documentTypeType.isInDraftState() == true)
 					draftStatusLabel = "черновик";
-				
-				System.out.println(String.format("\n%s:[%s] %s %s", documentTypeType.getId(), name, activeStatusLabel, draftStatusLabel));				
-				
-				
+
+				System.out.println(String.format("\n%s:[%s] %s %s", documentTypeType.getId(), name, activeStatusLabel, draftStatusLabel));
+
 				String[] si_elements = null;
 
 				if (systemInformation != null)
@@ -137,91 +167,158 @@ public class Fetcher
 				{
 
 				}
-				
-//				<http://user-onto.org#internal_memo> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://gost19.org/base#Document> .				
+
+				// <http://user-onto.org#internal_memo>
+				// <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+				// <http://gost19.org/base#Document> .
 				writeTriplet(Predicate.user_onto + id, Predicate.rdfs__subClassOf, Predicate.docs19__Document, false, out);
-				
-//				<http://user-onto.org#internal_memo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .				
+
+				// <http://user-onto.org#internal_memo>
+				// <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+				// <http://www.w3.org/2000/01/rdf-schema#Class> .
 				writeTriplet(Predicate.user_onto + id, Predicate.rdf__type, Predicate.rdfs__Class, false, out);
-				
+
+				writeTriplet(Predicate.user_onto + id, Predicate.dc__creator, Predicate.zdb + "person_" + authorId, false, out);
+
+				if (dateCreated != null)
+					writeTriplet(Predicate.user_onto + id, Predicate.swrc__creationDate, dateCreated.toString(), true, out);
+
+				// <http://user-onto.org#internal_memo>
+				// <http://www.w3.org/2000/01/rdf-schema#label>
+				// "\u0441\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F \u0437\u0430\u043F\u0438\u0441\u043A\u0430"@ru
+				// .
+				LangString lName = LangString.parse(name);
+
+				if (lName.text_ru != null)
+					writeTriplet(Predicate.user_onto + id, Predicate.rdfs__label, lName.text_ru, true, out, "ru");
+				if (lName.text_en != null)
+					writeTriplet(Predicate.user_onto + id, Predicate.rdfs__label, lName.text_en, true, out, "en");
+
 				int ii = 0;
-				
+
 				if (att_list != null)
 					for (magnetico.ws.document.AttributeType att_list_element : att_list)
 					{
 						ii++;
-						
-//						_:AX2dX3eaab3feX3aX12b3991c651X3aXX2dX79a6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-						writeTriplet("_:" + id + "_" + ii, Predicate.rdf__type, Predicate.owl__Restriction, false, out);
-						
+
 						String att_name = att_list_element.getName();
+
+						if (att_name.equals("$comment") || att_name.equals("$private"))
+						{
+							System.out.println("\n	att_name=[" + att_name + "] is skipped");
+
+							continue;
+						}
+
+						// _:AX2dX3eaab3feX3aX12b3991c651X3aXX2dX79a6
+						// <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+						// <http://www.w3.org/2002/07/owl#Restriction> .
+						writeTriplet("_:" + id + "_" + ii, Predicate.rdf__type, Predicate.owl__Restriction, false, out);
+						writeTriplet(Predicate.user_onto + id, Predicate.rdfs__subClassOf, "_:" + id + "_" + ii, false, out);
+						
 						String sysinfo = att_list_element.getSystemInformation();
 						String code = att_list_element.getCode();
-						String descr = att_list_element.getDescription();
+
+						String this_code_in_onto = code_onto.get(code);
 						
+						Integer count = code_stat.get(code);
+						if (count != null)
+							count = new Integer(count.intValue() + 1);
+						else
+						{
+							count = new Integer(1);
+
+							if (code_onto.get(code) == null)
+							{
+								// создать запись в онтологии о новом пользовательком поле документа
+								this_code_in_onto = Translit.toTranslit (code);
+							}
+						}
+
+						writeTriplet("_:" + id + "_" + ii, Predicate.owl__onProperty, this_code_in_onto, false, out);
+						
+						
+						code_stat.put(code, count);
+
+						String descr = att_list_element.getDescription();
+
 						String multi_select_label = "";
 						String obligatory_label = "";
-						
+
+
 						if (att_list_element.isMultiSelect())
 							multi_select_label = "[множественное]";
-						
+
 						if (att_list_element.isObligatory())
-							obligatory_label = "[обязательное]";							
-						
+							obligatory_label = "[обязательное]";
+
 						att_list_element.getDateCreated();
-						
+
 						TypeAttributeType type = att_list_element.getType();
-						
+
 						String typeLabel = null;
 						
+						String obj_owl__allValuesFrom = "???"; 
+
 						if (type == TypeAttributeType.BOOLEAN)
-						{							
+						{
 							typeLabel = "boolean";
+							obj_owl__allValuesFrom = Predicate.xsd__boolean;														
 						}
 						else if (type == TypeAttributeType.DATE)
 						{
-							typeLabel = "date";							
+							typeLabel = "date";
+							obj_owl__allValuesFrom = Predicate.xsd__date;														
 						}
 						else if (type == TypeAttributeType.DATEINTERVAL)
 						{
-							typeLabel = "date_interval";							
+							typeLabel = "date_interval";
+							obj_owl__allValuesFrom = Predicate.docs19__dateInterval;																					
 						}
 						else if (type == TypeAttributeType.DICTIONARY)
 						{
-							typeLabel = "dictionary";							
+							typeLabel = "dictionary";
 						}
 						else if (type == TypeAttributeType.FILE)
 						{
-							typeLabel = "attachment";							
+							obj_owl__allValuesFrom = Predicate.docs19__FileDescription;														
+							typeLabel = "attachment";
 						}
 						else if (type == TypeAttributeType.LINK)
 						{
-							typeLabel = "document_link";							
+							obj_owl__allValuesFrom = Predicate.docs19__Document;														
+							typeLabel = "document_link";
 						}
 						else if (type == TypeAttributeType.NUMBER)
 						{
-							typeLabel = "number";							
+							typeLabel = "number";
+							obj_owl__allValuesFrom = Predicate.xsd__integer;														
 						}
 						else if (type == TypeAttributeType.ORGANIZATION)
 						{
-							typeLabel = "organization";							
+							typeLabel = "organization";
+							obj_owl__allValuesFrom = Predicate.swrc__Organization;
 						}
 						else if (type == TypeAttributeType.TEXT)
 						{
-							typeLabel = "text";							
+							typeLabel = "text";
+							obj_owl__allValuesFrom = Predicate.xsd__string;
 						}
 
 						if (sysinfo != null)
 						{
-							System.out.println("sysinfo="+sysinfo);
+							System.out.println("sysinfo=" + sysinfo);
 						}
 
-						System.out.println("\n	att_name=[" + att_name + "]:" + typeLabel + " " + obligatory_label + " " + multi_select_label);
+						writeTriplet("_:" + id + "_" + ii, Predicate.owl__allValuesFrom, obj_owl__allValuesFrom, false, out);
+						
+						System.out.println("\n	att_name=[" + att_name + "]:" + typeLabel + " " + obligatory_label + " "
+								+ multi_select_label);
 						System.out.println("	code=[" + code + "]");
 						System.out.println("	description=[" + descr + "]");
 						att_list_element.isMultiSelect();
 					}
-				
+
 			}
 
 			if (!fake)
@@ -238,6 +335,16 @@ public class Fetcher
 		} catch (Exception ex)
 		{
 			ex.printStackTrace();
+		}
+
+		System.out.println("\ncode entry stat");
+		for (int ii = 20; ii > 0; ii--)
+		{
+			for (Entry<String, Integer> ee : code_stat.entrySet())
+			{
+				if (ee.getValue() == ii)
+					System.out.println("[" + ee.getKey() + "]:" + ee.getValue());
+			}
 		}
 
 	}
@@ -707,26 +814,32 @@ public class Fetcher
 		{
 			StringBuilder builder = new StringBuilder();
 			
+			///////////  SUBJECT
+
 			if (subject.indexOf("_:") < 0)
 				builder.append("<");
-				
+
 			builder.append(subject.trim());
 
 			if (subject.indexOf("_:") < 0)
-			builder.append(">");
+				builder.append(">");
 			
-			
-			builder.append (" <");
+			///////////  PREDICATE
+
+			builder.append(" <");
 			builder.append(predicate.trim());
 			builder.append("> ");
 
+			///////////  OBJECT
+			
 			if (isObjectLiteral)
 			{
 				builder.append("\"");
 			}
 			else
 			{
-				builder.append("<");
+				if (object.indexOf("_:") < 0)
+					builder.append("<");
 			}
 
 			String obj = new String(object.trim().getBytes(), "UTF-8");
@@ -743,7 +856,8 @@ public class Fetcher
 			}
 			else
 			{
-				builder.append(">");
+				if (object.indexOf("_:") < 0)
+					builder.append(">");
 			}
 
 			builder.append(" .\n");
