@@ -27,13 +27,17 @@ public class Predicate
 	public static final String owl__imports = owl + "imports";
 	public static final String owl__Restriction = owl + "Restriction"; 
 	public static final String owl__onProperty = owl + "onProperty"; 
-	public static final String owl__allValuesFrom = owl + "allValuesFrom"; 
+	public static final String owl__allValuesFrom = owl + "allValuesFrom";
+	public static final String owl__maxCardinality = owl + "maxCardinality";
+	public static final String owl__minCardinality = owl + "minCardinality";
+	public static final String owl__hasValue = owl + "hasValue";
 	
 	public static final String xsd__string = xsd + "string";
 	public static final String xsd__boolean = xsd + "boolean";
 	public static final String xsd__date = xsd + "date";
 	public static final String xsd__decimal = xsd + "decimal";
 	public static final String xsd__integer = xsd + "integer";
+	public static final String xsd__nonNegativeInteger = xsd + "nonNegativeInteger";
 
 	public static final String rdf__type = rdf + "type";
 	public static final String rdf__subject = rdf + "subject";
@@ -50,6 +54,8 @@ public class Predicate
 	public static final String dc__subject = dc + "subject";
 	public static final String dc__title = dc + "title";
 	public static final String dc__type = dc + "type";
+	public static final String dc__description = dc + "description";
+	public static final String dc__date = dc + "date";
 
 	public static final String swrc__Department = swrc + "Department";
 	public static final String swrc__Person = swrc + "Person";
@@ -63,6 +69,9 @@ public class Predicate
 	public static final String swrc__creationDate = swrc + "creationDate";
 	public static final String swrc__endDate = swrc + "endDate";
 	public static final String swrc__startDate = swrc + "startDate";
+	public static final String swrc__keywords = swrc + "keywords";
+	public static final String swrc__number = swrc + "number";
+	public static final String swrc__note = swrc + "note";
 
 	public static final String gost19__middlename = gost19 + "middlename";
 	public static final String gost19__externalIdentifer = gost19 + "externalIdentifer";	
@@ -80,5 +89,9 @@ public class Predicate
 	public static final String docs19__Document = docs19 + "Document";
 	public static final String docs19__carbon_copy = docs19 + "carbon_copy";
 	public static final String docs19__dateInterval = docs19 + "dateInterval"; 
+	public static final String docs19__contractor = docs19 + "contractor"; 
+	public static final String docs19__link = docs19 + "link"; 
+	public static final String docs19__content = docs19 + "content"; 
+	public static final String docs19__from = docs19 + "from";
 
 }

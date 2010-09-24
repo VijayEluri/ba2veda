@@ -57,11 +57,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link IsSearchReadyResponse }
+     * Create an instance of {@link SearchSync }
      * 
      */
-    public IsSearchReadyResponse createIsSearchReadyResponse() {
-        return new IsSearchReadyResponse();
+    public SearchSync createSearchSync() {
+        return new SearchSync();
     }
 
     /**
@@ -73,43 +73,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SearchResultResponseType }
+     * Create an instance of {@link SearchResponseType }
      * 
      */
-    public SearchResultResponseType createSearchResultResponseType() {
-        return new SearchResultResponseType();
+    public SearchResponseType createSearchResponseType() {
+        return new SearchResponseType();
     }
 
     /**
-     * Create an instance of {@link IsSearchReady }
+     * Create an instance of {@link SearchResultsRequestType }
      * 
      */
-    public IsSearchReady createIsSearchReady() {
-        return new IsSearchReady();
-    }
-
-    /**
-     * Create an instance of {@link SearchSync }
-     * 
-     */
-    public SearchSync createSearchSync() {
-        return new SearchSync();
-    }
-
-    /**
-     * Create an instance of {@link GetSearchResults }
-     * 
-     */
-    public GetSearchResults createGetSearchResults() {
-        return new GetSearchResults();
-    }
-
-    /**
-     * Create an instance of {@link GetSearchResultsResponse }
-     * 
-     */
-    public GetSearchResultsResponse createGetSearchResultsResponse() {
-        return new GetSearchResultsResponse();
+    public SearchResultsRequestType createSearchResultsRequestType() {
+        return new SearchResultsRequestType();
     }
 
     /**
@@ -121,19 +97,59 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link IsSearchReadyResponse }
+     * 
+     */
+    public IsSearchReadyResponse createIsSearchReadyResponse() {
+        return new IsSearchReadyResponse();
+    }
+
+    /**
+     * Create an instance of {@link AccessDeniedException }
+     * 
+     */
+    public AccessDeniedException createAccessDeniedException() {
+        return new AccessDeniedException();
+    }
+
+    /**
+     * Create an instance of {@link GetSearchResults }
+     * 
+     */
+    public GetSearchResults createGetSearchResults() {
+        return new GetSearchResults();
+    }
+
+    /**
+     * Create an instance of {@link SearchResultResponseType }
+     * 
+     */
+    public SearchResultResponseType createSearchResultResponseType() {
+        return new SearchResultResponseType();
+    }
+
+    /**
+     * Create an instance of {@link SearchSyncResponse }
+     * 
+     */
+    public SearchSyncResponse createSearchSyncResponse() {
+        return new SearchSyncResponse();
+    }
+
+    /**
+     * Create an instance of {@link IsSearchReady }
+     * 
+     */
+    public IsSearchReady createIsSearchReady() {
+        return new IsSearchReady();
+    }
+
+    /**
      * Create an instance of {@link SearchRequestType }
      * 
      */
     public SearchRequestType createSearchRequestType() {
         return new SearchRequestType();
-    }
-
-    /**
-     * Create an instance of {@link SearchResultsRequestType }
-     * 
-     */
-    public SearchResultsRequestType createSearchResultsRequestType() {
-        return new SearchResultsRequestType();
     }
 
     /**
@@ -161,35 +177,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetSearchResultsResponse }
+     * 
+     */
+    public GetSearchResultsResponse createGetSearchResultsResponse() {
+        return new GetSearchResultsResponse();
+    }
+
+    /**
      * Create an instance of {@link SearchAsyncResponse }
      * 
      */
     public SearchAsyncResponse createSearchAsyncResponse() {
         return new SearchAsyncResponse();
-    }
-
-    /**
-     * Create an instance of {@link SearchSyncResponse }
-     * 
-     */
-    public SearchSyncResponse createSearchSyncResponse() {
-        return new SearchSyncResponse();
-    }
-
-    /**
-     * Create an instance of {@link SearchResponseType }
-     * 
-     */
-    public SearchResponseType createSearchResponseType() {
-        return new SearchResponseType();
-    }
-
-    /**
-     * Create an instance of {@link AccessDeniedException }
-     * 
-     */
-    public AccessDeniedException createAccessDeniedException() {
-        return new AccessDeniedException();
     }
 
     /**
