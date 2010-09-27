@@ -38,8 +38,8 @@ public class DocumentUtil
 		return instance;
 	}
 
-	public DocumentTemplateType getDocumentTemplate(String url, String documentTemplateId, String sessionTicketId) throws MalformedURLException,
-			AccessDeniedException_Exception, BigArchiveServerException_Exception
+	public DocumentTemplateType getDocumentTemplate(String url, String documentTemplateId, String sessionTicketId)
+			throws MalformedURLException, AccessDeniedException_Exception, BigArchiveServerException_Exception
 	{
 		service = new DocumentService(new URL(url), DOCUMENT_QNAME);
 		documentService = service.getDocumentServiceEndpointPort();
@@ -47,6 +47,17 @@ public class DocumentUtil
 		DocumentTemplateType document = documentService.getDocumentTemplate(sessionTicketId, null, documentTemplateId);
 
 		return document;
+	}
+
+	public String getDocumentXml(String url, String id) throws MalformedURLException, AccessDeniedException_Exception,
+			BigArchiveServerException_Exception
+	{
+		service = new DocumentService(new URL(url), DOCUMENT_QNAME);
+		documentService = service.getDocumentServiceEndpointPort();
+
+		String doc_xml = documentService.getDocumentXml(id);
+
+		return doc_xml;
 	}
 
 	public DocumentType getDocumentById(String url, String id, String ticket) throws MalformedURLException,

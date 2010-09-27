@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Vector;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -19,6 +20,11 @@ import magnetico.ws.document.DocumentTemplateType.Attributes;
 import magnetico.ws.document.TypeAttributeType;
 import magnetico.ws.organization.AttributeType;
 import magnetico.ws.organization.EntityType;
+import net.n3.nanoxml.IXMLElement;
+import net.n3.nanoxml.IXMLParser;
+import net.n3.nanoxml.IXMLReader;
+import net.n3.nanoxml.StdXMLReader;
+import net.n3.nanoxml.XMLParserFactory;
 
 public class Fetcher
 {
@@ -28,7 +34,7 @@ public class Fetcher
 	private static String SEARCH_URL;
 	// private static QName SEARCH_QNAME = new
 	// QName("http://search.bigarchive.magnetosoft.ru/", "SearchService");
-	private static String DOCUMENT_URL;
+	private static String DOCUMENT_SERVICE_URL;
 	private static String pathToDump;
 	private static boolean fake = false;
 	private static Properties properties = new Properties();
@@ -39,7 +45,7 @@ public class Fetcher
 	private static String dbUrl;
 	private static String dbSuffix;
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 
 		loadProperties();
@@ -77,8 +83,10 @@ public class Fetcher
 	 * (пример: onto/user-onto.n3)
 	 */
 
-	private static void fetchDocumentTypes(String name_file)
+	private static void fetchDocumentTypes(String name_file) throws Exception
 	{
+		IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
+
 		HashMap<String, String> old_code__new_code = new HashMap<String, String>();
 		HashMap<String, String> code_onto = new HashMap<String, String>();
 		{
@@ -142,15 +150,13 @@ public class Fetcher
 				out = new OutputStreamWriter(fw, "UTF8");
 			}
 
-			List<DocumentTemplateType> types = DocumentUtil.getInstance().listDocumentTypes(DOCUMENT_URL, ticketId);
+			List<DocumentTemplateType> types = DocumentUtil.getInstance().listDocumentTypes(DOCUMENT_SERVICE_URL, ticketId);
 
 			System.out.println("Got " + types.size() + " docTypes");
 
 			for (DocumentTemplateType documentTypeType : types)
 			{
 
-				
-				
 				String authorId = documentTypeType.getAuthorId();
 				XMLGregorianCalendar dateCreated = documentTypeType.getDateCreated();
 				String id = documentTypeType.getId();
@@ -189,7 +195,17 @@ public class Fetcher
 
 				try
 				{
-					DocumentTemplateType doc_template = DocumentUtil.getInstance().getDocumentTemplate(DOCUMENT_URL, id, ticketId);
+					DocumentTemplateType doc_template = DocumentUtil.getInstance().getDocumentTemplate(DOCUMENT_SERVICE_URL, id, ticketId);
+
+					String StrXmlDoc = DocumentUtil.getInstance().getDocumentXml(DOCUMENT_SERVICE_URL, id);
+
+					IXMLReader reader = StdXMLReader.stringReader(StrXmlDoc);
+					parser.setReader(reader);
+					IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
+
+					Vector<IXMLElement>atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
+					
+					reader.close();
 
 					Attributes attributes = doc_template.getAttributes();
 
@@ -210,10 +226,10 @@ public class Fetcher
 				writeTriplet(Predicate.user_onto + id, Predicate.rdf__type, Predicate.rdfs__Class, false, out);
 
 				writeTriplet(Predicate.user_onto + id, Predicate.dc__creator, Predicate.zdb + "person_" + authorId, false, out);
-				
+
 				if (dateCreated != null)
 					writeTriplet(Predicate.user_onto + id, Predicate.swrc__creationDate, dateCreated.toString(), true, out);
-				
+
 				if (lastModifiedTime != null)
 					writeTriplet(Predicate.user_onto + id, Predicate.dc__date, lastModifiedTime.toString(), true, out);
 
@@ -384,13 +400,15 @@ public class Fetcher
 						{
 							typeLabel = "organization";
 							obj_owl__allValuesFrom = Predicate.swrc__Organization;
-							
-							// нужно определить что это за тип, person ? department ? organization
-							
+
+							// нужно определить что это за тип, person ?
+							// department ? organization
+
 							// для этого типа нужно добавить:
-							// <><http://www.w3.org/2002/07/owl#hasValue> <http://swrc.ontoware.org/ontology#lastName> .
-							// <><http://www.w3.org/2002/07/owl#hasValue> <http://swrc.ontoware.org/ontology#firstName>
-							
+							// <><http://www.w3.org/2002/07/owl#hasValue>
+							// <http://swrc.ontoware.org/ontology#lastName> .
+							// <><http://www.w3.org/2002/07/owl#hasValue>
+							// <http://swrc.ontoware.org/ontology#firstName>
 
 						}
 						else if (type == TypeAttributeType.TEXT)
@@ -822,7 +840,7 @@ public class Fetcher
 			documentTypeId = properties.getProperty("documentTypeId", "");
 			ticketId = properties.getProperty("sessionTicketId", "");
 			SEARCH_URL = properties.getProperty("searchUrl", "");
-			DOCUMENT_URL = properties.getProperty("documentsUrl", "");
+			DOCUMENT_SERVICE_URL = properties.getProperty("documentsUrl", "");
 			fake = new Boolean(properties.getProperty("fake", "false"));
 			pathToDump = properties.getProperty("pathToDump");
 			dbUser = properties.getProperty("dbUser", "ba");
@@ -868,7 +886,7 @@ public class Fetcher
 		System.out
 				.println("Usage  : java -cp ba2onto.jar org.gost19.ba2onto.Fetcher [ fetchType(directive|organization) [ docType [ pathToDump [ ticketId [ searchServicesWsdl [ searchQname [ docUrl [ fake(if exists => true) ] ] ] ] ] ]");
 		System.out.println("Example: java -cp ba2onto.jar org.gost19.ba2onto.Fetcher " + documentTypeId + " " + pathToDump + " " + ticketId
-				+ " " + SEARCH_URL + " " + DOCUMENT_URL);
+				+ " " + SEARCH_URL + " " + DOCUMENT_SERVICE_URL);
 	}
 
 	/**

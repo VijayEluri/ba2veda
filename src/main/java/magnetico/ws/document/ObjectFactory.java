@@ -123,35 +123,115 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CountDocumentsResponse }
+     * Create an instance of {@link CreateDocumentWithDraftResponse }
      * 
      */
-    public CountDocumentsResponse createCountDocumentsResponse() {
-        return new CountDocumentsResponse();
+    public CreateDocumentWithDraftResponse createCreateDocumentWithDraftResponse() {
+        return new CreateDocumentWithDraftResponse();
     }
 
     /**
-     * Create an instance of {@link PageDocuments }
+     * Create an instance of {@link GetDocumentTemplateXmlResponse }
      * 
      */
-    public PageDocuments createPageDocuments() {
-        return new PageDocuments();
+    public GetDocumentTemplateXmlResponse createGetDocumentTemplateXmlResponse() {
+        return new GetDocumentTemplateXmlResponse();
     }
 
     /**
-     * Create an instance of {@link CreateDocumentTemplateWithDraft }
+     * Create an instance of {@link GetDocumentTemplateByDate }
      * 
      */
-    public CreateDocumentTemplateWithDraft createCreateDocumentTemplateWithDraft() {
-        return new CreateDocumentTemplateWithDraft();
+    public GetDocumentTemplateByDate createGetDocumentTemplateByDate() {
+        return new GetDocumentTemplateByDate();
     }
 
     /**
-     * Create an instance of {@link JaxbDocumentValidationResult }
+     * Create an instance of {@link DocumentType }
      * 
      */
-    public JaxbDocumentValidationResult createJaxbDocumentValidationResult() {
-        return new JaxbDocumentValidationResult();
+    public DocumentType createDocumentType() {
+        return new DocumentType();
+    }
+
+    /**
+     * Create an instance of {@link AccessDeniedException }
+     * 
+     */
+    public AccessDeniedException createAccessDeniedException() {
+        return new AccessDeniedException();
+    }
+
+    /**
+     * Create an instance of {@link CreateDocumentDraft }
+     * 
+     */
+    public CreateDocumentDraft createCreateDocumentDraft() {
+        return new CreateDocumentDraft();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentTemplate }
+     * 
+     */
+    public GetDocumentTemplate createGetDocumentTemplate() {
+        return new GetDocumentTemplate();
+    }
+
+    /**
+     * Create an instance of {@link GetComputationalAttributesResponse }
+     * 
+     */
+    public GetComputationalAttributesResponse createGetComputationalAttributesResponse() {
+        return new GetComputationalAttributesResponse();
+    }
+
+    /**
+     * Create an instance of {@link CreateDocumentBatch }
+     * 
+     */
+    public CreateDocumentBatch createCreateDocumentBatch() {
+        return new CreateDocumentBatch();
+    }
+
+    /**
+     * Create an instance of {@link DocumentType.Attributes }
+     * 
+     */
+    public DocumentType.Attributes createDocumentTypeAttributes() {
+        return new DocumentType.Attributes();
+    }
+
+    /**
+     * Create an instance of {@link UpdateDocumentTemplateResponse }
+     * 
+     */
+    public UpdateDocumentTemplateResponse createUpdateDocumentTemplateResponse() {
+        return new UpdateDocumentTemplateResponse();
+    }
+
+    /**
+     * Create an instance of {@link RemoveDocumentTemplateResponse }
+     * 
+     */
+    public RemoveDocumentTemplateResponse createRemoveDocumentTemplateResponse() {
+        return new RemoveDocumentTemplateResponse();
+    }
+
+    /**
+     * Create an instance of {@link AttributeFileType }
+     * 
+     */
+    public AttributeFileType createAttributeFileType() {
+        return new AttributeFileType();
+    }
+
+    /**
+     * Create an instance of {@link CountDocumentsByTemplateIdResponse }
+     * 
+     */
+    public CountDocumentsByTemplateIdResponse createCountDocumentsByTemplateIdResponse() {
+        return new CountDocumentsByTemplateIdResponse();
     }
 
     /**
@@ -163,91 +243,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetVersion }
+     * Create an instance of {@link DocumentTemplateType }
      * 
      */
-    public GetVersion createGetVersion() {
-        return new GetVersion();
+    public DocumentTemplateType createDocumentTemplateType() {
+        return new DocumentTemplateType();
     }
 
     /**
-     * Create an instance of {@link CommitDocumentResponse }
+     * Create an instance of {@link UpdateDocument }
      * 
      */
-    public CommitDocumentResponse createCommitDocumentResponse() {
-        return new CommitDocumentResponse();
+    public UpdateDocument createUpdateDocument() {
+        return new UpdateDocument();
     }
 
     /**
-     * Create an instance of {@link GetDocumentTemplateDraftResponse }
+     * Create an instance of {@link DocumentTemplateDraftType.Attributes }
      * 
      */
-    public GetDocumentTemplateDraftResponse createGetDocumentTemplateDraftResponse() {
-        return new GetDocumentTemplateDraftResponse();
+    public DocumentTemplateDraftType.Attributes createDocumentTemplateDraftTypeAttributes() {
+        return new DocumentTemplateDraftType.Attributes();
     }
 
     /**
-     * Create an instance of {@link GetDocumentByDateResponse }
+     * Create an instance of {@link GetDocumentTemplates }
      * 
      */
-    public GetDocumentByDateResponse createGetDocumentByDateResponse() {
-        return new GetDocumentByDateResponse();
+    public GetDocumentTemplates createGetDocumentTemplates() {
+        return new GetDocumentTemplates();
     }
 
     /**
-     * Create an instance of {@link CreateDocumentBatchResponse }
+     * Create an instance of {@link IsInDocflow }
      * 
      */
-    public CreateDocumentBatchResponse createCreateDocumentBatchResponse() {
-        return new CreateDocumentBatchResponse();
-    }
-
-    /**
-     * Create an instance of {@link PageDocumentsResponse }
-     * 
-     */
-    public PageDocumentsResponse createPageDocumentsResponse() {
-        return new PageDocumentsResponse();
-    }
-
-    /**
-     * Create an instance of {@link UpdateDocumentTemplateDraftResponse }
-     * 
-     */
-    public UpdateDocumentTemplateDraftResponse createUpdateDocumentTemplateDraftResponse() {
-        return new UpdateDocumentTemplateDraftResponse();
-    }
-
-    /**
-     * Create an instance of {@link CreateDocumentTemplateWithDraftResponse }
-     * 
-     */
-    public CreateDocumentTemplateWithDraftResponse createCreateDocumentTemplateWithDraftResponse() {
-        return new CreateDocumentTemplateWithDraftResponse();
-    }
-
-    /**
-     * Create an instance of {@link AttributeLinkType }
-     * 
-     */
-    public AttributeLinkType createAttributeLinkType() {
-        return new AttributeLinkType();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentTemplateByDateResponse }
-     * 
-     */
-    public GetDocumentTemplateByDateResponse createGetDocumentTemplateByDateResponse() {
-        return new GetDocumentTemplateByDateResponse();
-    }
-
-    /**
-     * Create an instance of {@link CommitDocumentTemplate }
-     * 
-     */
-    public CommitDocumentTemplate createCommitDocumentTemplate() {
-        return new CommitDocumentTemplate();
+    public IsInDocflow createIsInDocflow() {
+        return new IsInDocflow();
     }
 
     /**
@@ -259,27 +291,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AttributeBooleanType }
+     * Create an instance of {@link PageDocuments }
      * 
      */
-    public AttributeBooleanType createAttributeBooleanType() {
-        return new AttributeBooleanType();
+    public PageDocuments createPageDocuments() {
+        return new PageDocuments();
     }
 
     /**
-     * Create an instance of {@link PageDocumentTemplates }
+     * Create an instance of {@link AttributeDateIntervalType }
      * 
      */
-    public PageDocumentTemplates createPageDocumentTemplates() {
-        return new PageDocumentTemplates();
-    }
-
-    /**
-     * Create an instance of {@link CountDocuments }
-     * 
-     */
-    public CountDocuments createCountDocuments() {
-        return new CountDocuments();
+    public AttributeDateIntervalType createAttributeDateIntervalType() {
+        return new AttributeDateIntervalType();
     }
 
     /**
@@ -299,107 +323,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AttributeDateIntervalType }
+     * Create an instance of {@link GetUserDocumentDrafts }
      * 
      */
-    public AttributeDateIntervalType createAttributeDateIntervalType() {
-        return new AttributeDateIntervalType();
+    public GetUserDocumentDrafts createGetUserDocumentDrafts() {
+        return new GetUserDocumentDrafts();
     }
 
     /**
-     * Create an instance of {@link DocumentTemplateType.Attributes }
+     * Create an instance of {@link CreateDocumentTemplateWithDraft }
      * 
      */
-    public DocumentTemplateType.Attributes createDocumentTemplateTypeAttributes() {
-        return new DocumentTemplateType.Attributes();
-    }
-
-    /**
-     * Create an instance of {@link CreateDocumentTemplateDraft }
-     * 
-     */
-    public CreateDocumentTemplateDraft createCreateDocumentTemplateDraft() {
-        return new CreateDocumentTemplateDraft();
-    }
-
-    /**
-     * Create an instance of {@link UpdateDocumentTemplate }
-     * 
-     */
-    public UpdateDocumentTemplate createUpdateDocumentTemplate() {
-        return new UpdateDocumentTemplate();
-    }
-
-    /**
-     * Create an instance of {@link RemoveDocumentTemplate }
-     * 
-     */
-    public RemoveDocumentTemplate createRemoveDocumentTemplate() {
-        return new RemoveDocumentTemplate();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentTemplate }
-     * 
-     */
-    public GetDocumentTemplate createGetDocumentTemplate() {
-        return new GetDocumentTemplate();
-    }
-
-    /**
-     * Create an instance of {@link IsInDocflow }
-     * 
-     */
-    public IsInDocflow createIsInDocflow() {
-        return new IsInDocflow();
-    }
-
-    /**
-     * Create an instance of {@link UpdateDocumentDraftResponse }
-     * 
-     */
-    public UpdateDocumentDraftResponse createUpdateDocumentDraftResponse() {
-        return new UpdateDocumentDraftResponse();
-    }
-
-    /**
-     * Create an instance of {@link CommitDocument }
-     * 
-     */
-    public CommitDocument createCommitDocument() {
-        return new CommitDocument();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentTemplateByDate }
-     * 
-     */
-    public GetDocumentTemplateByDate createGetDocumentTemplateByDate() {
-        return new GetDocumentTemplateByDate();
-    }
-
-    /**
-     * Create an instance of {@link CountDocumentTemplates }
-     * 
-     */
-    public CountDocumentTemplates createCountDocumentTemplates() {
-        return new CountDocumentTemplates();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentTemplateResponse }
-     * 
-     */
-    public GetDocumentTemplateResponse createGetDocumentTemplateResponse() {
-        return new GetDocumentTemplateResponse();
-    }
-
-    /**
-     * Create an instance of {@link RemoveDocumentDraftResponse }
-     * 
-     */
-    public RemoveDocumentDraftResponse createRemoveDocumentDraftResponse() {
-        return new RemoveDocumentDraftResponse();
+    public CreateDocumentTemplateWithDraft createCreateDocumentTemplateWithDraft() {
+        return new CreateDocumentTemplateWithDraft();
     }
 
     /**
@@ -411,107 +347,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DocumentType }
+     * Create an instance of {@link IsInDocflowResponse }
      * 
      */
-    public DocumentType createDocumentType() {
-        return new DocumentType();
+    public IsInDocflowResponse createIsInDocflowResponse() {
+        return new IsInDocflowResponse();
     }
 
     /**
-     * Create an instance of {@link UpdateDocumentTemplateResponse }
+     * Create an instance of {@link DocumentDraftType }
      * 
      */
-    public UpdateDocumentTemplateResponse createUpdateDocumentTemplateResponse() {
-        return new UpdateDocumentTemplateResponse();
-    }
-
-    /**
-     * Create an instance of {@link CreateDocumentDraftResponse }
-     * 
-     */
-    public CreateDocumentDraftResponse createCreateDocumentDraftResponse() {
-        return new CreateDocumentDraftResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentWithTemplateResponse }
-     * 
-     */
-    public GetDocumentWithTemplateResponse createGetDocumentWithTemplateResponse() {
-        return new GetDocumentWithTemplateResponse();
-    }
-
-    /**
-     * Create an instance of {@link DocumentDraftType.Attributes }
-     * 
-     */
-    public DocumentDraftType.Attributes createDocumentDraftTypeAttributes() {
-        return new DocumentDraftType.Attributes();
-    }
-
-    /**
-     * Create an instance of {@link JaxbDocumentValidationResult.Faults }
-     * 
-     */
-    public JaxbDocumentValidationResult.Faults createJaxbDocumentValidationResultFaults() {
-        return new JaxbDocumentValidationResult.Faults();
-    }
-
-    /**
-     * Create an instance of {@link BigArchiveServerException }
-     * 
-     */
-    public BigArchiveServerException createBigArchiveServerException() {
-        return new BigArchiveServerException();
-    }
-
-    /**
-     * Create an instance of {@link DocumentType.Attributes }
-     * 
-     */
-    public DocumentType.Attributes createDocumentTypeAttributes() {
-        return new DocumentType.Attributes();
-    }
-
-    /**
-     * Create an instance of {@link CreateDocumentDraft }
-     * 
-     */
-    public CreateDocumentDraft createCreateDocumentDraft() {
-        return new CreateDocumentDraft();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentTemplateXmlResponse }
-     * 
-     */
-    public GetDocumentTemplateXmlResponse createGetDocumentTemplateXmlResponse() {
-        return new GetDocumentTemplateXmlResponse();
-    }
-
-    /**
-     * Create an instance of {@link AttributeNumberType }
-     * 
-     */
-    public AttributeNumberType createAttributeNumberType() {
-        return new AttributeNumberType();
-    }
-
-    /**
-     * Create an instance of {@link DocumentTemplateDraftType.Attributes }
-     * 
-     */
-    public DocumentTemplateDraftType.Attributes createDocumentTemplateDraftTypeAttributes() {
-        return new DocumentTemplateDraftType.Attributes();
-    }
-
-    /**
-     * Create an instance of {@link RemoveDocument }
-     * 
-     */
-    public RemoveDocument createRemoveDocument() {
-        return new RemoveDocument();
+    public DocumentDraftType createDocumentDraftType() {
+        return new DocumentDraftType();
     }
 
     /**
@@ -523,19 +371,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link UpdateDocumentTemplateDraft }
+     * Create an instance of {@link DocumentTemplateDraftType }
      * 
      */
-    public UpdateDocumentTemplateDraft createUpdateDocumentTemplateDraft() {
-        return new UpdateDocumentTemplateDraft();
+    public DocumentTemplateDraftType createDocumentTemplateDraftType() {
+        return new DocumentTemplateDraftType();
     }
 
     /**
-     * Create an instance of {@link AttributeDictionaryType }
+     * Create an instance of {@link GetDocumentByDateResponse }
      * 
      */
-    public AttributeDictionaryType createAttributeDictionaryType() {
-        return new AttributeDictionaryType();
+    public GetDocumentByDateResponse createGetDocumentByDateResponse() {
+        return new GetDocumentByDateResponse();
+    }
+
+    /**
+     * Create an instance of {@link AttributeBooleanType }
+     * 
+     */
+    public AttributeBooleanType createAttributeBooleanType() {
+        return new AttributeBooleanType();
     }
 
     /**
@@ -547,11 +403,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FaultType }
+     * Create an instance of {@link RemoveDocumentTemplate }
      * 
      */
-    public FaultType createFaultType() {
-        return new FaultType();
+    public RemoveDocumentTemplate createRemoveDocumentTemplate() {
+        return new RemoveDocumentTemplate();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentTemplateDraftResponse }
+     * 
+     */
+    public GetDocumentTemplateDraftResponse createGetDocumentTemplateDraftResponse() {
+        return new GetDocumentTemplateDraftResponse();
+    }
+
+    /**
+     * Create an instance of {@link CreateDocumentWithDraft }
+     * 
+     */
+    public CreateDocumentWithDraft createCreateDocumentWithDraft() {
+        return new CreateDocumentWithDraft();
+    }
+
+    /**
+     * Create an instance of {@link CreateDocument }
+     * 
+     */
+    public CreateDocument createCreateDocument() {
+        return new CreateDocument();
+    }
+
+    /**
+     * Create an instance of {@link AttributeNumberType }
+     * 
+     */
+    public AttributeNumberType createAttributeNumberType() {
+        return new AttributeNumberType();
     }
 
     /**
@@ -563,19 +451,83 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetComputationalAttributes }
+     * Create an instance of {@link GetDocumentWithTemplateResponse }
      * 
      */
-    public GetComputationalAttributes createGetComputationalAttributes() {
-        return new GetComputationalAttributes();
+    public GetDocumentWithTemplateResponse createGetDocumentWithTemplateResponse() {
+        return new GetDocumentWithTemplateResponse();
     }
 
     /**
-     * Create an instance of {@link AccessDeniedException }
+     * Create an instance of {@link JaxbDocumentValidationResult }
      * 
      */
-    public AccessDeniedException createAccessDeniedException() {
-        return new AccessDeniedException();
+    public JaxbDocumentValidationResult createJaxbDocumentValidationResult() {
+        return new JaxbDocumentValidationResult();
+    }
+
+    /**
+     * Create an instance of {@link UpdateDocumentResponse }
+     * 
+     */
+    public UpdateDocumentResponse createUpdateDocumentResponse() {
+        return new UpdateDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentWithTemplateByDate }
+     * 
+     */
+    public GetDocumentWithTemplateByDate createGetDocumentWithTemplateByDate() {
+        return new GetDocumentWithTemplateByDate();
+    }
+
+    /**
+     * Create an instance of {@link CountDocumentsResponse }
+     * 
+     */
+    public CountDocumentsResponse createCountDocumentsResponse() {
+        return new CountDocumentsResponse();
+    }
+
+    /**
+     * Create an instance of {@link UpdateDocumentTemplateDraftResponse }
+     * 
+     */
+    public UpdateDocumentTemplateDraftResponse createUpdateDocumentTemplateDraftResponse() {
+        return new UpdateDocumentTemplateDraftResponse();
+    }
+
+    /**
+     * Create an instance of {@link CommitDocument }
+     * 
+     */
+    public CommitDocument createCommitDocument() {
+        return new CommitDocument();
+    }
+
+    /**
+     * Create an instance of {@link UpdateDocumentDraft }
+     * 
+     */
+    public UpdateDocumentDraft createUpdateDocumentDraft() {
+        return new UpdateDocumentDraft();
+    }
+
+    /**
+     * Create an instance of {@link PageDocumentsResponse }
+     * 
+     */
+    public PageDocumentsResponse createPageDocumentsResponse() {
+        return new PageDocumentsResponse();
+    }
+
+    /**
+     * Create an instance of {@link CreateDocumentTemplateWithDraftResponse }
+     * 
+     */
+    public CreateDocumentTemplateWithDraftResponse createCreateDocumentTemplateWithDraftResponse() {
+        return new CreateDocumentTemplateWithDraftResponse();
     }
 
     /**
@@ -587,19 +539,51 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetDocumentXml }
+     * Create an instance of {@link UpdateDocumentTemplate }
      * 
      */
-    public GetDocumentXml createGetDocumentXml() {
-        return new GetDocumentXml();
+    public UpdateDocumentTemplate createUpdateDocumentTemplate() {
+        return new UpdateDocumentTemplate();
     }
 
     /**
-     * Create an instance of {@link CommitDocumentTemplateResponse }
+     * Create an instance of {@link GetDocumentTemplateResponse }
      * 
      */
-    public CommitDocumentTemplateResponse createCommitDocumentTemplateResponse() {
-        return new CommitDocumentTemplateResponse();
+    public GetDocumentTemplateResponse createGetDocumentTemplateResponse() {
+        return new GetDocumentTemplateResponse();
+    }
+
+    /**
+     * Create an instance of {@link DocumentDraftType.Attributes }
+     * 
+     */
+    public DocumentDraftType.Attributes createDocumentDraftTypeAttributes() {
+        return new DocumentDraftType.Attributes();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentDraft }
+     * 
+     */
+    public GetDocumentDraft createGetDocumentDraft() {
+        return new GetDocumentDraft();
+    }
+
+    /**
+     * Create an instance of {@link PageDocumentTemplates }
+     * 
+     */
+    public PageDocumentTemplates createPageDocumentTemplates() {
+        return new PageDocumentTemplates();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentXmlResponse }
+     * 
+     */
+    public GetDocumentXmlResponse createGetDocumentXmlResponse() {
+        return new GetDocumentXmlResponse();
     }
 
     /**
@@ -608,6 +592,118 @@ public class ObjectFactory {
      */
     public GetUserDocumentDraftsResponse createGetUserDocumentDraftsResponse() {
         return new GetUserDocumentDraftsResponse();
+    }
+
+    /**
+     * Create an instance of {@link CountDocuments }
+     * 
+     */
+    public CountDocuments createCountDocuments() {
+        return new CountDocuments();
+    }
+
+    /**
+     * Create an instance of {@link AttributeLinkType }
+     * 
+     */
+    public AttributeLinkType createAttributeLinkType() {
+        return new AttributeLinkType();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentResponse }
+     * 
+     */
+    public GetDocumentResponse createGetDocumentResponse() {
+        return new GetDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentDraftResponse }
+     * 
+     */
+    public GetDocumentDraftResponse createGetDocumentDraftResponse() {
+        return new GetDocumentDraftResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentTemplateXml }
+     * 
+     */
+    public GetDocumentTemplateXml createGetDocumentTemplateXml() {
+        return new GetDocumentTemplateXml();
+    }
+
+    /**
+     * Create an instance of {@link CreateDocumentTemplateResponse }
+     * 
+     */
+    public CreateDocumentTemplateResponse createCreateDocumentTemplateResponse() {
+        return new CreateDocumentTemplateResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentXml }
+     * 
+     */
+    public GetDocumentXml createGetDocumentXml() {
+        return new GetDocumentXml();
+    }
+
+    /**
+     * Create an instance of {@link CreateDocumentBatchResponse }
+     * 
+     */
+    public CreateDocumentBatchResponse createCreateDocumentBatchResponse() {
+        return new CreateDocumentBatchResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetVersionResponse }
+     * 
+     */
+    public GetVersionResponse createGetVersionResponse() {
+        return new GetVersionResponse();
+    }
+
+    /**
+     * Create an instance of {@link FaultType }
+     * 
+     */
+    public FaultType createFaultType() {
+        return new FaultType();
+    }
+
+    /**
+     * Create an instance of {@link UpdateDocumentDraftResponse }
+     * 
+     */
+    public UpdateDocumentDraftResponse createUpdateDocumentDraftResponse() {
+        return new UpdateDocumentDraftResponse();
+    }
+
+    /**
+     * Create an instance of {@link RemoveDocumentDraftResponse }
+     * 
+     */
+    public RemoveDocumentDraftResponse createRemoveDocumentDraftResponse() {
+        return new RemoveDocumentDraftResponse();
+    }
+
+    /**
+     * Create an instance of {@link AttributeDictionaryType }
+     * 
+     */
+    public AttributeDictionaryType createAttributeDictionaryType() {
+        return new AttributeDictionaryType();
+    }
+
+    /**
+     * Create an instance of {@link UpdateDocumentTemplateDraft }
+     * 
+     */
+    public UpdateDocumentTemplateDraft createUpdateDocumentTemplateDraft() {
+        return new UpdateDocumentTemplateDraft();
     }
 
     /**
@@ -627,99 +723,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetComputationalAttributesResponse }
+     * Create an instance of {@link RemoveDocument }
      * 
      */
-    public GetComputationalAttributesResponse createGetComputationalAttributesResponse() {
-        return new GetComputationalAttributesResponse();
-    }
-
-    /**
-     * Create an instance of {@link CreateDocumentTemplateResponse }
-     * 
-     */
-    public CreateDocumentTemplateResponse createCreateDocumentTemplateResponse() {
-        return new CreateDocumentTemplateResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentTemplateDraft }
-     * 
-     */
-    public GetDocumentTemplateDraft createGetDocumentTemplateDraft() {
-        return new GetDocumentTemplateDraft();
-    }
-
-    /**
-     * Create an instance of {@link GetUserDocumentDrafts }
-     * 
-     */
-    public GetUserDocumentDrafts createGetUserDocumentDrafts() {
-        return new GetUserDocumentDrafts();
-    }
-
-    /**
-     * Create an instance of {@link CreateDocument }
-     * 
-     */
-    public CreateDocument createCreateDocument() {
-        return new CreateDocument();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentTemplateXml }
-     * 
-     */
-    public GetDocumentTemplateXml createGetDocumentTemplateXml() {
-        return new GetDocumentTemplateXml();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentResponse }
-     * 
-     */
-    public GetDocumentResponse createGetDocumentResponse() {
-        return new GetDocumentResponse();
-    }
-
-    /**
-     * Create an instance of {@link CreateDocumentWithDraftResponse }
-     * 
-     */
-    public CreateDocumentWithDraftResponse createCreateDocumentWithDraftResponse() {
-        return new CreateDocumentWithDraftResponse();
-    }
-
-    /**
-     * Create an instance of {@link AttributeFileType }
-     * 
-     */
-    public AttributeFileType createAttributeFileType() {
-        return new AttributeFileType();
-    }
-
-    /**
-     * Create an instance of {@link CreateDocumentWithDraft }
-     * 
-     */
-    public CreateDocumentWithDraft createCreateDocumentWithDraft() {
-        return new CreateDocumentWithDraft();
-    }
-
-    /**
-     * Create an instance of {@link AttributeOrganizationType }
-     * 
-     */
-    public AttributeOrganizationType createAttributeOrganizationType() {
-        return new AttributeOrganizationType();
-    }
-
-    /**
-     * Create an instance of {@link GetDocumentTemplates }
-     * 
-     */
-    public GetDocumentTemplates createGetDocumentTemplates() {
-        return new GetDocumentTemplates();
+    public RemoveDocument createRemoveDocument() {
+        return new RemoveDocument();
     }
 
     /**
@@ -731,43 +739,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CountDocumentsByTemplateIdResponse }
+     * Create an instance of {@link GetDocumentByDate }
      * 
      */
-    public CountDocumentsByTemplateIdResponse createCountDocumentsByTemplateIdResponse() {
-        return new CountDocumentsByTemplateIdResponse();
-    }
-
-    /**
-     * Create an instance of {@link UpdateDocument }
-     * 
-     */
-    public UpdateDocument createUpdateDocument() {
-        return new UpdateDocument();
-    }
-
-    /**
-     * Create an instance of {@link DocumentTemplateDraftType }
-     * 
-     */
-    public DocumentTemplateDraftType createDocumentTemplateDraftType() {
-        return new DocumentTemplateDraftType();
-    }
-
-    /**
-     * Create an instance of {@link DocumentDraftType }
-     * 
-     */
-    public DocumentDraftType createDocumentDraftType() {
-        return new DocumentDraftType();
-    }
-
-    /**
-     * Create an instance of {@link CreateDocumentBatch }
-     * 
-     */
-    public CreateDocumentBatch createCreateDocumentBatch() {
-        return new CreateDocumentBatch();
+    public GetDocumentByDate createGetDocumentByDate() {
+        return new GetDocumentByDate();
     }
 
     /**
@@ -779,6 +755,38 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link CommitDocumentTemplate }
+     * 
+     */
+    public CommitDocumentTemplate createCommitDocumentTemplate() {
+        return new CommitDocumentTemplate();
+    }
+
+    /**
+     * Create an instance of {@link JaxbDocumentValidationResult.Faults }
+     * 
+     */
+    public JaxbDocumentValidationResult.Faults createJaxbDocumentValidationResultFaults() {
+        return new JaxbDocumentValidationResult.Faults();
+    }
+
+    /**
+     * Create an instance of {@link GetDocumentTemplateDraft }
+     * 
+     */
+    public GetDocumentTemplateDraft createGetDocumentTemplateDraft() {
+        return new GetDocumentTemplateDraft();
+    }
+
+    /**
+     * Create an instance of {@link CommitDocumentTemplateResponse }
+     * 
+     */
+    public CommitDocumentTemplateResponse createCommitDocumentTemplateResponse() {
+        return new CommitDocumentTemplateResponse();
+    }
+
+    /**
      * Create an instance of {@link CreateDocumentTemplate }
      * 
      */
@@ -787,91 +795,83 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetDocumentByDate }
+     * Create an instance of {@link CreateDocumentDraftResponse }
      * 
      */
-    public GetDocumentByDate createGetDocumentByDate() {
-        return new GetDocumentByDate();
+    public CreateDocumentDraftResponse createCreateDocumentDraftResponse() {
+        return new CreateDocumentDraftResponse();
     }
 
     /**
-     * Create an instance of {@link UpdateDocumentResponse }
+     * Create an instance of {@link CountDocumentTemplates }
      * 
      */
-    public UpdateDocumentResponse createUpdateDocumentResponse() {
-        return new UpdateDocumentResponse();
+    public CountDocumentTemplates createCountDocumentTemplates() {
+        return new CountDocumentTemplates();
     }
 
     /**
-     * Create an instance of {@link IsInDocflowResponse }
+     * Create an instance of {@link GetComputationalAttributes }
      * 
      */
-    public IsInDocflowResponse createIsInDocflowResponse() {
-        return new IsInDocflowResponse();
+    public GetComputationalAttributes createGetComputationalAttributes() {
+        return new GetComputationalAttributes();
     }
 
     /**
-     * Create an instance of {@link DocumentTemplateType }
+     * Create an instance of {@link BigArchiveServerException }
      * 
      */
-    public DocumentTemplateType createDocumentTemplateType() {
-        return new DocumentTemplateType();
+    public BigArchiveServerException createBigArchiveServerException() {
+        return new BigArchiveServerException();
     }
 
     /**
-     * Create an instance of {@link UpdateDocumentDraft }
+     * Create an instance of {@link GetVersion }
      * 
      */
-    public UpdateDocumentDraft createUpdateDocumentDraft() {
-        return new UpdateDocumentDraft();
+    public GetVersion createGetVersion() {
+        return new GetVersion();
     }
 
     /**
-     * Create an instance of {@link GetDocumentXmlResponse }
+     * Create an instance of {@link GetDocumentTemplateByDateResponse }
      * 
      */
-    public GetDocumentXmlResponse createGetDocumentXmlResponse() {
-        return new GetDocumentXmlResponse();
+    public GetDocumentTemplateByDateResponse createGetDocumentTemplateByDateResponse() {
+        return new GetDocumentTemplateByDateResponse();
     }
 
     /**
-     * Create an instance of {@link RemoveDocumentTemplateResponse }
+     * Create an instance of {@link CreateDocumentTemplateDraft }
      * 
      */
-    public RemoveDocumentTemplateResponse createRemoveDocumentTemplateResponse() {
-        return new RemoveDocumentTemplateResponse();
+    public CreateDocumentTemplateDraft createCreateDocumentTemplateDraft() {
+        return new CreateDocumentTemplateDraft();
     }
 
     /**
-     * Create an instance of {@link GetDocumentDraftResponse }
+     * Create an instance of {@link CommitDocumentResponse }
      * 
      */
-    public GetDocumentDraftResponse createGetDocumentDraftResponse() {
-        return new GetDocumentDraftResponse();
+    public CommitDocumentResponse createCommitDocumentResponse() {
+        return new CommitDocumentResponse();
     }
 
     /**
-     * Create an instance of {@link GetDocumentWithTemplateByDate }
+     * Create an instance of {@link AttributeOrganizationType }
      * 
      */
-    public GetDocumentWithTemplateByDate createGetDocumentWithTemplateByDate() {
-        return new GetDocumentWithTemplateByDate();
+    public AttributeOrganizationType createAttributeOrganizationType() {
+        return new AttributeOrganizationType();
     }
 
     /**
-     * Create an instance of {@link GetDocumentDraft }
+     * Create an instance of {@link DocumentTemplateType.Attributes }
      * 
      */
-    public GetDocumentDraft createGetDocumentDraft() {
-        return new GetDocumentDraft();
-    }
-
-    /**
-     * Create an instance of {@link GetVersionResponse }
-     * 
-     */
-    public GetVersionResponse createGetVersionResponse() {
-        return new GetVersionResponse();
+    public DocumentTemplateType.Attributes createDocumentTemplateTypeAttributes() {
+        return new DocumentTemplateType.Attributes();
     }
 
     /**

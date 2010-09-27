@@ -46,19 +46,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ListAttachments }
+     * Create an instance of {@link GetVersionResponse }
      * 
      */
-    public ListAttachments createListAttachments() {
-        return new ListAttachments();
-    }
-
-    /**
-     * Create an instance of {@link AccessDeniedException }
-     * 
-     */
-    public AccessDeniedException createAccessDeniedException() {
-        return new AccessDeniedException();
+    public GetVersionResponse createGetVersionResponse() {
+        return new GetVersionResponse();
     }
 
     /**
@@ -70,11 +62,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetVersionResponse }
+     * Create an instance of {@link AccessDeniedException }
      * 
      */
-    public GetVersionResponse createGetVersionResponse() {
-        return new GetVersionResponse();
+    public AccessDeniedException createAccessDeniedException() {
+        return new AccessDeniedException();
+    }
+
+    /**
+     * Create an instance of {@link ListAttachmentsResponse }
+     * 
+     */
+    public ListAttachmentsResponse createListAttachmentsResponse() {
+        return new ListAttachmentsResponse();
     }
 
     /**
@@ -83,6 +83,14 @@ public class ObjectFactory {
      */
     public GetAttachment createGetAttachment() {
         return new GetAttachment();
+    }
+
+    /**
+     * Create an instance of {@link AttachmentType }
+     * 
+     */
+    public AttachmentType createAttachmentType() {
+        return new AttachmentType();
     }
 
     /**
@@ -102,19 +110,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetDependenciesVersionsResponse }
+     * 
+     */
+    public GetDependenciesVersionsResponse createGetDependenciesVersionsResponse() {
+        return new GetDependenciesVersionsResponse();
+    }
+
+    /**
      * Create an instance of {@link GetDependenciesVersions }
      * 
      */
     public GetDependenciesVersions createGetDependenciesVersions() {
         return new GetDependenciesVersions();
-    }
-
-    /**
-     * Create an instance of {@link AttachmentType }
-     * 
-     */
-    public AttachmentType createAttachmentType() {
-        return new AttachmentType();
     }
 
     /**
@@ -126,14 +134,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetDependenciesVersionsResponse }
-     * 
-     */
-    public GetDependenciesVersionsResponse createGetDependenciesVersionsResponse() {
-        return new GetDependenciesVersionsResponse();
-    }
-
-    /**
      * Create an instance of {@link CreateAttachment }
      * 
      */
@@ -142,11 +142,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ListAttachmentsResponse }
+     * Create an instance of {@link ListAttachments }
      * 
      */
-    public ListAttachmentsResponse createListAttachmentsResponse() {
-        return new ListAttachmentsResponse();
+    public ListAttachments createListAttachments() {
+        return new ListAttachments();
     }
 
     /**
