@@ -44,6 +44,8 @@ public class Fetcher
 	private static String dbPassword;
 	private static String dbUrl;
 	private static String dbSuffix;
+	private static HashMap<String, String> code_onto = new HashMap<String, String>();
+	private static HashMap<String, String> old_code__new_code = new HashMap<String, String>();
 
 	public static void main(String[] args) throws Exception
 	{
@@ -87,8 +89,6 @@ public class Fetcher
 	{
 		IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
 
-		HashMap<String, String> old_code__new_code = new HashMap<String, String>();
-		HashMap<String, String> code_onto = new HashMap<String, String>();
 		{
 			code_onto.put("date_from", Predicate.swrc__startDate);
 			code_onto.put("to", Predicate.swrc__endDate);
@@ -191,30 +191,6 @@ public class Fetcher
 				if (systemInformation != null)
 					si_elements = systemInformation.split(";");
 
-				List<magnetico.ws.document.AttributeType> att_list = null;
-
-				try
-				{
-					DocumentTemplateType doc_template = DocumentUtil.getInstance().getDocumentTemplate(DOCUMENT_SERVICE_URL, id, ticketId);
-
-					String StrXmlDoc = DocumentUtil.getInstance().getDocumentXml(DOCUMENT_SERVICE_URL, id);
-
-					IXMLReader reader = StdXMLReader.stringReader(StrXmlDoc);
-					parser.setReader(reader);
-					IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
-
-					Vector<IXMLElement>atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
-					
-					reader.close();
-
-					Attributes attributes = doc_template.getAttributes();
-
-					att_list = attributes.getAttributes();
-				} catch (Exception ex)
-				{
-
-				}
-
 				// <http://user-onto.org#internal_memo>
 				// <http://www.w3.org/2000/01/rdf-schema#subClassOf>
 				// <http://gost19.org/base#Document> .
@@ -244,14 +220,33 @@ public class Fetcher
 				if (lName.text_en != null)
 					writeTriplet(Predicate.user_onto + id, Predicate.rdfs__label, lName.text_en, true, out, "en");
 
-				int ii = 0;
+				// /////////////////////////////////////////////////////////////////////////////////////////////
+				Vector<IXMLElement> atts = null;
 
-				if (att_list != null)
-					for (magnetico.ws.document.AttributeType att_list_element : att_list)
+				try
+				{
+					String StrXmlDoc = DocumentUtil.getInstance().getDocumentXml(DOCUMENT_SERVICE_URL, id);
+
+					IXMLReader reader = StdXMLReader.stringReader(StrXmlDoc);
+					parser.setReader(reader);
+					IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
+
+					atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
+
+					reader.close();
+				} catch (Exception ex)
+				{
+
+				}
+
+				int ii = 0;
+				if (atts != null)
+				{
+					for (IXMLElement att_list_element : atts)
 					{
 						ii++;
 
-						String att_name = att_list_element.getName();
+						String att_name = get(att_list_element, "name", "");
 
 						if (att_name.equals("$comment") || att_name.equals("$private") || att_name.equals("$authorId")
 								|| att_name.equals("$defaultRepresentation"))
@@ -272,10 +267,7 @@ public class Fetcher
 
 						writeTriplet(Predicate.user_onto + id, Predicate.rdfs__subClassOf, restrictionId, false, out);
 
-						String sysinfo = att_list_element.getSystemInformation();
-						String code = att_list_element.getCode();
-
-						String prevCode = code;
+						String code = get(att_list_element, "code", null);
 
 						System.out.println("	code=[" + code + "]");
 
@@ -296,38 +288,31 @@ public class Fetcher
 							code = lName.text_ru;
 						}
 
-						String this_code_in_onto = code_onto.get(code);
-
+						// подсчет частоты встречаемости code
 						Integer count = code_stat.get(code);
 						if (count != null)
 							count = new Integer(count.intValue() + 1);
 						else
 						{
 							count = new Integer(1);
-
-							if (code_onto.get(code) == null)
-							{
-								// создать запись в онтологии о новом
-								// пользовательком поле документа
-								this_code_in_onto = Predicate.user_onto
-										+ Translit.toTranslit(code).replace(' ', '_').replace('\'', 'j').replace('№', 'N')
-												.replace(',', '_').replace('(', '_').replace(')', '_').replace('.', '_');
-								code_onto.put(code, this_code_in_onto);
-							}
 						}
 
-						old_code__new_code.put(prevCode, this_code_in_onto);
-
+						// переименование code в onto 
+						String this_code_in_onto = renameCodeToOnto (code);						
+						
 						writeTriplet(restrictionId, Predicate.owl__onProperty, this_code_in_onto, false, out);
 
 						code_stat.put(code, count);
 
-						String descr = att_list_element.getDescription();
+						String descr = get(att_list_element, "description", "");
 
 						String multi_select_label = "";
 						String obligatory_label = "";
 
-						if (att_list_element.isMultiSelect())
+						obligatory_label = get(att_list_element, "obligatory", "false");
+						multi_select_label = get(att_list_element, "multiSelect", "false");
+
+						if (multi_select_label.equals("true"))
 						{
 							multi_select_label = "[множественное]";
 						}
@@ -339,7 +324,7 @@ public class Fetcher
 							writeTriplet(restrictionId, Predicate.owl__maxCardinality, "1", true, out);
 						}
 
-						if (att_list_element.isObligatory())
+						if (obligatory_label.equals("true"))
 						{
 							obligatory_label = "[обязательное]";
 
@@ -353,81 +338,145 @@ public class Fetcher
 							// ?
 						}
 
-						att_list_element.getDateCreated();
+						// att_list_element.getDateCreated();
 
-						TypeAttributeType type = att_list_element.getType();
+						String type = get(att_list_element, "type", "");
 
 						String typeLabel = null;
 
-						String obj_owl__allValuesFrom = "???";
+						String obj_owl__allValuesFrom = null;
 
-						if (type == TypeAttributeType.BOOLEAN)
+						if (type.equals("BOOLEAN"))
 						{
 							typeLabel = "boolean";
 							obj_owl__allValuesFrom = Predicate.xsd__boolean;
 						}
-						else if (type == TypeAttributeType.DATE)
+						else if (type.equals("DATE"))
 						{
 							typeLabel = "date";
 							obj_owl__allValuesFrom = Predicate.xsd__date;
 						}
-						else if (type == TypeAttributeType.DATEINTERVAL)
+						else if (type.equals("DATEINTERVAL"))
 						{
 							typeLabel = "date_interval";
 							obj_owl__allValuesFrom = Predicate.docs19__dateInterval;
 						}
-						else if (type == TypeAttributeType.DICTIONARY)
+						else if (type.equals("DICTIONARY"))
 						{
 							typeLabel = "dictionary";
 							obj_owl__allValuesFrom = Predicate.docs19__Document;
 						}
-						else if (type == TypeAttributeType.FILE)
+						else if (type.equals("FILE"))
 						{
 							obj_owl__allValuesFrom = Predicate.docs19__FileDescription;
 							typeLabel = "attachment";
 						}
-						else if (type == TypeAttributeType.LINK)
+						else if (type.equals("LINK"))
 						{
 							obj_owl__allValuesFrom = Predicate.docs19__Document;
+
+							if (descr.indexOf("$composition") >= 0)
+							{
+								// нужно вынести в hasValue импортируемые поля
+								// из ссылаемого документа
+								String[] compzes = descr.split(";");
+
+								for (String compz : compzes)
+								{
+									if (compz.indexOf("$composition") >= 0)
+									{
+										String[] tmpa = compz.split("=");
+										if (tmpa.length > 1)
+										{
+											String data = tmpa[1];
+											if (data != null)
+											{
+												String[] importsFields = data.replace('|', ';').split(";");
+
+												for (String field : importsFields)
+												{													
+													String new_code = old_code__new_code.get(field);
+													
+													if (new_code == null)
+													{
+														new_code = renameCodeToOnto (field);
+													}
+
+													new_code += "";
+												}
+											}
+										}
+
+									}
+								}
+
+							}
+
 							typeLabel = "document_link";
 						}
-						else if (type == TypeAttributeType.NUMBER)
+						else if (type.equals("NUMBER"))
 						{
 							typeLabel = "number";
 							obj_owl__allValuesFrom = Predicate.xsd__integer;
 						}
-						else if (type == TypeAttributeType.ORGANIZATION)
+						else if (type.equals("ORGANIZATION"))
 						{
 							typeLabel = "organization";
-							obj_owl__allValuesFrom = Predicate.swrc__Organization;
+							// obj_owl__allValuesFrom =
+							// Predicate.swrc__Organization;
 
 							// нужно определить что это за тип, person ?
 							// department ? organization
+							String organizationTag = get(att_list_element, "organizationTag", "");
 
-							// для этого типа нужно добавить:
-							// <><http://www.w3.org/2002/07/owl#hasValue>
-							// <http://swrc.ontoware.org/ontology#lastName> .
-							// <><http://www.w3.org/2002/07/owl#hasValue>
-							// <http://swrc.ontoware.org/ontology#firstName>
+							String[] organizationTags = organizationTag.split(";");
+
+							for (String tag : organizationTags)
+							{
+								if (tag.equals("user"))
+								{
+									// для этого типа нужно добавить:
+
+									// <><http://www.w3.org/2002/07/owl#hasValue><http://swrc.ontoware.org/ontology#lastName>
+									writeTriplet(restrictionId, Predicate.owl__hasValue, Predicate.swrc__lastName, true, out);
+
+									// <><http://www.w3.org/2002/07/owl#hasValue><http://swrc.ontoware.org/ontology#firstName>
+									writeTriplet(restrictionId, Predicate.owl__hasValue, Predicate.swrc__firstName, true, out);
+
+									if (organizationTags.length == 1)
+										writeTriplet(restrictionId, Predicate.owl__allValuesFrom, Predicate.swrc__Person, true, out);
+									else
+										writeTriplet(restrictionId, Predicate.owl__someValuesFrom, Predicate.swrc__Person, true, out);
+
+								}
+								else if (tag.equals("department"))
+								{
+									// <><http://www.w3.org/2002/07/owl#hasValue><http://swrc.ontoware.org/ontology#name>
+									writeTriplet(restrictionId, Predicate.owl__hasValue, Predicate.swrc__name, true, out);
+
+									if (organizationTags.length == 1)
+										writeTriplet(restrictionId, Predicate.owl__allValuesFrom, Predicate.swrc__Department, true, out);
+									else
+										writeTriplet(restrictionId, Predicate.owl__someValuesFrom, Predicate.swrc__Department, true, out);
+
+								}
+							}
 
 						}
-						else if (type == TypeAttributeType.TEXT)
+						else if (type.equals("TEXT"))
 						{
 							typeLabel = "text";
 							obj_owl__allValuesFrom = Predicate.xsd__string;
 						}
 
-						if (sysinfo != null)
-						{
-							System.out.println("sysinfo=" + sysinfo);
-						}
-
-						writeTriplet("_:" + id + "_" + ii, Predicate.owl__allValuesFrom, obj_owl__allValuesFrom, false, out);
+						if (obj_owl__allValuesFrom != null)
+							writeTriplet(restrictionId, Predicate.owl__allValuesFrom, obj_owl__allValuesFrom, false, out);
 
 						System.out.println("	att_name=[" + att_name + "]:" + typeLabel + " " + obligatory_label + " " + multi_select_label);
 						System.out.println("	description=[" + descr + "]");
 
 					}
+				}
 
 			}
 
@@ -463,6 +512,37 @@ public class Fetcher
 			System.out.println("[" + ee.getKey() + "]->[" + ee.getValue() + "]");
 		}
 
+	}
+
+	private static String renameCodeToOnto (String code)
+	{
+		String this_code_in_onto = code_onto.get(code);
+		
+		if (this_code_in_onto == null)
+		{
+			this_code_in_onto = Predicate.user_onto
+			+ Translit.toTranslit(code).replace(' ', '_').replace('\'', 'j').replace('№', 'N')
+					.replace(',', '_').replace('(', '_').replace(')', '_').replace('.', '_');
+		}
+		
+		old_code__new_code.put(code, this_code_in_onto);		
+
+		return this_code_in_onto;
+	}
+	
+	private static String get(IXMLElement el, String Name, String def_val)
+	{
+		String res = null;
+
+		IXMLElement dd = el.getFirstChildNamed(Name);
+
+		if (dd != null)
+			res = dd.getContent();
+
+		if (res == null)
+			return def_val;
+		else
+			return res;
 	}
 
 	/**

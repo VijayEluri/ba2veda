@@ -28,6 +28,7 @@ public class Predicate
 	public static final String owl__Restriction = owl + "Restriction"; 
 	public static final String owl__onProperty = owl + "onProperty"; 
 	public static final String owl__allValuesFrom = owl + "allValuesFrom";
+	public static final String owl__someValuesFrom = owl + "someValuesFrom";	
 	public static final String owl__maxCardinality = owl + "maxCardinality";
 	public static final String owl__minCardinality = owl + "minCardinality";
 	public static final String owl__hasValue = owl + "hasValue";

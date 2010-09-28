@@ -1,4 +1,4 @@
-# Saved by TopBraid on Thu Sep 23 13:50:01 MSD 2010
+# Saved by TopBraid on Tue Sep 28 14:35:48 MSD 2010
 # baseURI: http://gost19.org/dos#
 # imports: http://gost19.org/base#
 # imports: http://swrc.ontoware.org/ontology-07
@@ -16,7 +16,7 @@
 
 docs19:
       rdf:type owl:Ontology ;
-      owl:imports gost19: , <http://swrc.ontoware.org/ontology-07> ;
+      owl:imports <http://swrc.ontoware.org/ontology-07> , gost19: ;
       owl:versionInfo "Created with TopBraid Composer"^^xsd:string .
 
 docs19:FileDescription
@@ -24,12 +24,12 @@ docs19:FileDescription
       rdfs:subClassOf gost19:Document ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:anyURI ;
+                owl:maxCardinality "1"^^xsd:int ;
                 owl:onProperty docs19:file
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
+                owl:allValuesFrom xsd:anyURI ;
                 owl:onProperty docs19:file
               ] .
 
@@ -75,33 +75,13 @@ docs19:department_card
       rdfs:subClassOf gost19:Document ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty swrc:name
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom swrc:Department ;
-                owl:onProperty docs19:department
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:hasValue swrc:name ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty swrc:organization
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty docs19:parentDepartment
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom swrc:Department ;
-                owl:onProperty docs19:parentDepartment
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty docs19:department
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty gost19:externalIdentifer
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -110,29 +90,15 @@ docs19:department_card
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom swrc:Department ;
                 owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty docs19:department
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty gost19:externalIdentifer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty swrc:name
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty swrc:organization
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty gost19:externalIdentifer
+                owl:allValuesFrom swrc:Department ;
+                owl:onProperty docs19:parentDepartment
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -141,13 +107,38 @@ docs19:department_card
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty docs19:parentDepartment
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty swrc:organization
+                owl:onProperty gost19:externalIdentifer
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:int ;
                 owl:onProperty gost19:externalIdentifer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:hasValue swrc:name ;
+                owl:onProperty swrc:organization
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty swrc:organization
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty swrc:name
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty swrc:name
               ] .
 
 docs19:employee
@@ -160,8 +151,68 @@ docs19:employee_card
       rdfs:subClassOf gost19:Document ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:hasValue swrc:name ;
+                owl:onProperty docs19:department
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty swrc:note
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty swrc:phone
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty swrc:firstName
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:anyURI ;
+                owl:onProperty swrc:photo
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:hasValue swrc:name ;
+                owl:onProperty swrc:organization
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty gost19:externalIdentifer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty gost19:externalIdentifer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom swrc:Person ;
+                owl:onProperty docs19:employee
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty swrc:organization
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:string ;
                 owl:onProperty gost19:middlename
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty swrc:organization
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty swrc:email
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -180,68 +231,8 @@ docs19:employee_card
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty swrc:note
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty swrc:firstName
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:hasValue swrc:name ;
-                owl:onProperty swrc:organization
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom swrc:Organization ;
                 owl:onProperty swrc:organization
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:hasValue swrc:name ;
-                owl:onProperty docs19:department
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty swrc:phone
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:anyURI ;
-                owl:onProperty swrc:photo
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty gost19:externalIdentifer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom swrc:Person ;
-                owl:onProperty docs19:employee
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty swrc:organization
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty swrc:organization
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty swrc:email
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty gost19:externalIdentifer
               ] .
 
 docs19:file
@@ -266,22 +257,7 @@ docs19:organization_card
       rdfs:subClassOf gost19:Document ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom swrc:Organization ;
-                owl:onProperty swrc:organization
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty swrc:name
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty swrc:name
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
                 owl:onProperty gost19:externalIdentifer
               ] ;
       rdfs:subClassOf
@@ -291,8 +267,23 @@ docs19:organization_card
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
+                owl:allValuesFrom xsd:string ;
                 owl:onProperty gost19:externalIdentifer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty swrc:name
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty swrc:name
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom swrc:Organization ;
+                owl:onProperty swrc:organization
               ] .
 
 docs19:pager
@@ -325,33 +316,33 @@ docs19:staffing_card
       rdfs:subClassOf gost19:Document ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom docs19:RequirementPosition ;
-                owl:onProperty docs19:position
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:string ;
                 owl:onProperty docs19:position
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:hasValue swrc:lastName ;
-                owl:onProperty docs19:employee
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:hasValue swrc:name ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty docs19:department
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
+                owl:allValuesFrom swrc:Organization ;
                 owl:onProperty swrc:organization
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty gost19:externalIdentifer
+                owl:allValuesFrom docs19:RequirementPosition ;
+                owl:onProperty docs19:position
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom swrc:Person ;
+                owl:onProperty docs19:employee
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty swrc:organization
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -365,8 +356,13 @@ docs19:staffing_card
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom swrc:Person ;
-                owl:onProperty docs19:employee
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty swrc:organization
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty gost19:externalIdentifer
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -375,17 +371,17 @@ docs19:staffing_card
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom swrc:Organization ;
+                owl:hasValue swrc:name ;
+                owl:onProperty docs19:department
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:hasValue swrc:name ;
                 owl:onProperty swrc:organization
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty docs19:department
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
                 owl:onProperty docs19:position
               ] ;
       rdfs:subClassOf
@@ -396,22 +392,17 @@ docs19:staffing_card
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty docs19:department
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty docs19:position
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty swrc:organization
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty docs19:department
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:hasValue swrc:name ;
-                owl:onProperty swrc:organization
+                owl:hasValue swrc:lastName ;
+                owl:onProperty docs19:employee
               ] .
 
 docs19:to
