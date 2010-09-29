@@ -223,21 +223,21 @@ public class Fetcher
 				// /////////////////////////////////////////////////////////////////////////////////////////////
 				Vector<IXMLElement> atts = null;
 
-				try
-				{
-					String StrXmlDoc = DocumentUtil.getInstance().getDocumentXml(DOCUMENT_SERVICE_URL, id);
+				// try
+				// {
+				String StrXmlDoc = DocumentUtil.getInstance().getDocumentXml(DOCUMENT_SERVICE_URL, id);
 
-					IXMLReader reader = StdXMLReader.stringReader(StrXmlDoc);
-					parser.setReader(reader);
-					IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
+				IXMLReader reader = StdXMLReader.stringReader(StrXmlDoc);
+				parser.setReader(reader);
+				IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
 
-					atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
+				atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
 
-					reader.close();
-				} catch (Exception ex)
-				{
+				reader.close();
+				// } catch (Exception ex)
+				// {
 
-				}
+				// }
 
 				int ii = 0;
 				if (atts != null)
@@ -297,9 +297,9 @@ public class Fetcher
 							count = new Integer(1);
 						}
 
-						// переименование code в onto 
-						String this_code_in_onto = renameCodeToOnto (code);						
-						
+						// переименование code в onto
+						String this_code_in_onto = renameCodeToOnto(code);
+
 						writeTriplet(restrictionId, Predicate.owl__onProperty, this_code_in_onto, false, out);
 
 						code_stat.put(code, count);
@@ -361,19 +361,26 @@ public class Fetcher
 							typeLabel = "date_interval";
 							obj_owl__allValuesFrom = Predicate.docs19__dateInterval;
 						}
-						else if (type.equals("DICTIONARY"))
-						{
-							typeLabel = "dictionary";
-							obj_owl__allValuesFrom = Predicate.docs19__Document;
-						}
 						else if (type.equals("FILE"))
 						{
 							obj_owl__allValuesFrom = Predicate.docs19__FileDescription;
 							typeLabel = "attachment";
 						}
-						else if (type.equals("LINK"))
+						else if (type.equals("LINK") || type.equals("DICTIONARY"))
 						{
-							obj_owl__allValuesFrom = Predicate.docs19__Document;
+							if (type.equals("DICTIONARY"))
+							{
+								String dictionaryIdValue = get(att_list_element, "dictionaryIdValue", null);
+
+								if (dictionaryIdValue != null)
+								{
+									System.out.println("dictionaryIdValue = " + dictionaryIdValue);
+									obj_owl__allValuesFrom = Predicate.user_onto + dictionaryIdValue;
+								}
+
+							}
+							else
+								obj_owl__allValuesFrom = Predicate.docs19__Document;
 
 							if (descr.indexOf("$composition") >= 0)
 							{
@@ -383,6 +390,16 @@ public class Fetcher
 
 								for (String compz : compzes)
 								{
+									if (compz.indexOf("$isTable") >= 0)
+									{
+										String[] tmpa = compz.split("=");
+										if (tmpa.length > 1)
+										{
+											String data = tmpa[1];
+
+											obj_owl__allValuesFrom = Predicate.user_onto + id;
+										}
+									}
 									if (compz.indexOf("$composition") >= 0)
 									{
 										String[] tmpa = compz.split("=");
@@ -394,12 +411,13 @@ public class Fetcher
 												String[] importsFields = data.replace('|', ';').split(";");
 
 												for (String field : importsFields)
-												{													
+												{
 													String new_code = old_code__new_code.get(field);
-													
+
 													if (new_code == null)
 													{
-														new_code = renameCodeToOnto (field);
+														new_code = renameCodeToOnto(field);
+														writeTriplet(restrictionId, Predicate.owl__hasValue, new_code, true, out);
 													}
 
 													new_code += "";
@@ -411,8 +429,11 @@ public class Fetcher
 								}
 
 							}
+							if (type.equals("LINK"))
+								typeLabel = "document_link";
+							else
+								typeLabel = "dictionary";
 
-							typeLabel = "document_link";
 						}
 						else if (type.equals("NUMBER"))
 						{
@@ -514,22 +535,22 @@ public class Fetcher
 
 	}
 
-	private static String renameCodeToOnto (String code)
+	private static String renameCodeToOnto(String code)
 	{
 		String this_code_in_onto = code_onto.get(code);
-		
+
 		if (this_code_in_onto == null)
 		{
 			this_code_in_onto = Predicate.user_onto
-			+ Translit.toTranslit(code).replace(' ', '_').replace('\'', 'j').replace('№', 'N')
-					.replace(',', '_').replace('(', '_').replace(')', '_').replace('.', '_');
+					+ Translit.toTranslit(code).replace(' ', '_').replace('\'', 'j').replace('№', 'N').replace(',', '_').replace('(', '_')
+							.replace(')', '_').replace('.', '_');
 		}
-		
-		old_code__new_code.put(code, this_code_in_onto);		
+
+		old_code__new_code.put(code, this_code_in_onto);
 
 		return this_code_in_onto;
 	}
-	
+
 	private static String get(IXMLElement el, String Name, String def_val)
 	{
 		String res = null;

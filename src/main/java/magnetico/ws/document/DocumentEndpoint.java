@@ -69,8 +69,8 @@ public interface DocumentEndpoint {
      * @param sessionTicketId
      * @return
      *     returns java.lang.String
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -170,8 +170,8 @@ public interface DocumentEndpoint {
      * @param sessionTicketId
      * @return
      *     returns magnetico.ws.document.DocumentDraftType
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -212,8 +212,8 @@ public interface DocumentEndpoint {
      * @param sessionTicketId
      * @return
      *     returns java.util.List<magnetico.ws.document.DocumentDraftType>
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -231,8 +231,8 @@ public interface DocumentEndpoint {
      * 
      * @param draftId
      * @param sessionTicketId
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "removeDocumentDraft", targetNamespace = "http://documents.bigarchive.magnetosoft.ru/", className = "magnetico.ws.document.RemoveDocumentDraft")
@@ -293,8 +293,8 @@ public interface DocumentEndpoint {
      * @param documentId
      * @return
      *     returns magnetico.ws.document.JaxbDocumentValidationResult
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -314,8 +314,8 @@ public interface DocumentEndpoint {
      * @param sessionTicketId
      * @return
      *     returns java.lang.String
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -335,8 +335,8 @@ public interface DocumentEndpoint {
      * @param sessionTicketId
      * @return
      *     returns java.lang.String
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -390,8 +390,8 @@ public interface DocumentEndpoint {
      * 
      * @param sessionTicketId
      * @param documentId
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "removeDocument", targetNamespace = "http://documents.bigarchive.magnetosoft.ru/", className = "magnetico.ws.document.RemoveDocument")
@@ -409,8 +409,8 @@ public interface DocumentEndpoint {
      * @param documentId
      * @return
      *     returns java.lang.String
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -447,8 +447,8 @@ public interface DocumentEndpoint {
      * @param documentId
      * @return
      *     returns magnetico.ws.document.DocumentType
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -510,8 +510,8 @@ public interface DocumentEndpoint {
      * 
      * @param documentTemplateId
      * @param sessionTicketId
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "removeDocumentTemplate", targetNamespace = "http://documents.bigarchive.magnetosoft.ru/", className = "magnetico.ws.document.RemoveDocumentTemplate")
@@ -531,8 +531,8 @@ public interface DocumentEndpoint {
      * @param sessionTicketId
      * @return
      *     returns magnetico.ws.document.DocumentTemplateType
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -556,8 +556,8 @@ public interface DocumentEndpoint {
      * @param sessionTicketId
      * @return
      *     returns magnetico.ws.document.DocumentTemplateType
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -583,8 +583,8 @@ public interface DocumentEndpoint {
      * @param objectType
      * @return
      *     returns java.util.List<magnetico.ws.document.DocumentTemplateType>
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -631,8 +631,8 @@ public interface DocumentEndpoint {
      * @param documentId
      * @return
      *     returns boolean
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -674,8 +674,8 @@ public interface DocumentEndpoint {
      * @param documentId
      * @return
      *     returns magnetico.ws.document.DocumentType
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -697,8 +697,8 @@ public interface DocumentEndpoint {
      * @param sessionTicketId
      * @return
      *     returns java.lang.String
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -716,8 +716,8 @@ public interface DocumentEndpoint {
      * 
      * @param document
      * @param sessionTicketId
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "updateDocument", targetNamespace = "http://documents.bigarchive.magnetosoft.ru/", className = "magnetico.ws.document.UpdateDocument")
@@ -734,8 +734,8 @@ public interface DocumentEndpoint {
      * 
      * @param documentTemplate
      * @param sessionTicketId
-     * @throws AccessDeniedException_Exception
      * @throws BigArchiveServerException_Exception
+     * @throws AccessDeniedException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "updateDocumentTemplate", targetNamespace = "http://documents.bigarchive.magnetosoft.ru/", className = "magnetico.ws.document.UpdateDocumentTemplate")
