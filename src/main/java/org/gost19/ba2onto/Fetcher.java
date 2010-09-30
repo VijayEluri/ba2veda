@@ -415,10 +415,9 @@ public class Fetcher
 													String new_code = old_code__new_code.get(field);
 
 													if (new_code == null)
-													{
 														new_code = renameCodeToOnto(field);
-														writeTriplet(restrictionId, Predicate.owl__hasValue, new_code, true, out);
-													}
+
+													writeTriplet(restrictionId, Predicate.owl__hasValue, new_code, true, out);
 
 													new_code += "";
 												}
