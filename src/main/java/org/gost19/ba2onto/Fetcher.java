@@ -4,6 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +20,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import magnetico.objects.organization.Department;
 import magnetico.ws.document.DocumentTemplateType;
-import magnetico.ws.document.DocumentTemplateType.Attributes;
-import magnetico.ws.document.TypeAttributeType;
 import magnetico.ws.organization.AttributeType;
 import magnetico.ws.organization.EntityType;
 import net.n3.nanoxml.IXMLElement;
@@ -39,7 +41,8 @@ public class Fetcher
 	private static boolean fake = false;
 	private static Properties properties = new Properties();
 	// private static ArrayList<String> roles = new ArrayList<String>();
-	private static ArrayList<String> admins = new ArrayList<String>();
+	// private static ArrayList<String> admins = new ArrayList<String>();
+	private static Connection connection = null;
 	private static String dbUser;
 	private static String dbPassword;
 	private static String dbUrl;
@@ -49,46 +52,6 @@ public class Fetcher
 
 	public static void main(String[] args) throws Exception
 	{
-
-		loadProperties();
-
-		if (args.length == 1)
-		{
-
-			if (args[0].equals("organization"))
-			{
-				fetchOrganization(args[0] + ".nt");
-			}
-			else if (args[0].equals("doc"))
-			{
-				// fetchAllDocuments(args[0] + ".nt");
-			}
-			else if (args[0].equals("document_types"))
-			{
-				fetchDocumentTypes(args[0] + ".nt");
-			}
-			else if (args[0].equals("att"))
-			{
-				// fetchAttachments();
-			}
-			else if (args[0].equals("auth"))
-			{
-				// fetchAuthorizationData(args[0] + ".nt");
-			}
-
-		}
-
-	}
-
-	/**
-	 * Выгружает данные структуры документов в виде пользовательских онтологий
-	 * (пример: onto/user-onto.n3)
-	 */
-
-	private static void fetchDocumentTypes(String name_file) throws Exception
-	{
-		IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
-
 		{
 			code_onto.put("date_from", Predicate.swrc__startDate);
 			code_onto.put("to", Predicate.swrc__endDate);
@@ -136,6 +99,136 @@ public class Fetcher
 			 */
 		}
 
+		loadProperties();
+		init_source();
+
+		if (args.length == 1)
+		{
+
+			if (args[0].equals("organization"))
+			{
+				fetchOrganization(args[0] + ".nt");
+			}
+			else if (args[0].equals("doc"))
+			{
+				fetchDocuments(args[0] + ".nt");
+			}
+			else if (args[0].equals("document_types"))
+			{
+				fetchDocumentTypes(args[0] + ".nt");
+			}
+			else if (args[0].equals("att"))
+			{
+				// fetchAttachments();
+			}
+			else if (args[0].equals("auth"))
+			{
+				// fetchAuthorizationData(args[0] + ".nt");
+			}
+
+		}
+
+	}
+
+	static void init_source() throws Exception
+	{
+		System.out.print("connect to source database " + dbUrl + "...");
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		connection = DriverManager.getConnection("jdbc:mysql://" + dbUrl + "/documents_db", dbUser, dbPassword);
+
+		System.out.println("ok");
+	}
+
+	private static void walkOnDocuments() throws Exception
+	{
+		String docsIdDataQuery = "select objectId FROM objects where isTemplate = false and timestamp is null";
+		ResultSet docRecordsRs = connection.createStatement().executeQuery(docsIdDataQuery);
+
+		while (docRecordsRs.next())
+		{
+			String docId = docRecordsRs.getString(1);
+
+			String docDataQuery = "select distinct content FROM objects where objectId = '" + docId + "' order by timestamp asc";
+			Statement st1 = connection.createStatement();
+			ResultSet docRecordRs = st1.executeQuery(docDataQuery);
+
+			while (docRecordRs.next())
+			{
+				String docXmlStr = docRecordRs.getString(1);
+				docXmlStr = docXmlStr;
+			}
+
+			docRecordRs.close();
+			st1.close();
+		}
+	}
+
+	private static IXMLElement getDocument(String id)
+	{
+		return null;
+	}
+
+	/**
+	 * Выгружает данные документов в виде триплетов (пример: onto/zdb.n3)
+	 */
+
+	private static void fetchDocuments(String name_file) throws Exception
+	{
+		walkOnDocuments();
+
+		IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
+
+		int count_doc = 0;
+
+		try
+		{
+
+			long fetchStart = System.nanoTime();
+
+			OutputStreamWriter out = null;
+			if (!fake)
+			{
+				FileOutputStream fw = new FileOutputStream(pathToDump + java.io.File.separatorChar + name_file);
+				out = new OutputStreamWriter(fw, "UTF8");
+			}
+
+			List<String> docIds = DocumentUtil.getInstance().listDocuments(DOCUMENT_SERVICE_URL, ticketId);
+
+			for (String docId : docIds)
+			{
+				String StrXmlDoc = DocumentUtil.getInstance().getDocumentXml(DOCUMENT_SERVICE_URL, docId);
+
+				IXMLReader reader = StdXMLReader.stringReader(StrXmlDoc);
+				parser.setReader(reader);
+				IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
+			}
+
+			if (!fake)
+			{
+				out.close();
+			}
+
+			System.out.println("TOTAL: Finished in " + ((System.nanoTime() - fetchStart) / 1000000000.0) + " s. for " + count_doc
+					+ " docs.");
+
+			System.out.println("TOTAL: Averall extracting speed  = " + count_doc / ((System.nanoTime() - fetchStart) / 1000000000.0)
+					+ " docs/s");
+
+		} catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * Выгружает данные структуры документов в виде пользовательских онтологий
+	 * (пример: onto/user-onto.n3)
+	 */
+
+	private static void fetchDocumentTypes(String name_file) throws Exception
+	{
+		IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
+
 		HashMap<String, Integer> code_stat = new HashMap<String, Integer>();
 
 		try
@@ -154,12 +247,22 @@ public class Fetcher
 
 			System.out.println("Got " + types.size() + " docTypes");
 
+			writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.docs19, false, out);
+			writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.f_swrc, false, out);
+			writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.gost19, false, out);
+			writeTriplet(Predicate.f_zdb, Predicate.rdf__type, Predicate.owl__Ontology, false, out);
+
 			for (DocumentTemplateType documentTypeType : types)
 			{
+				String id = documentTypeType.getId();
+				if (id.equals("0027562cbe0948e5965c3183eb23e42c"))
+				{
+					id = "0027562cbe0948e5965c3183eb23e42c";
+
+				}
 
 				String authorId = documentTypeType.getAuthorId();
 				XMLGregorianCalendar dateCreated = documentTypeType.getDateCreated();
-				String id = documentTypeType.getId();
 				XMLGregorianCalendar lastModifiedTime = documentTypeType.getLastModifiedTime();
 				String name = documentTypeType.getName();
 				String systemInformation = documentTypeType.getSystemInformation();
@@ -267,16 +370,16 @@ public class Fetcher
 
 						writeTriplet(Predicate.user_onto + id, Predicate.rdfs__subClassOf, restrictionId, false, out);
 
-						String code = get(att_list_element, "code", null);
-
-						System.out.println("	code=[" + code + "]");
-
 						lName = LangString.parse(att_name);
 
 						if (lName.text_ru != null)
 							writeTriplet(restrictionId, Predicate.rdfs__label, lName.text_ru, true, out, "ru");
 						if (lName.text_en != null)
 							writeTriplet(restrictionId, Predicate.rdfs__label, lName.text_en, true, out, "en");
+
+						String code = get(att_list_element, "code", null);
+
+						System.out.println("	code=[" + code + "]");
 
 						if ((code.indexOf('1') >= 0 || code.indexOf('2') >= 0 || code.indexOf('3') >= 0 || code.indexOf('4') >= 0
 								|| code.indexOf('5') >= 0 || code.indexOf('6') >= 0 || code.indexOf('7') >= 0 || code.indexOf('8') >= 0
@@ -285,7 +388,8 @@ public class Fetcher
 						{
 							// если code содержит uid, то заменим code на
 							// название из метки
-							code = lName.text_ru;
+							if (id.equals("0027562cbe0948e5965c3183eb23e42c") == false)
+								code = lName.text_ru;
 						}
 
 						// подсчет частоты встречаемости code
