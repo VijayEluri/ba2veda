@@ -21,6 +21,7 @@ public class Predicate
 	public static final String zdb = "http://user-db#";
 	public static final String f_zdb = "http://user-db";
 	public static final String user_onto = "http://user-onto.org#";
+	public static final String f_user_onto = "http://user-onto.org";
 		
 	////////////////////////////////////////////////////////////////////////////////////////////////////		
 	public static final String owl__Ontology = owl + "Ontology";

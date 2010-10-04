@@ -111,11 +111,8 @@ public class Fetcher
 			}
 			else if (args[0].equals("doc"))
 			{
-				fetchDocuments(args[0] + ".nt");
-			}
-			else if (args[0].equals("document_types"))
-			{
-				fetchDocumentTypes(args[0] + ".nt");
+				fetchDocumentTypes("doc_types.nt");
+				fetchDocuments("docs.nt");
 			}
 			else if (args[0].equals("att"))
 			{
@@ -139,9 +136,16 @@ public class Fetcher
 		System.out.println("ok");
 	}
 
-	private static void walkOnDocuments() throws Exception
+	private static void walkOnDocuments(OutputStreamWriter out) throws Exception
 	{
-		String docsIdDataQuery = "select objectId FROM objects where isTemplate = false and timestamp is null";
+		IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
+
+		writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.docs19, false, out);
+		writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.f_swrc, false, out);
+		writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.gost19, false, out);
+		writeTriplet(Predicate.f_zdb, Predicate.rdf__type, Predicate.owl__Ontology, false, out);
+
+		String docsIdDataQuery = "select objectId FROM objects where isTemplate = 0 and timestamp is null";
 		ResultSet docRecordsRs = connection.createStatement().executeQuery(docsIdDataQuery);
 
 		while (docRecordsRs.next())
@@ -155,17 +159,50 @@ public class Fetcher
 			while (docRecordRs.next())
 			{
 				String docXmlStr = docRecordRs.getString(1);
-				docXmlStr = docXmlStr;
-			}
 
+				IXMLReader reader = StdXMLReader.stringReader(docXmlStr);
+				parser.setReader(reader);
+				IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
+				reader.close();
+
+				String authorId = get(xmlDoc, "authorId", null);
+				String dateCreated = get(xmlDoc, "dateCreated", null);
+				String dateLastModified = get(xmlDoc, "dateLastModified", null);
+				String lastEditorId = get(xmlDoc, "lastEditorId", null);
+				String objectType = get(xmlDoc, "objectType", null);
+				String typeId = get(xmlDoc, "typeId", null);
+				String id = get(xmlDoc, "id", null);
+
+				String newSubject = Predicate.zdb + id;
+
+				writeTriplet(newSubject, Predicate.dc__creator, authorId, false, out);
+
+				Vector<IXMLElement> atts = null;
+				atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
+
+				if (atts != null)
+				{
+					for (IXMLElement att_list_element : atts)
+					{
+
+						String att_code = get(att_list_element, "code", "");
+						String textValue = get(att_list_element, "textValue", null);
+
+						String onto_code = old_code__new_code.get(att_code);
+
+						if (onto_code == null)
+							throw new Exception("onto_code == null");
+
+						if (textValue != null)
+							writeTriplet(newSubject, onto_code, textValue, false, out);
+					}
+				}
+			}
 			docRecordRs.close();
 			st1.close();
+			out.flush();
 		}
-	}
 
-	private static IXMLElement getDocument(String id)
-	{
-		return null;
 	}
 
 	/**
@@ -174,10 +211,6 @@ public class Fetcher
 
 	private static void fetchDocuments(String name_file) throws Exception
 	{
-		walkOnDocuments();
-
-		IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
-
 		int count_doc = 0;
 
 		try
@@ -192,16 +225,7 @@ public class Fetcher
 				out = new OutputStreamWriter(fw, "UTF8");
 			}
 
-			List<String> docIds = DocumentUtil.getInstance().listDocuments(DOCUMENT_SERVICE_URL, ticketId);
-
-			for (String docId : docIds)
-			{
-				String StrXmlDoc = DocumentUtil.getInstance().getDocumentXml(DOCUMENT_SERVICE_URL, docId);
-
-				IXMLReader reader = StdXMLReader.stringReader(StrXmlDoc);
-				parser.setReader(reader);
-				IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
-			}
+			walkOnDocuments(out);
 
 			if (!fake)
 			{
@@ -231,45 +255,60 @@ public class Fetcher
 
 		HashMap<String, Integer> code_stat = new HashMap<String, Integer>();
 
-		try
+		long fetchStart = System.nanoTime();
+
+		OutputStreamWriter out = null;
+		if (!fake)
 		{
+			FileOutputStream fw = new FileOutputStream(pathToDump + java.io.File.separatorChar + name_file);
+			out = new OutputStreamWriter(fw, "UTF8");
+		}
 
-			long fetchStart = System.nanoTime();
+		writeTriplet(Predicate.f_user_onto, Predicate.owl__imports, Predicate.docs19, false, out);
+		writeTriplet(Predicate.f_user_onto, Predicate.owl__imports, Predicate.f_swrc, false, out);
+		writeTriplet(Predicate.f_user_onto, Predicate.owl__imports, Predicate.gost19, false, out);
+		writeTriplet(Predicate.f_user_onto, Predicate.rdf__type, Predicate.owl__Ontology, false, out);
 
-			OutputStreamWriter out = null;
-			if (!fake)
+		String docsIdDataQuery = "select objectId FROM objects where isTemplate = 1 and timestamp is null";
+		ResultSet docRecordsRs = connection.createStatement().executeQuery(docsIdDataQuery);
+
+		while (docRecordsRs.next())
+		{
+			String docId = docRecordsRs.getString(1);
+
+			String docDataQuery = "select distinct content FROM objects where objectId = '" + docId + "' order by timestamp asc";
+			Statement st1 = connection.createStatement();
+			ResultSet docRecordRs = st1.executeQuery(docDataQuery);
+
+			while (docRecordRs.next())
 			{
-				FileOutputStream fw = new FileOutputStream(pathToDump + java.io.File.separatorChar + name_file);
-				out = new OutputStreamWriter(fw, "UTF8");
-			}
+				String docXmlStr = docRecordRs.getString(1);
 
-			List<DocumentTemplateType> types = DocumentUtil.getInstance().listDocumentTypes(DOCUMENT_SERVICE_URL, ticketId);
+				IXMLReader reader = StdXMLReader.stringReader(docXmlStr);
+				parser.setReader(reader);
+				IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
+				reader.close();
 
-			System.out.println("Got " + types.size() + " docTypes");
+				String authorId = get(xmlDoc, "authorId", null);
+				String dateCreated = get(xmlDoc, "dateCreated", null);
+				String lastModifiedTime = get(xmlDoc, "dateLastModified", null);
+				String lastEditorId = get(xmlDoc, "lastEditorId", null);
+				String objectType = get(xmlDoc, "objectType", null);
+				String typeId = get(xmlDoc, "typeId", null);
+				String id = get(xmlDoc, "id", null);
+				String name = get(xmlDoc, "name", null);
 
-			writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.docs19, false, out);
-			writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.f_swrc, false, out);
-			writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.gost19, false, out);
-			writeTriplet(Predicate.f_zdb, Predicate.rdf__type, Predicate.owl__Ontology, false, out);
-
-			for (DocumentTemplateType documentTypeType : types)
-			{
-				String id = documentTypeType.getId();
-				if (id.equals("0027562cbe0948e5965c3183eb23e42c"))
-				{
-					id = "0027562cbe0948e5965c3183eb23e42c";
-
-				}
-
-				String authorId = documentTypeType.getAuthorId();
-				XMLGregorianCalendar dateCreated = documentTypeType.getDateCreated();
-				XMLGregorianCalendar lastModifiedTime = documentTypeType.getLastModifiedTime();
-				String name = documentTypeType.getName();
-				String systemInformation = documentTypeType.getSystemInformation();
+				// XMLGregorianCalendar dateCreated =
+				// documentTypeType.getDateCreated();
+				// XMLGregorianCalendar lastModifiedTime =
+				// documentTypeType.getLastModifiedTime();
+				// String name = documentTypeType.getName();
+				// String systemInformation =
+				// documentTypeType.getSystemInformation();
 
 				if (dateCreated != null && lastModifiedTime != null)
 				{
-					if (dateCreated.compare(lastModifiedTime) == 0)
+					if (dateCreated.equals(lastModifiedTime))
 					{
 						System.out.println("dateCreated == lastModifiedTime");
 					}
@@ -280,19 +319,21 @@ public class Fetcher
 				}
 
 				String activeStatusLabel = "";
-				if (documentTypeType.isActive() == false)
+				if (dateCreated == null)
 					activeStatusLabel = "удален";
 
 				String draftStatusLabel = "";
-				if (documentTypeType.isInDraftState() == true)
-					draftStatusLabel = "черновик";
+				// if (documentTypeType.isInDraftState() == true)
+				// draftStatusLabel = "черновик";
 
-				System.out.println(String.format("\n%s:[%s] %s %s", documentTypeType.getId(), name, activeStatusLabel, draftStatusLabel));
+				// System.out.println(String.format("\n%s:[%s] %s %s",
+				// documentTypeType.getId(), name, activeStatusLabel,
+				// draftStatusLabel));
 
-				String[] si_elements = null;
+				// String[] si_elements = null;
 
-				if (systemInformation != null)
-					si_elements = systemInformation.split(";");
+				// if (systemInformation != null)
+				// si_elements = systemInformation.split(";");
 
 				// <http://user-onto.org#internal_memo>
 				// <http://www.w3.org/2000/01/rdf-schema#subClassOf>
@@ -326,21 +367,7 @@ public class Fetcher
 				// /////////////////////////////////////////////////////////////////////////////////////////////
 				Vector<IXMLElement> atts = null;
 
-				// try
-				// {
-				String StrXmlDoc = DocumentUtil.getInstance().getDocumentXml(DOCUMENT_SERVICE_URL, id);
-
-				IXMLReader reader = StdXMLReader.stringReader(StrXmlDoc);
-				parser.setReader(reader);
-				IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
-
 				atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
-
-				reader.close();
-				// } catch (Exception ex)
-				// {
-
-				// }
 
 				int ii = 0;
 				if (atts != null)
@@ -603,21 +630,14 @@ public class Fetcher
 				}
 
 			}
+			docRecordRs.close();
+			st1.close();
+			out.flush();
+		}
 
-			if (!fake)
-			{
-				out.close();
-			}
-
-			System.out.println("TOTAL: Finished in " + ((System.nanoTime() - fetchStart) / 1000000000.0) + " s. for " + types.size()
-					+ " docs.");
-
-			System.out.println("TOTAL: Averall extracting speed  = " + types.size() / ((System.nanoTime() - fetchStart) / 1000000000.0)
-					+ " docs/s");
-
-		} catch (Exception ex)
+		if (!fake)
 		{
-			ex.printStackTrace();
+			out.close();
 		}
 
 		System.out.println("\ncode entry stat");
