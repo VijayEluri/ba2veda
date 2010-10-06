@@ -49,9 +49,11 @@ public class Fetcher
 	private static String dbSuffix;
 	private static HashMap<String, String> code_onto = new HashMap<String, String>();
 	private static HashMap<String, String> old_code__new_code = new HashMap<String, String>();
+	private static String exclude_codes = "$comment, $private, $authorId, $defaultRepresentation";
 
 	public static void main(String[] args) throws Exception
 	{
+		// exclude_code.put("$parentDocumentId", "Y");
 		{
 			code_onto.put("date_from", Predicate.swrc__startDate);
 			code_onto.put("to", Predicate.swrc__endDate);
@@ -131,13 +133,15 @@ public class Fetcher
 	{
 		System.out.print("connect to source database " + dbUrl + "...");
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
-		connection = DriverManager.getConnection("jdbc:mysql://" + dbUrl + "/documents_db", dbUser, dbPassword);
+		connection = DriverManager.getConnection("jdbc:mysql://" + dbUrl, dbUser, dbPassword);
 
 		System.out.println("ok");
 	}
 
-	private static void walkOnDocuments(OutputStreamWriter out) throws Exception
+	private static int walkOnDocuments(OutputStreamWriter out) throws Exception
 	{
+		int count_documents = 0;
+
 		IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
 
 		writeTriplet(Predicate.f_zdb, Predicate.owl__imports, Predicate.docs19, false, out);
@@ -158,44 +162,58 @@ public class Fetcher
 
 			while (docRecordRs.next())
 			{
-				String docXmlStr = docRecordRs.getString(1);
-
-				IXMLReader reader = StdXMLReader.stringReader(docXmlStr);
-				parser.setReader(reader);
-				IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
-				reader.close();
-
-				String authorId = get(xmlDoc, "authorId", null);
-				String dateCreated = get(xmlDoc, "dateCreated", null);
-				String dateLastModified = get(xmlDoc, "dateLastModified", null);
-				String lastEditorId = get(xmlDoc, "lastEditorId", null);
-				String objectType = get(xmlDoc, "objectType", null);
-				String typeId = get(xmlDoc, "typeId", null);
-				String id = get(xmlDoc, "id", null);
-
-				String newSubject = Predicate.zdb + id;
-
-				writeTriplet(newSubject, Predicate.dc__creator, authorId, false, out);
-
-				Vector<IXMLElement> atts = null;
-				atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
-
-				if (atts != null)
+				String id = null;
+				try
 				{
-					for (IXMLElement att_list_element : atts)
+					count_documents++;
+
+					if (count_documents % 1000 == 0)
+						System.out.println("count prepared documents = " + count_documents);
+
+					String docXmlStr = docRecordRs.getString(1);
+
+					IXMLReader reader = StdXMLReader.stringReader(docXmlStr);
+					parser.setReader(reader);
+					IXMLElement xmlDoc = (IXMLElement) parser.parse(true);
+					reader.close();
+
+					String authorId = get(xmlDoc, "authorId", null);
+					String dateCreated = get(xmlDoc, "dateCreated", null);
+					String dateLastModified = get(xmlDoc, "dateLastModified", null);
+					String lastEditorId = get(xmlDoc, "lastEditorId", null);
+					String objectType = get(xmlDoc, "objectType", null);
+					String typeId = get(xmlDoc, "typeId", null);
+					id = get(xmlDoc, "id", null);
+
+					String newSubject = Predicate.zdb + id;
+
+					writeTriplet(newSubject, Predicate.dc__creator, authorId, false, out);
+					writeTriplet(newSubject, Predicate.rdf__type, Predicate.user_onto + typeId, false, out);
+
+					Vector<IXMLElement> atts = null;
+					atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
+
+					if (atts != null)
 					{
+						for (IXMLElement att_list_element : atts)
+						{
 
-						String att_code = get(att_list_element, "code", "");
-						String textValue = get(att_list_element, "textValue", null);
+							String att_code = get(att_list_element, "code", "");
+							String textValue = get(att_list_element, "textValue", null);
 
-						String onto_code = old_code__new_code.get(att_code);
+							String onto_code = old_code__new_code.get(att_code);
 
-						if (onto_code == null)
-							throw new Exception("onto_code == null");
+							if (onto_code == null)
+								continue;
 
-						if (textValue != null)
-							writeTriplet(newSubject, onto_code, textValue, false, out);
+							if (textValue != null)
+								writeTriplet(newSubject, onto_code, textValue, true, out);
+						}
 					}
+
+				} catch (Exception ex)
+				{
+					System.out.println("skip document id=" + id + ", reson:" + ex.getMessage());
 				}
 			}
 			docRecordRs.close();
@@ -203,6 +221,7 @@ public class Fetcher
 			out.flush();
 		}
 
+		return count_documents;
 	}
 
 	/**
@@ -225,7 +244,7 @@ public class Fetcher
 				out = new OutputStreamWriter(fw, "UTF8");
 			}
 
-			walkOnDocuments(out);
+			count_doc = walkOnDocuments(out);
 
 			if (!fake)
 			{
@@ -378,8 +397,7 @@ public class Fetcher
 
 						String att_name = get(att_list_element, "name", "");
 
-						if (att_name.equals("$comment") || att_name.equals("$private") || att_name.equals("$authorId")
-								|| att_name.equals("$defaultRepresentation"))
+						if (exclude_codes.indexOf(att_name) >= 0)
 						{
 							System.out.println("\n	att_name=[" + att_name + "] is skipped");
 
@@ -408,17 +426,6 @@ public class Fetcher
 
 						System.out.println("	code=[" + code + "]");
 
-						if ((code.indexOf('1') >= 0 || code.indexOf('2') >= 0 || code.indexOf('3') >= 0 || code.indexOf('4') >= 0
-								|| code.indexOf('5') >= 0 || code.indexOf('6') >= 0 || code.indexOf('7') >= 0 || code.indexOf('8') >= 0
-								|| code.indexOf('9') >= 0 || code.indexOf('0') >= 0)
-								&& lName.text_ru != null)
-						{
-							// если code содержит uid, то заменим code на
-							// название из метки
-							if (id.equals("0027562cbe0948e5965c3183eb23e42c") == false)
-								code = lName.text_ru;
-						}
-
 						// подсчет частоты встречаемости code
 						Integer count = code_stat.get(code);
 						if (count != null)
@@ -429,7 +436,7 @@ public class Fetcher
 						}
 
 						// переименование code в onto
-						String this_code_in_onto = renameCodeToOnto(code);
+						String this_code_in_onto = renameCodeToOnto(code, id, lName.text_ru);
 
 						writeTriplet(restrictionId, Predicate.owl__onProperty, this_code_in_onto, false, out);
 
@@ -546,7 +553,7 @@ public class Fetcher
 													String new_code = old_code__new_code.get(field);
 
 													if (new_code == null)
-														new_code = renameCodeToOnto(field);
+														new_code = renameCodeToOnto(field, null, null);
 
 													writeTriplet(restrictionId, Predicate.owl__hasValue, new_code, true, out);
 
@@ -658,15 +665,27 @@ public class Fetcher
 
 	}
 
-	private static String renameCodeToOnto(String code)
+	private static String renameCodeToOnto(String code, String id, String alternativeName)
 	{
 		String this_code_in_onto = code_onto.get(code);
 
 		if (this_code_in_onto == null)
 		{
+			if ((code.indexOf('1') >= 0 || code.indexOf('2') >= 0 || code.indexOf('3') >= 0 || code.indexOf('4') >= 0
+					|| code.indexOf('5') >= 0 || code.indexOf('6') >= 0 || code.indexOf('7') >= 0 || code.indexOf('8') >= 0
+					|| code.indexOf('9') >= 0 || code.indexOf('0') >= 0)
+					&& alternativeName != null)
+			{
+				// если code содержит uid, то заменим code на
+				// название из метки
+				if (id.equals("0027562cbe0948e5965c3183eb23e42c") == false)
+					this_code_in_onto = alternativeName;
+			}
+
 			this_code_in_onto = Predicate.user_onto
 					+ Translit.toTranslit(code).replace(' ', '_').replace('\'', 'j').replace('№', 'N').replace(',', '_').replace('(', '_')
 							.replace(')', '_').replace('.', '_');
+
 		}
 
 		old_code__new_code.put(code, this_code_in_onto);
