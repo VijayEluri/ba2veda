@@ -76,15 +76,7 @@ public class OrganizationUtil {
 			String suffix = firstLetterUp(locale);
 			PreparedQueryType query = createQuery(
 					"*",
-					"((firstName"
-							+ suffix
-							+ " like^ ?) or (surname"
-							+ suffix
-							+ " like^ ?) or (phone like^ ?) or (phoneExt like^ ?) or (secondName"
-							+ suffix
-							+ " like^ ?) or (post"
-							+ suffix
-							+ " like^ ?) or (domainName like^ ?)) and (active = 'true' or active = '1')",
+					"",
 					"", "*");
 
 			result = organizationInvoker.queryEntityContainer("contact", query)

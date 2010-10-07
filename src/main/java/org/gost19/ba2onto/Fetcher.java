@@ -50,6 +50,7 @@ public class Fetcher
 	private static HashMap<String, String> code_onto = new HashMap<String, String>();
 	private static HashMap<String, String> old_code__new_code = new HashMap<String, String>();
 	private static String exclude_codes = "$comment, $private, $authorId, $defaultRepresentation";
+	private static HashMap<String, EntityType> userUri__userObj = new HashMap<String, EntityType>();
 
 	public static void main(String[] args) throws Exception
 	{
@@ -60,6 +61,8 @@ public class Fetcher
 			code_onto.put("date_to", Predicate.swrc__endDate);
 			code_onto.put("Дата окончания (планируемая)", Predicate.swrc__endDate);
 			code_onto.put("from", Predicate.docs19__from);
+			code_onto.put("От кого", Predicate.docs19__from);
+			code_onto.put("Кому", Predicate.docs19__to);
 			code_onto.put("name", Predicate.swrc__name);
 			code_onto.put("Name", Predicate.swrc__name);
 			code_onto.put("Название", Predicate.swrc__name);
@@ -104,28 +107,9 @@ public class Fetcher
 		loadProperties();
 		init_source();
 
-		if (args.length == 1)
-		{
-
-			if (args[0].equals("organization"))
-			{
-				fetchOrganization(args[0] + ".nt");
-			}
-			else if (args[0].equals("doc"))
-			{
-				fetchDocumentTypes("doc_types.nt");
-				fetchDocuments("docs.nt");
-			}
-			else if (args[0].equals("att"))
-			{
-				// fetchAttachments();
-			}
-			else if (args[0].equals("auth"))
-			{
-				// fetchAuthorizationData(args[0] + ".nt");
-			}
-
-		}
+		fetchOrganization("organization.nt");
+		fetchDocumentTypes("doc_types.nt");
+		fetchDocuments("docs.nt");
 
 	}
 
@@ -136,6 +120,39 @@ public class Fetcher
 		connection = DriverManager.getConnection("jdbc:mysql://" + dbUrl, dbUser, dbPassword);
 
 		System.out.println("ok");
+	}
+
+	private static void addPersonToDocument(String DocUri, String PersonUri, String attUri, OutputStreamWriter out) throws Exception
+	{
+		writeTriplet(DocUri, attUri, PersonUri, false, out);
+
+		String newNodeId = DocUri + attUri;
+
+		writeTriplet(newNodeId, Predicate.rdf__type, Predicate.rdf__Statement, false, out);
+		writeTriplet(newNodeId, Predicate.rdf__object, PersonUri, false, out);
+		writeTriplet(newNodeId, Predicate.rdf__subject, DocUri, false, out);
+		writeTriplet(newNodeId, Predicate.rdf__predicate, attUri, false, out);
+
+		EntityType person = userUri__userObj.get(PersonUri);
+
+		if (person != null)
+		{
+			for (AttributeType a : person.getAttributes().getAttributeList())
+			{
+				if (a.getName().equalsIgnoreCase("firstNameRu"))
+				{
+					writeTriplet(newNodeId, Predicate.swrc__firstName, a.getValue(), false, out);
+				}
+				else if (a.getName().equalsIgnoreCase("surnameRu"))
+				{
+					writeTriplet(newNodeId, Predicate.swrc__lastName, a.getValue(), false, out);
+				}
+			}
+		}
+		else
+		{
+			PersonUri += "";
+		}
 	}
 
 	private static int walkOnDocuments(OutputStreamWriter out) throws Exception
@@ -185,10 +202,11 @@ public class Fetcher
 					String typeId = get(xmlDoc, "typeId", null);
 					id = get(xmlDoc, "id", null);
 
-					String newSubject = Predicate.zdb + id;
+					String newDocSubj = Predicate.zdb + id;
 
-					writeTriplet(newSubject, Predicate.dc__creator, authorId, false, out);
-					writeTriplet(newSubject, Predicate.rdf__type, Predicate.user_onto + typeId, false, out);
+					addPersonToDocument(newDocSubj, Predicate.zdb + "person_" + authorId, Predicate.dc__creator, out);
+
+					writeTriplet(newDocSubj, Predicate.rdf__type, Predicate.user_onto + typeId, false, out);
 
 					Vector<IXMLElement> atts = null;
 					atts = xmlDoc.getFirstChildNamed("xmlAttributes").getChildren();
@@ -197,22 +215,57 @@ public class Fetcher
 					{
 						for (IXMLElement att_list_element : atts)
 						{
-
+							String type = get(att_list_element, "type", "");
 							String att_code = get(att_list_element, "code", "");
-							String textValue = get(att_list_element, "textValue", null);
-
 							String onto_code = old_code__new_code.get(att_code);
-
 							if (onto_code == null)
 								continue;
 
-							if (textValue != null)
-								writeTriplet(newSubject, onto_code, textValue, true, out);
+							if (type.equals("ORGANIZATION"))
+							{
+								/*
+								 * <xmlAttribute>
+								 * 		<dateCreated>2010-02-02T09:40:08.862 +03:00</dateCreated>
+								 * 		<description></description>
+								 * 		<multiSelect>true</multiSelect>
+								 * 		<name>Кому</name>
+								 * 		<obligatory>true</obligatory>
+								 * 		<organizationTag>user</organizationTag>
+								 * 		<organizationValue>fb926d69-3a49-4842-a2e2-e592fd301073</organizationValue>
+								 * 		<type>ORGANIZATION</type>
+								 * 		<computationalConfirm>NONE</computationalConfirm>
+								 * 		<computationalReadonly>false</computationalReadonly>
+								 * 		<code>Кому</code> 
+								 * 		<xmlAttributes/>
+								 * </xmlAttribute>
+								 */
+								String organizationValue = get(att_list_element, "organizationValue", null);
+								String organizationTag = get(att_list_element, "organizationTag", null);
+
+								if (organizationValue != null)
+								{
+									if (organizationTag.indexOf("user") >= 0)
+									{
+										addPersonToDocument(newDocSubj, Predicate.zdb + "person_" + organizationValue, onto_code, out);
+
+									}
+								}
+							}
+							else if (type.equals("TEXT"))
+							{
+
+								String textValue = get(att_list_element, "textValue", null);
+
+								if (textValue != null)
+									writeTriplet(newDocSubj, onto_code, textValue, true, out);
+							}
+
 						}
 					}
 
 				} catch (Exception ex)
 				{
+					ex.printStackTrace();
 					System.out.println("skip document id=" + id + ", reson:" + ex.getMessage());
 				}
 			}
@@ -884,6 +937,8 @@ public class Fetcher
 
 				String userId = userEntity.getUid();
 
+				userUri__userObj.put(Predicate.zdb + "person_" + userId, userEntity);
+
 				writeTriplet(Predicate.zdb + "person_" + userId, Predicate.rdf__type, Predicate.swrc__Person, false, out);
 				writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.rdf__type, Predicate.docs19__employee_card, false, out);
 				writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.docs19__employee, Predicate.zdb + "person_" + userId, false, out);
@@ -1232,7 +1287,7 @@ public class Fetcher
 		}
 		else
 		{
-			System.out.println("Error! object = null. subject = " + subject + "; predicate = " + predicate);
+			System.out.println("skip fact <" + subject + "><" + predicate + "><>");
 		}
 	}
 

@@ -95,5 +95,6 @@ public class Predicate
 	public static final String docs19__link = docs19 + "link"; 
 	public static final String docs19__content = docs19 + "content"; 
 	public static final String docs19__from = docs19 + "from";
+	public static final String docs19__to = docs19 + "to";
 
 }
