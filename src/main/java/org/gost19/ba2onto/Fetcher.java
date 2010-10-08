@@ -51,6 +51,8 @@ public class Fetcher
 	private static HashMap<String, String> old_code__new_code = new HashMap<String, String>();
 	private static String exclude_codes = "$comment, $private, $authorId, $defaultRepresentation";
 	private static HashMap<String, EntityType> userUri__userObj = new HashMap<String, EntityType>();
+	private static OrganizationUtil organizationUtil;
+	private static String user_docflow = "541e2793-abc4-437a-9c71-6a1ac0434acf";
 
 	public static void main(String[] args) throws Exception
 	{
@@ -107,6 +109,9 @@ public class Fetcher
 		loadProperties();
 		init_source();
 
+		organizationUtil = new OrganizationUtil(properties.getProperty("organizationUrl"), properties.getProperty("organizationNameSpace"),
+				properties.getProperty("organizationName"));
+
 		fetchOrganization("organization.nt");
 		fetchDocumentTypes("doc_types.nt");
 		fetchDocuments("docs.nt");
@@ -121,9 +126,26 @@ public class Fetcher
 
 		System.out.println("ok");
 	}
-
-	private static void addPersonToDocument(String DocUri, String PersonUri, String attUri, OutputStreamWriter out) throws Exception
+	
+	private static void addLinkToDocument(String DocUri, String DocId, String attUri, OutputStreamWriter out) throws Exception
 	{
+		String PersonUri = Predicate.zdb + DocId;
+
+		writeTriplet(DocUri, attUri, PersonUri, false, out);		
+		String newNodeId = DocUri + attUri;
+
+		writeTriplet(newNodeId, Predicate.rdf__type, Predicate.rdf__Statement, false, out);
+		writeTriplet(newNodeId, Predicate.rdf__object, PersonUri, false, out);
+		writeTriplet(newNodeId, Predicate.rdf__subject, DocUri, false, out);
+		writeTriplet(newNodeId, Predicate.rdf__predicate, attUri, false, out);
+		
+		writeTriplet(newNodeId, Predicate.swrc__firstName, "репрезентатионвалуес", false, out);		
+	}
+
+	private static void addPersonToDocument(String DocUri, String PersonId, String attUri, OutputStreamWriter out) throws Exception
+	{
+		String PersonUri = Predicate.zdb + "person_" + PersonId;
+
 		writeTriplet(DocUri, attUri, PersonUri, false, out);
 
 		String newNodeId = DocUri + attUri;
@@ -134,24 +156,32 @@ public class Fetcher
 		writeTriplet(newNodeId, Predicate.rdf__predicate, attUri, false, out);
 
 		EntityType person = userUri__userObj.get(PersonUri);
+		if (person == null)
+		{
+			person = organizationUtil.getUser(PersonId);
+		}
 
 		if (person != null)
 		{
 			for (AttributeType a : person.getAttributes().getAttributeList())
 			{
-				if (a.getName().equalsIgnoreCase("firstNameRu"))
+				String name = a.getName();
+				String value = a.getValue();
+
+				if (name.equalsIgnoreCase("firstNameRu"))
 				{
-					writeTriplet(newNodeId, Predicate.swrc__firstName, a.getValue(), false, out);
+					if (!(PersonId.equals(user_docflow) && (value == null || value.length() == 0)))
+						writeTriplet(newNodeId, Predicate.swrc__firstName, value, false, out);
 				}
-				else if (a.getName().equalsIgnoreCase("surnameRu"))
+				else if (name.equalsIgnoreCase("surnameRu"))
 				{
-					writeTriplet(newNodeId, Predicate.swrc__lastName, a.getValue(), false, out);
+					writeTriplet(newNodeId, Predicate.swrc__lastName, value, false, out);
 				}
 			}
 		}
 		else
 		{
-			PersonUri += "";
+			throw new Exception("user [" + PersonId + "] not found in organization");
 		}
 	}
 
@@ -204,7 +234,7 @@ public class Fetcher
 
 					String newDocSubj = Predicate.zdb + id;
 
-					addPersonToDocument(newDocSubj, Predicate.zdb + "person_" + authorId, Predicate.dc__creator, out);
+					addPersonToDocument(newDocSubj, authorId, Predicate.dc__creator, out);
 
 					writeTriplet(newDocSubj, Predicate.rdf__type, Predicate.user_onto + typeId, false, out);
 
@@ -246,7 +276,7 @@ public class Fetcher
 								{
 									if (organizationTag.indexOf("user") >= 0)
 									{
-										addPersonToDocument(newDocSubj, Predicate.zdb + "person_" + organizationValue, onto_code, out);
+										addPersonToDocument(newDocSubj, organizationValue, onto_code, out);
 
 									}
 								}
@@ -256,8 +286,18 @@ public class Fetcher
 
 								String textValue = get(att_list_element, "textValue", null);
 
-								if (textValue != null)
+								if (textValue != null && textValue.length() > 0)
 									writeTriplet(newDocSubj, onto_code, textValue, true, out);
+							}
+							else if (type.equals("LINK"))
+							{
+								String value = get(att_list_element, "linkValue", null);
+								
+								if (value != null && value.length() > 0)
+								{
+									addLinkToDocument(newDocSubj, value, onto_code, out);									
+								}
+								
 							}
 
 						}
@@ -783,9 +823,6 @@ public class Fetcher
 				out = new OutputStreamWriter(fw, "UTF8");
 			}
 
-			OrganizationUtil organizationUtil = new OrganizationUtil(properties.getProperty("organizationUrl"),
-					properties.getProperty("organizationNameSpace"), properties.getProperty("organizationName"));
-
 			List<Department> deps = organizationUtil.getDepartments();
 
 			ArrayList<String> excludeNode = new ArrayList<String>();
@@ -984,7 +1021,9 @@ public class Fetcher
 					}
 					else if (a.getName().equals("email"))
 					{
-						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__email, a.getValue(), true, out);
+						String email = a.getValue();
+						if (email != null && email.length() > 0)
+							writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__email, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("id"))
 					{
@@ -998,11 +1037,15 @@ public class Fetcher
 					}
 					else if (a.getName().equalsIgnoreCase("pager"))
 					{
-						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.docs19__pager, a.getValue(), true, out);
+						String value = a.getValue();
+						if (value != null && value.length() > 0)
+							writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.docs19__pager, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("phone"))
 					{
-						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
+						String value = a.getValue();
+						if (value != null && value.length() > 0)
+							writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("offlineDateBegin"))
 					{
@@ -1033,15 +1076,21 @@ public class Fetcher
 					}
 					else if (a.getName().equalsIgnoreCase("mobilePrivate"))
 					{
-						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
+						String value = a.getValue();
+						if (value != null && value.length() > 0)
+							writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("phoneExt"))
 					{
-						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
+						String value = a.getValue();
+						if (value != null && value.length() > 0)
+							writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("mobile"))
 					{
-						writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
+						String value = a.getValue();
+						if (value != null && value.length() > 0)
+							writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.swrc__phone, a.getValue(), true, out);
 					}
 					else if (a.getName().equalsIgnoreCase("active"))
 					{

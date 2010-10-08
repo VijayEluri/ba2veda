@@ -69,6 +69,11 @@ public class OrganizationUtil {
 		return out;
 	}
 
+	public EntityType getUser (String userId) throws Exception
+	{
+		return organizationInvoker.getEntity(userId);
+	}
+	
 	public List<EntityType> getUsers() {
 
 		List<EntityType> result = null;
