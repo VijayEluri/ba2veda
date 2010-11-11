@@ -18,6 +18,7 @@ public class Predicate
 	public static final String f_swrc = "http://swrc.ontoware.org/ontology-07";
 	public static final String docs19 = "http://gost19.org/docs#";
 	public static final String gost19 = "http://gost19.org/base#";
+	public static final String auth = "http://gost19.org/auth#";
 	public static final String zdb = "http://user-db#";
 	public static final String f_zdb = "http://user-db";
 	public static final String user_onto = "http://user-onto.org#";
@@ -97,4 +98,8 @@ public class Predicate
 	public static final String docs19__from = docs19 + "from";
 	public static final String docs19__to = docs19 + "to";
 
+	public static final String auth__login = auth + "login";
+	public static final String auth__credential = auth + "credential";
+	public static final String auth__Authenticated = auth + "Authenticated";
 }
+

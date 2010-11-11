@@ -126,20 +126,20 @@ public class Fetcher
 
 		System.out.println("ok");
 	}
-	
+
 	private static void addLinkToDocument(String DocUri, String DocId, String attUri, OutputStreamWriter out) throws Exception
 	{
 		String PersonUri = Predicate.zdb + DocId;
 
-		writeTriplet(DocUri, attUri, PersonUri, false, out);		
+		writeTriplet(DocUri, attUri, PersonUri, false, out);
 		String newNodeId = DocUri + attUri;
 
 		writeTriplet(newNodeId, Predicate.rdf__type, Predicate.rdf__Statement, false, out);
 		writeTriplet(newNodeId, Predicate.rdf__object, PersonUri, false, out);
 		writeTriplet(newNodeId, Predicate.rdf__subject, DocUri, false, out);
 		writeTriplet(newNodeId, Predicate.rdf__predicate, attUri, false, out);
-		
-		writeTriplet(newNodeId, Predicate.swrc__firstName, "репрезентатионвалуес", false, out);		
+
+		writeTriplet(newNodeId, Predicate.swrc__firstName, "репрезентатионвалуес", false, out);
 	}
 
 	private static void addPersonToDocument(String DocUri, String PersonId, String attUri, OutputStreamWriter out) throws Exception
@@ -292,12 +292,12 @@ public class Fetcher
 							else if (type.equals("LINK"))
 							{
 								String value = get(att_list_element, "linkValue", null);
-								
+
 								if (value != null && value.length() > 0)
 								{
-									addLinkToDocument(newDocSubj, value, onto_code, out);									
+									addLinkToDocument(newDocSubj, value, onto_code, out);
 								}
-								
+
 							}
 
 						}
@@ -376,9 +376,11 @@ public class Fetcher
 			out = new OutputStreamWriter(fw, "UTF8");
 		}
 
-		writeTriplet(Predicate.f_user_onto, Predicate.owl__imports, Predicate.docs19, false, out);
+		writeTriplet(Predicate.f_user_onto, Predicate.owl__imports, Predicate.dc, false, out);
 		writeTriplet(Predicate.f_user_onto, Predicate.owl__imports, Predicate.f_swrc, false, out);
 		writeTriplet(Predicate.f_user_onto, Predicate.owl__imports, Predicate.gost19, false, out);
+		writeTriplet(Predicate.f_user_onto, Predicate.owl__imports, Predicate.docs19, false, out);
+		writeTriplet(Predicate.f_user_onto, Predicate.owl__imports, Predicate.user_onto, false, out);
 		writeTriplet(Predicate.f_user_onto, Predicate.rdf__type, Predicate.owl__Ontology, false, out);
 
 		String docsIdDataQuery = "select objectId FROM objects where isTemplate = 1 and timestamp is null";
@@ -817,11 +819,13 @@ public class Fetcher
 
 			OutputStreamWriter out = null;
 
-			if (!fake)
-			{
-				FileOutputStream fw = new FileOutputStream(pathToDump + java.io.File.separatorChar + name_file);
-				out = new OutputStreamWriter(fw, "UTF8");
-			}
+			FileOutputStream fw = new FileOutputStream(pathToDump + java.io.File.separatorChar + name_file);
+			out = new OutputStreamWriter(fw, "UTF8");
+
+			OutputStreamWriter out_auth_data = null;
+
+			FileOutputStream fw1 = new FileOutputStream(pathToDump + java.io.File.separatorChar + "auth_data.nt");
+			out_auth_data = new OutputStreamWriter(fw1, "UTF8");
 
 			List<Department> deps = organizationUtil.getDepartments();
 
@@ -980,6 +984,9 @@ public class Fetcher
 				writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.rdf__type, Predicate.docs19__employee_card, false, out);
 				writeTriplet(Predicate.zdb + "doc_" + userId, Predicate.docs19__employee, Predicate.zdb + "person_" + userId, false, out);
 
+				String domainName = null;
+				String password = null;
+
 				for (AttributeType a : userEntity.getAttributes().getAttributeList())
 				{
 					if (a.getName().equalsIgnoreCase("firstNameRu"))
@@ -1008,16 +1015,11 @@ public class Fetcher
 					}
 					else if (a.getName().equals("domainName"))
 					{
-						//
-						// writeTriplet(userId, p.LOGIN_NAME, a.getValue(),
-						// true, out);
-						//
-						// if (admins.contains(a.getValue()))
-						// {
-						// writeTriplet(userId, "magnet-ontology#isAdmin",
-						// "true", true, out);
-						// }
-
+						domainName = a.getValue();
+					}
+					else if (a.getName().equals("password"))
+					{
+						password = a.getValue();
 					}
 					else if (a.getName().equals("email"))
 					{
@@ -1145,10 +1147,21 @@ public class Fetcher
 					}
 					// else if (!writeRole(prefix, a, out))
 					// {
-					// writeTriplet(prefix, "magnet-ontology#chunknown"
+					// writeTriplet(prefix, "magnet-ontology#unknown"
 					// + a.getName(), a.getValue(), true, out);
 					// }
 				}
+
+				if (domainName != null && password != null)
+				{
+					// обяьвим этого субьекта как аутентифицируемого и добавим
+					// необходимые данные, выгружаем в отдельный файл
+					writeTriplet(Predicate.zdb + "person_" + userId, Predicate.rdf__type, Predicate.auth__Authenticated, false,
+							out_auth_data);
+					writeTriplet(Predicate.zdb + "person_" + userId, Predicate.auth__login, domainName, true, out_auth_data);
+					writeTriplet(Predicate.zdb + "person_" + userId, Predicate.auth__credential, password, true, out_auth_data);
+				}
+
 			}
 
 			end = System.currentTimeMillis();
@@ -1160,10 +1173,8 @@ public class Fetcher
 
 			System.out.println("-----------------------------------------");
 
-			if (!fake)
-			{
-				out.close();
-			}
+			out.close();
+			out_auth_data.close();
 
 		} catch (Exception e)
 		{
