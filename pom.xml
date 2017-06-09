@@ -1,109 +1,146 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>ba2onto</artifactId>
-    <groupId>org.gost19.extractor</groupId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>ba2onto</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sm.tools</groupId>
+	<artifactId>ba2veda</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<name>from BA to VEDA converter</name>
+
     <dependencies>
+
+<dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <version>1.4.192</version>
+</dependency>
+
+<dependency>
+  <groupId>com.github.spullara.mustache.java</groupId>
+  <artifactId>compiler</artifactId>
+  <version>0.8.18</version>
+</dependency>
+
         <dependency>
-            <groupId>local.sun.java.net</groupId>
-            <artifactId>jaxws-ri</artifactId>
-            <version>2.1.5</version>
-            <type>pom</type>
+	    <groupId>sm.tools</groupId>
+	    <artifactId>veda-client</artifactId>
+	    <version>0.1-SNAPSHOT</version>
         </dependency>
+
         <dependency>
-            <artifactId>big-archive-client-web-objects</artifactId>
-            <groupId>ru.magnetosoft.bigarchive.client.web</groupId>
-            <version>0.14.75-SNAPSHOT</version>
+	    <groupId>org.mongodb</groupId>
+	    <artifactId>mongo-java-driver</artifactId>
+	    <version>2.11.1</version>
         </dependency>
+
         <dependency>
-            <groupId>ru.magnetosoft.magnet</groupId>
-            <artifactId>magnet-commons-client</artifactId>
-            <version>1.5.15-SNAPSHOT</version>
+             <groupId>org.gost19.pacahon.client</groupId>
+             <artifactId>ba-pacahon-driver</artifactId>
+             <version>0.14-SNAPSHOT</version>
         </dependency>
+
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-            <version>4.4</version>
+            <groupId>ru.mndsc.bigarchive.server</groupId>
+            <artifactId>big-archive-server-kernel-core</artifactId>
+            <version>0.17.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
-            <groupId>ru.magnetosoft.magnet</groupId>
-            <artifactId>magnet-messaging</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <groupId>ru.mndsc.bigarchive.client.web</groupId>
+            <artifactId>big-archive-client-web-kernel</artifactId>
+            <version>0.16.22-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.6</version>
         </dependency>
-    </dependencies>
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <tasks>
-                                <path id="jwdp.classpath">
-                                <path refid="maven.compile.classpath" />
-                                    <pathelement location="${java.home}/../lib/tools.jar" />
-                                </path>
-                                <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
-                                    <classpath refid="jwdp.classpath" />
-                                </taskdef>
-                                <echo message="Generate DocumentService WS artifacts..." />
-                                <mkdir dir="${project.build.outputDirectory}" />
-                                <wsimport debug="true" verbose="false" keep="true" sourcedestdir="${project.build.sourceDirectory}" destdir="${project.build.outputDirectory}" wsdl="${basedir}/src/main/wsdl/DocumentService.wsdl" package="magnetico.ws.document" />
-                                <echo message="Generate SearchService WS artifacts..." />
-                                <mkdir dir="${project.build.outputDirectory}" />
-                                <wsimport debug="true" verbose="false" keep="true" sourcedestdir="${project.build.sourceDirectory}" destdir="${project.build.outputDirectory}" wsdl="${basedir}/src/main/wsdl/SearchService.wsdl" package="magnetico.ws.search" />
-                                <echo message="Generate AttachmentService WS artifacts..." />
-                                <mkdir dir="${project.build.outputDirectory}" />
-                                <wsimport debug="true" verbose="false" keep="true" sourcedestdir="${project.build.sourceDirectory}" destdir="${project.build.outputDirectory}" wsdl="${basedir}/src/main/wsdl/AttachmentService.wsdl" package="magnetico.ws.attachment" />
-                                <mkdir dir="${project.build.outputDirectory}" />
-                                <echo message="Generate Organization WS artifacts..." />
-                                <wsimport debug="true" verbose="false" keep="true" sourcedestdir="${project.build.sourceDirectory}" destdir="${project.build.outputDirectory}" wsdl="${basedir}/src/main/wsdl/OrganizationEntityService.wsdl" package="magnetico.ws.organization" />
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>org.gost19.ba2onto.Fetcher</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+<dependency>
+    <groupId>commons-httpclient</groupId>
+    <artifactId>commons-httpclient</artifactId>
+    <version>3.1</version>
+</dependency>
+
+<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.3.5</version>
+</dependency>
+ 
+<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpmime</artifactId>
+    <version>4.3.5</version>
+</dependency>
+
+    </dependencies>
+	<profiles>
+		<profile>
+			<id>default-tools.jar</id>
+			<activation>
+				<property>
+					<name>java.vendor</name>
+					<value>Sun Microsystems Inc.</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>com.sun</groupId>
+					<artifactId>tools</artifactId>
+					<version>1.6</version>
+					<scope>system</scope>
+					<systemPath>${java.home}/../lib/tools.jar</systemPath>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
+    <build>
+		<finalName>ba2veda</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>org.gost19.ba2veda.Fetcher</mainClass>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.0</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<includeScope>runtime</includeScope>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<silent>true</silent>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
 </project>
 
