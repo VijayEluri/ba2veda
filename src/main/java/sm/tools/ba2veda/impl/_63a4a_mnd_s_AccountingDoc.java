@@ -71,8 +71,8 @@ public class _63a4a_mnd_s_AccountingDoc extends Ba2VedaTransform
 
 		String kind_p_0 = ba.get_first_value_of_field(doc, "kind_p");
 
-		if (kind_p_0 != null && kind_p_0.equals("92a5bcfed9fa4cd2a062a1dc53ed2a1c") == false)
-			return new ArrayList<Individual>();
+		//if (kind_p_0 != null && kind_p_0.equals("92a5bcfed9fa4cd2a062a1dc53ed2a1c") == false)
+		//	return new ArrayList<Individual>();
 
 		for (XmlAttribute att : atts)
 		{
