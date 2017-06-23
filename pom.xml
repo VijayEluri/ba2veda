@@ -113,7 +113,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>org.gost19.ba2veda.Fetcher</mainClass>
+							<mainClass>sm.tools.ba2veda.Fetcher</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib</classpathPrefix>
 						</manifest>
