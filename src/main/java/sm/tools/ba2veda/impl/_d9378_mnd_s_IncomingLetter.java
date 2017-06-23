@@ -148,7 +148,7 @@ public class _d9378_mnd_s_IncomingLetter extends Ba2VedaTransform
 
 							//if (veda.getIndividual(link_id) == null)
 							//{
-							String new_link_id = link_id + "_" + ii;
+							String new_link_id = link_id + "_l_" + ii;
 							Individual link = new Individual();
 							link.setUri(new_link_id);
 							link.addProperty("rdf:type", "v-s:Link", Type._Uri);

@@ -7,6 +7,7 @@ import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
 import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
+import sm.tools.ba2veda.Pair;
 import sm.tools.ba2veda.Replacer;
 import sm.tools.veda_client.Individual;
 import sm.tools.veda_client.Resource;
@@ -106,7 +107,7 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 
 							//if (veda.getIndividual(link_id) == null)
 							//{
-							String new_link_id = link_id + "_" + ii;
+							String new_link_id = link_id + "_l_" + ii;
 							Individual link = new Individual();
 							link.setUri(new_link_id);
 							link.addProperty("rdf:type", "v-s:Link", Type._Uri);
@@ -131,22 +132,36 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 						rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 					if (code.equals("reg_note"))
+					{
 						_reg_note = rss;
 
-					if (code.equals("addresse"))
-						_addressee = rss;
-					else if (code.equals("addresse_to"))
-						_addressee_to = rss;
-					else if (code.equals("Исполнитель"))
-						_sender = rss;
-					else if (code.equals("Подписывающий"))
-						_signer = rss;
-					else if (code.equals("type_send"))
-						_type_send = rss;
-					//else if (code.equals("date_reg"))
-					//	_date_reg = rss;
-					else
-						new_individual.addProperty(predicate, rss);
+						if (_reg_note != null && _reg_note.resources.size() > 0)
+						{
+							Pair<XmlDocument, Long> doc_ts = st_ba.getActualDocument(_reg_note.resources.get(0).getData());
+
+							if (doc_ts != null)
+							{
+								XmlDocument _doc = doc_ts.getLeft();
+
+								if (_doc.isActive() == true)
+									new_individual.addProperty(predicate, rss);
+							}
+						}
+					} else
+					{
+						if (code.equals("addresse"))
+							_addressee = rss;
+						else if (code.equals("addresse_to"))
+							_addressee_to = rss;
+						else if (code.equals("Исполнитель"))
+							_sender = rss;
+						else if (code.equals("Подписывающий"))
+							_signer = rss;
+						else if (code.equals("type_send"))
+							_type_send = rss;
+						else
+							new_individual.addProperty(predicate, rss);
+					}
 				}
 			}
 		}
