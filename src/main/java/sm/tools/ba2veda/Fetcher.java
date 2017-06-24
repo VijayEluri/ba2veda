@@ -26,6 +26,7 @@ import sm.tools.ba2veda.impl._524d6_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._524d6_mnd_s_Contract;
 import sm.tools.ba2veda.impl._52e5c_mnd_s_Claim;
 import sm.tools.ba2veda.impl._579b1_mnd_s_ProjectCapex;
+import sm.tools.ba2veda.impl._5c2ce_mnd_s_Building;
 import sm.tools.ba2veda.impl._5ee12_v_s_Contractor;
 import sm.tools.ba2veda.impl._5fcfb_mnd_s_PurchaseOrder;
 import sm.tools.ba2veda.impl._63a4a_mnd_s_AccountingDoc;
@@ -65,6 +66,8 @@ import sm.tools.ba2veda.impl._fa740_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._faff0_v_s_ContractorProfileFile;
 import sm.tools.ba2veda.impl._fc534_v_s_NormativeDocument;
 import sm.tools.ba2veda.impl._3369e_mnd_s_BusinessTrip;
+import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
+
 import sm.tools.veda_client.VedaConnection;
 
 public class Fetcher
@@ -185,6 +188,9 @@ public class Fetcher
 		trs.add(new _7adb5_v_s_Delivery(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _52e5c_mnd_s_Claim(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _3369e_mnd_s_BusinessTrip(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _5c2ce_mnd_s_Building(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _22701_mnd_s_ClaimReport(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
