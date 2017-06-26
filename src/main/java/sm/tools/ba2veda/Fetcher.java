@@ -67,6 +67,8 @@ import sm.tools.ba2veda.impl._faff0_v_s_ContractorProfileFile;
 import sm.tools.ba2veda.impl._fc534_v_s_NormativeDocument;
 import sm.tools.ba2veda.impl._3369e_mnd_s_BusinessTrip;
 import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
+import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
+import sm.tools.ba2veda.impl._050ce_mnd_s_Pass;
 
 import sm.tools.veda_client.VedaConnection;
 
@@ -191,6 +193,8 @@ public class Fetcher
 		trs.add(new _5c2ce_mnd_s_Building(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		trs.add(new _22701_mnd_s_ClaimReport(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _7bd88_mnd_s_PassRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _050ce_mnd_s_Pass(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
