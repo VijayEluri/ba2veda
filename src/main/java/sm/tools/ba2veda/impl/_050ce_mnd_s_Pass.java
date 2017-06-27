@@ -101,12 +101,30 @@ public class _050ce_mnd_s_Pass extends Ba2VedaTransform {
 					putIndividual(comment, ba_id, true);
 					new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
 					
-				} else if (code.equals("contractor"))
-					new_individual.addProperty("v-s:correspondentOrganization", veda.getIndividual("d:" 
-							+ att.getLinkValue()).getResources("v-s:backwardTarget"));
-				else if (code.equals("owner"))
-					new_individual.addProperty("v-s:owner", veda.getIndividual("d:" 
-							+ att.getLinkValue()).getResources("v-s:backwardTarget"));
+				} else if (code.equals("contractor")) {
+					if (att.getLinkValue() == null) 
+						continue;
+					Individual individual = veda.getIndividual("d:" + att.getLinkValue());
+					if (individual == null)
+						continue;
+					Resources resources = individual.getResources("v-s:backwardTarget");
+					if (resources == null)
+						continue;
+					
+					
+					
+					new_individual.addProperty("v-s:correspondentOrganization", resources);
+				} else if (code.equals("owner")) {
+					if (att.getLinkValue() == null) 
+						continue;
+					Individual individual = veda.getIndividual("d:" + att.getLinkValue());
+					if (individual == null)
+						continue;
+					Resources resources = individual.getResources("v-s:backwardTarget");
+					if (resources == null)
+						continue;
+					new_individual.addProperty("v-s:owner", resources);
+				}
 			}
 		}
 		
