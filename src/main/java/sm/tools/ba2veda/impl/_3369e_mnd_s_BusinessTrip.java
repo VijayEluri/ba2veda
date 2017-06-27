@@ -10,6 +10,7 @@ import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
 import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
+import sm.tools.ba2veda.Pair;
 import sm.tools.ba2veda.Replacer;
 import sm.tools.veda_client.Individual;
 import sm.tools.veda_client.Resource;
@@ -139,7 +140,13 @@ public class _3369e_mnd_s_BusinessTrip extends Ba2VedaTransform {
 						new_individual.addProperty("v-s:hasClassifierCountry", new Resource(result, Type._Uri));
 				} else if (code.equals("reg_note")) {
 					String rn = att.getLinkValue();
-					XmlDocument rn_doc = ba.getActualDocument(rn).getLeft();
+					if (rn == null)
+						continue;
+					Pair<XmlDocument, Long> pair = ba.getActualDocument(rn);
+					if (pair == null)
+						continue;
+					
+					XmlDocument rn_doc = pair.getLeft();
 					
 					Individual btrr = new Individual();
 					String rn_uri = prepare_uri(rn);

@@ -78,9 +78,20 @@ public class _050ce_mnd_s_Pass extends Ba2VedaTransform {
 				if (rss.resources.size() < 1)
 					continue;
 				
-				if (code.equals("addresse_from"))
-					new_individual.addProperty("v-s:customer", veda.getIndividual("d:" + att.getLinkValue()).getResources("v-s:backwardTarget"));
-				else if (code.equals("comment")) {
+				if (rss == null)
+					continue;
+				
+				if (code.equals("addresse_from")) {
+					if (att.getLinkValue() == null) 
+						continue;
+					Individual individual = veda.getIndividual("d:" + att.getLinkValue());
+					if (individual == null)
+						continue;
+					Resources resources = individual.getResources("v-s:backwardTarget");
+					if (resources == null)
+						continue;
+					new_individual.addProperty("v-s:customer", resources);
+				} else if (code.equals("comment")) {
 					Individual comment = new Individual();
 					comment.setUri(new_individual.getUri() + "_comment");
 					comment.addProperty("rdfs:label", rss);
