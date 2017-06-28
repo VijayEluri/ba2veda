@@ -75,10 +75,10 @@ public class _050ce_mnd_s_Pass extends Ba2VedaTransform {
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
 				
-				if (rss.resources.size() < 1)
+				if (rss == null)
 					continue;
 				
-				if (rss == null)
+				if (rss.resources.size() < 1)
 					continue;
 				
 				if (code.equals("addresse_from")) {

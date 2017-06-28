@@ -22,6 +22,7 @@ import sm.tools.ba2veda.impl._15206_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._15206_mnd_s_Contract;
 import sm.tools.ba2veda.impl._19faf_mnd_s_AuditSafetyTheme;
 import sm.tools.ba2veda.impl._2fba7_mnd_s_ContractRequest;
+import sm.tools.ba2veda.impl._2fe65_mnd_s_RepresentativeCostsEvent;
 import sm.tools.ba2veda.impl._524d6_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._524d6_mnd_s_Contract;
 import sm.tools.ba2veda.impl._52e5c_mnd_s_Claim;
@@ -52,6 +53,8 @@ import sm.tools.ba2veda.impl._bcb5e_mnd_s_Contract;
 import sm.tools.ba2veda.impl._bdc96_mnd_s_AuditInternal;
 import sm.tools.ba2veda.impl._c6c99_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._c8a33_mnd_s_AuditInternalObject;
+import sm.tools.ba2veda.impl._d0072_v_s_Correspodent;
+import sm.tools.ba2veda.impl._d5c66_mnd_s_RepresentativeCostsForEvent;
 import sm.tools.ba2veda.impl._d9378_mnd_s_IncomingLetter;
 import sm.tools.ba2veda.impl._d9476_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._dabb6_v_s_MaterialGroup;
@@ -69,6 +72,7 @@ import sm.tools.ba2veda.impl._3369e_mnd_s_BusinessTrip;
 import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
 import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
 import sm.tools.ba2veda.impl._050ce_mnd_s_Pass;
+import sm.tools.ba2veda.impl._2bace_mnd_s_ActOfViolation;
 
 import sm.tools.veda_client.VedaConnection;
 
@@ -195,6 +199,12 @@ public class Fetcher
 		trs.add(new _22701_mnd_s_ClaimReport(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _7bd88_mnd_s_PassRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _050ce_mnd_s_Pass(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _2bace_mnd_s_ActOfViolation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _451f2_mnd_s_RepresentativeCosts(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _d0072_v_s_Correspodent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _2fe65_mnd_s_RepresentativeCostsEvent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _d5c66_mnd_s_RepresentativeCostsForEvent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
