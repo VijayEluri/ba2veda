@@ -63,8 +63,15 @@ public class _7bd88_mnd_s_PassRequest extends Ba2VedaTransform {
 					continue;
 				
 				if (code.equals("addresse_from")) {
-					new_individual.addProperty("v-s:customer", veda.getIndividual("d:" 
-							+ att.getLinkValue()).getResources("v-s:backwardTarget"));
+					if (att.getLinkValue() == null) 
+						continue;
+					Individual individual = veda.getIndividual("d:" + att.getLinkValue());
+					if (individual == null)
+						continue;
+					Resources resources = individual.getResources("v-s:backwardTarget");
+					if (resources == null)
+						continue;
+					new_individual.addProperty("v-s:customer", resources);
 				} else if (code.equals("inherit_rights_from")) {
 					String irf = att.getLinkValue();
 					XmlDocument irf_doc = ba.getActualDocument(irf).getLeft();
