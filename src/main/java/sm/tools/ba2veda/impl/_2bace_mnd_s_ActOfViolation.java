@@ -23,7 +23,7 @@ public class _2bace_mnd_s_ActOfViolation extends Ba2VedaTransform {
 		fields_map.put("date_fact", "v-s:date");
 		fields_map.put("number_reg", "v-s:registrationNumber");
 		fields_map.put("responsible_add", "v-s:correspondentPersonDescription");
-		fields_map.put("classifier_act", "mnd-s:hasActOfViolation");
+		fields_map.put("classifier_act", "mnd-s:hasActOfViolationKind");
 		fields_map.put("area", "mnd-s:ActOfViolationKpp");
 		fields_map.put("description", "v-s:description");
 		fields_map.put("attachment", "v-s:attachment");
@@ -58,8 +58,13 @@ public class _2bace_mnd_s_ActOfViolation extends Ba2VedaTransform {
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
 					
+				if (code.equals("importance") && (rss == null || rss.resources.size() < 1))
+					new_individual.addProperty("v-s:isActivityAccidental", new Resource(true, Type._Bool));
+				
+				
 				if (rss == null)
 					continue;
+
 					
 				if (rss.resources.size() < 1)
 					continue;
@@ -80,9 +85,9 @@ public class _2bace_mnd_s_ActOfViolation extends Ba2VedaTransform {
 				} else if (code.equals("importance")) {
 					int a = Integer.parseInt(att.getNumberValue());
 					if (a == 0) 
-						new_individual.addProperty("v-s:isActivityAccidental", new Resource(false, Type._Bool));
-					else 
 						new_individual.addProperty("v-s:isActivityAccidental", new Resource(true, Type._Bool));
+					else 
+						new_individual.addProperty("v-s:isActivityAccidental", new Resource(false, Type._Bool));
 				}
 			}
 		}

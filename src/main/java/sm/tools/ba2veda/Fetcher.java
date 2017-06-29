@@ -47,6 +47,7 @@ import sm.tools.ba2veda.impl._92fdd_mnd_s_Contract;
 import sm.tools.ba2veda.impl._99f08_v_s_LetterRegistrationRecordSender;
 import sm.tools.ba2veda.impl._9fb73_mnd_s_AuditSafety;
 import sm.tools.ba2veda.impl._a96be_v_s_Comment;
+import sm.tools.ba2veda.impl._b243a_mnd_s_DismantlingProject;
 import sm.tools.ba2veda.impl._b3999_mnd_s_OutgoingLetter;
 import sm.tools.ba2veda.impl._bcb5e_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._bcb5e_mnd_s_Contract;
@@ -205,6 +206,8 @@ public class Fetcher
 		trs.add(new _d0072_v_s_Correspodent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _2fe65_mnd_s_RepresentativeCostsEvent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _d5c66_mnd_s_RepresentativeCostsForEvent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _b243a_mnd_s_DismantlingProject(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
