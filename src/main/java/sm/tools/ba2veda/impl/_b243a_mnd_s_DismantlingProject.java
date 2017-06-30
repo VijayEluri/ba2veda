@@ -28,13 +28,15 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 		fields_map.put("Год CAPEX", "v-s:year");
 		fields_map.put("Вложения", "mnd-s:attachmentTz");
 		fields_map.put("name", "rdfs:label");
+		fields_map.put("Статус ИП", "v-s:hasStatus");
 		
 		fields_map.put("Комментарий", "?");
 		
 		fields_map.put("№ СПП-элемента", "?");
 		fields_map.put("Дата открытия СПП-элемента", "?");
 		
-		fields_map.put("Статус ИП", "?");
+		fields_map.put("Связанные документы", "?");
+		
 	}
 	
 	@Override
@@ -52,6 +54,7 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 		
 		Resources n_spp = null;
 		Resources date_spp = null;
+		int link_count = 0;
 		
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts) {
@@ -78,14 +81,14 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 					comment.addProperty("rdf:type", new Resource("v-s:Comment", Type._Uri));
 					comment.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 					comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
-					comment.addProperty("rdfs:comment", rss);
+					comment.addProperty("rdfs:label", rss);
 					putIndividual(comment, ba_id, true);
 					new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
 				} else if (code.equals("№ СПП-элемента"))
 					n_spp = rss;
 				else if (code.equals("Дата открытия СПП-элемента"))
 					date_spp = rss;
-				else if (code.equals("Статус ИП")) {
+				else if (code.equals("Связанные документы")) {
 					String irf = att.getLinkValue();
 					if (irf == null)
 						continue;
@@ -112,7 +115,8 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 							link_to = inherit_rights_from;
 					
 					Individual link = new Individual();
-					link.setUri(new_individual.getUri() + "_link");
+					link.setUri(new_individual.getUri() + "_link_" + link_count);
+					link_count++;
 					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
 					link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
 					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
