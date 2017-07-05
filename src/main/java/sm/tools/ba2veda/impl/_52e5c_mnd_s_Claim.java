@@ -353,7 +353,7 @@ public class _52e5c_mnd_s_Claim extends Ba2VedaTransform {
 		if (organization2 != null) {
 			Individual correspondent_organization = new Individual();
 			correspondent_organization.setUri(uri + "_correspondent_organization_recipient");
-			if (!organization.equals("9076b375bf4a468289dbd0c2db886256")) {
+			if (!organization2.equals("9076b375bf4a468289dbd0c2db886256")) {
 				correspondent_organization.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
 				for (Resources r : department) 
 					correspondent_organization.addProperty("v-s:correspondentDepartment", r);
