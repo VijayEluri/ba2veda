@@ -25,12 +25,13 @@ public class _7bd88_mnd_s_PassRequest extends Ba2VedaTransform {
 		fields_map.put("initiator", "v-s:initiator");
 		fields_map.put("target", "mnd-s:hasPassRequestGoal");
 		fields_map.put("reason", "v-s:goal");
-		fields_map.put("event", "mnd-s:hasPass");
 		fields_map.put("compound_title", "rdfs:label");
+		fields_map.put("event", "mnd-s:hasPass");
 		
 		fields_map.put("addresse_from", "?");
 		fields_map.put("attachment", "?");
 		fields_map.put("inherit_rights_from", "?");
+		
 	}
 	
 	@Override
@@ -107,7 +108,15 @@ public class _7bd88_mnd_s_PassRequest extends Ba2VedaTransform {
 					comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 					putIndividual(comment, ba_id, true);
 					new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
-				}		
+				} else if (code.equals("event")) {
+					if (att.getLinkValue() == null) 
+						continue;
+					Individual individual = veda.getIndividual("d:" + att.getLinkValue());
+					if (individual == null)
+						continue;
+					individual.setProperty("v-s:parent", new Resource("d:" + ba_id, Type._Uri));
+					putIndividual(individual, ba_id, true);
+				} 
 			} 
 		}
 		

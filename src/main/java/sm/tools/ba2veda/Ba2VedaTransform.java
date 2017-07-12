@@ -723,7 +723,7 @@ public abstract class Ba2VedaTransform
 		if (type.equals("TEXT"))
 		{
 			String str = att.getTextValue();
-
+			
 			if (str != null && str.length() > 0)
 			{
 				str = str.trim();

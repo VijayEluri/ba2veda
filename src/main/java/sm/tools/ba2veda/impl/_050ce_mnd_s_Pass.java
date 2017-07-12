@@ -35,7 +35,6 @@ public class _050ce_mnd_s_Pass extends Ba2VedaTransform {
 		fields_map.put("department", "v-s:correspondentDepartment");
 		fields_map.put("responsible_add",  "v-s:correspondentPersonDescription");
 		fields_map.put("date_born", "v-s:birthday");
-		fields_map.put("from_doc_certificate_number_reg", "mnd-s:passVehicleRegistrationNumber");
 		fields_map.put("trade_mark", "v-s:hasVehicleModel");
 		fields_map.put("classifier_product", "v-s:hasVehicleCategory");
 		fields_map.put("description", "mnd-s:passPassengerList");
@@ -45,6 +44,28 @@ public class _050ce_mnd_s_Pass extends Ba2VedaTransform {
 		fields_map.put("comment", "?");
 		fields_map.put("contractor", "?");
 		fields_map.put("owner", "?");
+		
+		fields_map.put("from_doc_certificate_number_reg", "?");
+	}
+	
+	private String changeNum(String num) {
+		String digits = "0123456789";
+		String outp = "";
+		
+		Boolean prev_digit = false;
+		for (int i = 0; i < num.length(); i++) {
+			String smb = num.substring(i, i + 1);
+			if (digits.indexOf(smb) >= 0 && !prev_digit) {
+				outp += " ";
+				prev_digit = true;
+			} else if (digits.indexOf(smb) < 0 && prev_digit) {
+				outp += " ";
+				prev_digit = false;
+			}
+			outp += smb;
+		}
+		
+		return outp.trim();
 	}
 	
 	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
@@ -59,8 +80,8 @@ public class _050ce_mnd_s_Pass extends Ba2VedaTransform {
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		
-		if (parent_ba_doc_id != null)
-			new_individual.addProperty("v-s:parent", new Resource("d:" + parent_ba_doc_id, Type._Uri));
+//		if (parent_ba_doc_id != null)
+//			new_individual.addProperty("v-s:parent", new Resource("d:" + parent_ba_doc_id, Type._Uri));
 		
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts) {
@@ -124,6 +145,11 @@ public class _050ce_mnd_s_Pass extends Ba2VedaTransform {
 					if (resources == null)
 						continue;
 					new_individual.addProperty("v-s:owner", resources);
+				} else if (code.equals("from_doc_certificate_number_reg")) {
+					String num = att.getTextValue();
+//					num = num.replaceAll("/\\s*(\\d+)\\s*/gi", " $1 ");
+					num = changeNum(num);
+					new_individual.addProperty("mnd-s:passVehicleRegistrationNumber", new Resource(num));
 				}
 			}
 		}

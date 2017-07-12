@@ -28,9 +28,11 @@ import sm.tools.ba2veda.impl._524d6_mnd_s_Contract;
 import sm.tools.ba2veda.impl._52e5c_mnd_s_Claim;
 import sm.tools.ba2veda.impl._579b1_mnd_s_ProjectCapex;
 import sm.tools.ba2veda.impl._5c2ce_mnd_s_Building;
+import sm.tools.ba2veda.impl._5d588_mnd_s_Decree;
 import sm.tools.ba2veda.impl._5ee12_v_s_Contractor;
 import sm.tools.ba2veda.impl._5fcfb_mnd_s_PurchaseOrder;
 import sm.tools.ba2veda.impl._63a4a_mnd_s_AccountingDoc;
+import sm.tools.ba2veda.impl._65875_mnd_s_Decree;
 import sm.tools.ba2veda.impl._662_v_s_DeliveryMethod;
 import sm.tools.ba2veda.impl._6b0ea_v_s_ContractorProfile;
 import sm.tools.ba2veda.impl._6b0ea_v_s_Organization;
@@ -60,7 +62,9 @@ import sm.tools.ba2veda.impl._d9378_mnd_s_IncomingLetter;
 import sm.tools.ba2veda.impl._d9476_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._dabb6_v_s_MaterialGroup;
 import sm.tools.ba2veda.impl._df75b_mnd_s_AuditSafety;
+import sm.tools.ba2veda.impl._df968_mnd_s_Decree;
 import sm.tools.ba2veda.impl._e2515_mnd_s_AuditInternalReport;
+import sm.tools.ba2veda.impl._e85f6_mnd_s_Decree;
 import sm.tools.ba2veda.impl._ead1b_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._ead1b_mnd_s_Contract;
 import sm.tools.ba2veda.impl._ec6d7_mnd_s_AdditionalAgreement;
@@ -69,10 +73,14 @@ import sm.tools.ba2veda.impl._f063e_v_s_ClassifierOKVED;
 import sm.tools.ba2veda.impl._fa740_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._faff0_v_s_ContractorProfileFile;
 import sm.tools.ba2veda.impl._fc534_v_s_NormativeDocument;
+import sm.tools.ba2veda.impl._fcb4a_mnd_s_Decree;
 import sm.tools.ba2veda.impl._3369e_mnd_s_BusinessTrip;
+import sm.tools.ba2veda.impl._3b538_mnd_s_Decree;
 import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
+import sm.tools.ba2veda.impl._22dc2_mnd_s_Decree;
 import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
 import sm.tools.ba2veda.impl._050ce_mnd_s_Pass;
+import sm.tools.ba2veda.impl._09969_mnd_s_Decree;
 import sm.tools.ba2veda.impl._2bace_mnd_s_ActOfViolation;
 
 import sm.tools.veda_client.VedaConnection;
@@ -208,6 +216,15 @@ public class Fetcher
 		trs.add(new _d5c66_mnd_s_RepresentativeCostsForEvent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		trs.add(new _b243a_mnd_s_DismantlingProject(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _5d588_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _09969_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _e85f6_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _fcb4a_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _df968_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _22dc2_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _65875_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _3b538_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
