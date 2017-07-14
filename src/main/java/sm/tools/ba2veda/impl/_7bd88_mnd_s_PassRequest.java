@@ -60,6 +60,9 @@ public class _7bd88_mnd_s_PassRequest extends Ba2VedaTransform {
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
 				
+				if (rss == null) 
+					continue;
+				
 				if (rss.resources.size() < 1)
 					continue;
 				
