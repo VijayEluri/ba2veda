@@ -7,7 +7,6 @@ import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
 import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
-import sm.tools.ba2veda.Pair;
 import sm.tools.ba2veda.Replacer;
 import sm.tools.veda_client.Individual;
 import sm.tools.veda_client.Resource;
@@ -15,34 +14,25 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _5d588_mnd_s_Decree extends Ba2VedaTransform {
-	public _5d588_mnd_s_Decree(BaSystem _ba, VedaConnection _veda, Replacer replacer) {
-		super(_ba, _veda, replacer, "5d58831674654beba275600783490941", "mnd-s:Decree");
+public class _bfb8d_mnd_s_DecreeRegistrationRecord extends Ba2VedaTransform{
+	public _bfb8d_mnd_s_DecreeRegistrationRecord(BaSystem _ba, VedaConnection _veda, Replacer replacer) {
+		super(_ba, _veda, replacer, "bfb8da8c956d41b1b61860d09b0a657b", "mnd-s:DecreeRegistrationRecord");
 	}
 
 	public void inital_set() {
-		fields_map.put("to_department", "v-s:responsibleDepartment");
-		fields_map.put("Заголовок", "v-s:title");
-		fields_map.put("Инициатор", "v-s:initiator");
-		fields_map.put("Подписывающий", "v-s:signedBy");
-		fields_map.put("file", "v-s:attachment");
-		fields_map.put("cause", "v-s:reason");
-		fields_map.put("description", "v-s:description");
-		fields_map.put("comment", "v-s:hasComment");
-		fields_map.put("reg_note", "mnd-s:hasDecreeRegistrationRecord");
+		fields_map.put("map_to_doc", "v-s:pareng");
+		fields_map.put("reg_number", "v-s:registrationNumber");
+		fields_map.put("date_from", "v-s:registrationDate");
+		fields_map.put("attachment", "v-s:attachment");
+		fields_map.put("comment", "rdfs:comment");
 		fields_map.put("name", "rdfs:label");
-		fields_map.put("recipient", "v-s:copyTo");
-//		fields_map.put("status", "v-s:hasStatus");
-		fields_map.put("add_info", "v-s:hasComment");
-		
-		fields_map.put("Связанные документы", "?");
+		fields_map.put("add_to_doc", "v-s:backwardTarget");
 		fields_map.put("nomenclature", "?");
 	}
 	
 	@Override
 	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
-		String parent_ba_doc_id, String path) throws Exception {
-		
+			String parent_ba_doc_id, String path) throws Exception {
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 
@@ -50,34 +40,30 @@ public class _5d588_mnd_s_Decree extends Ba2VedaTransform {
 		new_individual.setUri(uri);
 
 		set_basic_fields(new_individual, doc);
-		
+
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
-		int link_count = 0;
-		int ncomments = 1;
+		new_individual.addProperty("v-s:omitBackwardTarget", new Resource(false, Type._Bool));
+		new_individual.addProperty("v-s:backwardPropery", new Resource("v-s:hasDecreeRegistrationRecord", Type._Uri));
+		
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts) {
 			String code = att.getCode();
 
 			String predicate = fields_map.get(code);
 			System.out.println("CODE: " + code);
-			
 			if (predicate != null) {
 				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
-					
+
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
-					
-				if (code.equals("importance") && (rss == null || rss.resources.size() < 1))
-					new_individual.addProperty("v-s:isActivityAccidental", new Resource(true, Type._Bool));
-				
 				
 				if (rss == null)
 					continue;
-
-					
+				
 				if (rss.resources.size() < 1)
 					continue;
+				
 				if (code.equals("nomenclature")) {
 					String val = att.getRecordIdValue();
 					switch (val) {
@@ -747,47 +733,14 @@ public class _5d588_mnd_s_Decree extends Ba2VedaTransform {
 					}
 					
 					new_individual.addProperty("mnd-s:hasDecreeKind", new Resource(val, Type._Uri));
-				} else if (code.equals("Связанные документы")) {
-					String irf = att.getLinkValue();
-					if (irf == null)
-						continue;
-					Pair<XmlDocument, Long> pair = ba.getActualDocument(irf);
-					if (pair == null)
-						continue;
-					
-					XmlDocument irf_doc = pair.getLeft();
-					
-					String inherit_rights_from = ba.get_first_value_of_field(irf_doc, "inherit_rights_from");
-					String link_to = irf;
-					
-					if (inherit_rights_from != null)
-						if (irf_doc.getTypeId().equals("ead1b2fa113c45a8b79d093e8ec14728")
-								|| irf_doc.getTypeId().equals("15206d33eafa440c84c02c8d912bce7a")
-								|| irf_doc.getTypeId().equals("ec6d76a99d814d0496d5d879a0056428")
-								|| irf_doc.getTypeId().equals("a0e50600ebe9450e916469ee698e3faa")
-								|| irf_doc.getTypeId().equals("71e3890b3c77441bad288964bf3c3d6a")
-								|| irf_doc.getTypeId().equals("cab21bf8b68a4b87ac37a5b41adad8a8")
-								|| irf_doc.getTypeId().equals("110fa1f351e24a2bbc187c872b114ea4")
-								|| irf_doc.getTypeId().equals("d539b253cb6247a381fb51f4ee34b9d8")
-								|| irf_doc.getTypeId().equals("a7b5b15a99704c9481f777fa941506c0")
-								|| irf_doc.getTypeId().equals("67588724c4c54b25a2c84906613bd15a"))
-							link_to = inherit_rights_from;
-					
-					Individual link = new Individual();
-					link.setUri(new_individual.getUri() + "_link_" + link_count);
-					link_count++;
-					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
-					link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
-					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
-					putIndividual(link, ba_id, true);
-					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
 				}
 			}
 		}
-			
-		new_individual.addProperty("rdf:type", to_class, Type._Uri);
+		
+		
+
+
 		res.add(new_individual);
 		return res;
 	}
-
 }
