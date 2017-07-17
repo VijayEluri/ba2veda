@@ -26,6 +26,7 @@ import sm.tools.ba2veda.impl._2fe65_mnd_s_RepresentativeCostsEvent;
 import sm.tools.ba2veda.impl._524d6_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._524d6_mnd_s_Contract;
 import sm.tools.ba2veda.impl._52e5c_mnd_s_Claim;
+import sm.tools.ba2veda.impl._53ba3_mnd_s_MaterialGroup;
 import sm.tools.ba2veda.impl._579b1_mnd_s_ProjectCapex;
 import sm.tools.ba2veda.impl._5c2ce_mnd_s_Building;
 import sm.tools.ba2veda.impl._5d588_mnd_s_Decree;
@@ -61,6 +62,7 @@ import sm.tools.ba2veda.impl._d0072_v_s_Correspodent;
 import sm.tools.ba2veda.impl._d5c66_mnd_s_RepresentativeCostsForEvent;
 import sm.tools.ba2veda.impl._d9378_mnd_s_IncomingLetter;
 import sm.tools.ba2veda.impl._d9476_mnd_s_ContractRequest;
+import sm.tools.ba2veda.impl._dabb6_mnd_s_MaterialGroup;
 import sm.tools.ba2veda.impl._dabb6_v_s_MaterialGroup;
 import sm.tools.ba2veda.impl._df75b_mnd_s_AuditSafety;
 import sm.tools.ba2veda.impl._df968_mnd_s_Decree;
@@ -228,6 +230,8 @@ public class Fetcher
 		trs.add(new _22dc2_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _65875_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _3b538_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+
+		trs.add(new _dabb6_mnd_s_MaterialGroup(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
