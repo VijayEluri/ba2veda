@@ -81,6 +81,7 @@ import sm.tools.ba2veda.impl._3369e_mnd_s_BusinessTrip;
 import sm.tools.ba2veda.impl._3b538_mnd_s_Decree;
 import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
 import sm.tools.ba2veda.impl._22dc2_mnd_s_Decree;
+import sm.tools.ba2veda.impl._270b9_mnd_s_ProjectCapex;
 import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
 import sm.tools.ba2veda.impl._050ce_mnd_s_Pass;
 import sm.tools.ba2veda.impl._09969_mnd_s_Decree;
@@ -234,6 +235,8 @@ public class Fetcher
 		trs.add(new _dabb6_mnd_s_MaterialGroup(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		trs.add(new _53ba3_mnd_s_MaterialRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _270b9_mnd_s_ProjectCapex(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
