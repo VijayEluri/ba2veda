@@ -57,8 +57,10 @@ import sm.tools.ba2veda.impl._bcb5e_mnd_s_Contract;
 import sm.tools.ba2veda.impl._bdc96_mnd_s_AuditInternal;
 import sm.tools.ba2veda.impl._bfb8d_mnd_s_DecreeRegistrationRecord;
 import sm.tools.ba2veda.impl._c6c99_mnd_s_ContractRequest;
+import sm.tools.ba2veda.impl._c6c99_v_s_Link;
 import sm.tools.ba2veda.impl._c8a33_mnd_s_AuditInternalObject;
 import sm.tools.ba2veda.impl._d0072_v_s_Correspodent;
+import sm.tools.ba2veda.impl._d1191_v_s_Link;
 import sm.tools.ba2veda.impl._d5c66_mnd_s_RepresentativeCostsForEvent;
 import sm.tools.ba2veda.impl._d9378_mnd_s_IncomingLetter;
 import sm.tools.ba2veda.impl._d9476_mnd_s_ContractRequest;
@@ -75,9 +77,11 @@ import sm.tools.ba2veda.impl._ec6d7_mnd_s_Contract;
 import sm.tools.ba2veda.impl._f063e_v_s_ClassifierOKVED;
 import sm.tools.ba2veda.impl._fa740_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._faff0_v_s_ContractorProfileFile;
+import sm.tools.ba2veda.impl._fb3d8_v_s_Link;
 import sm.tools.ba2veda.impl._fc534_v_s_NormativeDocument;
 import sm.tools.ba2veda.impl._fcb4a_mnd_s_Decree;
 import sm.tools.ba2veda.impl._3369e_mnd_s_BusinessTrip;
+import sm.tools.ba2veda.impl._38851_v_s_Link;
 import sm.tools.ba2veda.impl._3b538_mnd_s_Decree;
 import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
 import sm.tools.ba2veda.impl._22dc2_mnd_s_Decree;
@@ -85,6 +89,7 @@ import sm.tools.ba2veda.impl._270b9_mnd_s_ProjectCapex;
 import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
 import sm.tools.ba2veda.impl._050ce_mnd_s_Pass;
 import sm.tools.ba2veda.impl._09969_mnd_s_Decree;
+import sm.tools.ba2veda.impl._0d138_v_s_Link;
 import sm.tools.ba2veda.impl._2bace_mnd_s_ActOfViolation;
 
 import sm.tools.veda_client.VedaConnection;
@@ -237,6 +242,12 @@ public class Fetcher
 		trs.add(new _53ba3_mnd_s_MaterialRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		trs.add(new _270b9_mnd_s_ProjectCapex(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _d1191_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _0d138_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _38851_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _c6c99_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _fb3d8_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
