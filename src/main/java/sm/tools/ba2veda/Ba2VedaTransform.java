@@ -38,10 +38,29 @@ public abstract class Ba2VedaTransform
 	static int count_put;
 	static boolean is_enable_store = true;
 
+	private static long get_count_of_queue(String queue_name)
+	{
+		long res = 9999999999L;
+		try
+		{
+			Individual queue_state = st_veda.getIndividual("srv:queue-state-" + queue_name);
+
+			if (queue_state != null)
+			{
+				long cc = Long.parseLong(queue_state.getValue("srv:current_count"));
+				long tc = Long.parseLong(queue_state.getValue("srv:total_count"));
+
+				return tc - cc;
+			}
+			return res;
+		} catch (Exception ex)
+		{
+			return -1;
+		}
+	}
+
 	public static int putIndividual(Individual indv, String ba_doc_id, boolean isPrepareEvent) throws Exception
 	{
-		Thread.currentThread().sleep(0);
-		
 		if (is_enable_store == false)
 			return 200;
 
@@ -63,88 +82,87 @@ public abstract class Ba2VedaTransform
 		// }
 
 		// ba_doc_id = null;
-		if (ba_doc_id != null)
-		{
-			List<Right> rights = st_ba.get_rights_of_doc(ba_doc_id);
-
-			for (Right right : rights)
-			{
-				String veda_user_uri = null;
-
-				if (right.user_id.equals("68549dcf-24c7-4254-91d3-1ec62a5a038d"))
-					right.hashCode();
-
-				String link = right.user_id;
-				String new_link = null;
-
-				HashMap<String, Resource> rpls = st_replacer.get_replace(null, link, null);
-
-				if (rpls != null)
-					veda_user_uri = rpls.get("*").getData();
-				else
-				{
-					new_link = findAppointmentFromVeda(link);
-					if (new_link != null)
-						veda_user_uri = new_link;
-					else
-						System.out.println("ERR: fail prepare : " + link);
-				}
-
-				if (veda_user_uri != null && veda_user_uri.indexOf("dismissed") < 0)
-				{
-					if (veda_user_uri.equals("d:68549dcf-24c7-4254-91d3-1ec62a5a038d"))
-						veda_user_uri.length();
-
-					Individual app = st_veda.getIndividual(veda_user_uri);
-
-					if (app != null)
-					{
-						Resources occup = app.getResources("v-s:occupation");
-
-						String to = null;
-
-						if (occup != null && occup.resources.size() > 0)
-							to = occup.resources.get(0).getData();
-
-						if (to != null)
-						{
-							Individual new_permission = new Individual();
-
-							String right_uri = util.get_hashed_uri (indv.getUri().hashCode() + "_" + to.hashCode() + "_prm");
-
-							new_permission.setUri(right_uri);
-							new_permission.addProperty("rdf:type", new Resource("v-s:PermissionStatement", Type._Uri));
-							new_permission.addProperty("v-s:permissionSubject", new Resource(to, Type._Uri));
-							new_permission.addProperty("v-s:permissionObject", new Resource(indv.getUri(), Type._Uri));
-
-							if (right.isCreate == true)
-								new_permission.addProperty("v-s:canCreate", new Resource("true", Type._Bool));
-							if (right.isRead == true)
-								new_permission.addProperty("v-s:canRead", new Resource("true", Type._Bool));
-							if (right.isUpdate == true)
-								new_permission.addProperty("v-s:canUpdate", new Resource("true", Type._Bool));
-							if (right.isDelete == true)
-								new_permission.addProperty("v-s:canDelete", new Resource("true", Type._Bool));
-
-							st_veda.putIndividual(new_permission, isPrepareEvent);
-							System.out.println("ADD RIGHT:" + new_permission.getUri());
-						} else
-						{
-							System.out.println("ERR: fail add right, not found occupation in appointment : " + veda_user_uri);
-						}
-					} else
-					{
-						System.out.println("ERR: fail add right, not found appointment : " + veda_user_uri);
-					}
-
-				}
-			}
-		}
-
 		if (is_store)
 		{
-			if (indv.getUri().equals("d:3185047800f6483182c8ba77b01a448f"))
-				indv.getUri();
+			if (get_count_of_queue("fulltext_indexer0") > 1000 || get_count_of_queue("fanout_sql_np0") > 1000)
+			{
+				System.out.println("Server overload, sleep 10s");
+				Thread.currentThread().sleep(10000);
+			}
+
+			if (ba_doc_id != null)
+			{
+				List<Right> rights = st_ba.get_rights_of_doc(ba_doc_id);
+
+				for (Right right : rights)
+				{
+					String veda_user_uri = null;
+
+					String link = right.user_id;
+					String new_link = null;
+
+					HashMap<String, Resource> rpls = st_replacer.get_replace(null, link, null);
+
+					if (rpls != null)
+						veda_user_uri = rpls.get("*").getData();
+					else
+					{
+						new_link = findAppointmentFromVeda(link);
+						if (new_link != null)
+							veda_user_uri = new_link;
+						else
+							System.out.println("ERR: fail prepare : " + link);
+					}
+
+					if (veda_user_uri != null && veda_user_uri.indexOf("dismissed") < 0)
+					{
+						Individual app = st_veda.getIndividual(veda_user_uri);
+
+						if (app != null)
+						{
+							Resources occup = app.getResources("v-s:occupation");
+
+							String to = null;
+
+							if (occup != null && occup.resources.size() > 0)
+								to = occup.resources.get(0).getData();
+
+							if (to != null)
+							{
+								Individual new_permission = new Individual();
+
+								String right_uri = util.get_hashed_uri(indv.getUri().hashCode() + "_" + to.hashCode() + "_prm");
+
+								new_permission.setUri(right_uri);
+								new_permission.addProperty("rdf:type", new Resource("v-s:PermissionStatement", Type._Uri));
+								new_permission.addProperty("v-s:permissionSubject", new Resource(to, Type._Uri));
+								new_permission.addProperty("v-s:permissionObject", new Resource(indv.getUri(), Type._Uri));
+
+								if (right.isCreate == true)
+									new_permission.addProperty("v-s:canCreate", new Resource("true", Type._Bool));
+								if (right.isRead == true)
+									new_permission.addProperty("v-s:canRead", new Resource("true", Type._Bool));
+								if (right.isUpdate == true)
+									new_permission.addProperty("v-s:canUpdate", new Resource("true", Type._Bool));
+								if (right.isDelete == true)
+									new_permission.addProperty("v-s:canDelete", new Resource("true", Type._Bool));
+
+								st_veda.putIndividual(new_permission, isPrepareEvent);
+								System.out.println("ADD RIGHT:" + new_permission.getUri());
+							} else
+							{
+								System.out.println("ERR: fail add right, not found occupation in appointment : " + veda_user_uri);
+							}
+						} else
+						{
+							System.out.println("ERR: fail add right, not found appointment : " + veda_user_uri);
+						}
+
+					}
+				}
+			}
+
+			System.out.println("PUT INDIVIDUAL: " + indv.getUri());
 			return st_veda.putIndividual(indv, isPrepareEvent);
 		} else
 			return 200;
@@ -162,9 +180,9 @@ public abstract class Ba2VedaTransform
 			st = transfer_info_conn.createStatement();
 			st.execute(
 					"CREATE TABLE IF NOT EXISTS PREPARED_IDS(src_id VARCHAR(255), dest_id VARCHAR(255), timestamp BIGINT(20), dest_type VARCHAR(255))");
-			
-			st.execute("CREATE INDEX IF NOT EXISTS t1b ON PREPARED_IDS(src_id)"); 
-			st.execute("CREATE INDEX IF NOT EXISTS t2b ON PREPARED_IDS(dest_id)"); 
+
+			st.execute("CREATE INDEX IF NOT EXISTS t1b ON PREPARED_IDS(src_id)");
+			st.execute("CREATE INDEX IF NOT EXISTS t2b ON PREPARED_IDS(dest_id)");
 		} catch (Exception ex)
 		{
 			System.out.println(ex);
@@ -342,15 +360,14 @@ public abstract class Ba2VedaTransform
 			{
 				String tmp = el.getData();
 				tmp = tmp.replace('T', ' ').replace('Z', ' ').substring(0, 10);
-				res.put(el.getLang(), tmp);				
-			}
-			else
+				res.put(el.getLang(), tmp);
+			} else
 				res.put(el.getLang(), el.getData());
 		}
 
 		return res;
 	}
-	
+
 	public String get_OrgUri_of_inn(String inn) throws Exception
 	{
 		String docId;
@@ -723,7 +740,7 @@ public abstract class Ba2VedaTransform
 		if (type.equals("TEXT"))
 		{
 			String str = att.getTextValue();
-			
+
 			if (str != null && str.length() > 0)
 			{
 				str = str.trim();
@@ -931,7 +948,7 @@ public abstract class Ba2VedaTransform
 		{
 			String fileId = att.getFileValue();
 			FileInfo fi = ba.getFileInfo(fileId);
-			
+
 			if (fi != null && doc.getDateCreated() != null)
 			{
 				// String path_to_files = util.date2_short_string(doc.getDateCreated()).replace('-',
