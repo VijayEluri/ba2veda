@@ -148,7 +148,7 @@ public abstract class Ba2VedaTransform
 									new_permission.addProperty("v-s:canDelete", new Resource("true", Type._Bool));
 
 								st_veda.putIndividual(new_permission, isPrepareEvent);
-								System.out.println("ADD RIGHT:" + new_permission.getUri());
+								System.out.println("ADD RIGHT:" + new_permission.getUri() + ", TO:" + indv.getUri());
 							} else
 							{
 								System.out.println("ERR: fail add right, not found occupation in appointment : " + veda_user_uri);
@@ -159,6 +159,7 @@ public abstract class Ba2VedaTransform
 						}
 
 					}
+					Thread.currentThread().sleep(10);
 				}
 			}
 
