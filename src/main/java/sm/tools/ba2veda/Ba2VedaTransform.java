@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -463,6 +464,9 @@ public abstract class Ba2VedaTransform
 	{
 		String res_ap = null;
 
+		if (person_id.equals("47a03c80-5f04-425b-80d7-1562bd4a0a6c"))
+			person_id.length();
+
 		ArrayList<String> arg1 = new ArrayList<String>();
 		arg1.add(person_id);
 		List<User> uus = st_ba.pacahon.getUsersByUids(arg1, "RU", "getAppointmentFromVeda");
@@ -477,23 +481,29 @@ public abstract class Ba2VedaTransform
 
 		long pid = uu.getTabNomer();
 
-		String[] res = null;
+		List<String> res = new ArrayList<String>();
+
+		String str_pid = null;
 
 		if (pid > 0)
 		{
-			String str_pid = pid + "";
+			str_pid = pid + "";
 
 			if (str_pid.length() < 8)
 				str_pid = "00000000".substring(0, 8 - ("" + pid).length()) + pid;
 
-			res = st_veda.query("'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'");
+			res.addAll(new ArrayList<String>(
+					Arrays.asList(st_veda.query("'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'"))));
 		} else
 		{
 			// System.out.println("user " + person_id + ", not content tabnumber");
 			return "d:" + person_id;
 		}
 
-		if (res == null || res.length == 0)
+		res.addAll(new ArrayList<String>(
+				Arrays.asList(st_veda.query("'v-s:deleted' == true && 'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'"))));
+
+		if (res.size() == 0)
 		{
 			// поиск пользователя по доменному имени
 			String domain_name = uu.getDomainName();
@@ -501,13 +511,13 @@ public abstract class Ba2VedaTransform
 			{
 				domain_name = domain_name.replace("-", " +");
 
-				res = st_veda.query("'v-s:login'=='" + domain_name + "'");
-				if (res == null || res.length == 0)
+				res = new ArrayList<String>(Arrays.asList(st_veda.query("'v-s:login'=='" + domain_name + "'")));
+				if (res.size() == 0)
 				{
 					return createUserToVeda(uu, "dismissed", "d:mondi_position_dismissed", false);
 				} else
 				{
-					String account_id = (String) res[0];
+					String account_id = (String) res.get(0);
 
 					Individual jsno_account = st_veda.getIndividual(account_id);
 
@@ -519,13 +529,11 @@ public abstract class Ba2VedaTransform
 
 		}
 
-		// String mnd_uri = null;
-
 		if (res != null)
 		{
-			for (int i = 0; i < res.length; i++)
+			for (int i = 0; i < res.size(); i++)
 			{
-				String id_ap = (String) res[i];
+				String id_ap = (String) res.get(i);
 
 				Individual unit = st_veda.getIndividual(id_ap);
 
@@ -550,9 +558,9 @@ public abstract class Ba2VedaTransform
 
 		if (res_ap == null)
 		{
-			for (int i = 0; i < res.length; i++)
+			for (int i = 0; i < res.size(); i++)
 			{
-				String id_ap = (String) res[i];
+				String id_ap = (String) res.get(i);
 
 				if (id_ap.indexOf("dismissed") > 0)
 				{
