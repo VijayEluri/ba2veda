@@ -123,7 +123,8 @@ public class _5fcfb_mnd_s_PurchaseOrder extends Ba2VedaTransform
 							}
 						} else
 						{
-							System.out.println("ERR! in field inherit_rights_from[" + add_to_link + "] not found in veda");
+							System.out.println("WARN! in field inherit_rights_from[" + add_to_link + "] not found in BA, use as is");
+							new_individual.addProperty(predicate, rss);							
 						}
 					} else
 					{
