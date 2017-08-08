@@ -501,7 +501,7 @@ public abstract class Ba2VedaTransform
 		}
 
 		res.addAll(new ArrayList<String>(
-				Arrays.asList(st_veda.query("'v-s:deleted' == true && 'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'"))));
+				Arrays.asList("'v-s:deleted' == true && 'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'")));
 
 		if (res.size() == 0)
 		{
