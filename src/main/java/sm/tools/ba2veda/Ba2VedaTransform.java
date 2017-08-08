@@ -464,8 +464,8 @@ public abstract class Ba2VedaTransform
 	{
 		String res_ap = null;
 
-		if (person_id.equals("47a03c80-5f04-425b-80d7-1562bd4a0a6c"))
-			person_id.length();
+		//		if (person_id.equals("47a03c80-5f04-425b-80d7-1562bd4a0a6c"))
+		//			person_id.length();
 
 		ArrayList<String> arg1 = new ArrayList<String>();
 		arg1.add(person_id);
@@ -500,8 +500,8 @@ public abstract class Ba2VedaTransform
 			return "d:" + person_id;
 		}
 
-		res.addAll(new ArrayList<String>(
-				Arrays.asList("'v-s:deleted' == true && 'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'")));
+		res.addAll(new ArrayList<String>(Arrays.asList(
+				st_veda.query(("'v-s:deleted' == true && 'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'")))));
 
 		if (res.size() == 0)
 		{
