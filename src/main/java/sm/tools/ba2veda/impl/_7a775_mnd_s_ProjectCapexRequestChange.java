@@ -30,13 +30,14 @@ public class _7a775_mnd_s_ProjectCapexRequestChange extends Ba2VedaTransform {
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("compound_title", "rdfs:label");
 		fields_map.put("nomenclature", "v-s:parent");
-		fields_map.put("effects_to_value", "mnd-s:capexEffectToValue");
-		fields_map.put("effects_to_budget", "mnd-s:capexEffectToBudget");
-		fields_map.put("effects_to_time", "mnd-s:capexEffectToTime");
-		fields_map.put("effects_to_safety", "mnd-s:capexEffectToSafety");
+		fields_map.put("effect_to_value", "mnd-s:capexEffectToValue");
+		fields_map.put("effect_to_budget", "mnd-s:capexEffectToBudget");
+		fields_map.put("effect_to_time", "mnd-s:capexEffectToTime");
+		fields_map.put("effect_to_safety", "mnd-s:capexEffectToSafety");
+		fields_map.put("date_to", "v-s:dateTo");
 		
 		fields_map.put("inherit_rights_from", "?");
-		fields_map.put("add_info", "?");
+		fields_map.put("add_info", "v-s:hasComment");
 	}
 	
 	@Override
@@ -75,15 +76,8 @@ public class _7a775_mnd_s_ProjectCapexRequestChange extends Ba2VedaTransform {
 				
 				if (rss.resources.size() < 1)
 					continue;
-				if (code.equals("add_info")) {
-					Individual comment = new Individual();
-					comment.setUri(String.format("%s_comment_%d", new_individual.getUri(), ncomments));
-					comment.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
-					comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
-					comment.addProperty("v-s:attachment", rss);
-					new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
-					putIndividual(comment, ba_id, true);
-				} else if (code.equals("inherit_rights_from")) {
+				
+				if (code.equals("inherit_rights_from")) {
 					String irf = att.getLinkValue();
 					XmlDocument irf_doc = ba.getActualDocument(irf).getLeft();
 					String inherit_rights_from = ba.get_first_value_of_field(irf_doc, "inherit_rights_from");
