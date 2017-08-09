@@ -85,6 +85,11 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 		Individual agd = null;
 		
 		List<XmlAttribute> atts = doc.getAttributes();
+		
+		ArrayList<Object> label_parts = new ArrayList<Object>();
+		Resources regnmb = null;
+		Resources project_stage = null;
+		
 		int ncomments = 1;
 		for (XmlAttribute att : atts) {
 			String code = att.getCode();
@@ -104,6 +109,9 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 				
 				if (rss.resources.size() < 1)
 					continue;
+				
+				if (code.equals("Номер"))
+					regnmb = rss;
 				if (code.equals("№ идеи в ЛИЗ")) {
 					nliz = rss;		
 				} else if (code.equals("Решение по документу")) {
@@ -128,6 +136,11 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 					}
 					
 					new_individual.addProperty("v-s:hasProjectStage", new Resource(of_stage, Type._Uri));
+					Individual ps = veda.getIndividual(of_stage);
+					
+					if (ps != null) {
+						project_stage = ps.getResources("rdfs:label");
+					}
 					
 					if (agd == null)
 						agd = new Individual();
@@ -339,6 +352,33 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 			comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
 			putIndividual(comment, ba_id, true);
+		}
+		
+		if (regnmb != null || project_stage != null) {
+			String[] langs_out1 = { "EN", "RU" };
+			String[] langs_out2 = { "NONE" };
+			
+//			Object[] parts = { "№ идеи в ЛИЗ: ", " ", nliz };
+			
+			ArrayList<Object> parts = new ArrayList<Object>();
+			
+			parts.add("Инвестиционная заявка");
+			
+			if (regnmb != null) {
+				parts.add(" ");
+				parts.add(regnmb);
+			}
+			
+			if (project_stage != null) {
+				parts.add(" ");
+				parts.add(project_stage);
+			}
+			
+			Resources rss = rs_assemble(parts.toArray(), langs_out1);
+			if (rss.resources.size() == 0)
+				rss = rs_assemble(parts.toArray(), langs_out2);
+			
+			new_individual.addProperty("rdfs:label", rss);
 		}
 		
 		if (spp_element != null) {

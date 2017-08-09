@@ -43,7 +43,7 @@ public class _bfb8d_mnd_s_DecreeRegistrationRecord extends Ba2VedaTransform{
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		new_individual.addProperty("v-s:omitBackwardTarget", new Resource(false, Type._Bool));
-		new_individual.addProperty("v-s:backwardPropery", new Resource("v-s:hasDecreeRegistrationRecord", Type._Uri));
+		new_individual.addProperty("v-s:backwardProperty", new Resource("v-s:hasDecreeRegistrationRecord", Type._Uri));
 		
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts) {
@@ -352,7 +352,7 @@ public class _bfb8d_mnd_s_DecreeRegistrationRecord extends Ba2VedaTransform{
 					case "72cce4f3d505486db70756a5b94751ab":
 						val = "d:9c171b39761749dab3ca7891b67bf531";
 						break;
-					case "0d5f29aae4f84e7b8341545345c3f4f1:":
+					case "0d5f29aae4f84e7b834154ba5345c3f4f1:":
 						val = "d:5f3338bf470448958167688853db0b4a";
 						break;
 					case "e066392a80d346aaba1c612422fb129e":

@@ -40,6 +40,7 @@ import sm.tools.ba2veda.impl._6b0ea_v_s_Organization;
 import sm.tools.ba2veda.impl._6f121_v_s_Level;
 import sm.tools.ba2veda.impl._74eb8_mnd_s_AuditSafetyAction;
 import sm.tools.ba2veda.impl._7a14e_mnd_s_AccountingRecord;
+import sm.tools.ba2veda.impl._7a775_mnd_s_ProjectCapexRequestChange;
 import sm.tools.ba2veda.impl._7ab24_mnd_s_AuditInternalAction;
 import sm.tools.ba2veda.impl._7adb5_v_s_Delivery;
 import sm.tools.ba2veda.impl._7be2d_mnd_s_ContractPassport;
@@ -248,6 +249,7 @@ public class Fetcher
 		trs.add(new _38851_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _c6c99_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _fb3d8_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _7a775_mnd_s_ProjectCapexRequestChange(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
