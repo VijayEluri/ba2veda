@@ -53,6 +53,7 @@ import sm.tools.ba2veda.impl._9fb73_mnd_s_AuditSafety;
 import sm.tools.ba2veda.impl._a96be_v_s_Comment;
 import sm.tools.ba2veda.impl._b243a_mnd_s_DismantlingProject;
 import sm.tools.ba2veda.impl._b3999_mnd_s_OutgoingLetter;
+import sm.tools.ba2veda.impl._b4a29_mnd_s_ConatractDirection;
 import sm.tools.ba2veda.impl._bcb5e_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._bcb5e_mnd_s_Contract;
 import sm.tools.ba2veda.impl._bdc96_mnd_s_AuditInternal;
@@ -61,6 +62,7 @@ import sm.tools.ba2veda.impl._c6c99_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._c6c99_v_s_Link;
 import sm.tools.ba2veda.impl._c8a33_mnd_s_AuditInternalObject;
 import sm.tools.ba2veda.impl._d0072_v_s_Correspodent;
+import sm.tools.ba2veda.impl._d1191_mnd_s_InternalDocument;
 import sm.tools.ba2veda.impl._d1191_v_s_Link;
 import sm.tools.ba2veda.impl._d5c66_mnd_s_RepresentativeCostsForEvent;
 import sm.tools.ba2veda.impl._d9378_mnd_s_IncomingLetter;
@@ -75,6 +77,7 @@ import sm.tools.ba2veda.impl._ead1b_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._ead1b_mnd_s_Contract;
 import sm.tools.ba2veda.impl._ec6d7_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._ec6d7_mnd_s_Contract;
+import sm.tools.ba2veda.impl._f025ba_mnd_s_IncomingLetter;
 import sm.tools.ba2veda.impl._f063e_v_s_ClassifierOKVED;
 import sm.tools.ba2veda.impl._fa740_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._faff0_v_s_ContractorProfileFile;
@@ -83,6 +86,7 @@ import sm.tools.ba2veda.impl._fc534_v_s_NormativeDocument;
 import sm.tools.ba2veda.impl._fcb4a_mnd_s_Decree;
 import sm.tools.ba2veda.impl._3369e_mnd_s_BusinessTrip;
 import sm.tools.ba2veda.impl._38851_v_s_Link;
+import sm.tools.ba2veda.impl._3afd6_mnd_s_ForestryDocument;
 import sm.tools.ba2veda.impl._3b538_mnd_s_Decree;
 import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
 import sm.tools.ba2veda.impl._22dc2_mnd_s_Decree;
@@ -90,6 +94,7 @@ import sm.tools.ba2veda.impl._270b9_mnd_s_ProjectCapex;
 import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
 import sm.tools.ba2veda.impl._050ce_mnd_s_Pass;
 import sm.tools.ba2veda.impl._09969_mnd_s_Decree;
+import sm.tools.ba2veda.impl._0d138_mnd_s_InternalDocument;
 import sm.tools.ba2veda.impl._0d138_v_s_Link;
 import sm.tools.ba2veda.impl._2bace_mnd_s_ActOfViolation;
 
@@ -250,6 +255,13 @@ public class Fetcher
 		trs.add(new _c6c99_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _fb3d8_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _7a775_mnd_s_ProjectCapexRequestChange(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _3afd6_mnd_s_ForestryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _b4a29_mnd_s_ConatractDirection(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _f025ba_mnd_s_IncomingLetter(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _d1191_mnd_s_InternalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _0d138_mnd_s_InternalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{

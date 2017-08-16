@@ -114,8 +114,10 @@ public class _a96be_v_s_Comment extends Ba2VedaTransform
 						}
 					} else
 					{
-						if (code.equals("comment"))
+						if (code.equals("comment")) {
 							comment = rss;
+							continue;
+						}
 
 						new_individual.addProperty(predicate, rss);
 					}
@@ -123,18 +125,32 @@ public class _a96be_v_s_Comment extends Ba2VedaTransform
 			}
 		}
 
-		if (kind_as_comment != null)
+		if (kind_as_comment != null || comment != null)
 		{
-			Object[] ff1 =
-			{ kind_as_comment, ", ", comment };
+//			Object[] ff1 =
+//			{ kind_as_comment, ", ", comment };
+			
+			ArrayList<Object> ff1 = new ArrayList<Object>();
+			if (kind_as_comment != null) {
+				ff1.add(kind_as_comment);
+			} 
+			
+			if (comment != null) {
+				if (ff1.size() > 0)
+					ff1.add(", ");
+				
+				ff1.add(comment);
+			}
+			
 			String[] langs_out1 =
 			{ "EN", "RU" };
-			Resources rss = rs_assemble(ff1, langs_out1);
+			
+			Resources rss = rs_assemble(ff1.toArray(), langs_out1);
 			if (rss.resources.size() == 0)
 			{
 				String[] langs_out2 =
 				{ "NONE" };
-				rss = rs_assemble(ff1, langs_out2);
+				rss = rs_assemble(ff1.toArray(), langs_out2);
 			}
 
 			if (rss.resources.size() > 0)
