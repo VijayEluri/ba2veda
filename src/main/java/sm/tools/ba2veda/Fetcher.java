@@ -45,6 +45,7 @@ import sm.tools.ba2veda.impl._7ab24_mnd_s_AuditInternalAction;
 import sm.tools.ba2veda.impl._7adb5_v_s_Delivery;
 import sm.tools.ba2veda.impl._7be2d_mnd_s_ContractPassport;
 import sm.tools.ba2veda.impl._86607_mnd_s_ContractorCategoryRequest;
+import sm.tools.ba2veda.impl._8aa42_mnd_s_ActOfPpeDestruction;
 import sm.tools.ba2veda.impl._9172d_v_s_Subsidiary;
 import sm.tools.ba2veda.impl._92fdd_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._92fdd_mnd_s_Contract;
@@ -91,6 +92,7 @@ import sm.tools.ba2veda.impl._3b538_mnd_s_Decree;
 import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
 import sm.tools.ba2veda.impl._22dc2_mnd_s_Decree;
 import sm.tools.ba2veda.impl._270b9_mnd_s_ProjectCapex;
+import sm.tools.ba2veda.impl._2806b_mnd_s_EnergyResourceRequest;
 import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
 import sm.tools.ba2veda.impl._050ce_mnd_s_Pass;
 import sm.tools.ba2veda.impl._09969_mnd_s_Decree;
@@ -262,6 +264,10 @@ public class Fetcher
 		trs.add(new _f025ba_mnd_s_IncomingLetter(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _d1191_mnd_s_InternalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _0d138_mnd_s_InternalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _2806b_mnd_s_EnergyResourceRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _8aa42_mnd_s_ActOfPpeDestruction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
