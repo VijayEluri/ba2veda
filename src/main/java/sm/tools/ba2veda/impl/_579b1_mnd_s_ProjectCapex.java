@@ -156,6 +156,16 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 						spp_element = new Individual();
 					
 					spp_element.addProperty("mnd-s:sppNumber", rss);
+					
+					String[] langs_out1 = { "EN", "RU" };
+					String[] langs_out2 = { "NONE" };
+					
+					Object[] parts = { "СПП-элемент", " ", rss };
+					Resources rss1 = rs_assemble(parts, langs_out1);
+					if (rss1.resources.size() == 0)
+						rss1 = rs_assemble(parts, langs_out2);
+					 
+					spp_element.addProperty("rdfs:label", rss1);
 				} else if (code.equals("Дата открытия СПП-элемента")) {
 					if (spp_element == null)
 						spp_element = new Individual();
@@ -367,6 +377,11 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 			if (regnmb != null) {
 				parts.add(" ");
 				parts.add(regnmb);
+			}
+			
+			if (new_individual.getResources("v-s:title") != null) {
+				parts.add(" ");
+				parts.add(new_individual.getResources("v-s:title"));
 			}
 			
 			if (project_stage != null) {

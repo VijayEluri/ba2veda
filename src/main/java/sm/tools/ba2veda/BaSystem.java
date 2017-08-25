@@ -217,9 +217,9 @@ public class BaSystem
 
 	public ResultSet getBAObjOnTemplateId(String templateId, Date begin_time)
 	{
-		String queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1";	
-//		String id = "a9c42592542b42428ac1701b4224a55d";
-//		String queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1 AND objectId = '"+ id + "'";
+//		String queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1";	
+		String id = "36130f48c60049658427c3dc4ce4f259";
+		String queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1 AND objectId = '"+ id + "'";
 		try
 		{
 			PreparedStatement ps = documents_db_connection.prepareStatement(queryStr);
@@ -249,9 +249,9 @@ public class BaSystem
 	public Long getCountBAObjOnTemplateId(String templateId, Date begin_time)
 	{
 		Long res = null;
-		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1";
-//		String id = "a9c42592542b42428ac1701b4224a55d";
-//		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1 AND objectId = '"+ id + "'";
+//		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1";
+		String id = "36130f48c60049658427c3dc4ce4f259";
+		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1 AND objectId = '"+ id + "'";
 
 		try
 		{
