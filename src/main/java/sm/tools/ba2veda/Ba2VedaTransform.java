@@ -491,7 +491,8 @@ public abstract class Ba2VedaTransform
 
 			if (str_pid.length() < 8)
 				str_pid = "00000000".substring(0, 8 - ("" + pid).length()) + pid;
-
+			
+			System.out.println("'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'");
 			res.addAll(new ArrayList<String>(
 					Arrays.asList(st_veda.query("'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'"))));
 		} else
