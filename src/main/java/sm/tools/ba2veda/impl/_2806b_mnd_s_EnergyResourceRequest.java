@@ -22,9 +22,8 @@ public class _2806b_mnd_s_EnergyResourceRequest extends Ba2VedaTransform {
 	
 	public void inital_set() {
 		fields_map.put("name", "v-s:title");
-		fields_map.put("toro_object", "v-s:hasMaintainedObject");
-		fields_map.put("work_kind", "v-s:hasTechnicalWorkKind");
-		fields_map.put("energy_source_kind", "mnd-s:hasEnergySourceKind");
+		fields_map.put("work_kind", "mnd-s:hasTechnicalWorkKind");
+		fields_map.put("energy_source_kind", "mnd-s:hasEnergyResourceKind");
 		fields_map.put("date_from", "v-s:dateFrom");
 		fields_map.put("date_to", "v-s:dateTo");
 		fields_map.put("area_from", "mnd-s:armatureFrom");
@@ -36,6 +35,8 @@ public class _2806b_mnd_s_EnergyResourceRequest extends Ba2VedaTransform {
 		fields_map.put("name_full", "rdfs:label");
 		
 		fields_map.put("add_doc", "?");
+//		fields_map.put("toro_object", "v-s:hasMaintainedObject");
+		fields_map.put("toro_object", "?");
 	}
 	
 	@Override
@@ -97,12 +98,15 @@ public class _2806b_mnd_s_EnergyResourceRequest extends Ba2VedaTransform {
 							link_to = inherit_rights_from;
 					
 					Individual link = new Individual();
-					link.setUri(ba_id + "_" + link_to);
-					link.addProperty("v-s:to", new Resource("d:" + Type._Uri));
+					link.setUri("d:" + ba_id + "_" + link_to);
+					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
 					link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
 					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
 					putIndividual(link, ba_id, true);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
+				} else if (code.equals("toro_object")) {
+					new_individual.addProperty("v-s:hasMaintainedObject", rss);
+					new_individual.addProperty("mnd-s:maintainedObjectTxtForEnergyResourceRequest",  new Resource(att.getRecordNameValue()));
 				}
 			}
 		}

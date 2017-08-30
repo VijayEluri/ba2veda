@@ -20,7 +20,7 @@ public class _8aa42_mnd_s_ActOfPpeDestruction extends Ba2VedaTransform{
 		fields_map.put("chief", "v-s:chiefOfWorkGroup");
 		fields_map.put("member", "v-s:member");
 		fields_map.put("condition", "v-s:productionCondition");
-		fields_map.put("desctiption", "v-s:rationale");
+		fields_map.put("description", "v-s:rationale");
 		fields_map.put("deviation", "v-s:deviationDescription");
 		fields_map.put("classifier_decision", "mnd-s:hasPpeDestructionDecisionKind");
 		fields_map.put("attachment", "v-s:attachment");
