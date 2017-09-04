@@ -82,7 +82,12 @@ public class _a96be_v_s_Comment extends Ba2VedaTransform
 					if (code.equals("add_doc"))
 					{
 						String add_to_link = att.getLinkValue();
-						XmlDocument add_to = ba.getActualDocument(add_to_link).getLeft();
+						
+						Pair<XmlDocument, Long> pp = ba.getActualDocument(add_to_link);
+						
+						if (pp != null)
+						{
+						XmlDocument add_to = pp.getLeft();
 						String inherit_rights_from = ba.get_first_value_of_field(add_to, "inherit_rights_from");
 
 						if (inherit_rights_from == null)
@@ -112,6 +117,7 @@ public class _a96be_v_s_Comment extends Ba2VedaTransform
 								new_individual.addProperty(predicate, rss);
 							}
 						}
+					    }
 					} else
 					{
 						if (code.equals("comment")) {
