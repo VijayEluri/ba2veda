@@ -38,6 +38,8 @@ import sm.tools.ba2veda.impl._662_v_s_DeliveryMethod;
 import sm.tools.ba2veda.impl._6b0ea_v_s_ContractorProfile;
 import sm.tools.ba2veda.impl._6b0ea_v_s_Organization;
 import sm.tools.ba2veda.impl._6f121_v_s_Level;
+import sm.tools.ba2veda.impl._73d7c_mnd_s_EquipmentPiece;
+import sm.tools.ba2veda.impl._73d7c_mnd_s_Equipmentlocation;
 import sm.tools.ba2veda.impl._74eb8_mnd_s_AuditSafetyAction;
 import sm.tools.ba2veda.impl._7a14e_mnd_s_AccountingRecord;
 import sm.tools.ba2veda.impl._7a775_mnd_s_ProjectCapexRequestChange;
@@ -268,6 +270,9 @@ public class Fetcher
 		trs.add(new _2806b_mnd_s_EnergyResourceRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		trs.add(new _8aa42_mnd_s_ActOfPpeDestruction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _73d7c_mnd_s_Equipmentlocation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _73d7c_mnd_s_EquipmentPiece(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{

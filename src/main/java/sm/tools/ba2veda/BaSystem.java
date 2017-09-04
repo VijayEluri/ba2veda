@@ -39,10 +39,12 @@ public class BaSystem
 	public BaOrganizationDriver pacahon;
 	private Connection documents_db_connection = null;
 	private Connection files_db_connection = null;
+	private Connection synchronization_db_connection = null;
 	private String dbUser;
 	private String dbPassword;
 	private String documents_dbUrl;
 	private String files_dbUrl;
+	private String synchronization_dbUrl;
 	private String az_mongodb_host;
 	private int az_mongodb_port;
 	private DBCollection az_simple_coll;
@@ -67,6 +69,7 @@ public class BaSystem
 			dbPassword = properties.getProperty("dbPassword", "123456");
 			documents_dbUrl = properties.getProperty("documents_dbUrl", "localhost:3306/documents_db");
 			files_dbUrl = properties.getProperty("files_dbUrl", "localhost:3306/fm_meta_db");
+			synchronization_dbUrl = properties.getProperty("synchronization_dbUrl", "localhost:3306/synchronization_db");
 
 			String az_db = properties.getProperty("authorization_db", "localhost:27017");
 			String[] els = az_db.split(":");
@@ -218,7 +221,7 @@ public class BaSystem
 	public ResultSet getBAObjOnTemplateId(String templateId, Date begin_time)
 	{
 //		String queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1";	
-		String id = "752391e2237f4dff8184e961406e33e3";
+		String id = "328cff7c89e644b188679a50206db986";
 		String queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1 AND objectId = '"+ id + "'";
 		try
 		{
@@ -250,7 +253,7 @@ public class BaSystem
 	{
 		Long res = null;
 //		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1";
-		String id = "752391e2237f4dff8184e961406e33e3";
+		String id = "328cff7c89e644b188679a50206db986";
 		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1 AND objectId = '"+ id + "'";
 
 		try
@@ -282,6 +285,7 @@ public class BaSystem
 		documents_db_connection = DriverManager.getConnection("jdbc:mysql://" + documents_dbUrl, dbUser, dbPassword);
 		System.out.print("connect to source database " + files_dbUrl + "...");
 		files_db_connection = DriverManager.getConnection("jdbc:mysql://" + files_dbUrl, dbUser, dbPassword);
+		synchronization_db_connection = DriverManager.getConnection("jdbc:mysql://" + synchronization_dbUrl, dbUser, dbPassword);
 
 		System.out.println("ok");
 	}
@@ -377,4 +381,23 @@ public class BaSystem
 		return res;
 	}
 
+	public String gedDdsidFromSynchronizationViaQuery(String query) {
+		try
+		{
+			PreparedStatement ps = synchronization_db_connection.prepareStatement(query);
+			System.out.println("QUERY: " + query);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+			{
+				return rs.getString("ddsid");
+			}
+			rs.close();
+			ps.close();
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
 }
