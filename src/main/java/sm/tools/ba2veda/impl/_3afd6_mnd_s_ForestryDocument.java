@@ -18,5 +18,6 @@ public class _3afd6_mnd_s_ForestryDocument extends Ba2VedaTransform {
 		fields_map.put("comment", "v-s:rdfs:comment");
 		fields_map.put("add_doc", "v-s:hasLink");
 		fields_map.put("name", "rdfs:label");
+		fields_map.put("number", "v-s:registrationNumber");
 	}
 }
