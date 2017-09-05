@@ -105,7 +105,22 @@ public class _2806b_mnd_s_EnergyResourceRequest extends Ba2VedaTransform {
 					putIndividual(link, ba_id, true);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
 				} else if (code.equals("toro_object")) {
-					new_individual.addProperty("v-s:hasMaintainedObject", rss);
+//					new_individual.addProperty("v-s:hasMaintainedObject", rss);
+					String ddsid =  att.getRecordIdValue();
+					Pair<XmlDocument, Long> pair = ba.getActualDocument(ddsid);
+					if (pair == null)
+						continue;
+					
+					XmlDocument ddsid_doc = pair.getLeft();
+					
+//					String r3_id = ba.get_first_value_of_field(ddsid_doc, "R3_ID");
+					List<XmlAttribute> ddsid_atts = ddsid_doc.getAttributes();
+					for (XmlAttribute ddsid_att : ddsid_atts) {
+						if (ddsid_att.getCode().equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2")) {
+							new_individual.addProperty("mnd-s:MaintainedObject", new Resource("d:" + ddsid_att.getTextValue(), Type._Uri));
+							break;
+						}
+					}
 					new_individual.addProperty("mnd-s:maintainedObjectTxtForEnergyResourceRequest",  new Resource(att.getRecordNameValue()));
 				}
 			}

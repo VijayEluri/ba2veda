@@ -7,6 +7,7 @@ import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
 import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
+import sm.tools.ba2veda.Pair;
 import sm.tools.ba2veda.Replacer;
 import sm.tools.veda_client.Individual;
 import sm.tools.veda_client.Resource;
@@ -28,7 +29,6 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 		fields_map.put("number_reg", "mnd-s:materialGroupNumber");
 		fields_map.put("unit_of_measure", "v-s:hasUnitOfMeasure");
 		fields_map.put("duration", "v-s:duration");
-		fields_map.put("object_toro", "v-s:hasMaintainedObject");
 		fields_map.put("count", "v-s:count");
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("add_info", "v-s:hasComment");
@@ -36,6 +36,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 		
 		fields_map.put("cost", "?");
 		fields_map.put("inherit_rights_from", "?");
+		fields_map.put("object_toro", "?");
 	}
 	
 	@Override
@@ -109,6 +110,22 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
 					putIndividual(link, ba_id, true);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
+				} else if (code.equals("object_toro")) {
+					String ddsid =  att.getRecordIdValue();
+					Pair<XmlDocument, Long> pair = ba.getActualDocument(ddsid);
+					if (pair == null)
+						continue;
+					
+					XmlDocument ddsid_doc = pair.getLeft();
+					
+//					String r3_id = ba.get_first_value_of_field(ddsid_doc, "R3_ID");
+					List<XmlAttribute> ddsid_atts = ddsid_doc.getAttributes();
+					for (XmlAttribute ddsid_att : ddsid_atts) {
+						if (ddsid_att.getCode().equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2")) {
+							new_individual.addProperty("mnd-s:MaintainedObject", new Resource("d:" + ddsid_att.getTextValue(), Type._Uri));
+							break;
+						}
+					}
 				}
 			}
 		}

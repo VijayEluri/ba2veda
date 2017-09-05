@@ -78,7 +78,20 @@ public class _73d7c_mnd_s_Equipmentlocation extends Ba2VedaTransform {
 					String query = String.format("select * from mapper where synchronizerId ='toro' and sapR3Id like '%%%s' limit 100", 
 						parent_id);
 					String ddsid =  ba.gedDdsidFromSynchronizationViaQuery(query);
-					new_individual.addProperty("v-s:hasParentLink", new Resource("d:" + ddsid, Type._Uri));
+					Pair<XmlDocument, Long> pair = ba.getActualDocument(ddsid);
+					if (pair == null)
+						continue;
+					
+					XmlDocument ddsid_doc = pair.getLeft();
+					
+//					String r3_id = ba.get_first_value_of_field(ddsid_doc, "R3_ID");
+					List<XmlAttribute> ddsid_atts = ddsid_doc.getAttributes();
+					for (XmlAttribute ddsid_att : ddsid_atts) {
+						if (ddsid_att.getCode().equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2")) {
+							new_individual.addProperty("v-s:hasParentLink", new Resource("d:" + ddsid_att.getTextValue(), Type._Uri));
+							break;
+						}
+					}
 				}
 					
 				
