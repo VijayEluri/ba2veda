@@ -1,13 +1,23 @@
 package sm.tools.ba2veda.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
+import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
 import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
+import sm.tools.ba2veda.Pair;
 import sm.tools.ba2veda.Replacer;
+import sm.tools.veda_client.Individual;
+import sm.tools.veda_client.Resource;
+import sm.tools.veda_client.Resources;
+import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _8aa42_mnd_s_ActOfPpeDestruction extends Ba2VedaTransform{
-	public _8aa42_mnd_s_ActOfPpeDestruction(BaSystem _ba, VedaConnection _veda, Replacer replacer)  {
-		super(_ba, _veda, replacer, "8aa42683d92643799bc88aa36a835d8b", "mnd-s:ActOfPpeDestruction");
+public class _8aa42_mnd_s_PpeDestructionRequest extends Ba2VedaTransform{
+	public _8aa42_mnd_s_PpeDestructionRequest(BaSystem _ba, VedaConnection _veda, Replacer replacer)  {
+		super(_ba, _veda, replacer, "8aa42683d92643799bc88aa36a835d8b", "mnd-s:PpeDestructionRequest");
 	}
 	
 	public void inital_set() {
