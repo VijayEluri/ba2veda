@@ -70,8 +70,11 @@ public class _73d7c_mnd_s_EquipmentPiece extends Ba2VedaTransform {
 				if (code.equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2")) {
 					new_individual.setUri("d:" + att.getTextValue());
 				} else if (code.equals("1b073c10-91fb-451e-b636-8c5bfe77c598_7")) {
-					if (!att.getTextValue().equals("Единица оборудования")) 
-						return res;
+					if (!att.getTextValue().equals("Единица оборудования")) {
+						new_individual.setProperty("rdf:type", 
+								new Resource("mnd-s:Equipmentlocation", Type._Uri));
+//						return res;
+					}
 				} else if (code.equals("1b073c10-91fb-451e-b636-8c5bfe77c598_3")) {
 					String parent_id = att.getTextValue().substring(1).replace(".", "_");
 					String query = String.format("select * from mapper where synchronizerId ='toro' and sapR3Id like '%%%s' limit 100", 
@@ -97,7 +100,6 @@ public class _73d7c_mnd_s_EquipmentPiece extends Ba2VedaTransform {
 			}
 		}
 			
-		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		res.add(new_individual);
 		return res;
 	}

@@ -271,7 +271,7 @@ public class Fetcher
 		
 		trs.add(new _8aa42_mnd_s_ActOfPpeDestruction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
-		trs.add(new _73d7c_mnd_s_Equipmentlocation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+//		trs.add(new _73d7c_mnd_s_Equipmentlocation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _73d7c_mnd_s_EquipmentPiece(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)

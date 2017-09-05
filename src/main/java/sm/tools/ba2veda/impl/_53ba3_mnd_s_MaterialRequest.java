@@ -122,7 +122,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 					List<XmlAttribute> ddsid_atts = ddsid_doc.getAttributes();
 					for (XmlAttribute ddsid_att : ddsid_atts) {
 						if (ddsid_att.getCode().equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2")) {
-							new_individual.addProperty("mnd-s:MaintainedObject", new Resource("d:" + ddsid_att.getTextValue(), Type._Uri));
+							new_individual.addProperty("mnd-s:hasMaintainedObject", new Resource("d:" + ddsid_att.getTextValue(), Type._Uri));
 							break;
 						}
 					}
