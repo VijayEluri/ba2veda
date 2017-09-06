@@ -68,7 +68,8 @@ public class _73d7c_mnd_s_EquipmentPiece extends Ba2VedaTransform {
 					continue;
 
 				if (code.equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2")) {
-					new_individual.setUri("d:" + att.getTextValue());
+					if (doc.isActive())
+						new_individual.setUri("d:" + att.getTextValue());
 				} else if (code.equals("1b073c10-91fb-451e-b636-8c5bfe77c598_7")) {
 					if (!att.getTextValue().equals("Единица оборудования")) {
 						new_individual.setProperty("rdf:type", 
@@ -87,6 +88,7 @@ public class _73d7c_mnd_s_EquipmentPiece extends Ba2VedaTransform {
 					XmlDocument ddsid_doc = pair.getLeft();
 					
 //					String r3_id = ba.get_first_value_of_field(ddsid_doc, "R3_ID");
+					
 					List<XmlAttribute> ddsid_atts = ddsid_doc.getAttributes();
 					for (XmlAttribute ddsid_att : ddsid_atts) {
 						if (ddsid_att.getCode().equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2")) {
@@ -94,6 +96,7 @@ public class _73d7c_mnd_s_EquipmentPiece extends Ba2VedaTransform {
 							break;
 						}
 					}
+					
 				}
 					
 				

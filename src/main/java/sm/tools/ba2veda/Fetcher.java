@@ -300,7 +300,7 @@ public class Fetcher
 			ResultCode rc = new ResultCode();
 			String docId = rs.getString(2);
 			long timestamp = (long) rs.getLong(3);
-			Ba2VedaTransform.prepare_document(from, to, docId, "", idx, count, null, null, rc);
+			Ba2VedaTransform.prepare_document(from, to, docId, "", idx, count, null, null, rc, false);
 
 			store_timestamp_to_cfg(new Date(timestamp + 1));
 

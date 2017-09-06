@@ -457,7 +457,9 @@ public abstract class Ba2VedaTransform
 			Resource rc = default_values_map.get(pp);
 			new_individual.addProperty(pp, rc);
 		}
-
+		
+		if (!doc.isActive())
+			new_individual.addProperty("v-s:deleted", new Resource(true, Type._Bool));
 	}
 
 	private static String findAppointmentFromVeda(String person_id) throws Exception
@@ -884,8 +886,9 @@ public abstract class Ba2VedaTransform
 						ResultCode rc = new ResultCode();
 						List<Individual> indvs = null;
 
-						if (is_deep == true)
-							indvs = prepare_document(link_type, veda_type, link, path + veda_doc_id, 0, 0, veda_doc_id, ba_doc_id, rc);
+						if (is_deep == true) {
+							indvs = prepare_document(link_type, veda_type, link, path + veda_doc_id, 0, 0, veda_doc_id, ba_doc_id, rc, true);
+						}
 
 						if (indvs != null && indvs.size() > 0)
 						{
@@ -1098,7 +1101,7 @@ public abstract class Ba2VedaTransform
 	}
 
 	public static List<Individual> prepare_document(String from_ba_class, String to_veda_class, String docId, String path, long cur_id_count,
-			long total_ids, String parent_veda_doc_id, String parent_ba_doc_id, ResultCode rc) throws Exception
+			long total_ids, String parent_veda_doc_id, String parent_ba_doc_id, ResultCode rc, boolean prepare_deleted) throws Exception
 	{
 		List<Individual> new_individuals = null;
 
@@ -1126,7 +1129,7 @@ public abstract class Ba2VedaTransform
 		XmlDocument doc = doc_ts.getLeft();
 		long timestamp = doc_ts.getRight();
 
-		if (doc.isActive() == false)
+		if (doc.isActive() == false && !prepare_deleted)
 			return null;
 
 		ResultSet sql_result;
