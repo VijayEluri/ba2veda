@@ -77,13 +77,27 @@ public class _73d7c_mnd_s_EquipmentPiece extends Ba2VedaTransform {
 //						return res;
 					}
 				} else if (code.equals("1b073c10-91fb-451e-b636-8c5bfe77c598_3")) {
-					String parent_id = att.getTextValue().substring(1).replace(".", "_");
-					String query = String.format("select * from mapper where synchronizerId ='toro' and sapR3Id like '%%%s' limit 100", 
-						parent_id);
+					String parent_id = att.getTextValue().substring(1);
+					String parent_id_prepared = "";
+					int dots_count = 0;
+					for (int i = 0; i < parent_id.length(); i++) {
+						String smb = parent_id.substring(i, i + 1);
+						if (smb.equals(".") && dots_count < 4) {
+							parent_id_prepared += "-";
+							dots_count++;
+						} else if (smb.equals(".") && dots_count >= 4) {
+							parent_id_prepared += "_";
+							dots_count++;
+						} else 
+							parent_id_prepared += smb;
+					}
+					String query = String.format("select * from mapper where synchronizerId ='toro' and sapR3Id = '%s' limit 100", 
+						parent_id_prepared);
 					String ddsid =  ba.gedDdsidFromSynchronizationViaQuery(query);
 					Pair<XmlDocument, Long> pair = ba.getActualDocument(ddsid);
-					if (pair == null)
-						continue;
+					if (pair == null) {
+						return res;
+					}
 					
 					XmlDocument ddsid_doc = pair.getLeft();
 					

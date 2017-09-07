@@ -1726,6 +1726,67 @@
 {
     "if-equals":[{ "value":"183237408a344fb7b1e63c1b6daa553b"}],
     "set": [{"value":"d:a5rrihl8fkpbjuxqo99neiq25",  "type" : "Uri"}]
+},
+
+{
+    "if-equals":[{ "value":"3f1ff99b30684de596dab30e0fdf9bf0"}],
+    "set": [{"value":"d:45bb1de686d547098a58ca8b58a8dc5d",  "type" : "Uri"}]
+},
+
+{
+    "if-equals":[{ "value":"bb6926d02e2e4d169223e4c25d5d1931"}],
+    "set": [{"value":"d:ae5e2e05b8bc48e2a10df25dfe18f1cb",  "type" : "Uri"}]
+},
+
+{
+    "if-equals":[{ "value":"a9867546937f42a3a89f19f8ca6456a1"}],
+    "set": [{"value":"d:831daafd86d9489ebb458450a49998a2",  "type" : "Uri"}]
+},
+
+{
+    "if-equals":[{ "value":"65b89132f8924b4f936d0b2f9275eeca"}],
+    "set": [{"value":"d:ba1a7913d52e4a47967645767b6f2604",  "type" : "Uri"}]
+},
+
+{
+    "if-equals":[{ "value":"398cd36a92ec4ed39752cd47eebfdfb7"}],
+    "set": [{"value":"d:52690a3f0dbd4d3baf937220a7035ae0",  "type" : "Uri"}]
+},
+
+{
+    "if-equals":[{ "value":"1205068f5aba428abbbcc6dc390ce949"}],
+    "set": [{"value":"v-s:StatusApproval",  "type" : "Uri"}]
+},
+
+{
+    "if-equals":[{ "value":"af5f4808f19a43a48ea5f83d9258b7bd"}],
+    "set": [{"value":"v-s:StatusRejected",  "type" : "Uri"}]
+},
+
+{
+    "if-equals":[{ "value":"f16e8dd148264643a8bdf9e1727fca70"}],
+    "set": [{"value":"v-s:StatusInvestigationCompleted",  "type" : "Uri"}]
+},
+
+{
+    "if-equals":[{ "value":"669019e6a948474eb26b6467f7b1abfa"}],
+    "set": [{"value":"v-s:StatusElimination",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"39f9f94ae25a4bc5991e91962b15cea2"}],
+    "set": [{"value":"v-s:StatusAgreement",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"23335d8a9cf44f16aecff77e63884ac4"}],
+    "set": [{"value":"v-s:StatusInvestigation",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"1c67464e16aa44418f3510ef78fe735d"}],
+    "set": [{"value":"v-s:StatusPostponed",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"33c844ed0f9f4725a41a8705fe34b6e2"}],
+    "set": [{"value":"v-s:StatusInvestigationInitiated",  "type" : "Uri"}]
 }
 
 ]

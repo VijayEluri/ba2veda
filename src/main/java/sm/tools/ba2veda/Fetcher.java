@@ -21,6 +21,7 @@ import sm.tools.ba2veda.impl._13e63_mnd_s_AuditSafetyObservationKind;
 import sm.tools.ba2veda.impl._15206_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._15206_mnd_s_Contract;
 import sm.tools.ba2veda.impl._19faf_mnd_s_AuditSafetyTheme;
+import sm.tools.ba2veda.impl._1d28e_v_s_Cost;
 import sm.tools.ba2veda.impl._2fba7_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._2fe65_mnd_s_RepresentativeCostsEvent;
 import sm.tools.ba2veda.impl._524d6_mnd_s_AdditionalAgreement;
@@ -28,6 +29,7 @@ import sm.tools.ba2veda.impl._524d6_mnd_s_Contract;
 import sm.tools.ba2veda.impl._52e5c_mnd_s_Claim;
 import sm.tools.ba2veda.impl._53ba3_mnd_s_MaterialRequest;
 import sm.tools.ba2veda.impl._579b1_mnd_s_ProjectCapex;
+import sm.tools.ba2veda.impl._57da5_mnd_s_ActFailureAction;
 import sm.tools.ba2veda.impl._5c2ce_mnd_s_Building;
 import sm.tools.ba2veda.impl._5d588_mnd_s_Decree;
 import sm.tools.ba2veda.impl._5ee12_v_s_Contractor;
@@ -70,11 +72,13 @@ import sm.tools.ba2veda.impl._d1191_v_s_Link;
 import sm.tools.ba2veda.impl._d5c66_mnd_s_RepresentativeCostsForEvent;
 import sm.tools.ba2veda.impl._d9378_mnd_s_IncomingLetter;
 import sm.tools.ba2veda.impl._d9476_mnd_s_ContractRequest;
+import sm.tools.ba2veda.impl._da0e6_mnd_s_ActFailure;
 import sm.tools.ba2veda.impl._dabb6_mnd_s_MaterialGroup;
 import sm.tools.ba2veda.impl._dabb6_v_s_MaterialGroup;
 import sm.tools.ba2veda.impl._df75b_mnd_s_AuditSafety;
 import sm.tools.ba2veda.impl._df968_mnd_s_Decree;
 import sm.tools.ba2veda.impl._e2515_mnd_s_AuditInternalReport;
+import sm.tools.ba2veda.impl._e5312_mnd_s_ActFailureReason;
 import sm.tools.ba2veda.impl._e85f6_mnd_s_Decree;
 import sm.tools.ba2veda.impl._ead1b_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._ead1b_mnd_s_Contract;
@@ -93,6 +97,7 @@ import sm.tools.ba2veda.impl._3afd6_mnd_s_ForestryDocument;
 import sm.tools.ba2veda.impl._3b538_mnd_s_Decree;
 import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
 import sm.tools.ba2veda.impl._22dc2_mnd_s_Decree;
+import sm.tools.ba2veda.impl._24b39_mnd_s_RepairInformation;
 import sm.tools.ba2veda.impl._270b9_mnd_s_ProjectCapex;
 import sm.tools.ba2veda.impl._2806b_mnd_s_EnergyResourceRequest;
 import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
@@ -273,6 +278,12 @@ public class Fetcher
 		
 //		trs.add(new _73d7c_mnd_s_Equipmentlocation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _73d7c_mnd_s_EquipmentPiece(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _1d28e_v_s_Cost(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _24b39_mnd_s_RepairInformation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _e5312_mnd_s_ActFailureReason(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _57da5_mnd_s_ActFailureAction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _da0e6_mnd_s_ActFailure(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
