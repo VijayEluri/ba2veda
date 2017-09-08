@@ -25,7 +25,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 		fields_map.put("name", "v-s:theme");
 		fields_map.put("department_kind", "v-s:hasSector");
 		fields_map.put("department", "v-s:responsibleDepartment");
-		fields_map.put("manager", "v-s:actFailureManager");
+		fields_map.put("manager", "mnd-s:actFailureManager");
 		fields_map.put("date_from", "v-s:date");
 		fields_map.put("status_manual", "v-s:hasStatus");
 		fields_map.put("initiation_kind", "mnd-s:hasInitiationKind");
@@ -47,7 +47,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 		fields_map.put("disposal_time", "v-s:eliminatingTime");
 		fields_map.put("downtime", "v-s:downtime");
 		fields_map.put("count", "mnd-s:stoppedMachinesCount");
-		fields_map.put("spare_part_costs", "mnd-s:sparePartsCosts");
+		fields_map.put("spare_parts_costs", "mnd-s:sparePartsCosts");
 		fields_map.put("services_costs", "mnd-s:servicesCosts");
 		fields_map.put("unreleased_products_sum", "mnd-s:lossesUnreleasedProducts");
 		fields_map.put("action", "v-s:hasAction");
