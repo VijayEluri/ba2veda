@@ -102,6 +102,7 @@ import sm.tools.ba2veda.impl._270b9_mnd_s_ProjectCapex;
 import sm.tools.ba2veda.impl._2806b_mnd_s_EnergyResourceRequest;
 import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
 import sm.tools.ba2veda.impl._050ce_mnd_s_Pass;
+import sm.tools.ba2veda.impl._06ec5_mnd_s_PowerOfAttorney;
 import sm.tools.ba2veda.impl._09969_mnd_s_Decree;
 import sm.tools.ba2veda.impl._0d138_mnd_s_InternalDocument;
 import sm.tools.ba2veda.impl._0d138_v_s_Link;
@@ -284,6 +285,8 @@ public class Fetcher
 		trs.add(new _e5312_mnd_s_ActFailureReason(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _57da5_mnd_s_ActFailureAction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _da0e6_mnd_s_ActFailure(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _06ec5_mnd_s_PowerOfAttorney(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
