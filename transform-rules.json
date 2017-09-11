@@ -1882,14 +1882,104 @@
 {
     "if-equals":[{ "value":"8ac26fa180fe4675b48e8ba606414883"}],
     "set": [{"value":"d:ce0724eb71a546f48048c229739ec914",  "type" : "Uri"}]
-}
-	
-	
-	
-	
-	
-	
-	
+},
+
+{
+    "if-equals":[{ "value":"e2a4f32f28cd4b1d8d0f9ebf72081898"}],
+    "set": [{"value":"d:mondi_department_50001654",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"31d615c0707845a1925f8125f04759b6"}],
+    "set": [{"value":"d:mondi_department_50001654",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"d72dffcd4ca043e6acb84ecf345fa762"}],
+    "set": [{"value":"d:mondi_department_50001663",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"0b3607b81cfa4f59a88f3301c5989996"}],
+    "set": [{"value":"d:mondi_department_50003376",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"f5121a9a699744b592c72bdb0649a966"}],
+    "set": [{"value":"d:mondi_department_50001690",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"8ac44eea4f3e4ab0b52d36dddb003d6b"}],
+    "set": [{"value":"d:mondi_department_50001658",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"10fbaa8863184ec9a798928388e3897e"}],
+    "set": [{"value":"d:mondi_department_50003351",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"f848b73a68f643e19e4efad4a49ca73a"}],
+    "set": [{"value":"d:mondi_department_50003410",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"b188dd3281674238b2fff86f87a6e0a7"}],
+    "set": [{"value":"d:mondi_department_50001665",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"df758c8f2ad54967ad2c1d2dcff80d6f"}],
+    "set": [{"value":"d:mondi_department_50001666",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"713f10cef95b444eb39563043af9aa28"}],
+    "set": [{"value":"d:mondi_department_50001667",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"d84d3379c8654811b23381b8ad156904"}],
+    "set": [{"value":"d:mondi_department_50001659",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"a660c35417934a4b87365f34f40c4a41"}],
+    "set": [{"value":"d:mondi_department_50003657",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"4ec4cc144dec42e5871f24aacd5e07e9"}],
+    "set": [{"value":"d:mondi_department_50003626",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"9c7e7419bd04483292d2b62832d6a272"}],
+    "set": [{"value":"d:mondi_department_50001721",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"602f623d779e427a9c8d11f092255e52"}],
+    "set": [{"value":"d:mondi_department_50001664",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"7c3221a9c0f242488c021d0aba231cd3"}],
+    "set": [{"value":"d:mondi_department_50001744",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"15f215f6626e4e8687d7463b7d7ea9af"}],
+    "set": [{"value":"d:mondi_department_50001669",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"f6c75f9a53354f57aac45b75b0138865"}],
+    "set": [{"value":"d:mondi_department_50001662",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"262ac5389bb04a78b1eb3d4f18db4f8f"}],
+    "set": [{"value":"d:mondi_department_50003642",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"6849e0f684d74e538a26d59a6ad9077f"}],
+    "set": [{"value":"d:mondi_department_50002528",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"e52c52464c29407b8be4bb8706ea362b"}],
+    "set": [{"value":"d:mondi_department_50003527",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"79ed16ba4568404f9afb81ec7f955c04"}],
+    "set": [{"value":"d:mondi_department_50001698",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"632f34e7bd7940bbb289ff0ce055de4b"}],
+    "set": [{"value":"d:mondi_department_50001677",  "type" : "Uri"}]
+}	
 
 ]
 }
