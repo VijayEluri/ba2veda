@@ -25,7 +25,7 @@ public class _252bf_mnd_s_LocalRegulatoryDocument extends Ba2VedaTransform {
 		fields_map.put("title", "v-s:title");
 		fields_map.put("comment", "rdfs:comment");
 		fields_map.put("nomenclature", "v-s:owner");
-		fields_map.put("v-s:hasSector", "kind");
+		fields_map.put("kind", "v-s:hasSector");
 		fields_map.put("scope", "mnd-s:appliesTo");
 		fields_map.put("add_doc_version", "v-s:hasVersionOfLocalRegulatoryDocument");
 		fields_map.put("attachment_order", "v-s:isDefinedBy");

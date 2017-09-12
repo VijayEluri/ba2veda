@@ -117,6 +117,8 @@ public class _cdaa9_mnd_s_PowerOfAttorney extends Ba2VedaTransform {
 			grantor.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			grantor.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			grantor.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
+			if (grantor.getResources("v-s:correspondentOrganization") == null && grantor.getResources("v-s:correspondentPerson") != null)
+				grantor.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
 			new_individual.addProperty("v-s:grantor", new Resource(grantor.getUri(), Type._Uri));
 			putIndividual(grantor, ba_id, true);
 		}
@@ -127,6 +129,8 @@ public class _cdaa9_mnd_s_PowerOfAttorney extends Ba2VedaTransform {
 			grantee.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			grantee.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			grantee.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
+			if (grantee.getResources("v-s:correspondentOrganization") == null && grantee.getResources("v-s:correspondentPerson") != null)
+				grantee.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
 			new_individual.addProperty("v-s:grantee", new Resource(grantee.getUri(), Type._Uri));
 			putIndividual(grantee, ba_id, true);
 		}
