@@ -221,7 +221,7 @@ public class BaSystem
 	public ResultSet getBAObjOnTemplateId(String templateId, Date begin_time)
 	{
 		String queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1";	
-//		String id = "720793773da54f83975bb67029bd1ab8";
+//		String id = "4fe686076d584643b9bb659dc5f12300";
 //		String queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1 AND objectId = '"+ id + "'";
 		try
 		{
@@ -253,7 +253,7 @@ public class BaSystem
 	{
 		Long res = null;
 		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1";
-//		String id = "720793773da54f83975bb67029bd1ab8";
+//		String id = "4fe686076d584643b9bb659dc5f12300";
 //		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1 AND objectId = '"+ id + "'";
 
 		try

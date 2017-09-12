@@ -14,9 +14,9 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _06ec5_mnd_s_PowerOfAttorney extends Ba2VedaTransform {
-	public _06ec5_mnd_s_PowerOfAttorney(BaSystem _ba, VedaConnection _veda, Replacer replacer)  {
-		super(_ba, _veda, replacer, "06ec5fdaa4c54e17bdebd34d96913dbc", "mnd-s:PowerOfAttorney");
+public class _cdaa9_mnd_s_PowerOfAttorney extends Ba2VedaTransform {
+	public _cdaa9_mnd_s_PowerOfAttorney(BaSystem _ba, VedaConnection _veda, Replacer replacer)  {
+		super(_ba, _veda, replacer, "cdaa9a041fcf493284e8fbd7bf4e2a12", "mnd-s:PowerOfAttorney");
 	}
 	
 	public void inital_set() {
@@ -81,16 +81,28 @@ public class _06ec5_mnd_s_PowerOfAttorney extends Ba2VedaTransform {
 				} else if (code.equals("contractor_from")) {
 					if (grantor == null) 
 						grantor = new Individual();
-					
-					grantor.addProperty("v-s:correspondentOrganization", rss);
+					String link = "d:" + att.getLinkValue();
+					Individual i = veda.getIndividual(link);
+					if (i == null) {
+						System.out.println("Did not found " + link);
+						continue;
+					}
+					grantor.addProperty("v-s:correspondentOrganization", i.getResources("v-s:backwardTarget"));
 				} else if (code.equals("replaceable_stuff_to")) {
 					if (grantee == null) 
 						grantee = new Individual();
+					
 					grantee.addProperty("v-s:correspondentPerson", rss);
 				} else if (code.equals("contractor")) {
 					if (grantee == null) 
 						grantee = new Individual();
-					grantee.addProperty("v-s:correspondentOrganization", rss);
+					String link = "d:" + att.getLinkValue();
+					Individual i = veda.getIndividual(link);
+					if (i == null) {
+						System.out.println("Did not found " + link);
+						continue;
+					}
+					grantee.addProperty("v-s:correspondentOrganization", i.getResources("v-s:backwardTarget"));
 				} else if (code.equals("responsible_add")) {
 					if (grantee == null) 
 						grantee = new Individual();

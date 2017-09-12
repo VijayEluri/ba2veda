@@ -66,10 +66,12 @@ import sm.tools.ba2veda.impl._bfb8d_mnd_s_DecreeRegistrationRecord;
 import sm.tools.ba2veda.impl._c6c99_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._c6c99_v_s_Link;
 import sm.tools.ba2veda.impl._c8a33_mnd_s_AuditInternalObject;
+import sm.tools.ba2veda.impl._cdaa9_mnd_s_PowerOfAttorney;
 import sm.tools.ba2veda.impl._d0072_v_s_Correspodent;
 import sm.tools.ba2veda.impl._d1191_mnd_s_InternalDocument;
 import sm.tools.ba2veda.impl._d1191_v_s_Link;
 import sm.tools.ba2veda.impl._d5c66_mnd_s_RepresentativeCostsForEvent;
+import sm.tools.ba2veda.impl._d6e6d_mnd_s_VersionOfLocalRegulatoryDocument;
 import sm.tools.ba2veda.impl._d9378_mnd_s_IncomingLetter;
 import sm.tools.ba2veda.impl._d9476_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._da0e6_mnd_s_ActFailure;
@@ -98,11 +100,11 @@ import sm.tools.ba2veda.impl._3b538_mnd_s_Decree;
 import sm.tools.ba2veda.impl._22701_mnd_s_ClaimReport;
 import sm.tools.ba2veda.impl._22dc2_mnd_s_Decree;
 import sm.tools.ba2veda.impl._24b39_mnd_s_RepairInformation;
+import sm.tools.ba2veda.impl._252bf_mnd_s_LocalRegulatoryDocument;
 import sm.tools.ba2veda.impl._270b9_mnd_s_ProjectCapex;
 import sm.tools.ba2veda.impl._2806b_mnd_s_EnergyResourceRequest;
 import sm.tools.ba2veda.impl._7bd88_mnd_s_PassRequest;
 import sm.tools.ba2veda.impl._050ce_mnd_s_Pass;
-import sm.tools.ba2veda.impl._06ec5_mnd_s_PowerOfAttorney;
 import sm.tools.ba2veda.impl._09969_mnd_s_Decree;
 import sm.tools.ba2veda.impl._0d138_mnd_s_InternalDocument;
 import sm.tools.ba2veda.impl._0d138_v_s_Link;
@@ -286,7 +288,9 @@ public class Fetcher
 		trs.add(new _57da5_mnd_s_ActFailureAction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _da0e6_mnd_s_ActFailure(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
-		trs.add(new _06ec5_mnd_s_PowerOfAttorney(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _cdaa9_mnd_s_PowerOfAttorney(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _252bf_mnd_s_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _d6e6d_mnd_s_VersionOfLocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
