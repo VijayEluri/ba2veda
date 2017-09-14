@@ -20,7 +20,7 @@ public class _689c5_mnd_s_Addendum extends Ba2VedaTransform{
 	}
 	
 	public void inital_set() {
-		fields_map.put("title", "v-s:title");
+		fields_map.put("title", "rdfs:label");
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("date_from", "v-s:dateFrom");
 		fields_map.put("date_to", "v-s:dateTo");
@@ -43,6 +43,7 @@ public class _689c5_mnd_s_Addendum extends Ba2VedaTransform{
 		
 		new_individual.addProperty("rdf:type", new Resource(to_class, Type._Uri));
 		new_individual.addProperty("v-s:backwardProperty", new Resource("v-s:hasAddendum", Type._Uri));
+		new_individual.addProperty("v-s:backwardTarget", new Resource(parent_veda_doc_uri, Type._Uri));
 
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts) {
@@ -91,7 +92,7 @@ public class _689c5_mnd_s_Addendum extends Ba2VedaTransform{
 							link_to = inherit_rights_from;
 					
 					
-					new_individual.addProperty("v-s:backwardTarget", new Resource(link_to, Type._Uri));
+					new_individual.addProperty("v-s:parent", new Resource("d:" + link_to, Type._Uri));
 				}
 			}
 		}

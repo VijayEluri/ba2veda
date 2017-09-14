@@ -37,6 +37,7 @@ import sm.tools.ba2veda.impl._5fcfb_mnd_s_PurchaseOrder;
 import sm.tools.ba2veda.impl._63a4a_mnd_s_AccountingDoc;
 import sm.tools.ba2veda.impl._65875_mnd_s_Decree;
 import sm.tools.ba2veda.impl._662_v_s_DeliveryMethod;
+import sm.tools.ba2veda.impl._689c5_mnd_s_Addendum;
 import sm.tools.ba2veda.impl._6b0ea_v_s_ContractorProfile;
 import sm.tools.ba2veda.impl._6b0ea_v_s_Organization;
 import sm.tools.ba2veda.impl._6f121_v_s_Level;
@@ -55,6 +56,7 @@ import sm.tools.ba2veda.impl._92fdd_mnd_s_AdditionalAgreement;
 import sm.tools.ba2veda.impl._92fdd_mnd_s_Contract;
 import sm.tools.ba2veda.impl._99f08_v_s_LetterRegistrationRecordSender;
 import sm.tools.ba2veda.impl._9fb73_mnd_s_AuditSafety;
+import sm.tools.ba2veda.impl._a5931_mnd_s_DescriptionOfChange;
 import sm.tools.ba2veda.impl._a96be_v_s_Comment;
 import sm.tools.ba2veda.impl._b243a_mnd_s_DismantlingProject;
 import sm.tools.ba2veda.impl._b3999_mnd_s_OutgoingLetter;
@@ -291,6 +293,8 @@ public class Fetcher
 		trs.add(new _cdaa9_mnd_s_PowerOfAttorney(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _252bf_mnd_s_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _d6e6d_mnd_s_VersionOfLocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _a5931_mnd_s_DescriptionOfChange(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _689c5_mnd_s_Addendum(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
