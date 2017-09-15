@@ -52,7 +52,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 		fields_map.put("unreleased_products_sum", "mnd-s:lossesUnreleasedProducts");
 		fields_map.put("action", "v-s:hasAction");
 		fields_map.put("title", "v-s:title");
-		fields_map.put("reason", "v-s:reason");
+		fields_map.put("reason", "mnd-s:hasActFailureReason");
 		fields_map.put("opinion", "v-s:specialOpinion");
 		
 		fields_map.put("chief", "?");
