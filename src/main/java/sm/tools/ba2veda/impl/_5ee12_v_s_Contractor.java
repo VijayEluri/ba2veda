@@ -203,9 +203,10 @@ public class _5ee12_v_s_Contractor extends Ba2VedaTransform
 		if (parent_veda_doc_uri == null && (org_uri == null || org_uri.length() < 3))
 		{
 			System.out.println("КОНТРАГЕНТ с инн[" + inn + "] для [" + ba_id + "] НЕ НАЙДЕН");
+			res.add(new_individual);
 		} else
 			res.add(new_individual);
-
+		
 		return res;
 	}
 
