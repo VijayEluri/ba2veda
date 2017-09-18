@@ -123,7 +123,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 			}
 		}
 		
-		String[] langs_out1 = { "EN", "RU" };
+	/*	String[] langs_out1 = { "EN", "RU" };
 		String[] langs_out2 = { "NONE" };
 		
 		ArrayList<Object> label_parts = new ArrayList<Object>();
@@ -139,7 +139,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 		if (rss.resources.size() == 0)
 			rss = rs_assemble(label_parts.toArray(), langs_out2);
 			
-		new_individual.addProperty("rdfs:label", rss);
+		new_individual.addProperty("rdfs:label", rss);*/
 		res.add(new_individual);
 		
 	/*	if (chief != null) {
