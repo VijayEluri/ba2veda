@@ -43,7 +43,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 		fields_map.put("strategy", "mnd-s:toStrategy");
 		fields_map.put("last_repair", "mnd-s:lastRepairInfo");
 		fields_map.put("information", "mnd-s:defectsMessages");
-		fields_map.put("comment", "rdfs:comment");
+		fields_map.put("comment", "mnd-s:otherCircumstancesForActFailure");
 		fields_map.put("disposal_time", "v-s:eliminatingTime");
 		fields_map.put("downtime", "v-s:downtime");
 		fields_map.put("count", "mnd-s:stoppedMachinesCount");
