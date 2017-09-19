@@ -66,8 +66,10 @@ public class _1d28e_v_s_Cost extends Ba2VedaTransform {
 					price.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 					price.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 					price.addProperty("v-s:created", new_individual.getResources("v-s:created"));
-					price.addProperty("v-sum", rss);
+					price.addProperty("v-s:sum", rss);
 					price.addProperty("v-s:hasCurrency", new Resource("d:currency_rub", Type._Uri));
+					putIndividual(price, ba_id, true);
+					new_individual.addProperty("v-s:hasPrice", new Resource(price.getUri(), Type._Uri));
 				}
 			}
 		}

@@ -51,6 +51,7 @@ public class _57da5_mnd_s_ActFailureAction extends Ba2VedaTransform {
 		set_basic_fields(new_individual, doc);
 		
 		new_individual.addProperty("rdf:type", new Resource(to_class, Type._Uri));
+		new_individual.addProperty("v-s:parent", new Resource(parent_veda_doc_uri, Type._Uri));
 		
 		int member = 0;
 

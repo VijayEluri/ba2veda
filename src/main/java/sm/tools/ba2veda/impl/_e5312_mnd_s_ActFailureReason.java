@@ -30,7 +30,7 @@ public class _e5312_mnd_s_ActFailureReason extends Ba2VedaTransform {
 		fields_map.put("s4", "mnd-s:why4");
 		fields_map.put("s5", "mnd-s:why5");
 		fields_map.put("reason", "mnd-s:hasCatalogOfActFailureReason");
-		fields_map.put("faiure_act", "v-s:hasParentLink");
+		fields_map.put("failure_act", "v-s:hasParentLink");
 	}
 	
 	@Override
