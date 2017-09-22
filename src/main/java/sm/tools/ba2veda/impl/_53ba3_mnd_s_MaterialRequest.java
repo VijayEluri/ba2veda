@@ -25,18 +25,21 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 		fields_map.put("reason", "v-s:reason");
 		fields_map.put("department", "v-s:responsibleDepartment");
 		fields_map.put("classifier_product", "mnd-s:hasMaterialGroup");
-		fields_map.put("title", "v-s:title");	
-		fields_map.put("number_reg", "mnd-s:materialGroupNumber");
-		fields_map.put("unit_of_measure", "v-s:hasUnitOfMeasure");
-		fields_map.put("duration", "v-s:duration");
-		fields_map.put("count", "v-s:count");
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("compound_title", "rdfs:label");
 		
-		fields_map.put("cost", "?");
 		fields_map.put("inherit_rights_from", "?");
+		
+		
+		fields_map.put("title", "?");
+		fields_map.put("number_reg", "?");
+		fields_map.put("unit_of_measure", "?");
+		fields_map.put("cost", "?");
+		fields_map.put("duration", "?");
 		fields_map.put("object_toro", "?");
+		fields_map.put("count", "?");
+		
 	}
 	
 	@Override
@@ -53,6 +56,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		
 		new_individual.addProperty("mnd-s:hasDecreeKind", new Resource("d:9664874293574b79af624f01e3c091cd", Type._Uri));
+		Individual eomr = null;
 		
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts) {
@@ -74,17 +78,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 					continue;
 				
 				
-				if (code.equals("cost")) {
-					Individual price = new Individual();
-					price.setUri(new_individual.getUri() + "_price");
-					price.addProperty("rdf:type", new Resource("v-s:Price", Type._Uri));
-					price.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
-					price.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
-					price.addProperty("v-s:created", new_individual.getResources("v-s:created"));
-					price.addProperty("v-s:sum", rss);
-					new_individual.addProperty("v-s:hasPrice", new Resource(price.getUri(), Type._Uri));
-					putIndividual(price, ba_id, true);
-				} else if (code.equals("inherit_rights_from")) {
+				if (code.equals("inherit_rights_from")) {
 					String irf = att.getLinkValue();
 					XmlDocument irf_doc = ba.getActualDocument(irf).getLeft();
 					String inherit_rights_from = ba.get_first_value_of_field(irf_doc, "inherit_rights_from");
@@ -122,12 +116,65 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 					List<XmlAttribute> ddsid_atts = ddsid_doc.getAttributes();
 					for (XmlAttribute ddsid_att : ddsid_atts) {
 						if (ddsid_att.getCode().equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2")) {
-							new_individual.addProperty("mnd-s:hasMaintainedObject", new Resource("d:" + ddsid_att.getTextValue(), Type._Uri));
+							if (eomr == null)
+								eomr = new Individual();
+							eomr.addProperty("mnd-s:hasMaintainedObject", new Resource("d:" + ddsid_att.getTextValue(), Type._Uri));
 							break;
 						}
-					}
+					} 
+				} else if (code.equals("title")) {
+					if (eomr == null)
+						eomr = new Individual();
+					eomr.addProperty("v-s:title", rss);
+				} else if (code.equals("number_reg")) {
+					if (eomr == null)
+						eomr = new Individual();
+					eomr.addProperty("mnd-s:materialGroupNumber", rss);
+				} else if (code.equals("unit_of_measure")) {
+					if (eomr == null)
+						eomr = new Individual();
+					eomr.addProperty("v-s:hasUnitOfMeasure", rss);
+				} else if (code.equals("cost")) {
+					if (eomr == null)
+						eomr = new Individual();
+					Individual price = new Individual();
+					price.setUri(new_individual.getUri() + "_price");
+					price.addProperty("rdf:type", new Resource("v-s:Price", Type._Uri));
+					price.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
+					price.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+					price.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+					price.addProperty("v-s:sum", rss);
+					eomr.addProperty("v-s:hasPrice", new Resource(price.getUri(), Type._Uri));
+					putIndividual(price, ba_id, true);
+				} else if (code.equals("duration")) {
+					if (eomr == null)
+						eomr = new Individual();
+					eomr.addProperty("v-s:duration", rss);
 				}
 			}
+		}
+		
+		if (eomr != null) {
+			eomr.setUri(new_individual.getUri() + "_eomr");
+			eomr.addProperty("rdf:type", 
+				new Resource("mnd-s:ElementOfMaterialRequest", Type._Uri));
+			eomr.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+			eomr.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+			eomr.addProperty("v-s:parent", new Resource(new_individual.getUri(), 
+				Type._Uri));
+			if (eomr.getResources("v-s:title") != null) {
+				String[] langs_out1 = { "EN", "RU" };
+				String[] langs_out2 = { "NONE" };
+				
+				Object[] parts = {eomr.getResources("v-s:title"), " - ", 
+					eomr.getResources("v-s:created")};
+				Resources rss = rs_assemble(parts, langs_out1);
+				if (rss.resources.size() == 0)
+					rss = rs_assemble(parts, langs_out2);
+			}
+			new_individual.addProperty("mnd-s:hasElementOfMaterialRequest",
+				new Resource(eomr.getUri(), Type._Uri));
+			putIndividual(eomr, ba_id, true);
 		}
 		
 		res.add(new_individual);
