@@ -96,6 +96,7 @@ import sm.tools.ba2veda.impl._fb3d8_v_s_Link;
 import sm.tools.ba2veda.impl._fc534_v_s_NormativeDocument;
 import sm.tools.ba2veda.impl._fcb4a_mnd_s_Decree;
 import sm.tools.ba2veda.impl._3369e_mnd_s_BusinessTrip;
+import sm.tools.ba2veda.impl._38851_mnd_s_InternalAccountingDocument;
 import sm.tools.ba2veda.impl._38851_v_s_Link;
 import sm.tools.ba2veda.impl._3afd6_mnd_s_ForestryDocument;
 import sm.tools.ba2veda.impl._3b538_mnd_s_Decree;
@@ -295,6 +296,8 @@ public class Fetcher
 		trs.add(new _d6e6d_mnd_s_VersionOfLocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _a5931_mnd_s_DescriptionOfChange(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _689c5_mnd_s_Addendum(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _38851_mnd_s_InternalAccountingDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{

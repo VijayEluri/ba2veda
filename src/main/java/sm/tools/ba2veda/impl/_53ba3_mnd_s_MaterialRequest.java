@@ -118,7 +118,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 						if (ddsid_att.getCode().equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2")) {
 							if (eomr == null)
 								eomr = new Individual();
-							eomr.addProperty("mnd-s:hasMaintainedObject", new Resource("d:" + ddsid_att.getTextValue(), Type._Uri));
+							eomr.addProperty("v-s:hasMaintainedObject", new Resource("d:" + ddsid_att.getTextValue(), Type._Uri));
 							break;
 						}
 					} 
@@ -144,12 +144,17 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 					price.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 					price.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 					price.addProperty("v-s:sum", rss);
+					price.addProperty("v-s:hasCurrency", new Resource("d:currency_rub", Type._Uri));
 					eomr.addProperty("v-s:hasPrice", new Resource(price.getUri(), Type._Uri));
 					putIndividual(price, ba_id, true);
 				} else if (code.equals("duration")) {
 					if (eomr == null)
 						eomr = new Individual();
 					eomr.addProperty("v-s:duration", rss);
+				} else if (code.equals("count")) {
+					if (eomr == null)
+						eomr = new Individual();
+					eomr.addProperty("v-s:count", rss);
 				}
 			}
 		}
