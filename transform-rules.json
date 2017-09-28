@@ -1886,11 +1886,11 @@
 
 {
     "if-equals":[{ "value":"e2a4f32f28cd4b1d8d0f9ebf72081898"}],
-    "set": [{"value":"d:mondi_department_50001654",  "type" : "Uri"}]
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
 },
 {
     "if-equals":[{ "value":"31d615c0707845a1925f8125f04759b6"}],
-    "set": [{"value":"d:mondi_department_50001654",  "type" : "Uri"}]
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
 },
 {
     "if-equals":[{ "value":"d72dffcd4ca043e6acb84ecf345fa762"}],
