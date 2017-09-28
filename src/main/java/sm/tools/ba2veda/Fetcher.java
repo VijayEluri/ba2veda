@@ -192,7 +192,7 @@ public class Fetcher
 		trs.add(new _a96be_v_s_Comment(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _7be2d_mnd_s_ContractPassport(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _5fcfb_mnd_s_PurchaseOrder(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		trs.add(new _dabb6_v_s_MaterialGroup(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+//		trs.add(new _dabb6_v_s_MaterialGroup(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _bdc96_mnd_s_AuditInternal(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _7ab24_mnd_s_AuditInternalAction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _c8a33_mnd_s_AuditInternalObject(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
