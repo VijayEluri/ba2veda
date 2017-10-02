@@ -62,17 +62,11 @@ public class _e5312_mnd_s_ActFailureReason extends Ba2VedaTransform {
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
 				
-				if (code.equals("decision")) {
-//					заполнять значениями: v-s:StatusInvestigation, если decision пусто; v-s:StatusConfirmed, если decision="Да"; v-s:StatusNotConfirmed, если decision="Да"
-					int a = 2 + 2;
-					a = 2 + a;
+				if (code.equals("decision"))
 					if (att.getRecordIdValue().equals("67c37a15c1bc4bfaa92e16ff09c3a349"))
 						new_individual.addProperty("v-s:hasStatus", new Resource("v-s:StatusConfirmed", Type._Uri));
 					else
 						new_individual.addProperty("v-s:hasStatus", new Resource("v-s:StatusNotConfirmed", Type._Uri));
-//					if 
-				}
-					
 			}
 		}
 		
@@ -82,10 +76,16 @@ public class _e5312_mnd_s_ActFailureReason extends Ba2VedaTransform {
 		String[] langs_out1 = { "EN", "RU" };
 		String[] langs_out2 = { "NONE" };
 		
+//		Сформировать (rdfs:label индивида  в mnd-s:hasCatalogOfActFailureReason) + ' - ' + v-s:description
 		ArrayList<Object> label_parts = new ArrayList<Object>();
 		if (new_individual.getResources("mnd-s:hasCatalogOfActFailureReason") != null) {
-			label_parts.add(new_individual.getResources("mnd-s:hasCatalogOfActFailureReason"));
-			label_parts.add(" - ");
+			Individual i = veda.getIndividual(new_individual.getResources("mnd-s:hasCatalogOfActFailureReason").resources.get(0).getData());
+			if (i != null) {
+				if (i.getResources("rdfs:label") != null) {
+					label_parts.add(i.getResources("rdfs:label"));
+					label_parts.add(" - ");
+				}
+			}
 		}
 		
 		if (new_individual.getResources("v-s:description") != null)
