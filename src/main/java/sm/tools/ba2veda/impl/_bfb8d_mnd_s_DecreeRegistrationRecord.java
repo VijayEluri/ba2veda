@@ -43,7 +43,7 @@ public class _bfb8d_mnd_s_DecreeRegistrationRecord extends Ba2VedaTransform{
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		new_individual.addProperty("v-s:omitBackwardTarget", new Resource(false, Type._Bool));
-		new_individual.addProperty("v-s:backwardProperty", new Resource("v-s:hasDecreeRegistrationRecord", Type._Uri));
+		new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasDecreeRegistrationRecord", Type._Uri));
 		
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts) {
