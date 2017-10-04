@@ -44,10 +44,15 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 		fields_map.put("PBP, лет", "mnd-s:payBackPeriod");
 		fields_map.put("Дата запуска оборудования по графику", "v-s:dateFromPlan");
 		fields_map.put("date_fact", "v-s:dateFromFact");
-		fields_map.put("Приемочная документация", "mnd-s:AcceptanceDocumentation");
+		fields_map.put("Приемочная документация", "mnd-s:attachmentsForProjectCapexAcceptanceDocumentation");
 		fields_map.put("Вложение", "v-s:attachment");
 		fields_map.put("Сопровождающие документы", "mnd-s:attachmentsForProjectCapexOther");
 		fields_map.put("add_info", "v-s:hasComment");
+		fields_map.put("Дата ввода в осн.фонды", "mnd-s:commissioningDate");
+		fields_map.put("Сумма ввода, руб.", "mnd-s:commissioningSumRub");
+		fields_map.put("Сумма ввода, евр", "mnd-s:commissioningSumEuro");
+		fields_map.put("area_folder", "mnd-s:folderNumber");
+		fields_map.put("from_doc_object_card_number_reg", "mnd-s:idNumber");
 		
 		fields_map.put("№ идеи в ЛИЗ", "?");
 		fields_map.put("Решение по документу", "?");
@@ -82,7 +87,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 		Resources nliz = null;
 		
 		Individual spp_element = null;
-		Individual agd = null;
+//		Individual agd = null;
 		
 		List<XmlAttribute> atts = doc.getAttributes();
 		
@@ -142,7 +147,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 						project_stage = ps.getResources("rdfs:label");
 					}
 					
-					if (agd == null)
+					/*if (agd == null)
 						agd = new Individual();
 					
 					if (stage == "6d4eae44c758435ca06b08383a5bc7a2")
@@ -150,7 +155,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 					else 
 						agd.addProperty("mnd-s:ProjectCapex", new Resource("mnd-s:hasProjectClass"));
 					
-					agd.addProperty("v-s:hasProjectStage", new Resource(of_stage, Type._Uri));
+					agd.addProperty("v-s:hasProjectStage", new Resource(of_stage, Type._Uri));*/
 				} else if (code.equals("№ СПП-элемента")){
 					if (spp_element == null)
 						spp_element = new Individual();
@@ -208,10 +213,10 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 				} else if (code.equals("Руководитель проекта")) {
 					new_individual.addProperty("v-s:projectManager", rss);
 					
-					if (agd == null)
+				/*	if (agd == null)
 						agd = new Individual();
 					
-					agd.addProperty("v-s:projectManager", rss);
+					agd.addProperty("v-s:projectManager", rss);*/
 				} else if (code.equals("add_contract")) {
 					String irf = att.getLinkValue();
 					XmlDocument irf_doc = ba.getActualDocument(irf).getLeft();
@@ -272,10 +277,10 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 					putIndividual(link, ba_id, true);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
 				} else if (code.equals("Дата утверждения мероприятия")) {
-					if (agd == null)
+					/*if (agd == null)
 						agd = new Individual();
 					
-					agd.addProperty("v-s:created", rss);
+					agd.addProperty("v-s:created", rss);*/
 				} else if (code.equals("classifier_budget")) {
 					String cb = att.getRecordIdValue();
 					String cb_of = "";
@@ -406,13 +411,13 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 			putIndividual(spp_element, ba_id, true);
 		}
 		
-		if (agd != null) {
+		/*if (agd != null) {
 			agd.setUri(new_individual.getUri() + "_approval_gate_decision");
 			agd.addProperty("rdf:type", new Resource("mnd-s:ApprovalGateDecision", Type._Uri));
 			agd.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			new_individual.addProperty("mnd-s:hasApprovalGateDecision", new Resource(agd.getUri(), Type._Uri));
 			putIndividual(agd, ba_id, true);
-		}
+		}*/
 		
 		res.add(new_individual);
 		return res;
