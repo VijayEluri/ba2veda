@@ -69,7 +69,7 @@ public class _bcb5e_mnd_s_Contract extends _xxxxx_x_Contract
 		if (kind_pr != null && (kind_pr.equals(kpr1) || kind_pr.equals(kpr2)))
 		{
 
-			if (inherit_rights_from == null || inherit_rights_from.length() == 0)
+//			if (inherit_rights_from == null || inherit_rights_from.length() == 0)
 			{
 				Individual new_individual = new Individual();
 				transform1(doc, new_individual, kind_pr, ba_id, parent_veda_doc_uri, parent_ba_doc_id, path);
@@ -100,7 +100,8 @@ public class _bcb5e_mnd_s_Contract extends _xxxxx_x_Contract
 
 					res.add(new_individual);
 				}
-			} else
+			}
+/*			else
 			{
 				Individual new_individual = veda.getIndividual("d:" + inherit_rights_from);
 
@@ -120,6 +121,7 @@ public class _bcb5e_mnd_s_Contract extends _xxxxx_x_Contract
 					}
 				}
 			}
+*/
 		}
 
 		return res;
