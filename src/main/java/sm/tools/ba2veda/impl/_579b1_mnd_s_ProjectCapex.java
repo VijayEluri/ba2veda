@@ -198,8 +198,15 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 					String query = String.format("'rdf:type'=='v-s:Asset' && (%s)", cond_str);
 					String[] ids = veda.query(query);
 					
-					for (int i = 0; i < ids.length; i++)
-						new_individual.addProperty("v-s:hasAsset", new Resource(ids[i], Type._Uri));
+					for (int i = 0; i < ids.length; i++) {
+//						mnd-s:AssetForDismantlig
+						Individual afd = new Individual();
+						afd.setUri(String.format("%s_asset_for_dismantling_%d",new_individual.getUri(), i));
+						afd.addProperty("rdf:type", new Resource("mnd-s:AssetForDismantlig", Type._Uri));
+						afd.addProperty("v-s:hasAsset", new Resource(ids[i], Type._Uri));
+						new_individual.addProperty("mnd-s:hasAssetForDismantling", new Resource(afd.getUri(), Type._Uri));
+						putIndividual(afd, ba_id, true);
+					}
 				} else if (code.equals("Комментарий")) {
 					Individual comment = new Individual();
 					comment.setUri(String.format("%s_comment_%d", new_individual.getUri(), ncomments));
