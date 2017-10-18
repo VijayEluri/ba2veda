@@ -2024,7 +2024,216 @@
 {
     "if-equals":[{ "value":"7817ddd1-1e63-488c-bea0-b5cde877b3ba"}],
     "set": [{"value":"d:mondi_position_71015289",  "type" : "Uri"}]
-}	
+},
+
+{
+    "if-equals":[{ "value":"3e2ff6c1-dc90-4c3e-945a-cc9f5de6610e"}],
+    "set": [{"value":"d:org_RU1101117102",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"2ca237fe-d8a7-4945-ba3d-1dab6fe21420"}],
+    "set": [{"value":"d:org_RU7727273155",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"f6ac6a66-cb1c-48e8-9091-6bf99ca5b6dd"}],
+    "set": [{"value":"d:org_RU9909133678",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"7a504394-71a7-4817-b6c6-5eb083f05378"}],
+    "set": [{"value":"d:org_RU9909133678",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"b973a00a-5b6b-4f13-9c7e-91e2dea5dd2e"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"da6745aa-ffb5-4892-bbd8-b1ce084447f5"}],
+    "set": [{"value":"d:org_RU7810221561",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"17f979df-5e23-4109-999f-992a919c1e1b"}],
+    "set": [{"value":"d:org_RU1101078196",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"0056f4df-e72c-4c4a-82cb-a1ac752a615e"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"fb6583b7-ed14-492f-bf92-45eb3cab3a56"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"2d9d57ce-3df5-4541-9210-c4f1087016ce"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"7ba6759f-26c8-43ac-a3f7-6abd369953d8"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"c110928d-43fc-45ea-912b-341922057653"}],
+    "set": [{"value":"d:org_RU1121014190",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"bbee1427-9362-4a8b-8056-4ba4b772a5a0"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"a966637b-a4f5-4f2a-9990-10861122a2ed"}],
+    "set": [{"value":"d:org_RU1121013060",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"5bf316d8-2424-4780-a81b-262214543f61"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"3ed131ed-3351-44c6-b038-aa32de890005"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"b69f93b8-416d-4f91-ad91-7311e04175c4"}],
+    "set": [{"value":"d:org_RU1121014190",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"3770624b-eed5-421f-90e8-cbbdb92d8e7b"}],
+    "set": [{"value":"d:org_RU1121014190",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"554f9d45-9164-4eac-8a76-9e98d4ad8687"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"dbf04a9b-994c-44a7-9153-8341982f8390"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"67b77d53-9afc-4f8e-b760-5c4efa13cbcb"}],
+    "set": [{"value":"d:org_RU7709129705",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"6f50b880-1042-45c4-b34d-ed751eb8f131"}],
+    "set": [{"value":"d:a2ac4dabacff458b97ae722b09e90fc3",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"a676e7fd-f86e-4f92-99f1-596942bc9a41"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"1949e0a4-a727-4f16-82e5-5eb752f84896"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"63573b6f-295f-4a88-bdf4-0659d09f3e56"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"f0b7aa2c-ebf4-431a-812a-8c1cab633537"}],
+    "set": [{"value":"d:org_RU7702347687",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"926abd62-c00d-4f9e-8e36-dcb76aa0c23a"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"0a91f3c5-efb3-44c7-9e5b-9adc9f483514"}],
+    "set": [{"value":"d:org_RU7744000302",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"4fb17dc2-37f7-466b-8a8b-705b8e01ea2c"}],
+    "set": [{"value":"d:org_RU1121014190",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"f9336892-dca7-4973-8693-7748a2e6b1d2"}],
+    "set": [{"value":"d:org_RU1121014190",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"dd6654df-4751-4bc4-816c-04ecb2a9a943"}],
+    "set": [{"value":"d:org_RU1121014190",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"3ac5dbf1-9281-4f5e-93a5-b41657223ce6"}],
+    "set": [{"value":"d:org_ATU14837300",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"7216755c-dd6e-423a-8d58-5bfbaae17df9"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"d757adc0-ec6b-498f-b65f-f3cbfeb5a565"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"0811dd4b-7e8b-42e9-96fe-9f845b9c0ea2"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"962f986e-190a-4105-bf3e-e16477dca784"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"2fee6911-6bcc-4c47-9696-041ee7fd421e"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"43408996-8580-4ecc-8eb1-2b6116683ae4"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"3ae74847-4a74-4a8b-a2d3-712a764644a7"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"cdb4be37-fb12-4386-ad92-a4d274de5523"}],
+    "set": [{"value":"d:org_RU1121020998",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"691f7e63-255e-4ed0-a408-8dfe37287dbe"}],
+    "set": [{"value":"d:org_RU1121006489",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"bd44dfac-0b6e-43fc-b72a-5b03f6d59ec6"}],
+    "set": [{"value":"d:org_RU1121006489",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"456dc8ba-7943-4c94-8939-fb51747b1405"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"a20d7fff-f484-45fc-b4fc-b76f5415489b"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"db55a7ea-22b2-4449-a5dc-4b7ff28bb3ff"}],
+    "set": [{"value":"d:org_ATU14837300",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"3070d9f5-50c7-4573-ad42-3d0bd388f8a6"}],
+    "set": [{"value":"d:mondi_orggroup_InternalAuditProject",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"84110f9f-c30a-418a-9027-be7d2bf548ea"}],
+    "set": [{"value":"d:mondi_orggroup_FitToWinProject",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"c480e669-9314-4880-a713-c337c55b0f7b"}],
+    "set": [{"value":"d:mondi_orggroup_MRPOffice",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"97ccd489-076f-46a5-b3c1-b70044ebac36"}],
+    "set": [{"value":"d:org_RU1121003135",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"a7794b17-0383-412c-bda0-c0585d89dda8"}],
+    "set": [{"value":"d:org_RU4345396079",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"cc3e9467-3487-4f0d-80f6-6db58f050ee4"}],
+    "set": [{"value":"d:a7zkeogdmcr00idlvb8fdeu1b",  "type" : "Uri"}]
+},
+{
+    "if-equals":[{ "value":"23ac1247-5513-46fb-bfeb-c9e77a32d4dc"}],
+    "set": [{"value":"d:mondi_department_50001722",  "type" : "Uri"}]
+}
 
 ]
 }
