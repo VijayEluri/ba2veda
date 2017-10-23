@@ -1755,7 +1755,7 @@
 
 {
     "if-equals":[{ "value":"1205068f5aba428abbbcc6dc390ce949"}],
-    "set": [{"value":"v-s:StatusApproval",  "type" : "Uri"}]
+    "set": [{"value":"v-s:StatusAgreement",  "type" : "Uri"}]
 },
 
 {
@@ -1765,12 +1765,12 @@
 
 {
     "if-equals":[{ "value":"f16e8dd148264643a8bdf9e1727fca70"}],
-    "set": [{"value":"v-s:StatusInvestigationCompleted",  "type" : "Uri"}]
+    "set": [{"value":"v-s:StatusExecuted",  "type" : "Uri"}]
 },
 
 {
     "if-equals":[{ "value":"669019e6a948474eb26b6467f7b1abfa"}],
-    "set": [{"value":"v-s:StatusElimination",  "type" : "Uri"}]
+    "set": [{"value":"v-s:StatusExecution",  "type" : "Uri"}]
 },
 {
     "if-equals":[{ "value":"39f9f94ae25a4bc5991e91962b15cea2"}],
