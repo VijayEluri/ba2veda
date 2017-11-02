@@ -21,7 +21,7 @@ public class _d6e6d_mnd_s_VersionOfLocalRegulatoryDocument extends Ba2VedaTransf
 	
 	public void inital_set() {
 		fields_map.put("classifier_doc", "v-s:hasDocumentKind");
-		fields_map.put("nomenclature", "v-s:bacwardTarget");
+		fields_map.put("nomenclature", "v-s:backwardTarget");
 		fields_map.put("number_reg", "v-s:registrationNumber");
 		fields_map.put("title", "v-s:title");
 		fields_map.put("date_reg", "v-s:registrationDate");
