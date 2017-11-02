@@ -54,7 +54,7 @@ public class _7a775_mnd_s_ProjectCapexRequestChange extends Ba2VedaTransform {
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		
 		new_individual.addProperty("v-s:omitBackwardTargetGroup", new Resource(false, Type._Bool));
-		new_individual.addProperty("v-s:backwardPropery", new Resource("mnd-s:hasProjectCapexRequestChange", Type._Uri));
+		new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasProjectCapexRequestChange", Type._Uri));
 		
 		List<XmlAttribute> atts = doc.getAttributes();
 		int ncomments = 1;
