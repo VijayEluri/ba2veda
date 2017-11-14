@@ -67,6 +67,7 @@ import sm.tools.ba2veda.impl._bdc96_mnd_s_AuditInternal;
 import sm.tools.ba2veda.impl._bfb8d_mnd_s_DecreeRegistrationRecord;
 import sm.tools.ba2veda.impl._c6c99_mnd_s_ContractRequest;
 import sm.tools.ba2veda.impl._c6c99_v_s_Link;
+import sm.tools.ba2veda.impl._c7977_mnd_s_ContractorCreateChangeRequest;
 import sm.tools.ba2veda.impl._c8a33_mnd_s_AuditInternalObject;
 import sm.tools.ba2veda.impl._cdaa9_mnd_s_PowerOfAttorney;
 import sm.tools.ba2veda.impl._d0072_v_s_Correspodent;
@@ -298,6 +299,8 @@ public class Fetcher
 		trs.add(new _689c5_mnd_s_Addendum(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		trs.add(new _38851_mnd_s_InternalAccountingDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
+		trs.add(new _c7977_mnd_s_ContractorCreateChangeRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{
