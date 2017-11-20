@@ -37,9 +37,12 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 		fields_map.put("reply", "v-s:hasRelatedLetter");
 		fields_map.put("inherit_rights_from", "?");
 		fields_map.put("add_doc", "?");
-		fields_map.put("date_reg", "?");
+		
 		fields_map.put("type_send", "?");
 		fields_map.put("add_doc", "?");
+		
+		fields_map.put("number_reg", "?");
+		fields_map.put("date_reg", "?");
 	}
 
 	@Override
@@ -66,6 +69,7 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 		Resources _edited = new_individual.getResources("v-s:edited");
 
 		Individual indv_recepient = new Individual();
+		Individual lrrs = null;
 		indv_recepient.setUri(uri + "_4");
 		indv_recepient.addProperty("rdf:type", "mnd-s:Correspondent", Type._Uri);
 		indv_recepient.addProperty("v-s:parent", uri, Type._Uri);
@@ -92,10 +96,11 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 			if (predicate != null)
 			{
 				Resources rss = null;
-
+				rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
+				
 				if (code.equals("add_doc"))
 				{
-					rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
+					
 
 					if (rss != null)
 					{
@@ -121,7 +126,20 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 							new_individual.addProperty("v-s:hasLink", new_link_id, Type._Uri);
 						}
 					}
-				} else
+				}
+				else if (code.equals("number_reg"))
+				{
+					if (lrrs == null)
+						lrrs = new Individual();
+					lrrs.addProperty("v-s:registrationNumber", rss);
+				}
+				else if (code.equals("date_reg"))
+				{
+					if (lrrs == null)
+						lrrs = new Individual();
+					lrrs.addProperty("v-s:registrationDate", rss);
+				}
+				else
 				{
 					if (code.equals("position_send"))
 						code.length();
@@ -315,6 +333,16 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 			}
 			if (rss.resources.size() > 0)
 				new_individual.addProperty("rdfs:label", rss);
+		}
+		
+		if (lrrs != null) {
+			lrrs.setUri(new_individual.getUri() + "_" + "letter_registration_record_recipient");
+			lrrs.addProperty("rdf:type", new Resource("v-s:LetterRegistrationRecordRecipient", Type._Uri));
+			lrrs.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
+			lrrs.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+			lrrs.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+			new_individual.addProperty("v-s:hasLetterRegistrationRecordSender", new Resource(lrrs.getUri(), Type._Uri));
+			veda.putIndividual(lrrs, true);
 		}
 
 		res.add(new_individual);
