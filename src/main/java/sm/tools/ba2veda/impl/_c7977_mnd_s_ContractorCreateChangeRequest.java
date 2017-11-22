@@ -77,8 +77,18 @@ public class _c7977_mnd_s_ContractorCreateChangeRequest extends Ba2VedaTransform
 					continue;
 				
 				if (code.equals("contractor_dossier")) {
-					Individual cd = veda.getIndividual(rss.resources.get(0).getData());
-					new_individual.addProperty("v-s:backwardTarget", cd.getResources("v-s:backwardTarget"));
+					try {
+						Individual cd = veda.getIndividual(rss.resources.get(0).getData());
+						if (cd == null) {
+							System.err.println(String.format("Individual %s not found", 
+								rss.resources.get(0).getData()));
+							continue;
+						}
+						new_individual.addProperty("v-s:backwardTarget", cd.getResources("v-s:backwardTarget"));
+					} catch (Exception e) {
+						System.err.println(String.format("Bad uri %s", 
+							rss.resources.get(0).getData()));
+					}
 				}
 			}
 		}
