@@ -1038,7 +1038,7 @@ public abstract class Ba2VedaTransform
 
 		if (ba_department.type == Department._DEPARTMENT)
 		{
-			prefix = "department";
+			prefix = "mondi_department";
 			rdf_type = "v-s:Department";
 		} else if (ba_department.type == Department._GROUP)
 		{
@@ -1089,8 +1089,8 @@ public abstract class Ba2VedaTransform
 		else if (ba_department.type == Department._ORGANIZATION)
 			pprefix = "org";
 
-		Individual dp_veda = veda.getIndividual("d:" + pprefix + "_" + ba_department.getInternalId());
-		if (dp_veda == null)
+		Individual dp_veda;// = veda.getIndividual("d:" + pprefix + "_" + ba_department.getInternalId());
+//		if (dp_veda == null)
 			dp_veda = veda.getIndividual("d:mondi_" + pprefix + "_" + ba_department.getInternalId());
 
 		if (dp_veda != null)
