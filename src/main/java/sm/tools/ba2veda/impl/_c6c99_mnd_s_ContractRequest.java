@@ -149,10 +149,12 @@ public class _c6c99_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 		new_individual.addProperty("rdfs:label", rss);
 		
 		if (new_individual.getResources("v-s:supplierContractor") != null) {
-			String sc = new_individual.getResources("v-s:supplierContractor").resources.get(0).getData();
-			Individual sci = veda.getIndividual(sc);
-			if (sci != null)
-				new_individual.addProperty("v-s:supplier", sci.getResources("v-s:linkedOrganization"));
+			if (new_individual.getResources("v-s:supplierContractor").resources.size() > 0) {
+				String sc = new_individual.getResources("v-s:supplierContractor").resources.get(0).getData();
+				Individual sci = veda.getIndividual(sc);
+				if (sci != null)
+					new_individual.addProperty("v-s:supplier", sci.getResources("v-s:linkedOrganization"));
+			}
 		}
 		
 		res.add(new_individual);
