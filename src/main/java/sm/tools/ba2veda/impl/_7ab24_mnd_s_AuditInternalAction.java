@@ -78,8 +78,20 @@ public class _7ab24_mnd_s_AuditInternalAction extends Ba2VedaTransform
 			if (predicate != null)
 			{
 				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				
+				if (code.equals("status_ex")) {
+					if (att.getRecordIdValue().equals("4363a85a-1b4f-4c0b-89be-fe1326b9bae9")) {
+						new_individual.addProperty(predicate, new Resource("v-s:StatusExecution", Type._Uri));
+						continue;
+					} else if (att.getRecordIdValue().equals("8e1d546b-e70e-4f88-a4de-091fc7a247c3")) {
+						new_individual.addProperty(predicate, new Resource("v-s:StatusExecuted", Type._Uri));
+						continue;
+					}
+				}
 
 				new_individual.addProperty(predicate, rss);
+				
+				
 			}
 		}
 
