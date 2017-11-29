@@ -25,7 +25,7 @@ public class _e2515_mnd_s_AuditInternalReport extends Ba2VedaTransform
 		fields_map.put("responsible", "v-s:responsible");
 		fields_map.put("date", "v-s:dateToPlan");
 		fields_map.put("attachment", "v-s:attachment");
-		fields_map.put("comment", "comment");
+		fields_map.put("comment", "rdfs:comment");
 	}
 
 	@Override
