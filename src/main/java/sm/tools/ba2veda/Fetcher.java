@@ -312,15 +312,15 @@ public class Fetcher
 		}
 	}
 
-	public static void prepare_documents_of_type(String from, String to, Date begin_time) throws Exception
+	public static void prepare_documents_of_type(String from, String to, Date begin_time, String ba_id) throws Exception
 	{
 		String templateId = from;
 		System.out.println("prepare_documents_of_type: " + templateId + "->" + to);
 		// List<Pair<String, Long>> elements =
 		// Ba2VedaTransform.st_ba.getBAObjOnTemplateId(templateId, begin_time);		
-		long count = Ba2VedaTransform.st_ba.getCountBAObjOnTemplateId(templateId, begin_time);
+		long count = Ba2VedaTransform.st_ba.getCountBAObjOnTemplateId(templateId, begin_time, ba_id);
 		System.out.println("found records: " + count);
-		ResultSet rs = Ba2VedaTransform.st_ba.getBAObjOnTemplateId(templateId, begin_time);
+		ResultSet rs = Ba2VedaTransform.st_ba.getBAObjOnTemplateId(templateId, begin_time, ba_id);
 
 		long idx = 0;
 		while (rs.next())
@@ -371,10 +371,13 @@ public class Fetcher
 				{
 					String[] ss = arg.split("/");
 
-					if (ss.length == 2)
+					if (ss.length >= 2)
 					{
 						String from = ss[0].trim();
 						String to = ss[1].trim();
+						String ba_id = null;
+						if (ss.length == 3)
+							ba_id = ss[2].trim();
 						delta_properties_fname = from + "#" + to + ".cfg";
 
 						if (is_delta)
@@ -400,7 +403,7 @@ public class Fetcher
 
 						}
 
-						prepare_documents_of_type(from, to, start_timestamp);
+						prepare_documents_of_type(from, to, start_timestamp, ba_id);
 					} else
 						System.out.println("invalid argument: " + arg);
 

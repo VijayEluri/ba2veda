@@ -180,7 +180,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 					String doc_str = att.getTextValue();
 					String[] docs = doc_str.split(",");
 					
-					ArrayList<String> conditions = new ArrayList<>();
+					ArrayList<String> conditions = new ArrayList<String>();
 					for (int i = 0; i < docs.length; i++)
 						if (StringUtils.isNumeric(docs[i].trim())) {
 							if (docs[i].trim().length() < 7) {

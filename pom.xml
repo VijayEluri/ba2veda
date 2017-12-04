@@ -32,6 +32,8 @@
 	    <version>2.11.1</version>
         </dependency>
 
+		
+
         <dependency>
              <groupId>org.gost19.pacahon.client</groupId>
              <artifactId>ba-pacahon-driver</artifactId>
@@ -73,6 +75,13 @@
     <artifactId>httpmime</artifactId>
     <version>4.3.5</version>
 </dependency>
+
+<dependency>
+      <groupId>org.zeromq</groupId>
+      <artifactId>jeromq</artifactId>
+      <version>0.4.3</version>
+    </dependency>
+
 
     </dependencies>
 	<profiles>
@@ -120,6 +129,21 @@
 					</archive>
 				</configuration>
 			</plugin>
+
+<plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>sm.tools.ba2veda.Fetcher</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
+
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>2.0</version>
