@@ -38,6 +38,11 @@ public abstract class Ba2VedaTransform
 	static int count_get;
 	static int count_put;
 	static boolean is_enable_store = true;
+	protected static int assignedSubsystems = 0;
+	
+	public static void set_subsystems(int subsystems) {
+		assignedSubsystems = subsystems;
+	}
 
 	private static long get_count_of_queue(String queue_name)
 	{
@@ -148,7 +153,7 @@ public abstract class Ba2VedaTransform
 								if (right.isDelete == true)
 									new_permission.addProperty("v-s:canDelete", new Resource("true", Type._Bool));
 
-								st_veda.putIndividual(new_permission, isPrepareEvent);
+								st_veda.putIndividual(new_permission, isPrepareEvent, assignedSubsystems);
 								System.out.println("ADD RIGHT:" + new_permission.getUri() + ", TO:" + indv.getUri());
 							} else
 							{
@@ -165,7 +170,7 @@ public abstract class Ba2VedaTransform
 			}
 
 			System.out.println("PUT INDIVIDUAL: " + indv.getUri());
-			return st_veda.putIndividual(indv, isPrepareEvent);
+			return st_veda.putIndividual(indv, isPrepareEvent, assignedSubsystems);
 		} else
 			return 200;
 	}

@@ -342,7 +342,7 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 			lrrs.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			lrrs.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			new_individual.addProperty("v-s:hasLetterRegistrationRecordSender", new Resource(lrrs.getUri(), Type._Uri));
-			veda.putIndividual(lrrs, true);
+			veda.putIndividual(lrrs, true, assignedSubsystems);
 		}
 
 		res.add(new_individual);

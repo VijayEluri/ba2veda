@@ -85,7 +85,7 @@ public class _c6c99_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 					price.addProperty("rdf:type", new Resource("v-s:Price", Type._Uri));
 					price.addProperty("v-s:hasCurrency", new Resource("d:currency_rub", Type._Uri));
 					price.addProperty("v-s:sum", rss);
-					veda.putIndividual(price, true);
+					veda.putIndividual(price, true, assignedSubsystems);
 					new_individual.addProperty("v-s:expectedValueOfContract", new Resource(price.getUri(), Type._Uri));
 				} else if (code.equals("description_equipment")) {
 					if (rcd == null)
@@ -127,7 +127,7 @@ public class _c6c99_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 		if (rcd != null) {
 			rcd.setUri(new_individual.getUri() + "_request_contract_detail");
 			rcd.addProperty("rdf:type", new Resource("mnd-s:RequestContractDetail", Type._Uri));
-			veda.putIndividual(rcd, true);
+			veda.putIndividual(rcd, true, assignedSubsystems);
 			new_individual.addProperty("mnd-s:hasRequestContractDetail", new Resource(rcd.getUri(), Type._Uri));
 		}
 		

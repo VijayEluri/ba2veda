@@ -351,7 +351,8 @@ public class Fetcher
 
 		// getAttachmentPort();
 		// fetchOrganization();
-
+		int assignedSubsystem = 0;
+		Ba2VedaTransform.set_subsystems(0);
 		if (args.length > 0)
 		{
 			for (String arg : args)
@@ -361,13 +362,18 @@ public class Fetcher
 					is_delta = true;
 					System.out.println("use delta");
 				}
+				else if (arg.indexOf("-subsystem") >= 0)
+				{
+					assignedSubsystem = Integer.parseInt(arg.replace("-subsystem", ""));
+					Ba2VedaTransform.set_subsystems(assignedSubsystem);
+				}
 			}
 
 			Date start_timestamp = new Date(Byte.MIN_VALUE);
 
 			for (String arg : args)
 			{
-				if (!arg.equals("-delta"))
+				if (!arg.equals("-delta") && (arg.indexOf("-subsystem") < 0))
 				{
 					String[] ss = arg.split("/");
 
