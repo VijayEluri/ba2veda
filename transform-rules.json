@@ -1782,7 +1782,7 @@
 },
 {
     "if-equals":[{ "value":"1c67464e16aa44418f3510ef78fe735d"}],
-    "set": [{"value":"v-s:StatusPostponed",  "type" : "Uri"}]
+    "set": [{"value":"v-s:StatusRejected",  "type" : "Uri"}]
 },
 {
     "if-equals":[{ "value":"33c844ed0f9f4725a41a8705fe34b6e2"}],
