@@ -31,6 +31,7 @@ public class _9fb73_mnd_s_AuditSafety extends Ba2VedaTransform
 		fields_map.put("Список рассылки", "v-s:copyTo");
 		fields_map.put("Замечания аудита", "v-s:hasAction");
 		fields_map.put("action", "v-s:hasAction");
+		fields_map.put("Замечание аудита", "v-s:hasAction");
 		fields_map.put("Вывод", "v-s:summary");
 	}
 
