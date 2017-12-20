@@ -43,6 +43,7 @@ public class _bcc80_mnd_s_AuditSafetyRating extends Ba2VedaTransform{
 		new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasAuditSafetyRating", 
 			Type._Uri));
 		new_individual.addProperty("v-s:omitBackwardTargetGroup", new Resource("false", Type._Bool));
+		new_individual.addProperty("v-s:canRead", new Resource(true, Type._Bool));
 		
 		for (XmlAttribute att : atts) {
 			String code = att.getCode();
