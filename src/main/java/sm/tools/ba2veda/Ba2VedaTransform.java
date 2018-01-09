@@ -807,7 +807,7 @@ public abstract class Ba2VedaTransform
 					if (rpls != null)
 						res.add(rpls.get("*").getData(), rpls.get("*").getType());
 
-				} else if (otype.equals("department"))
+				} else if (otype.equals("department") || otype.contains("department"))
 				{
 					String new_link = null;
 					HashMap<String, Resource> rpls = replacer.get_replace(code, link, null);

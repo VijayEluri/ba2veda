@@ -206,6 +206,9 @@ public class Fetcher
 		trs.add(new _da0e6_v_s_Comment(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _bcc80_mnd_s_AuditSafetyRating(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
+		trs.add(new _fb3d8_mnd_s_EngineeringRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _93469_mnd_s_VersionOfTechnicalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
 		for (Ba2VedaTransform tr : trs)
 		{
 			for (String key : Ba2VedaTransform.st_types_map.keySet())
