@@ -23,16 +23,18 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 
 	public void inital_set()
 	{
+		fields_map.put("Цех", "mnd-s:technicalDocumentObject");
+		fields_map.put("Объект ТОРО", "v-s:hasMaintainedObject");
+		fields_map.put("Инв.№", "v-s:inventoryNumber");
 		fields_map.put("Название", "v-s:title");
-		fields_map.put("Марка", "v-s:hasDocumentKind");
+		fields_map.put("Раздел", "v-s:hasDocumentKind");
 		fields_map.put("Дата получения", "v-s:registrationDate");
-		fields_map.put("Лист", "v-s:sheetsCount");
 		fields_map.put("attachment_doc", "v-s:attachment");
 		fields_map.put("Полное название", "rdfs:label");
 
 		fields_map.put("Комментарий", "?");
 		fields_map.put("Обозначение", "?");
-		fields_map.put("Разработчик", "?");
+		fields_map.put("developer", "?");
 		fields_map.put("add_doc", "?");
 		fields_map.put("attachment_doc", "?");
 	}
@@ -75,7 +77,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 
 				if (code.equals("Обозначение"))
 					shortLabel = rss;
-				else if (code.equals("Разработчик"))
+				else if (code.equals("developer"))
 				{
 					Individual dev = new Individual();
 					dev.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
