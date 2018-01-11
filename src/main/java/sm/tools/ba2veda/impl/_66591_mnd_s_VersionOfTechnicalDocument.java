@@ -31,6 +31,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		fields_map.put("Дата получения", "v-s:registrationDate");
 		fields_map.put("attachment_doc", "v-s:attachment");
 		fields_map.put("Полное название", "rdfs:label");
+		fields_map.put("Количество листов", "v-s:sheetsCount");		
 
 		fields_map.put("Комментарий", "?");
 		fields_map.put("Обозначение", "?");
@@ -101,7 +102,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 					comment.addProperty("v-s:backwardTarget", new Resource(new_individual.getUri(), Type._Uri));
 					comment.addProperty("v-s:backwardProperty", new Resource("v-s:hasComment", Type._Uri));
 					comment.addProperty("rdfs:label", rss);
-					new_individual.addProperty("v-s:comment", new Resource(comment.getUri(), Type._Uri));
+					new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
 					veda.putIndividual(comment, true, assignedSubsystems);
 				} else if (code.equals("add_doc"))
 				{

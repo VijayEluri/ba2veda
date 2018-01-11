@@ -99,7 +99,7 @@ public class _a2137_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 					comment.addProperty("v-s:backwardTarget", new Resource(new_individual.getUri(), Type._Uri));
 					comment.addProperty("v-s:backwardProperty", new Resource("v-s:hasComment", Type._Uri));
 					comment.addProperty("rdfs:label", rss);
-					new_individual.addProperty("v-s:comment", new Resource(comment.getUri(), Type._Uri));
+					new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
 					veda.putIndividual(comment, true, assignedSubsystems);
 				} else if (code.equals("add_doc"))
 				{
