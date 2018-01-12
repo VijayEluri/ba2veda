@@ -31,7 +31,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		fields_map.put("Дата получения", "v-s:registrationDate");
 		fields_map.put("attachment_doc", "v-s:attachment");
 		fields_map.put("Полное название", "rdfs:label");
-		fields_map.put("Количество листов", "v-s:sheetsCount");		
+		fields_map.put("Количество листов", "v-s:sheetsCount");
 
 		fields_map.put("Комментарий", "?");
 		fields_map.put("Обозначение", "?");
@@ -80,17 +80,26 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 					shortLabel = rss;
 				else if (code.equals("developer"))
 				{
-					Individual dev = new Individual();
-					dev.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
-					dev.addProperty("v-s:created", new_individual.getResources("v-s:created"));
-					dev.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
-					dev.setUri(new_individual.getUri() + "_developer");
-					dev.addProperty("rdf:type", new Resource("v-s:Comment", Type._Uri));
-					dev.addProperty("v-s:backwardTarget", new Resource(new_individual.getUri(), Type._Uri));
-					dev.addProperty("v-s:backwardProperty", new Resource("v-s:hasComment", Type._Uri));
-					dev.addProperty("rdfs:label", new Resource("Разработчик: " + att.getTextValue()));
-					new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
-					veda.putIndividual(dev, true, assignedSubsystems);
+					if (rss.resources.size() > 0)
+					{
+						Individual dd = veda.getIndividual(rss.resources.get(0).getData());
+
+						Individual developer = new Individual();
+						developer.setUri(new_individual.getUri() + "_developer");
+						developer.addProperty("rdf:type", new Resource("v-s:Correspondent", Type._Uri));
+						developer.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+						developer.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+						developer.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
+
+						Resources rr = dd.getResources("v-s:linkedOrganization");
+
+						if (rr.resources.size() > 0)
+						{
+							developer.addProperty("v-s:correspondentOrganization", rr);
+							new_individual.addProperty("v-s:developer", new Resource(developer.getUri(), Type._Uri));
+							veda.putIndividual(developer, true, assignedSubsystems);
+						}
+					}
 				} else if (code.equals("Комментарий"))
 				{
 					Individual comment = new Individual();
