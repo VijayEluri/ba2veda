@@ -73,7 +73,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception {
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
@@ -81,7 +81,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		Resources nliz = null;
@@ -103,7 +103,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 			System.out.println("CODE: " + code);
 			
 			if (predicate != null) {
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
 
 				if (predicate.equals("?") == false) 
@@ -205,7 +205,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 						afd.addProperty("rdf:type", new Resource("mnd-s:AssetForDismantling", Type._Uri));
 						afd.addProperty("v-s:hasAsset", new Resource(ids[i], Type._Uri));
 						new_individual.addProperty("mnd-s:hasAssetForDismantling", new Resource(afd.getUri(), Type._Uri));
-						putIndividual(afd, ba_id, true);
+						putIndividual(level, afd, ba_id);
 					}
 				} else if (code.equals("Комментарий")) {
 					Individual comment = new Individual();
@@ -216,7 +216,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 					comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 					comment.addProperty("rdfs:label", rss);
 					new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
-					putIndividual(comment, ba_id, true);
+					putIndividual(level, comment, ba_id);
 				} else if (code.equals("Руководитель проекта")) {
 					new_individual.addProperty("v-s:projectManager", rss);
 					
@@ -247,7 +247,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 								|| irf_doc.getTypeId().equals("67588724c4c54b25a2c84906613bd15a"))
 						{
 							att.setLinkValue(inherit_rights_from);
-							Resources rss1 = ba_field_to_veda(att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+							Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 									true);
 
 							new_individual.addProperty("v-s:hasContract", rss1);
@@ -281,7 +281,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
 					link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
 					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
-					putIndividual(link, ba_id, true);
+					putIndividual(level, link, ba_id);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
 				} else if (code.equals("Дата утверждения мероприятия")) {
 					/*if (agd == null)
@@ -373,7 +373,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 			comment.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
-			putIndividual(comment, ba_id, true);
+			putIndividual(level, comment, ba_id);
 		}
 		
 		if (regnmb != null || project_stage != null) {
@@ -415,7 +415,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 			spp_element.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			spp_element.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 			new_individual.addProperty("mnd-s:hasSppElement", new Resource(spp_element.getUri(), Type._Uri));
-			putIndividual(spp_element, ba_id, true);
+			putIndividual(level, spp_element, ba_id);
 		}
 		
 		/*if (agd != null) {
@@ -423,7 +423,7 @@ public class _579b1_mnd_s_ProjectCapex extends Ba2VedaTransform
 			agd.addProperty("rdf:type", new Resource("mnd-s:ApprovalGateDecision", Type._Uri));
 			agd.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			new_individual.addProperty("mnd-s:hasApprovalGateDecision", new Resource(agd.getUri(), Type._Uri));
-			putIndividual(agd, ba_id, true);
+			putIndividual(level, agd, ba_id, true);
 		}*/
 		
 		res.add(new_individual);

@@ -46,7 +46,7 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		String uri = prepare_uri(ba_id);
@@ -54,7 +54,7 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		Resources _addressee = null;
 		Resources _addressee_to = null;
@@ -96,7 +96,7 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 			if (predicate != null)
 			{
 				Resources rss = null;
-				rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
+				rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
 				
 				if (code.equals("add_doc"))
 				{
@@ -145,9 +145,9 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 						code.length();
 
 					if (code.equals("reply"))
-						rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
+						rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
 					else
-						rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+						rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 					if (code.equals("reg_note"))
 					{
@@ -342,7 +342,7 @@ public class _b3999_mnd_s_OutgoingLetter extends Ba2VedaTransform
 			lrrs.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			lrrs.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			new_individual.addProperty("v-s:hasLetterRegistrationRecordSender", new Resource(lrrs.getUri(), Type._Uri));
-			veda.putIndividual(lrrs, true, assignedSubsystems);
+			putIndividual(level, lrrs, null);
 		}
 
 		res.add(new_individual);

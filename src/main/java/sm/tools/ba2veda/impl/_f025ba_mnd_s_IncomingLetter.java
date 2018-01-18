@@ -37,7 +37,7 @@ public class _f025ba_mnd_s_IncomingLetter extends Ba2VedaTransform {
 	}
 	
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception {
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
@@ -45,7 +45,7 @@ public class _f025ba_mnd_s_IncomingLetter extends Ba2VedaTransform {
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		
@@ -62,7 +62,7 @@ public class _f025ba_mnd_s_IncomingLetter extends Ba2VedaTransform {
 			String predicate = fields_map.get(code);
 			System.out.println("CODE: " + code);
 			if (predicate != null) {
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
 
 				if (predicate.equals("?") == false) 
@@ -89,7 +89,7 @@ public class _f025ba_mnd_s_IncomingLetter extends Ba2VedaTransform {
 						new Resource("d:org_RU000000000000", Type._Uri));
 					ind.addProperty("v-s:correspondentPersonDescription", rss);
 					new_individual.addProperty("v-s:sender", new Resource(ind.getUri(), Type._Uri));
-					putIndividual(ind, ba_id, true);
+					putIndividual(level, ind, ba_id);
 				} else if (code.equals("classifier_delivery"))
 					classifier_delivery = rss;
 				else if (code.equals("addresse_to")) {
@@ -104,7 +104,7 @@ public class _f025ba_mnd_s_IncomingLetter extends Ba2VedaTransform {
 					ind.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 					ind.addProperty("v-s:registrationDate", rss);
 					new_individual.addProperty("v-s:hasLetterRegistrationRecordSender", new Resource(ind.getUri(), Type._Uri));
-					putIndividual(ind, ba_id, true);
+					putIndividual(level, ind, ba_id);
 				}else if (code.equals("add_doc")) {
 					String irf = att.getLinkValue();
 					if (irf == null)
@@ -136,7 +136,7 @@ public class _f025ba_mnd_s_IncomingLetter extends Ba2VedaTransform {
 					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
 					link.addProperty("v-s:to", new Resource(new_individual.getUri(), Type._Uri));
 					link.addProperty("v-s:from", new Resource("d:" + link_to, Type._Uri));
-					putIndividual(link, ba_id, true);
+					putIndividual(level, link, ba_id);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
 				}
 			}
@@ -154,7 +154,7 @@ public class _f025ba_mnd_s_IncomingLetter extends Ba2VedaTransform {
 			lrbr.addProperty("v-s:registrationDate", date_reg);
 			new_individual.addProperty("v-s:hasLetterRegistrationRecordRecipient", 
 				new Resource(lrbr.getUri(), Type._Uri));
-			putIndividual(lrbr, ba_id, true);
+			putIndividual(level, lrbr, ba_id);
 		}
 		
 		if (classifier_delivery != null) {
@@ -168,7 +168,7 @@ public class _f025ba_mnd_s_IncomingLetter extends Ba2VedaTransform {
 			ind.addProperty("v-s:deliverBy", classifier_delivery);
 			ind.addProperty("v-s:date", date_reg);
 			new_individual.addProperty("v-s:hasDelivery",	new Resource(ind.getUri(), Type._Uri));
-			putIndividual(ind, ba_id, true);
+			putIndividual(level, ind, ba_id);
 		}
 		
 		if (adresse_to.size() > 0) {
@@ -184,7 +184,7 @@ public class _f025ba_mnd_s_IncomingLetter extends Ba2VedaTransform {
 			for (int i = 0; i < adresse_to.size(); i++)
 				ind.addProperty("v-s:correspondentPerson", adresse_to.get(i));
 			new_individual.addProperty("v-s:recipient", new Resource(ind.getUri(), Type._Uri));
-			putIndividual(ind, ba_id, true);
+			putIndividual(level, ind, ba_id);
 		}
 		
 		res.add(new_individual);

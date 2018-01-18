@@ -32,7 +32,7 @@ public class _7adb5_v_s_Delivery extends Ba2VedaTransform
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		String uri = prepare_uri(ba_id);
@@ -40,7 +40,7 @@ public class _7adb5_v_s_Delivery extends Ba2VedaTransform
 
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		Resources _add_to_doc = null;
 
@@ -53,7 +53,7 @@ public class _7adb5_v_s_Delivery extends Ba2VedaTransform
 			if (predicate != null)
 			{
 				Resources rss = null;
-				rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 				if (code.equals("add_to_doc"))
 					_add_to_doc = rss;

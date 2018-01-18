@@ -37,7 +37,7 @@ public class _93469_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform {
 	}
 	
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception {
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
@@ -45,7 +45,7 @@ public class _93469_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform {
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		
@@ -58,7 +58,7 @@ public class _93469_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform {
 			String predicate = fields_map.get(code);
 			System.out.println("CODE: " + code);
 			if (predicate != null) {
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
 
 				if (predicate.equals("?") == false) 
@@ -83,7 +83,7 @@ public class _93469_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform {
 					dev.addProperty("v-s:backwardProperty", new Resource("v-s:hasComment", Type._Uri));
 					dev.addProperty("rdfs:label", new Resource("Разработчик: " + att.getTextValue()));
 					new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
-					veda.putIndividual(dev, true, assignedSubsystems);
+					putIndividual(level, dev, null);
 				} else if (code.equals("Комментарий")) {
 					Individual comment = new Individual();
 					comment.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
@@ -95,7 +95,7 @@ public class _93469_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform {
 					comment.addProperty("v-s:backwardProperty", new Resource("v-s:hasComment", Type._Uri));
 					comment.addProperty("rdfs:label", rss);
 					new_individual.addProperty("v-s:comment", new Resource(comment.getUri(), Type._Uri));
-					veda.putIndividual(comment, true, assignedSubsystems);
+					putIndividual(level, comment, null);
 				} else if (code.equals("add_doc")) {
 //					Создать индивид класса v-s:Link. (ID сгенерировать), 
 //					в котором v-s:from - id взятого по ссылке, v-s:to - id текущего документа.
@@ -110,14 +110,14 @@ public class _93469_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform {
 					link.addProperty("v-s:from", new Resource(from, Type._Uri));
 					link.addProperty("v-s:to", new Resource(to, Type._Uri));
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
-					veda.putIndividual(link, true, assignedSubsystems);
+					putIndividual(level, link, null);
 				} else if (code.equals("attachment_doc")) {
 					XmlDocument doc2 = ba.getActualDocument(att.getLinkValue()).getLeft();
 					if (doc2 != null) {
 						List<XmlAttribute> atts2 = doc2.getAttributes();
 						for (XmlAttribute att2 : atts2) {
 							if (att2.getCode().equals("attachment")) {
-								Resources rss2 = ba_field_to_veda(att2, uri, ba_id, 
+								Resources rss2 = ba_field_to_veda(level, att2, uri, ba_id, 
 									doc2, path, parent_ba_doc_id, parent_veda_doc_uri,
 									true);
 								new_individual.addProperty("v-s:attachment", rss2);
@@ -144,7 +144,7 @@ public class _93469_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform {
 		td.addProperty("v-s:registrationDate", new_individual.getResources("v-s:registrationDate"));
 		td.addProperty("v-s:shortLabel", shortLabel);
 		new_individual.addProperty("v-s:backwardTarget", new Resource(td.getUri(), Type._Uri));
-		veda.putIndividual(td, true, assignedSubsystems);
+		putIndividual(level, td, null);
 		
 		res.add(new_individual);
 		return res;

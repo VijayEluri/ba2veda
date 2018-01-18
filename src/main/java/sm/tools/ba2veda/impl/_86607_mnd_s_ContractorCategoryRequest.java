@@ -40,7 +40,7 @@ public class _86607_mnd_s_ContractorCategoryRequest extends Ba2VedaTransform
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		String uri = prepare_uri(ba_id);
@@ -57,11 +57,11 @@ public class _86607_mnd_s_ContractorCategoryRequest extends Ba2VedaTransform
 			String predicate = fields_map.get(code);
 			if (predicate != null)
 			{
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 				new_individual_1.addProperty(predicate, rss);
 			}
 		}
-		set_basic_fields(new_individual_1, doc);
+		set_basic_fields(level, new_individual_1, doc);
 
 		if (parent_veda_doc_uri != null)
 		{
@@ -77,11 +77,11 @@ public class _86607_mnd_s_ContractorCategoryRequest extends Ba2VedaTransform
 			String predicate = inner2_fields_map.get(code);
 			if (predicate != null)
 			{
-				Resources rss = ba_field_to_veda(att, new_individual_2.getUri(), null, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				Resources rss = ba_field_to_veda(level, att, new_individual_2.getUri(), null, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 				new_individual_2.addProperty(predicate, rss);
 			}
 		}
-		set_basic_fields(new_individual_2, doc);
+		set_basic_fields(level, new_individual_2, doc);
 		new_individual_2.setProperty("rdf:type", new Resource("mnd-s:ContractorCategoryDecision", Type._Uri));
 		if (parent_veda_doc_uri != null)
 		{
@@ -89,7 +89,7 @@ public class _86607_mnd_s_ContractorCategoryRequest extends Ba2VedaTransform
 			new_individual_2.addProperty("v-s:backwardTarget", new Resource(uri, Type._Uri));
 		}
 
-		int res_2 = putIndividual(new_individual_2, ba_id, true);
+		int res_2 = putIndividual(level, new_individual_2, ba_id);
 
 		if (res_2 != 200)
 		{
@@ -110,11 +110,11 @@ public class _86607_mnd_s_ContractorCategoryRequest extends Ba2VedaTransform
 			String predicate = inner3_fields_map.get(code);
 			if (predicate != null)
 			{
-				Resources rss = ba_field_to_veda(att, new_individual_3.getUri(), null, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				Resources rss = ba_field_to_veda(level, att, new_individual_3.getUri(), null, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 				new_individual_3.addProperty(predicate, rss);
 			}
 		}
-		set_basic_fields(new_individual_3, doc);
+		set_basic_fields(level, new_individual_3, doc);
 		new_individual_3.setProperty("rdf:type", new Resource("mnd-s:ContractorCategoryDecisionSecurity", Type._Uri));
 		if (parent_veda_doc_uri != null)
 		{
@@ -122,7 +122,7 @@ public class _86607_mnd_s_ContractorCategoryRequest extends Ba2VedaTransform
 			new_individual_3.addProperty("v-s:backwardTarget", new Resource(new_individual_2.getUri(), Type._Uri));
 		}
 
-		int res_3 = putIndividual(new_individual_3, ba_id, true);
+		int res_3 = putIndividual(level, new_individual_3, ba_id);
 
 		return res;
 	}

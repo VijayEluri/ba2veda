@@ -222,7 +222,7 @@ public class Fetcher
 		}
 	}
 
-	public static void prepare_documents_of_type(String from, String to, Date begin_time, String ba_id) throws Exception
+	public static void prepare_documents_of_type(int level, String from, String to, Date begin_time, String ba_id) throws Exception
 	{
 		String templateId = from;
 		System.out.println("prepare_documents_of_type: " + templateId + "->" + to);
@@ -238,7 +238,7 @@ public class Fetcher
 			ResultCode rc = new ResultCode();
 			String docId = rs.getString(2);
 			long timestamp = (long) rs.getLong(3);
-			Ba2VedaTransform.prepare_document(from, to, docId, "", idx, count, null, null, rc, false);
+			Ba2VedaTransform.prepare_document(level, from, to, docId, "", idx, count, null, null, rc, false);
 
 			store_timestamp_to_cfg(new Date(timestamp + 1));
 
@@ -319,7 +319,7 @@ public class Fetcher
 
 						}
 
-						prepare_documents_of_type(from, to, start_timestamp, ba_id);
+						prepare_documents_of_type(0, from, to, start_timestamp, ba_id);
 					} else
 						System.out.println("invalid argument: " + arg);
 

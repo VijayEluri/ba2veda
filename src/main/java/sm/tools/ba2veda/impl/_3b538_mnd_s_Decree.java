@@ -35,7 +35,7 @@ public class _3b538_mnd_s_Decree extends Ba2VedaTransform {
 	}
 	
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception {
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
@@ -43,7 +43,7 @@ public class _3b538_mnd_s_Decree extends Ba2VedaTransform {
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		
@@ -60,7 +60,7 @@ public class _3b538_mnd_s_Decree extends Ba2VedaTransform {
 			String predicate = fields_map.get(code);
 			System.out.println("CODE: " + code);
 			if (predicate != null) {
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
 
 				if (predicate.equals("?") == false) 
@@ -144,7 +144,7 @@ public class _3b538_mnd_s_Decree extends Ba2VedaTransform {
 			drtr.addProperty("rdf:type", new Resource("mnd-s:DecreeRegistrationRecord", Type._Uri));
 			new_individual.addProperty("mnd-s:hasDecreeRegistrationRecord", new Resource(drtr.getUri(), Type._Uri));
 			drtr.addProperty("mnd-s:hasDecreeKind", new Resource("d:9664874293574b79af624f01e3c091cd", Type._Uri));
-			putIndividual(drtr, ba_id, true);
+			putIndividual(level, drtr, ba_id);
 		}
 		
 		String[] langs_out1 = { "EN", "RU" };
@@ -163,7 +163,7 @@ public class _3b538_mnd_s_Decree extends Ba2VedaTransform {
 			comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			comment.addProperty("rdfs:label", rss);
 			new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
-			putIndividual(comment, ba_id, true);
+			putIndividual(level, comment, ba_id);
 		}
 		
 		res.add(new_individual);

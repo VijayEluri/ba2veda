@@ -41,7 +41,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		String uri = prepare_uri(ba_id);
@@ -50,7 +50,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 
@@ -65,7 +65,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 			System.out.println("CODE: " + code);
 			if (predicate != null)
 			{
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
@@ -93,11 +93,11 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 
 						Resources rr = dd.getResources("v-s:linkedOrganization");
 
-						if (rr.resources.size() > 0)
+						if (rr != null && rr.resources.size() > 0)
 						{
 							developer.addProperty("v-s:correspondentOrganization", rr);
 							new_individual.addProperty("v-s:developer", new Resource(developer.getUri(), Type._Uri));
-							veda.putIndividual(developer, true, assignedSubsystems);
+							putIndividual(level, developer, null);
 						}
 					}
 				} else if (code.equals("Комментарий"))
@@ -112,7 +112,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 					comment.addProperty("v-s:backwardProperty", new Resource("v-s:hasComment", Type._Uri));
 					comment.addProperty("rdfs:label", rss);
 					new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
-					veda.putIndividual(comment, true, assignedSubsystems);
+					putIndividual(level, comment, null);
 				} else if (code.equals("add_doc"))
 				{
 					//					Создать индивид класса v-s:Link. (ID сгенерировать), 
@@ -128,7 +128,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 					link.addProperty("v-s:from", new Resource(from, Type._Uri));
 					link.addProperty("v-s:to", new Resource(to, Type._Uri));
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
-					veda.putIndividual(link, true, assignedSubsystems);
+					putIndividual(level, link, null);
 				} else if (code.equals("attachment_doc"))
 				{
 					XmlDocument doc2 = ba.getActualDocument(att.getLinkValue()).getLeft();
@@ -139,7 +139,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 						{
 							if (att2.getCode().equals("attachment"))
 							{
-								Resources rss2 = ba_field_to_veda(att2, uri, ba_id, doc2, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+								Resources rss2 = ba_field_to_veda(level, att2, uri, ba_id, doc2, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 								new_individual.addProperty("v-s:attachment", rss2);
 							}
 						}
@@ -165,7 +165,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		td.addProperty("v-s:registrationDate", new_individual.getResources("v-s:registrationDate"));
 		td.addProperty("v-s:shortLabel", shortLabel);
 		new_individual.addProperty("v-s:backwardTarget", new Resource(td.getUri(), Type._Uri));
-		veda.putIndividual(td, true, assignedSubsystems);
+		putIndividual(level, td, null);
 
 		res.add(new_individual);
 		return res;

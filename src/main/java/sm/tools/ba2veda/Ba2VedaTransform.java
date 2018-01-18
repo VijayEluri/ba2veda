@@ -65,7 +65,7 @@ public abstract class Ba2VedaTransform
 		}
 	}
 
-	public static int putIndividual(Individual indv, String ba_doc_id, boolean isPrepareEvent) throws Exception
+	public static int putIndividual(int level, Individual indv, String ba_doc_id) throws Exception
 	{
 		if (is_enable_store == false)
 			return 200;
@@ -92,8 +92,8 @@ public abstract class Ba2VedaTransform
 		{
 			if (get_count_of_queue("fulltext_indexer0") > 1000 || get_count_of_queue("fanout_sql_np0") > 1000)
 			{
-				System.out.println("Server overload, sleep 10s");
-				Thread.currentThread().sleep(10000);
+				System.out.println("Server overload, sleep 20s");
+				Thread.currentThread().sleep(20000);
 			}
 
 			if (ba_doc_id != null)
@@ -113,7 +113,7 @@ public abstract class Ba2VedaTransform
 						veda_user_uri = rpls.get("*").getData();
 					else
 					{
-						new_link = findAppointmentFromVeda(link);
+						new_link = findAppointmentFromVeda(level, link);
 						if (new_link != null)
 							veda_user_uri = new_link;
 						else
@@ -153,7 +153,7 @@ public abstract class Ba2VedaTransform
 								if (right.isDelete == true)
 									new_permission.addProperty("v-s:canDelete", new Resource("true", Type._Bool));
 
-								st_veda.putIndividual(new_permission, isPrepareEvent, assignedSubsystems);
+								st_veda.putIndividual(new_permission, true, assignedSubsystems);
 								System.out.println("ADD RIGHT:" + new_permission.getUri() + ", TO:" + indv.getUri());
 							} else
 							{
@@ -170,7 +170,7 @@ public abstract class Ba2VedaTransform
 			}
 
 			System.out.println("PUT INDIVIDUAL: " + indv.getUri());
-			return st_veda.putIndividual(indv, isPrepareEvent, assignedSubsystems);
+			return st_veda.putIndividual(indv, true, assignedSubsystems);
 		} else
 			return 200;
 	}
@@ -256,7 +256,7 @@ public abstract class Ba2VedaTransform
 			return res;
 	}
 
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_id, String parent_ba_doc_id, String path) throws Exception
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_id, String parent_ba_doc_id, String path) throws Exception
 	{
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
@@ -264,7 +264,7 @@ public abstract class Ba2VedaTransform
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(0, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 
@@ -280,7 +280,7 @@ public abstract class Ba2VedaTransform
 
 			if (predicate != null)
 			{
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_id, true);
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_id, true);
 				new_individual.addProperty(predicate, rss);
 			} else
 			{
@@ -422,7 +422,7 @@ public abstract class Ba2VedaTransform
 		return docId;
 	}
 
-	public void set_basic_fields(Individual new_individual, XmlDocument doc) throws Exception
+	public void set_basic_fields(int level, Individual new_individual, XmlDocument doc) throws Exception
 	{
 		if (to_class != null && to_class.length() > 0)
 			new_individual.addProperty("rdf:type", to_class, Type._Uri);
@@ -439,7 +439,7 @@ public abstract class Ba2VedaTransform
 		if (rpls != null)
 			editor_ap = rpls.get("*").getData();
 		else
-			editor_ap = findAppointmentFromVeda(doc.getLastEditorId());
+			editor_ap = findAppointmentFromVeda(level, doc.getLastEditorId());
 
 		if (editor_ap != null)
 			new_individual.addProperty("v-s:lastEditor", editor_ap, Type._Uri);
@@ -452,7 +452,7 @@ public abstract class Ba2VedaTransform
 		if (rpls != null)
 			author_ap = rpls.get("*").getData();
 		else
-			author_ap = findAppointmentFromVeda(doc.getAuthorId());
+			author_ap = findAppointmentFromVeda(level, doc.getAuthorId());
 
 		if (author_ap != null)
 			new_individual.addProperty("v-s:creator", author_ap, Type._Uri);
@@ -467,7 +467,7 @@ public abstract class Ba2VedaTransform
 			new_individual.addProperty("v-s:deleted", new Resource(true, Type._Bool));
 	}
 
-	private static String findAppointmentFromVeda(String person_id) throws Exception
+	private static String findAppointmentFromVeda(int level, String person_id) throws Exception
 	{
 		String res_ap = null;
 
@@ -522,7 +522,7 @@ public abstract class Ba2VedaTransform
 				res = new ArrayList<String>(Arrays.asList(st_veda.query("'v-s:login'=='" + domain_name + "'")));
 				if (res.size() == 0)
 				{
-					return createUserToVeda(uu, "dismissed", "d:mondi_position_dismissed", false);
+					return createUserToVeda(level, uu, "dismissed", "d:mondi_position_dismissed", false);
 				} else
 				{
 					String account_id = (String) res.get(0);
@@ -579,12 +579,12 @@ public abstract class Ba2VedaTransform
 		}
 
 		if (res_ap == null)
-			return createUserToVeda(uu, "dismissed", "d:mondi_position_dismissed", false);
+			return createUserToVeda(level, uu, "dismissed", "d:mondi_position_dismissed", false);
 
 		return res_ap;
 	}
 
-	private static String createUserToVeda(User user, String in_position_tab_num, String in_position_id, boolean isActive) throws Exception
+	private static String createUserToVeda(int level, User user, String in_position_tab_num, String in_position_id, boolean isActive) throws Exception
 	{
 		int res;
 
@@ -673,7 +673,7 @@ public abstract class Ba2VedaTransform
 			FIOD_EN += user.getMiddleName("En").charAt(0) + ".";
 
 		iipp.setUri(person_id);
-		res = putIndividual(iipp, null, true);
+		res = putIndividual(level, iipp, null);
 		if (res != 200)
 		{
 			System.out.println("ERR:" + res + "\n" + iipp);
@@ -694,7 +694,7 @@ public abstract class Ba2VedaTransform
 			FIOD_EN += " " + user.getPosition("En");
 
 			ii.setUri(position_id);
-			res = putIndividual(ii, null, true);
+			res = putIndividual(level, ii, null);
 			if (res != 200)
 			{
 				System.out.println("ERR:" + res + "\n" + ii);
@@ -714,7 +714,7 @@ public abstract class Ba2VedaTransform
 		iiap.addProperty("v-s:employee", new Resources().add(person_id, 1));
 
 		iiap.setUri(appointment_id);
-		res = putIndividual(iiap, null, true);
+		res = putIndividual(level, iiap, null);
 		if (res != 200)
 		{
 			System.out.println("ERR:" + res + "\n" + iiap);
@@ -733,7 +733,7 @@ public abstract class Ba2VedaTransform
 		acc.addProperty("v-s:owner", new Resources().add(person_id, 1));
 
 		acc.setUri(account_id);
-		res = putIndividual(acc, null, true);
+		res = putIndividual(level, acc, null);
 		if (res != 200)
 		{
 			System.out.println("ERR:" + res + "\n" + acc);
@@ -743,7 +743,7 @@ public abstract class Ba2VedaTransform
 		return appointment_id;
 	}
 
-	public Resources ba_field_to_veda(XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path, String parent_ba_id,
+	public Resources ba_field_to_veda(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path, String parent_ba_id,
 			String parent_veda_doc_uri, boolean is_deep) throws Exception
 	{
 		Resources res = new Resources();
@@ -831,7 +831,7 @@ public abstract class Ba2VedaTransform
 					}
 
 					if (new_link == null)
-						new_link = createDepartmentToVeda(dp);
+						new_link = createDepartmentToVeda(level, dp);
 
 					if (new_link != null)
 						res.add(new_link, Type._Uri);
@@ -847,7 +847,7 @@ public abstract class Ba2VedaTransform
 						res.add(rpls.get("*").getData(), rpls.get("*").getType());
 					else
 					{
-						new_link = findAppointmentFromVeda(link);
+						new_link = findAppointmentFromVeda(level, link);
 						if (new_link != null)
 							res.add(new_link, Type._Uri);
 						else
@@ -892,7 +892,7 @@ public abstract class Ba2VedaTransform
 						List<Individual> indvs = null;
 
 						if (is_deep == true) {
-							indvs = prepare_document(link_type, veda_type, link, path + veda_doc_id, 0, 0, veda_doc_id, ba_doc_id, rc, true);
+							indvs = prepare_document(level + 1, link_type, veda_type, link, path + veda_doc_id, 0, 0, veda_doc_id, ba_doc_id, rc, true);
 						}
 
 						if (indvs != null && indvs.size() > 0)
@@ -992,7 +992,7 @@ public abstract class Ba2VedaTransform
 				if (rpls != null)
 					author_ap = rpls.get("*").getData();
 				else
-					author_ap = findAppointmentFromVeda(doc.getAuthorId());
+					author_ap = findAppointmentFromVeda(level, doc.getAuthorId());
 
 				ff.addProperty("v-s:creator", new Resources().add(author_ap, Type._Uri));
 				// util.serializeResources(sbf, "v-s:created", new
@@ -1001,7 +1001,7 @@ public abstract class Ba2VedaTransform
 
 				ff.setUri(file_uri);
 
-				int rc = putIndividual(ff, ba_doc_id, true);
+				int rc = putIndividual(level, ff, ba_doc_id);
 				if (rc != 200)
 					return null;
 
@@ -1016,7 +1016,7 @@ public abstract class Ba2VedaTransform
 		return res;
 	}
 
-	private String createDepartmentToVeda(Department ba_department) throws Exception
+	private String createDepartmentToVeda(int level, Department ba_department) throws Exception
 	{
 		int res = 0;
 
@@ -1034,7 +1034,7 @@ public abstract class Ba2VedaTransform
 				veda_parent_id = findInVeda(ba_parent);
 
 				if (veda_parent_id == null)
-					createDepartmentToVeda(ba_parent);
+					createDepartmentToVeda(level, ba_parent);
 			}
 		}
 
@@ -1073,7 +1073,7 @@ public abstract class Ba2VedaTransform
 		String individualId = "d:" + prefix + "_" + ba_department.getInternalId();
 		pr.setUri(individualId);
 
-		res = putIndividual(pr, null, true);
+		res = putIndividual(level, pr, null);
 		if (res != 200)
 		{
 			System.out.print("ERR:" + res + "\n" + pr);
@@ -1105,7 +1105,7 @@ public abstract class Ba2VedaTransform
 
 	}
 
-	public static List<Individual> prepare_document(String from_ba_class, String to_veda_class, String docId, String path, long cur_id_count,
+	public static List<Individual> prepare_document(int level, String from_ba_class, String to_veda_class, String docId, String path, long cur_id_count,
 			long total_ids, String parent_veda_doc_id, String parent_ba_doc_id, ResultCode rc, boolean prepare_deleted) throws Exception
 	{
 		List<Individual> new_individuals = null;
@@ -1173,13 +1173,13 @@ public abstract class Ba2VedaTransform
 		if (tr == null)
 			return null;
 
-		new_individuals = tr.transform(doc, ba_docId, parent_veda_doc_id, parent_ba_doc_id, path);
+		new_individuals = tr.transform(level, doc, ba_docId, parent_veda_doc_id, parent_ba_doc_id, path);
 
 		for (Individual new_individual : new_individuals)
 		{
 			prepared_ids.put(docId, new_individual.getUri());
 
-			int res = putIndividual(new_individual, ba_docId, true);
+			int res = putIndividual(level, new_individual, ba_docId);
 
 			if (res != 200)
 			{

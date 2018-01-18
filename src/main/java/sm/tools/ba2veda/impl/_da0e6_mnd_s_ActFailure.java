@@ -59,7 +59,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 		fields_map.put("member", "?");
 	}
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 		String parent_ba_doc_id, String path) throws Exception {
 		
 		String uri = prepare_uri(ba_id);
@@ -68,7 +68,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 		
 		new_individual.addProperty("rdf:type", new Resource(to_class, Type._Uri));
 		
@@ -82,7 +82,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 			System.out.println("CODE: " + code);
 			
 			if (predicate != null) {
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
 					
 				if (predicate.equals("?") == false)
@@ -106,7 +106,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 					m.addProperty("v-s:member", rss);
 					m.addProperty("v-s:occupation", new Resource("d:aaa2f4046-eb3f-3c3e-1b50-026cf6c3cfdf", Type._Uri));
 					new_individual.addProperty("v-s:hasMemberOfWorkGroup", new Resource(m.getUri(), Type._Uri));
-					putIndividual(m, ba_id, true);					
+					putIndividual(level, m, ba_id);					
 				} else if (code.equals("member")) {
 					Individual m = new Individual();
 					
@@ -118,7 +118,7 @@ public class _da0e6_mnd_s_ActFailure extends Ba2VedaTransform {
 					m.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 					m.addProperty("v-s:member", rss);
 					new_individual.addProperty("v-s:hasMemberOfWorkGroup", new Resource(m.getUri(), Type._Uri));
-					putIndividual(m, ba_id, true);
+					putIndividual(level, m, ba_id);
 				}
 			}
 		}

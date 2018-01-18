@@ -29,7 +29,7 @@ public abstract class _xxxxx_x_ContractRequest extends Ba2VedaTransform
 		return price;
 	}
 
-	public void transform1(XmlDocument doc, Individual new_individual, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public void transform1(int level, XmlDocument doc, Individual new_individual, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		String uri;
@@ -38,7 +38,7 @@ public abstract class _xxxxx_x_ContractRequest extends Ba2VedaTransform
 		{
 			uri = prepare_uri(ba_id);
 			new_individual.setUri(uri);
-			set_basic_fields(new_individual, doc);
+			set_basic_fields(level, new_individual, doc);
 
 			new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		} else
@@ -65,7 +65,7 @@ public abstract class _xxxxx_x_ContractRequest extends Ba2VedaTransform
 			{
 				Resources rss;
 
-				rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 				if (rss != null && rss.resources.size() > 0)
 				{
@@ -81,7 +81,7 @@ public abstract class _xxxxx_x_ContractRequest extends Ba2VedaTransform
 						} else
 						{
 							att.setLinkValue(inherit_rights_from);
-							Resources rss1 = ba_field_to_veda(att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+							Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 							new_individual.addProperty(predicate, rss1);
 						}
@@ -129,13 +129,13 @@ public abstract class _xxxxx_x_ContractRequest extends Ba2VedaTransform
 
 		if (inin1 != null)
 		{
-			putIndividual(inin1, ba_id, true);
+			putIndividual(level, inin1, ba_id);
 			new_individual.addProperty("v-s:hasComment", new Resource(inin1.getUri(), Type._Uri));
 		}
 
 		if (inin2 != null)
 		{
-			putIndividual(inin2, ba_id, true);
+			putIndividual(level, inin2, ba_id);
 			new_individual.addProperty("v-s:hasLink", new Resource(inin2.getUri(), Type._Uri));
 		}
 
@@ -147,7 +147,7 @@ public abstract class _xxxxx_x_ContractRequest extends Ba2VedaTransform
 			{
 				new_individual.addProperty("v-s:expectedValueOfContract", new Resource(price.getUri(), Type._Uri));
 				price.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
-				putIndividual(price, ba_id, true);
+				putIndividual(level, price, ba_id);
 			}
 		}
 

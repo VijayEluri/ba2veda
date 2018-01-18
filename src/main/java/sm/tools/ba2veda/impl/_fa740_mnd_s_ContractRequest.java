@@ -39,7 +39,7 @@ public class _fa740_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		fields_map.clear();
@@ -48,7 +48,7 @@ public class _fa740_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 		List<Individual> res = new ArrayList<Individual>();
 
 		Individual new_individual = new Individual();
-		transform1(doc, new_individual, ba_id, parent_veda_doc_uri, parent_ba_doc_id, path);
+		transform1(level, doc, new_individual, ba_id, parent_veda_doc_uri, parent_ba_doc_id, path);
 
 		Resources regnum = new_individual.getResources("v-s:registrationNumber");
 		Resources theme = new_individual.getResources("v-s:theme");

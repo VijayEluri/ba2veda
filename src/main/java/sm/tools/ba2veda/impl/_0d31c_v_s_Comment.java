@@ -30,7 +30,7 @@ public class _0d31c_v_s_Comment extends Ba2VedaTransform
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		String uri = prepare_uri(ba_id);
@@ -39,7 +39,7 @@ public class _0d31c_v_s_Comment extends Ba2VedaTransform
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 
@@ -64,7 +64,7 @@ public class _0d31c_v_s_Comment extends Ba2VedaTransform
 
 						if (code1.equals("name"))
 						{
-							Resources rss = ba_field_to_veda(att1, uri, kind_id, doc1, path, ba_id, parent_veda_doc_uri, true);
+							Resources rss = ba_field_to_veda(level, att1, uri, kind_id, doc1, path, ba_id, parent_veda_doc_uri, true);
 							kind_as_comment = rss;
 							break;
 						}
@@ -75,7 +75,7 @@ public class _0d31c_v_s_Comment extends Ba2VedaTransform
 			String predicate = fields_map.get(code);
 			if (predicate != null)
 			{
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 				if (rss != null && rss.resources.size() > 0)
 				{
@@ -103,7 +103,7 @@ public class _0d31c_v_s_Comment extends Ba2VedaTransform
 							{
 
 								att.setLinkValue(inherit_rights_from);
-								Resources rss1 = ba_field_to_veda(att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+								Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 										true);
 
 								new_individual.addProperty(predicate, rss1);

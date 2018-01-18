@@ -45,7 +45,7 @@ public class _7ab24_mnd_s_AuditInternalAction extends Ba2VedaTransform
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		String uri = prepare_uri(ba_id);
@@ -54,7 +54,7 @@ public class _7ab24_mnd_s_AuditInternalAction extends Ba2VedaTransform
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 
@@ -74,10 +74,10 @@ public class _7ab24_mnd_s_AuditInternalAction extends Ba2VedaTransform
 			
 			String predicate = fields_map.get(code);
 			if (code.equals("auto_number"))
-				auto_number = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				auto_number = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 			if (predicate != null)
 			{
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 				
 				if (code.equals("status_ex")) {
 					if (att.getRecordIdValue().equals("4363a85a-1b4f-4c0b-89be-fe1326b9bae9")) {
@@ -108,17 +108,17 @@ public class _7ab24_mnd_s_AuditInternalAction extends Ba2VedaTransform
 				
 				if (code.equals("name"))
 				{
-					parent_name = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+					parent_name = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 				} else if (code.equals("number"))
 				{
-					parent_number = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+					parent_number = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 				} else if (code.equals("company"))
 				{
-					parent_company = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+					parent_company = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 					new_individual.addProperty("mnd-s:hasAuditInternalObject", parent_company);
 				} else if (code.equals("audit_name"))
 				{
-					parent_audit_name = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+					parent_audit_name = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 					new_individual.addProperty("v-s:theme", parent_audit_name);
 				}
 			}

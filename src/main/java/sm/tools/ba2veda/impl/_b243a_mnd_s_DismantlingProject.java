@@ -40,7 +40,7 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 	}
 	
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception {
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
@@ -48,7 +48,7 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		
@@ -63,7 +63,7 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 			String predicate = fields_map.get(code);
 			System.out.println("CODE: " + code);
 			if (predicate != null) {
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
 
 				if (predicate.equals("?") == false)
@@ -82,7 +82,7 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 					comment.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 					comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 					comment.addProperty("rdfs:label", rss);
-					putIndividual(comment, ba_id, true);
+					putIndividual(level, comment, ba_id);
 					new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
 				} else if (code.equals("№ СПП-элемента"))
 					n_spp = rss;
@@ -120,7 +120,7 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
 					link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
 					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
-					putIndividual(link, ba_id, true);
+					putIndividual(level, link, ba_id);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
 				}
 			}
@@ -136,7 +136,7 @@ public class _b243a_mnd_s_DismantlingProject extends Ba2VedaTransform {
 			spp_elem.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 			spp_elem.addProperty("mnd-s:sppNumber", n_spp);
 			spp_elem.addProperty("mnd-s:sppDate", date_spp);
-			putIndividual(spp_elem, ba_id, true);
+			putIndividual(level, spp_elem, ba_id);
 			new_individual.addProperty("mnd-s:hasSppElement", new Resource(spp_elem.getUri(), Type._Uri));
 		}
 

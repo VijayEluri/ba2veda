@@ -39,7 +39,7 @@ public class _7be2d_mnd_s_ContractPassport extends Ba2VedaTransform
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		String uri = prepare_uri(ba_id);
@@ -48,7 +48,7 @@ public class _7be2d_mnd_s_ContractPassport extends Ba2VedaTransform
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 
@@ -60,14 +60,14 @@ public class _7be2d_mnd_s_ContractPassport extends Ba2VedaTransform
 			String predicate = fields_map.get(code);
 			if (predicate != null)
 			{
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 				if (code.equals("inherit_rights_from"))
 				{
 					String add_to_link = att.getLinkValue();
 					XmlDocument add_to = ba.getActualDocument(add_to_link).getLeft();
 					String inherit_rights_from = ba.get_first_value_of_field(add_to, "inherit_rights_from");
-					// Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path,
+					// Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path,
 					// parent_ba_doc_id, true);
 
 					if (inherit_rights_from == null)
@@ -88,7 +88,7 @@ public class _7be2d_mnd_s_ContractPassport extends Ba2VedaTransform
 						{
 
 							att.setLinkValue(inherit_rights_from);
-							Resources rss1 = ba_field_to_veda(att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+							Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 							new_individual.addProperty(predicate, rss1);
 						} else

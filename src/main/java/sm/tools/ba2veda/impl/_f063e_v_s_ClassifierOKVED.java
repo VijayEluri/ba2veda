@@ -22,7 +22,7 @@ public class _f063e_v_s_ClassifierOKVED extends Ba2VedaTransform
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String pareint_veda_uri, String parent_ba_doc_id, String path) throws Exception
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String pareint_veda_uri, String parent_ba_doc_id, String path) throws Exception
 	{
 		String uri = prepare_uri(ba_id);
 

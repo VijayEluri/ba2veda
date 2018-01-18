@@ -62,7 +62,7 @@ public class _3369e_mnd_s_BusinessTrip extends Ba2VedaTransform {
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception {
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
@@ -70,7 +70,7 @@ public class _3369e_mnd_s_BusinessTrip extends Ba2VedaTransform {
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 		
 		Resources adresse_to = null;
 		Resources country = null;
@@ -85,7 +85,7 @@ public class _3369e_mnd_s_BusinessTrip extends Ba2VedaTransform {
 			String predicate = fields_map.get(code);
 //			System.out.println("CODE: " + code);
 			if (predicate != null) {
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
 				
 				if (predicate.equals("?") == false)
@@ -190,7 +190,7 @@ public class _3369e_mnd_s_BusinessTrip extends Ba2VedaTransform {
 					}
 					
 					new_individual.addProperty("v-s:hasBusinessTripRegistrationRecord", new Resource(rn_uri, Type._Uri));
-					putIndividual(btrr, ba_id, true);
+					putIndividual(level, btrr, ba_id);
 				} else if (code.equals("cause")) {
 					if (rss.resources.size() < 1)
 						continue;
@@ -279,7 +279,7 @@ public class _3369e_mnd_s_BusinessTrip extends Ba2VedaTransform {
 			cot.addProperty("v-s:creator", new Resource("d:rimert_DocRegistrator_SLPK", Type._Uri));
 			cot.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			new_individual.addProperty("mnd-s:hasChangeOfTerms", new Resource(cot.getUri(), Type._Uri));
-			putIndividual(cot, ba_id, true);
+			putIndividual(level, cot, ba_id);
 		}
 		
 		if (cot2 != null) {
@@ -288,7 +288,7 @@ public class _3369e_mnd_s_BusinessTrip extends Ba2VedaTransform {
 			cot2.addProperty("v-s:creator", new Resource("d:rimert_DocRegistrator_SLPK", Type._Uri));
 			cot2.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			new_individual.addProperty("mnd-s:hasChangeOfTerms", new Resource(cot2.getUri(), Type._Uri));
-			putIndividual(cot2, ba_id, true);
+			putIndividual(level, cot2, ba_id);
 		}
 		
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);

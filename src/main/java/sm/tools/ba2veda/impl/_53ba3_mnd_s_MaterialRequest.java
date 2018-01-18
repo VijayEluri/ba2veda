@@ -43,7 +43,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 	}
 	
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception {
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
@@ -51,7 +51,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		
@@ -65,7 +65,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 			String predicate = fields_map.get(code);
 			System.out.println("CODE: " + code);
 			if (predicate != null) {
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
 
 				if (predicate.equals("?") == false) 
@@ -102,7 +102,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
 					link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
 					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
-					putIndividual(link, ba_id, true);
+					putIndividual(level, link, ba_id);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
 				} else if (code.equals("object_toro")) {
 					String ddsid =  att.getRecordIdValue();
@@ -146,7 +146,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 					price.addProperty("v-s:sum", rss);
 					price.addProperty("v-s:hasCurrency", new Resource("d:currency_rub", Type._Uri));
 					eomr.addProperty("v-s:hasPrice", new Resource(price.getUri(), Type._Uri));
-					putIndividual(price, ba_id, true);
+					putIndividual(level, price, ba_id);
 				} else if (code.equals("duration")) {
 					if (eomr == null)
 						eomr = new Individual();
@@ -179,7 +179,7 @@ public class _53ba3_mnd_s_MaterialRequest extends Ba2VedaTransform {
 			}
 			new_individual.addProperty("mnd-s:hasElementOfMaterialRequest",
 				new Resource(eomr.getUri(), Type._Uri));
-			putIndividual(eomr, ba_id, true);
+			putIndividual(level, eomr, ba_id);
 		}
 		
 		res.add(new_individual);

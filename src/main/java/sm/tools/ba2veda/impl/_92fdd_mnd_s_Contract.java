@@ -56,7 +56,7 @@ public class _92fdd_mnd_s_Contract extends _xxxxx_x_Contract
 	}
 
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
 		fields_map.clear();
@@ -69,7 +69,7 @@ public class _92fdd_mnd_s_Contract extends _xxxxx_x_Contract
 		{
 
 			Individual new_individual = new Individual();
-			transform1(doc, new_individual, kind_pr, ba_id, parent_veda_doc_uri, parent_ba_doc_id, path);
+			transform1(level, doc, new_individual, kind_pr, ba_id, parent_veda_doc_uri, parent_ba_doc_id, path);
 
 			if (new_individual.getUri() != null)
 			{

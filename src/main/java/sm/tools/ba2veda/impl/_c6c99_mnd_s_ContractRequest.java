@@ -39,7 +39,7 @@ public class _c6c99_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 	}	
 	
 	@Override
-	public List<Individual> transform(XmlDocument doc, String ba_id, String parent_veda_doc_uri,
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception {
 		String uri = prepare_uri(ba_id);
 		if (ba_id.equals(""))
@@ -49,7 +49,7 @@ public class _c6c99_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
-		set_basic_fields(new_individual, doc);
+		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		new_individual.addProperty("v-s:initiator", new Resource("d:mondi_department_50003626", Type._Uri));
@@ -67,7 +67,7 @@ public class _c6c99_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 			String predicate = fields_map.get(code);
 			System.out.println("CODE: " + code);
 			if (predicate != null) {
-				Resources rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 						true);
 
 				if (predicate.equals("?") == false) 
@@ -85,7 +85,7 @@ public class _c6c99_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 					price.addProperty("rdf:type", new Resource("v-s:Price", Type._Uri));
 					price.addProperty("v-s:hasCurrency", new Resource("d:currency_rub", Type._Uri));
 					price.addProperty("v-s:sum", rss);
-					veda.putIndividual(price, true, assignedSubsystems);
+					putIndividual(level, price, null);
 					new_individual.addProperty("v-s:expectedValueOfContract", new Resource(price.getUri(), Type._Uri));
 				} else if (code.equals("description_equipment")) {
 					if (rcd == null)
@@ -127,7 +127,7 @@ public class _c6c99_mnd_s_ContractRequest extends _xxxxx_x_ContractRequest
 		if (rcd != null) {
 			rcd.setUri(new_individual.getUri() + "_request_contract_detail");
 			rcd.addProperty("rdf:type", new Resource("mnd-s:RequestContractDetail", Type._Uri));
-			veda.putIndividual(rcd, true, assignedSubsystems);
+			putIndividual(level, rcd, null);
 			new_individual.addProperty("mnd-s:hasRequestContractDetail", new Resource(rcd.getUri(), Type._Uri));
 		}
 		

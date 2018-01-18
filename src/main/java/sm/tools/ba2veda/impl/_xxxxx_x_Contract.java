@@ -33,7 +33,7 @@ public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
 		return price;
 	}
 
-	public void transform1(XmlDocument doc, Individual new_individual, String kind_pr, String ba_id, String parent_veda_doc_uri,
+	public void transform1(int level, XmlDocument doc, Individual new_individual, String kind_pr, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception
 	{
 		String uri;
@@ -42,7 +42,7 @@ public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
 		{
 			uri = prepare_uri(ba_id);
 			new_individual.setUri(uri);
-			set_basic_fields(new_individual, doc);
+			set_basic_fields(level, new_individual, doc);
 
 			new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		} else
@@ -84,10 +84,10 @@ public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
 
 					if (code.equals("add_doc"))
 					{
-						rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
+						rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
 					} else
 					{
-						rss = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+						rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 					}
 
 					if (rss != null && rss.resources.size() > 0)
@@ -104,7 +104,7 @@ public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
 							} else
 							{
 								att.setLinkValue(inherit_rights_from);
-								Resources rss1 = ba_field_to_veda(att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+								Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 										true);
 
 								new_individual.addProperty(predicate, rss1);
@@ -147,7 +147,7 @@ public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
 								{
 
 									att.setLinkValue(inherit_rights_from);
-									Resources rss1 = ba_field_to_veda(att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
+									Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
 											true);
 
 									inin1.addProperty(predicate, rss1);
@@ -180,7 +180,7 @@ public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
 							inin2.setProperty("rdfs:label", rss);
 							inin2.addProperty("v-s:creator", author);
 							inin2.addProperty("v-s:created", created);
-							putIndividual(inin2, ba_id, true);
+							putIndividual(level, inin2, ba_id);
 							new_individual.addProperty("v-s:hasComment", new Resource(inin2.getUri(), Type._Uri));
 						} else if (code.equals("date_to"))
 						{
@@ -199,7 +199,7 @@ public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
 						String prev_id = att.getRecordIdValue();
 						String f_id = "_" + prev_id;
 						att.setRecordIdValue(f_id);
-						Resources rss1 = ba_field_to_veda(att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
+						Resources rss1 = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
 						String fc_id = rss1.resources.get(0).getData();
 						if (fc_id.equals("d:" + f_id))
 							new_individual.addProperty("v-s:hasObligationKind", new Resource("d:" + prev_id, Type._Uri));
@@ -212,7 +212,7 @@ public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
 
 			if (inin1 != null)
 			{
-				putIndividual(inin1, ba_id, true);
+				putIndividual(level, inin1, ba_id);
 				new_individual.addProperty("v-s:hasComment", new Resource(inin1.getUri(), Type._Uri));
 			}
 
@@ -220,7 +220,7 @@ public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
 			{
 				new_individual.addProperty("v-s:hasPrice", new Resource(price.getUri(), Type._Uri));
 				price.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
-				putIndividual(price, ba_id, true);
+				putIndividual(level, price, ba_id);
 			}
 
 		} else
