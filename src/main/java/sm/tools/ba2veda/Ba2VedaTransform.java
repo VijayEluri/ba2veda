@@ -39,8 +39,9 @@ public abstract class Ba2VedaTransform
 	static int count_put;
 	static boolean is_enable_store = true;
 	protected static int assignedSubsystems = 0;
-	
-	public static void set_subsystems(int subsystems) {
+
+	public static void set_subsystems(int subsystems)
+	{
 		assignedSubsystems = subsystems;
 	}
 
@@ -256,7 +257,8 @@ public abstract class Ba2VedaTransform
 			return res;
 	}
 
-	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_id, String parent_ba_doc_id, String path) throws Exception
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_id, String parent_ba_doc_id, String path)
+			throws Exception
 	{
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
@@ -422,6 +424,16 @@ public abstract class Ba2VedaTransform
 		return docId;
 	}
 
+	public String prepare_link(String docId)
+	{
+		String res = null;
+		HashMap<String, Resource> rpls = replacer.get_replace(null, docId, null);
+		if (rpls != null)
+			res = rpls.get("*").getData();
+
+		return res;
+	}
+
 	public void set_basic_fields(int level, Individual new_individual, XmlDocument doc) throws Exception
 	{
 		if (to_class != null && to_class.length() > 0)
@@ -462,7 +474,7 @@ public abstract class Ba2VedaTransform
 			Resource rc = default_values_map.get(pp);
 			new_individual.addProperty(pp, rc);
 		}
-		
+
 		if (!doc.isActive())
 			new_individual.addProperty("v-s:deleted", new Resource(true, Type._Bool));
 	}
@@ -498,7 +510,7 @@ public abstract class Ba2VedaTransform
 
 			if (str_pid.length() < 8)
 				str_pid = "00000000".substring(0, 8 - ("" + pid).length()) + pid;
-			
+
 			System.out.println("'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'");
 			res.addAll(new ArrayList<String>(
 					Arrays.asList(st_veda.query("'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'"))));
@@ -743,8 +755,8 @@ public abstract class Ba2VedaTransform
 		return appointment_id;
 	}
 
-	public Resources ba_field_to_veda(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path, String parent_ba_id,
-			String parent_veda_doc_uri, boolean is_deep) throws Exception
+	public Resources ba_field_to_veda(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path,
+			String parent_ba_id, String parent_veda_doc_uri, boolean is_deep) throws Exception
 	{
 		Resources res = new Resources();
 
@@ -800,18 +812,53 @@ public abstract class Ba2VedaTransform
 
 			if (link != null && link.length() > 3)
 			{
-				if (otype.equals("organization"))
+				boolean is_department = false;
+				boolean is_user = false;
+				boolean is_organization = true;
+
+				User uu = null;
+				try
+				{
+					uu = ba.getPacahon().getUserByUid(link, "RU", "");
+				} catch (Exception ex)
+				{
+				}
+
+				Department dp = null;
+
+				if (uu != null)
+				{
+					is_user = true;
+					is_department = false;
+					is_organization = false;
+				} else
+				{
+					try
+					{
+						dp = ba.pacahon.getDepartmentByUid(link, "RU", "");
+					} catch (Exception ex)
+					{
+					}
+
+					if (dp != null)
+					{
+						is_user = false;
+						is_department = true;
+						is_organization = false;
+					}
+				}
+
+				if (is_organization)
 				{
 					HashMap<String, Resource> rpls = replacer.get_replace(code, link, null);
 
 					if (rpls != null)
 						res.add(rpls.get("*").getData(), rpls.get("*").getType());
 
-				} else if (otype.equals("department") || otype.contains("department"))
+				} else if (is_department)
 				{
 					String new_link = null;
 					HashMap<String, Resource> rpls = replacer.get_replace(code, link, null);
-					Department dp = ba.pacahon.getDepartmentByUid(link, "RU", "");
 
 					if (rpls != null)
 					{
@@ -830,7 +877,7 @@ public abstract class Ba2VedaTransform
 							new_link = findInVeda(dp);
 					}
 
-					if (new_link == null)
+					if (new_link == null && dp != null)
 						new_link = createDepartmentToVeda(level, dp);
 
 					if (new_link != null)
@@ -891,8 +938,10 @@ public abstract class Ba2VedaTransform
 						ResultCode rc = new ResultCode();
 						List<Individual> indvs = null;
 
-						if (is_deep == true) {
-							indvs = prepare_document(level + 1, link_type, veda_type, link, path + veda_doc_id, 0, 0, veda_doc_id, ba_doc_id, rc, true);
+						if (is_deep == true)
+						{
+							indvs = prepare_document(level + 1, link_type, veda_type, link, path + veda_doc_id, 0, 0, veda_doc_id, ba_doc_id, rc,
+									true);
 						}
 
 						if (indvs != null && indvs.size() > 0)
@@ -1095,8 +1144,8 @@ public abstract class Ba2VedaTransform
 			pprefix = "org";
 
 		Individual dp_veda;// = veda.getIndividual("d:" + pprefix + "_" + ba_department.getInternalId());
-//		if (dp_veda == null)
-			dp_veda = veda.getIndividual("d:mondi_" + pprefix + "_" + ba_department.getInternalId());
+		//		if (dp_veda == null)
+		dp_veda = veda.getIndividual("d:mondi_" + pprefix + "_" + ba_department.getInternalId());
 
 		if (dp_veda != null)
 			veda_department_id = dp_veda.getUri();
@@ -1105,8 +1154,9 @@ public abstract class Ba2VedaTransform
 
 	}
 
-	public static List<Individual> prepare_document(int level, String from_ba_class, String to_veda_class, String docId, String path, long cur_id_count,
-			long total_ids, String parent_veda_doc_id, String parent_ba_doc_id, ResultCode rc, boolean prepare_deleted) throws Exception
+	public static List<Individual> prepare_document(int level, String from_ba_class, String to_veda_class, String docId, String path,
+			long cur_id_count, long total_ids, String parent_veda_doc_id, String parent_ba_doc_id, ResultCode rc, boolean prepare_deleted)
+			throws Exception
 	{
 		List<Individual> new_individuals = null;
 
