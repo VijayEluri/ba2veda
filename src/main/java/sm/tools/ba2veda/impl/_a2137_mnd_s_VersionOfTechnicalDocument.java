@@ -86,129 +86,132 @@ public class _a2137_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 				{
 					String kpl_id = att.getLinkValue();
 					Pair<XmlDocument, Long> dd = ba.getActualDocument(kpl_id);
-					Individual parent = veda.getIndividual("d:" + kpl_id);					
+					Individual parent = veda.getIndividual("d:" + kpl_id);
 					if (parent != null)
 					{
 						Resources childs = parent.getResources("v-s:childUnit");
 						if (childs == null)
 							childs = new Resources();
 
-						childs.add(new Resource(uri, Type._Uri));
+						childs.add(new Resource(uri + "_1", Type._Uri));
 						parent.addProperty("v-s:childUnit", childs);
 
 						//if (parent_is_new == false)
 						veda.putIndividual(parent, true, 0);
 					}
-					
-					
-					XmlDocument d1 = dd.getLeft();
 
-					String f1 = ba.get_first_value_of_field(d1, "Цех");
-					// Цех -> mnd-s:technicalDocumentObject
-					if (f1 != null)
+					if (dd != null)
 					{
-						new_individual.addProperty("mnd-s:technicalDocumentObject", new Resource("d:" + f1, Type._Uri));
-					}
+						XmlDocument d1 = dd.getLeft();
 
-					XmlAttribute xat1 = null;
-
-					for (XmlAttribute ddsid_att : d1.getAttributes())
-					{
-						if (ddsid_att.getCode().equals("Объект ТОРО"))
+						String f1 = ba.get_first_value_of_field(d1, "Цех");
+						// Цех -> mnd-s:technicalDocumentObject
+						if (f1 != null)
 						{
+							new_individual.addProperty("mnd-s:technicalDocumentObject", new Resource("d:" + f1, Type._Uri));
+						}
 
-							String ddsid = ddsid_att.getRecordIdValue();
-							Pair<XmlDocument, Long> pair = ba.getActualDocument(ddsid);
-							if (pair == null)
-								continue;
+						XmlAttribute xat1 = null;
 
-							XmlDocument ddsid_doc = pair.getLeft();
-
-							List<XmlAttribute> ddsid_atts = ddsid_doc.getAttributes();
-
-							for (XmlAttribute ddsid_att1 : ddsid_atts)
+						for (XmlAttribute ddsid_att : d1.getAttributes())
+						{
+							if (ddsid_att.getCode().equals("Объект ТОРО"))
 							{
-								if (ddsid_att1.getCode().equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2"))
+
+								String ddsid = ddsid_att.getRecordIdValue();
+								Pair<XmlDocument, Long> pair = ba.getActualDocument(ddsid);
+								if (pair == null)
+									continue;
+
+								XmlDocument ddsid_doc = pair.getLeft();
+
+								List<XmlAttribute> ddsid_atts = ddsid_doc.getAttributes();
+
+								for (XmlAttribute ddsid_att1 : ddsid_atts)
 								{
-									new_individual.addProperty("v-s:hasMaintainedObject", new Resource("d:" + ddsid_att1.getTextValue(), Type._Uri));
-									break;
+									if (ddsid_att1.getCode().equals("1b073c10-91fb-451e-b636-8c5bfe77c598_2"))
+									{
+										new_individual.addProperty("v-s:hasMaintainedObject",
+												new Resource("d:" + ddsid_att1.getTextValue(), Type._Uri));
+										break;
+									}
 								}
+							} else if (ddsid_att.getCode().equals("Разработчик"))
+							{
+								xat1 = ddsid_att;
 							}
-						} else if (ddsid_att.getCode().equals("Разработчик"))
-						{
-							xat1 = ddsid_att;
-						}
-					}
-
-					String f3 = ba.get_first_value_of_field(d1, "Инв.№");
-					// Инв.№ -> v-s:inventoryNumber
-					if (f3 != null)
-					{
-						new_individual.addProperty("v-s:inventoryNumber", new Resource(f3, Type._String));
-					}
-
-					f4 = ba.get_first_value_of_field(d1, "Тип работ");
-
-					String f5 = ba.get_first_value_of_field(d1, "Разработчик");
-
-					if (f5 != null)
-					{
-						Individual dev = new Individual();
-						dev.setUri(new_individual.getUri() + "_res1");
-						dev.addProperty("rdf:type", new Resource("v-s:Correspondent", Type._Uri));
-						dev.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
-						dev.addProperty("v-s:created", new_individual.getResources("v-s:created"));
-						dev.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
-
-						Department dp = ba.getPacahon().getDepartmentByUid(f5, "RU", "");
-
-						boolean is_mondi = true;
-						boolean is_departnment = false;
-						if (dp != null)
-						{
-							String iid = dp.getInternalId();
-							if (iid.length() == 8 && iid.charAt(0) == '5')
-								is_mondi = true;
-							else
-								is_mondi = false;
-
-							is_departnment = true;
 						}
 
-						Resources rss1 = ba_field_to_veda(level, xat1, null, f5, d1, path, parent_ba_doc_id, parent_veda_doc_uri, true);
-
-						if (rss1 != null)
+						String f3 = ba.get_first_value_of_field(d1, "Инв.№");
+						// Инв.№ -> v-s:inventoryNumber
+						if (f3 != null)
 						{
-							if (is_mondi && is_departnment == false)
-							{
-								dev.addProperty("v-s:correspondentPerson", rss1);
-								dev.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
-							}
-							if (is_mondi && is_departnment == true)
-							{
-								dev.addProperty("v-s:correspondentDepartment", rss1);
-								dev.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
-							}
-
-							if (is_mondi == false && is_departnment == true)
-							{
-								dev.addProperty("v-s:correspondentOrganization", rss1);
-							}
-
+							new_individual.addProperty("v-s:inventoryNumber", new Resource(f3, Type._String));
 						}
 
-						new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
-						putIndividual(level, dev, null);
-					}
+						f4 = ba.get_first_value_of_field(d1, "Тип работ");
 
-					f6 = ba.get_first_value_of_field(d1, "Раздел");
+						String f5 = ba.get_first_value_of_field(d1, "Разработчик");
 
-					Pair<XmlDocument, Long> dd1 = ba.getActualDocument(f6);
-					if (dd1 != null)
-					{
-						XmlDocument d11 = dd1.getLeft();
+						if (f5 != null)
+						{
+							Individual dev = new Individual();
+							dev.setUri(new_individual.getUri() + "_res1");
+							dev.addProperty("rdf:type", new Resource("v-s:Correspondent", Type._Uri));
+							dev.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+							dev.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+							dev.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 
-						f6f6 = ba.get_first_value_of_field(d11, "Раздел");
+							Department dp = ba.getPacahon().getDepartmentByUid(f5, "RU", "");
+
+							boolean is_mondi = true;
+							boolean is_departnment = false;
+							if (dp != null)
+							{
+								String iid = dp.getInternalId();
+								if (iid.length() == 8 && iid.charAt(0) == '5')
+									is_mondi = true;
+								else
+									is_mondi = false;
+
+								is_departnment = true;
+							}
+
+							Resources rss1 = ba_field_to_veda(level, xat1, null, f5, d1, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+
+							if (rss1 != null)
+							{
+								if (is_mondi && is_departnment == false)
+								{
+									dev.addProperty("v-s:correspondentPerson", rss1);
+									dev.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
+								}
+								if (is_mondi && is_departnment == true)
+								{
+									dev.addProperty("v-s:correspondentDepartment", rss1);
+									dev.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
+								}
+
+								if (is_mondi == false && is_departnment == true)
+								{
+									dev.addProperty("v-s:correspondentOrganization", rss1);
+								}
+
+							}
+
+							new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
+							putIndividual(level, dev, null);
+						}
+
+						f6 = ba.get_first_value_of_field(d1, "Раздел");
+
+						Pair<XmlDocument, Long> dd1 = ba.getActualDocument(f6);
+						if (dd1 != null)
+						{
+							XmlDocument d11 = dd1.getLeft();
+
+							f6f6 = ba.get_first_value_of_field(d11, "Раздел");
+						}
 					}
 
 				} else if (code.equals("Разработчик"))
