@@ -84,7 +84,23 @@ public class _a2137_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 					shortLabel = rss;
 				else if (code.equals("Комплект"))
 				{
-					Pair<XmlDocument, Long> dd = ba.getActualDocument(att.getLinkValue());
+					String kpl_id = att.getLinkValue();
+					Pair<XmlDocument, Long> dd = ba.getActualDocument(kpl_id);
+					Individual parent = veda.getIndividual("d:" + kpl_id);					
+					if (parent != null)
+					{
+						Resources childs = parent.getResources("v-s:childUnit");
+						if (childs == null)
+							childs = new Resources();
+
+						childs.add(new Resource(uri, Type._Uri));
+						parent.addProperty("v-s:childUnit", childs);
+
+						//if (parent_is_new == false)
+						veda.putIndividual(parent, true, 0);
+					}
+					
+					
 					XmlDocument d1 = dd.getLeft();
 
 					String f1 = ba.get_first_value_of_field(d1, "Цех");
@@ -259,6 +275,7 @@ public class _a2137_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasVersionOfTechnicalDocument", Type._Uri));
 		new_individual.addProperty("v-s:canRead", new Resource(true, Type._Bool));
 		new_individual.addProperty("v-s:shortLabel", shortLabel);
+		new_individual.addProperty("v-s:registrationNumberAdd", new Resource("1", Type._String));
 
 		Individual td = new Individual();
 		td.setUri(new_individual.getUri() + "_1");

@@ -758,6 +758,12 @@ public abstract class Ba2VedaTransform
 	public Resources ba_field_to_veda(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path,
 			String parent_ba_id, String parent_veda_doc_uri, boolean is_deep) throws Exception
 	{
+		return ba_field_to_veda(level, att, veda_doc_id, ba_doc_id, doc, path, parent_ba_id, parent_veda_doc_uri, is_deep, null);
+	}
+
+	public Resources ba_field_to_veda(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path,
+			String parent_ba_id, String parent_veda_doc_uri, boolean is_deep, List<Individual> out_indvs) throws Exception
+	{
 		Resources res = new Resources();
 
 		String code = att.getCode();
@@ -949,6 +955,8 @@ public abstract class Ba2VedaTransform
 							for (Individual indv : indvs)
 							{
 								res.add(indv.getUri(), Type._Uri);
+								if (out_indvs != null)
+									out_indvs.add(indv);
 							}
 						} else
 						{

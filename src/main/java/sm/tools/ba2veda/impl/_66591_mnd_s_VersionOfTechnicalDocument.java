@@ -151,6 +151,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasVersionOfTechnicalDocument", Type._Uri));
 		new_individual.addProperty("v-s:canRead", new Resource(true, Type._Bool));
 		new_individual.addProperty("v-s:shortLabel", shortLabel);
+		new_individual.addProperty("v-s:registrationNumberAdd", new Resource("1", Type._String));		
 
 		Individual td = new Individual();
 		td.setUri(new_individual.getUri() + "_1");
