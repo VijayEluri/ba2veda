@@ -32,12 +32,15 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		fields_map.put("attachment_doc", "v-s:attachment");
 		fields_map.put("Полное название", "rdfs:label");
 		fields_map.put("Количество листов", "v-s:sheetsCount");
+		fields_map.put("Вложение", "v-s:attachment");
+		fields_map.put("Вложения", "v-s:attachment");
 
 		fields_map.put("Комментарий", "?");
 		fields_map.put("Обозначение", "?");
 		fields_map.put("developer", "?");
 		fields_map.put("add_doc", "?");
 		fields_map.put("attachment_doc", "?");
+		fields_map.put("Тип работ", "?");
 	}
 
 	@Override
@@ -55,6 +58,8 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 
 		List<XmlAttribute> atts = doc.getAttributes();
+
+		Resources vstr = null;
 
 		Resources shortLabel = null;
 		for (XmlAttribute att : atts)
@@ -78,6 +83,8 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 
 				if (code.equals("Обозначение"))
 					shortLabel = rss;
+				else if (code.equals("Тип работ"))
+					vstr = rss;
 				else if (code.equals("developer"))
 				{
 					if (rss.resources.size() > 0)
@@ -151,7 +158,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasVersionOfTechnicalDocument", Type._Uri));
 		new_individual.addProperty("v-s:canRead", new Resource(true, Type._Bool));
 		new_individual.addProperty("v-s:shortLabel", shortLabel);
-		new_individual.addProperty("v-s:registrationNumberAdd", new Resource("1", Type._String));		
+		new_individual.addProperty("v-s:registrationNumberAdd", new Resource("1", Type._String));
 
 		Individual td = new Individual();
 		td.setUri(new_individual.getUri() + "_1");
@@ -165,6 +172,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		td.addProperty("v-s:hasDocumentKind", new_individual.getResources("v-s:hasDocumentKind"));
 		td.addProperty("v-s:registrationDate", new_individual.getResources("v-s:registrationDate"));
 		td.addProperty("v-s:shortLabel", shortLabel);
+		td.addProperty("v-s:hasBudgetCategory", vstr);
 		new_individual.addProperty("v-s:backwardTarget", new Resource(td.getUri(), Type._Uri));
 		putIndividual(level, td, null);
 

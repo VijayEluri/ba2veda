@@ -28,6 +28,8 @@ public class _93469_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform {
 		fields_map.put("Дата получения", "v-s:registrationDate");
 		fields_map.put("attachment_doc", "v-s:attachment");
 		fields_map.put("Полное название", "rdfs:label");
+		fields_map.put("Вложение", "v-s:attachment");
+		fields_map.put("Вложения", "v-s:attachment");
 		
 		fields_map.put("Комментарий", "?");
 		fields_map.put("Обозначение", "?");
