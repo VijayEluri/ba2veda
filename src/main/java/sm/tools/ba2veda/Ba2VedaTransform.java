@@ -91,7 +91,7 @@ public abstract class Ba2VedaTransform
 		// ba_doc_id = null;
 		if (is_store)
 		{
-			if (get_count_of_queue("fulltext_indexer0") > 1000 || get_count_of_queue("fanout_sql_np0") > 1000)
+			if (get_count_of_queue("fulltext_indexer0") > 1000 || get_count_of_queue("fanout_sql_np0") > 1000 || get_count_of_queue("scripts_main0") > 100)
 			{
 				System.out.println("Server overload, sleep 20s");
 				Thread.currentThread().sleep(20000);
