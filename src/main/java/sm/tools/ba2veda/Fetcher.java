@@ -191,8 +191,8 @@ public class Fetcher
 		trs.add(new _1d28e_v_s_Cost(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _24b39_mnd_s_RepairInformation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _e5312_mnd_s_ActFailureReason(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		trs.add(new _57da5_mnd_s_ActFailureAction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		trs.add(new _da0e6_mnd_s_ActFailure(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		//trs.add(new _57da5_mnd_s_ActFailureAction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+	//	trs.add(new _da0e6_mnd_s_ActFailure(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		trs.add(new _cdaa9_mnd_s_PowerOfAttorney(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _252bf_mnd_s_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
