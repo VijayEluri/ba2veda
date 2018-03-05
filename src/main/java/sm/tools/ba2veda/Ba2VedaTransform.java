@@ -171,7 +171,14 @@ public abstract class Ba2VedaTransform
 			}
 
 			System.out.println("PUT INDIVIDUAL: " + indv.getUri());
-			return st_veda.putIndividual(indv, true, assignedSubsystems);
+			
+			int res = -1;
+			while (res == -1)
+			{
+				res = st_veda.putIndividual(indv, true, assignedSubsystems);
+			}	
+			
+			return res;			
 		} else
 			return 200;
 	}
