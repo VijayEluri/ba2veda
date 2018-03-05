@@ -173,6 +173,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		td.addProperty("v-s:registrationDate", new_individual.getResources("v-s:registrationDate"));
 		td.addProperty("v-s:shortLabel", shortLabel);
 		td.addProperty("v-s:hasBudgetCategory", vstr);
+		td.addProperty("v-s:hasLifecycleStage", new Resource("d:a1jtbf9rj5v2rwgv3k10xklj2dj", Type._Uri));
 		new_individual.addProperty("v-s:backwardTarget", new Resource(td.getUri(), Type._Uri));
 		putIndividual(level, td, null);
 
