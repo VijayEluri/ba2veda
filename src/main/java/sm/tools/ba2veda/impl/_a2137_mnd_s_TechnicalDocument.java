@@ -16,11 +16,11 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _a2137_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
+public class _a2137_mnd_s_TechnicalDocument extends Ba2VedaTransform
 {
-	public _a2137_mnd_s_VersionOfTechnicalDocument(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _a2137_mnd_s_TechnicalDocument(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "a2137a5a9c4d4c7999b94b3ccfb05378", "mnd-s:VersionOfTechnicalDocument");
+		super(_ba, _veda, replacer, "a2137a5a9c4d4c7999b94b3ccfb05378", "mnd-s:TechnicalDocument");
 	}
 
 	public void inital_set()
@@ -33,6 +33,7 @@ public class _a2137_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		fields_map.put("Полное название", "rdfs:label");
 		fields_map.put("Вложение", "v-s:attachment");
 		fields_map.put("Вложения", "v-s:attachment");
+		fields_map.put("Тип работ", "v-s:hasBudgetCategory");
 
 		fields_map.put("Комплект", "?");
 		fields_map.put("Комментарий", "?");
@@ -51,6 +52,7 @@ public class _a2137_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
+		
 
 		set_basic_fields(level, new_individual, doc);
 
@@ -277,7 +279,7 @@ public class _a2137_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 			}
 		}
 
-		new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasVersionOfTechnicalDocument", Type._Uri));
+		new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasTechnicalDocument", Type._Uri));
 		new_individual.addProperty("v-s:canRead", new Resource(true, Type._Bool));
 		new_individual.addProperty("v-s:shortLabel", shortLabel);
 		new_individual.addProperty("v-s:registrationNumberAdd", new Resource("1", Type._String));
