@@ -88,6 +88,7 @@ public class _a2137_mnd_s_TechnicalDocument extends Ba2VedaTransform
 					shortLabel = rss;
 				else if (code.equals("Комплект"))
 				{
+					new_individual.addProperty("v-s:backwardTarget", rss);
 					String kpl_id = att.getLinkValue();
 					Pair<XmlDocument, Long> dd = ba.getActualDocument(kpl_id);
 					Individual parent = veda.getIndividual("d:" + kpl_id);
@@ -283,9 +284,15 @@ public class _a2137_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		new_individual.addProperty("v-s:canRead", new Resource(true, Type._Bool));
 		new_individual.addProperty("v-s:shortLabel", shortLabel);
 		new_individual.addProperty("v-s:registrationNumberAdd", new Resource("1", Type._String));
+		new_individual.addProperty("v-s:hasLifecycleStage", "d:yzukiatavri0xticlw3xax2qeg", Type._Uri);
+		new_individual.addProperty("v-s:valid", "true", Type._Bool);
+		new_individual.addProperty("mnd-s:appliesTo", "d:org_RU1121003135", Type._Uri);
+		new_individual.addProperty("mnd-s:isAccessLimited", "false", Type._Bool);
+		new_individual.addProperty("v-s:owner", "d:mondi_department_50003626", Type._Uri);
+		new_individual.addProperty("v-s:hasSector", "d:4775f24d50774505bc8279314557b19a", Type._Uri);
 
 		Individual td = new Individual();
-		td.setUri(new_individual.getUri() + "_1");
+		td.setUri(new_individual.getResources("v-s:backwardTarget").resources.get(0).getData());
 		td.setProperty("rdf:type", new Resource("mnd-s:TechnicalDocument", Type._Uri));
 		td.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 		td.addProperty("v-s:created", new_individual.getResources("v-s:created"));
@@ -308,24 +315,34 @@ public class _a2137_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		if (f6 != null)
 		{
 			//1) если у него поле "Раздел"."Раздел" = 69ca82170be24d41b32fc9033a2574f5(Рабочая документация), то помещаем его в поле mnd-s:hasMarkOfTechnicalDocuments этого индивида
-			if (f6f6.equals("69ca82170be24d41b32fc9033a2574f5"))
-				td.addProperty("mnd-s:hasMarkOfTechnicalDocuments", new Resource("d:" + f6, Type._Uri));
+			if (f6f6.equals("69ca82170be24d41b32fc9033a2574f5")) {
+				new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", new Resource("d:" + f6f6, Type._Uri));
+			}
 
 			// 1.1)"Раздел" = 69ca82170be24d41b32fc9033a2574f5(Рабочая документация), то тоже самое
-			if (f6.equals("69ca82170be24d41b32fc9033a2574f5"))
-				td.addProperty("mnd-s:hasMarkOfTechnicalDocuments", new Resource("d:" + f6, Type._Uri));
+			if (f6.equals("69ca82170be24d41b32fc9033a2574f5")) {
+				if (new_individual.getResources("mnd-s:hasMarkOfTechnicalDocuments") == null)
+					new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", new Resource("d:" + f6, Type._Uri));
+			}
 
 			//2) если у него поле "Раздел"."Раздел" = 4f391bc4b9434d619ea95396cd0faba7 (Проектная документация), то помещаем его в поле mnd-s:hasSectionOfProjectDocumentation этого индивида
-			if (f6f6.equals("4f391bc4b9434d619ea95396cd0faba7"))
-				td.addProperty("mnd-s:hasSectionOfProjectDocumentation", new Resource("d:" + f6f6, Type._Uri));
+			if (f6f6.equals("4f391bc4b9434d619ea95396cd0faba7")) {
+				if (new_individual.getResources("mnd-s:hasMarkOfTechnicalDocuments") == null)
+					new_individual.addProperty("mnd-s:hasSectionOfProjectDocumentation", new Resource("d:" + f6f6, Type._Uri));
+				if (new_individual.getResources("v-s:hasDocumentKind") == null)
+					new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:kqyyu62f90hy89wh188664bxw", Type._Uri));
+			}
 
 			//3) если у него поле "Раздел"."Раздел" = 7d67bd472db4481db0f5511f37107cae (Конструкторские док), 
 			// то в поле mnd-s:hasDocumentKindStandard вписываем d:in6sbni64f41euzkalz7tcky 
 			// и в поле mnd-s:hasDocumentKind вписываем d:mqzlxqrejhhbod4ra42nq8cf (Чертеж)
 			if (f6f6.equals("7d67bd472db4481db0f5511f37107cae"))
 			{
-				td.addProperty("mnd-s:hasDocumentKindStandard", new Resource("d:in6sbni64f41euzkalz7tcky", Type._Uri));
-				td.addProperty("mnd-s:hasDocumentKind", new Resource("d:mqzlxqrejhhbod4ra42nq8cf", Type._Uri));
+				if (new_individual.getResources("mnd-s:hasMarkOfTechnicalDocuments") == null)
+					new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", 
+						new Resource("d:7d67bd472db4481db0f5511f37107cae", Type._Uri));
+				if (new_individual.getResources("v-s:hasDocumentKind") == null)
+					new_individual.addProperty("mnd-s:hasDocumentKind", new Resource("d:mqzlxqrejhhbod4ra42nq8cf", Type._Uri));
 			}
 
 			//4) если само значение предиката =  db6c04d678c849859295f65efce1de76 (ПКД), то в 
@@ -333,8 +350,11 @@ public class _a2137_mnd_s_TechnicalDocument extends Ba2VedaTransform
 			//		и в поле mnd-s:hasDocumentKindStandard вписываем d:in6sbni64f41euzkalz7tcky
 			if (f6.equals("db6c04d678c849859295f65efce1de76"))
 			{
-				td.addProperty("mnd-s:hasDocumentKindStandard", new Resource("d:in6sbni64f41euzkalz7tcky", Type._Uri));
-				td.addProperty("mnd-s:hasDocumentKind", new Resource("d:mqzlxqrejhhbod4ra42nq8cf", Type._Uri));
+				if (new_individual.getResources("mnd-s:hasMarkOfTechnicalDocuments") == null)
+					new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", 
+						new Resource("d:7d67bd472db4481db0f5511f37107cae", Type._Uri));
+				if (new_individual.getResources("v-s:hasDocumentKind") == null)
+					new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:mqzlxqrejhhbod4ra42nq8cf", Type._Uri));
 			}
 
 			//		5) если само значение предиката =  6ba70b2261d4443e98d91452565d3b98 (Произвольный комплект), то в 
@@ -342,8 +362,12 @@ public class _a2137_mnd_s_TechnicalDocument extends Ba2VedaTransform
 			//		и в поле mnd-s:hasDocumentKindStandard вписываем d:in6sbni64f41euzkalz7tcky
 			if (f6.equals("6ba70b2261d4443e98d91452565d3b98") || ba_id.equals("69ca82170be24d41b32fc9033a2574f5"))
 			{
-				td.addProperty("mnd-s:hasDocumentKindStandard", new Resource("d:in6sbni64f41euzkalz7tcky", Type._Uri));
-				td.addProperty("mnd-s:hasDocumentKind", new Resource("d:afc1a827f2ac47a9bd19b6db910dfc13", Type._Uri));
+				if (new_individual.getResources("mnd-s:hasMarkOfTechnicalDocuments") == null)
+					new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", 
+						new Resource("d:6ba70b2261d4443e98d91452565d3b98", Type._Uri));
+				if (new_individual.getResources("v-s:hasDocumentKind") == null)
+					new_individual.addProperty("mnd-s:hasDocumentKind", 
+						new Resource("d:afc1a827f2ac47a9bd19b6db910dfc13", Type._Uri));
 			}
 
 			//		6) если само значение предиката =  584e7ef299b14bec89c516b311472ba5 (Составное изделение), то в 
@@ -351,8 +375,12 @@ public class _a2137_mnd_s_TechnicalDocument extends Ba2VedaTransform
 			// и в поле mnd-s:hasDocumentKindStandard вписываем d:in6sbni64f41euzkalz7tcky
 			if (f6.equals("584e7ef299b14bec89c516b311472ba5"))
 			{
-				td.addProperty("mnd-s:hasDocumentKindStandard", new Resource("d:in6sbni64f41euzkalz7tcky", Type._Uri));
-				td.addProperty("mnd-s:hasDocumentKind", new Resource("d:99d3887ae22d439c9fe77a10ff5a4b0d", Type._Uri));
+				if (new_individual.getResources("mnd-s:hasMarkOfTechnicalDocuments") == null)
+					new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", 
+						new Resource("d:7d67bd472db4481db0f5511f37107cae	", Type._Uri));
+				if (new_individual.getResources("v-s:hasDocumentKind") == null)
+					new_individual.addProperty("v-s:hasDocumentKind", 
+						new Resource("d:99d3887ae22d439c9fe77a10ff5a4b0d", Type._Uri));
 			}
 
 			//		7) если само значение предиката = 41b925655c8a44a8b34ab3b1894bebd0 (Инженерн изыск), то в 
@@ -360,14 +388,18 @@ public class _a2137_mnd_s_TechnicalDocument extends Ba2VedaTransform
 			// и в поле mnd-s:hasDocumentKindStandard вписываем d:in6sbni64f41euzkalz7tcky
 			if (f6.equals("41b925655c8a44a8b34ab3b1894bebd0"))
 			{
-				td.addProperty("mnd-s:hasDocumentKindStandard", new Resource("d:in6sbni64f41euzkalz7tcky", Type._Uri));
-				td.addProperty("mnd-s:hasDocumentKind", new Resource("d:zn8jlec6ma6x28fsgp6lyw49zo", Type._Uri));
+				if (new_individual.getResources("mnd-s:hasMarkOfTechnicalDocuments") == null)
+					new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", 
+						new Resource("d:7d67bd472db4481db0f5511f37107cae", Type._Uri));
+				if (new_individual.getResources("v-s:hasDocumentKind") == null)
+					new_individual.addProperty("mnd-s:hasDocumentKind", 
+						new Resource("d:zn8jlec6ma6x28fsgp6lyw49zo", Type._Uri));
 			}
 
 		}
 
-		new_individual.addProperty("v-s:backwardTarget", new Resource(td.getUri(), Type._Uri));
-		putIndividual(level, td, null);
+		//new_individual.addProperty("v-s:backwardTarget", new Resource(td.getUri(), Type._Uri));
+	//	putIndividual(level, td, null);
 
 		res.add(new_individual);
 		return res;
