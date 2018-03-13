@@ -91,7 +91,8 @@ public abstract class Ba2VedaTransform
 		// ba_doc_id = null;
 		if (is_store)
 		{
-			if (get_count_of_queue("fulltext_indexer0") > 1000 || get_count_of_queue("fanout_sql_np0") > 1000 || get_count_of_queue("scripts_main0") > 100)
+			if (get_count_of_queue("fulltext_indexer0") > 1000 || get_count_of_queue("fanout_sql_np0") > 1000
+					|| get_count_of_queue("scripts_main0") > 100)
 			{
 				System.out.println("Server overload, sleep 20s");
 				Thread.currentThread().sleep(20000);
@@ -171,14 +172,14 @@ public abstract class Ba2VedaTransform
 			}
 
 			System.out.println("PUT INDIVIDUAL: " + indv.getUri());
-			
+
 			int res = -1;
 			while (res == -1)
 			{
 				res = st_veda.putIndividual(indv, true, assignedSubsystems);
-			}	
-			
-			return res;			
+			}
+
+			return res;
 		} else
 			return 200;
 	}
@@ -765,11 +766,18 @@ public abstract class Ba2VedaTransform
 	public Resources ba_field_to_veda(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path,
 			String parent_ba_id, String parent_veda_doc_uri, boolean is_deep) throws Exception
 	{
-		return ba_field_to_veda(level, att, veda_doc_id, ba_doc_id, doc, path, parent_ba_id, parent_veda_doc_uri, is_deep, null);
+		return ba_field_to_veda(level, att, veda_doc_id, ba_doc_id, doc, path, parent_ba_id, parent_veda_doc_uri, is_deep, false, null);
+	}
+
+	public Resources ba_field_to_veda_with_store_deep(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path,
+			String parent_ba_id, String parent_veda_doc_uri, boolean is_deep, boolean is_store_new_individuals) throws Exception
+	{
+		return ba_field_to_veda(level, att, veda_doc_id, ba_doc_id, doc, path, parent_ba_id, parent_veda_doc_uri, is_deep, true, null);
 	}
 
 	public Resources ba_field_to_veda(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path,
-			String parent_ba_id, String parent_veda_doc_uri, boolean is_deep, List<Individual> out_indvs) throws Exception
+			String parent_ba_id, String parent_veda_doc_uri, boolean is_deep, boolean is_store_new_individuals, List<Individual> out_indvs)
+			throws Exception
 	{
 		Resources res = new Resources();
 
@@ -954,7 +962,7 @@ public abstract class Ba2VedaTransform
 						if (is_deep == true)
 						{
 							indvs = prepare_document(level + 1, link_type, veda_type, link, path + veda_doc_id, 0, 0, veda_doc_id, ba_doc_id, rc,
-									true);
+									true, is_store_new_individuals);
 						}
 
 						if (indvs != null && indvs.size() > 0)
@@ -1065,9 +1073,12 @@ public abstract class Ba2VedaTransform
 
 				ff.setUri(file_uri);
 
-				int rc = putIndividual(level, ff, ba_doc_id);
-				if (rc != 200)
-					return null;
+				if (is_store_new_individuals)
+				{
+					int rc = putIndividual(level, ff, ba_doc_id);
+					if (rc != 200)
+						return null;
+				}
 
 				String link = file_uri;
 				if (link != null && link.length() > 3)
@@ -1170,8 +1181,8 @@ public abstract class Ba2VedaTransform
 	}
 
 	public static List<Individual> prepare_document(int level, String from_ba_class, String to_veda_class, String docId, String path,
-			long cur_id_count, long total_ids, String parent_veda_doc_id, String parent_ba_doc_id, ResultCode rc, boolean prepare_deleted)
-			throws Exception
+			long cur_id_count, long total_ids, String parent_veda_doc_id, String parent_ba_doc_id, ResultCode rc, boolean prepare_deleted,
+			boolean is_store_new_individuals) throws Exception
 	{
 		List<Individual> new_individuals = null;
 
@@ -1202,30 +1213,34 @@ public abstract class Ba2VedaTransform
 		if (doc.isActive() == false && !prepare_deleted)
 			return null;
 
-		ResultSet sql_result;
 		long prev_timestamp = -1;
-		sql_result = st
-				.executeQuery("SELECT dest_id, timestamp FROM PREPARED_IDS WHERE src_id ='" + docId + "' AND dest_type ='" + to_veda_class + "'");
-
-		while (sql_result.next())
+		if (Fetcher.no_check_exists == false)
 		{
-			String info = sql_result.getString("dest_id");
-			prev_timestamp = sql_result.getLong("timestamp");
-			if (info != null && prev_timestamp == timestamp)
+			ResultSet sql_result;
+			sql_result = st
+					.executeQuery("SELECT dest_id, timestamp FROM PREPARED_IDS WHERE src_id ='" + docId + "' AND dest_type ='" + to_veda_class + "'");
+
+			while (sql_result.next())
 			{
-				rc.code = ResultCode.AlreadyExists;
+				String info = sql_result.getString("dest_id");
+				prev_timestamp = sql_result.getLong("timestamp");
+				if (info != null && prev_timestamp == timestamp)
+				{
+					rc.code = ResultCode.AlreadyExists;
 
-				Individual indv = new Individual();
+					Individual indv = new Individual();
 
-				indv.setUri(info);
-				if (new_individuals == null)
-					new_individuals = new ArrayList<Individual>();
+					indv.setUri(info);
+					if (new_individuals == null)
+						new_individuals = new ArrayList<Individual>();
 
-				new_individuals.add(indv);
+					new_individuals.add(indv);
+				}
 			}
+			if (new_individuals != null)
+				return new_individuals;
+
 		}
-		if (new_individuals != null)
-			return new_individuals;
 
 		if (st_replacer.is_ignore("@", docId, null))
 		{
@@ -1244,32 +1259,35 @@ public abstract class Ba2VedaTransform
 		{
 			prepared_ids.put(docId, new_individual.getUri());
 
-			int res = putIndividual(level, new_individual, ba_docId);
-
-			if (res != 200)
+			if (is_store_new_individuals)
 			{
-				System.out.println("[" + count_get + "/" + count_put + "], [" + cur_id_count + "/" + total_ids + "/" + st_veda.count_put
-						+ "] ERR: res=" + res + ", veda_type=" + to_veda_class + ", ba_id=" + ba_docId + ", veda_id=" + new_individual.getUri());
+				int res = putIndividual(level, new_individual, ba_docId);
 
-			} else
-			{
-				// count_put++;
-				System.out.println("[" + count_get + "/" + count_put + "], [" + cur_id_count + "/" + total_ids + "/" + st_veda.count_put
-						+ "] OK: veda_type=" + to_veda_class + ", ba_id=" + ba_docId + ", veda_id=" + new_individual.getUri());
-				try
+				if (res != 200)
 				{
-					if (prev_timestamp == -1)
-						st.execute("INSERT INTO PREPARED_IDS VALUES('" + ba_docId + "','" + new_individual.getUri() + "', " + timestamp + ", '"
-								+ to_veda_class + "')");
-					else
-						st.execute("UPDATE PREPARED_IDS SET timestamp = " + timestamp + " WHERE src_id ='" + docId + "' ");
+					System.out.println("[" + count_get + "/" + count_put + "], [" + cur_id_count + "/" + total_ids + "/" + st_veda.count_put
+							+ "] ERR: res=" + res + ", veda_type=" + to_veda_class + ", ba_id=" + ba_docId + ", veda_id=" + new_individual.getUri());
 
-					transfer_info_conn.commit();
-				} catch (SQLException ex)
+				} else
 				{
-					if (ex.getSQLState().equals("23505") == false)
+					// count_put++;
+					System.out.println("[" + count_get + "/" + count_put + "], [" + cur_id_count + "/" + total_ids + "/" + st_veda.count_put
+							+ "] OK: veda_type=" + to_veda_class + ", ba_id=" + ba_docId + ", veda_id=" + new_individual.getUri());
+					try
 					{
-						throw ex;
+						if (prev_timestamp == -1)
+							st.execute("INSERT INTO PREPARED_IDS VALUES('" + ba_docId + "','" + new_individual.getUri() + "', " + timestamp + ", '"
+									+ to_veda_class + "')");
+						else
+							st.execute("UPDATE PREPARED_IDS SET timestamp = " + timestamp + " WHERE src_id ='" + docId + "' ");
+
+						transfer_info_conn.commit();
+					} catch (SQLException ex)
+					{
+						if (ex.getSQLState().equals("23505") == false)
+						{
+							throw ex;
+						}
 					}
 				}
 			}

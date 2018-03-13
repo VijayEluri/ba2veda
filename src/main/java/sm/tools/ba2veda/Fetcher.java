@@ -27,6 +27,7 @@ public class Fetcher
 	private static JSONParser jp;
 
 	public static boolean is_delta = false;
+	public static boolean no_check_exists = false;
 	public static String delta_properties_fname;
 	public static Properties delta_properties = new Properties();
 	static SimpleDateFormat sdf0 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -224,7 +225,7 @@ public class Fetcher
 		}
 	}
 
-	public static void prepare_documents_of_type(int level, String from, String to, Date begin_time, String ba_id) throws Exception
+	public static void prepare_documents_of_type(int level, String from, String to, Date begin_time, String ba_id, boolean is_store_new_individuals) throws Exception
 	{
 		String templateId = from;
 		System.out.println("prepare_documents_of_type: " + templateId + "->" + to);
@@ -240,7 +241,7 @@ public class Fetcher
 			ResultCode rc = new ResultCode();
 			String docId = rs.getString(2);
 			long timestamp = (long) rs.getLong(3);
-			Ba2VedaTransform.prepare_document(level, from, to, docId, "", idx, count, null, null, rc, false);
+			Ba2VedaTransform.prepare_document(level, from, to, docId, "", idx, count, null, null, rc, false, is_store_new_individuals);
 
 			store_timestamp_to_cfg(new Date(timestamp + 1));
 
@@ -269,7 +270,12 @@ public class Fetcher
 		{
 			for (String arg : args)
 			{
-				if (arg.equals("-delta"))
+				if (arg.equals("-no_check_exists"))
+				{
+					no_check_exists = true;
+					System.out.println("no check exists");
+				}
+				else if (arg.equals("-delta"))
 				{
 					is_delta = true;
 					System.out.println("use delta");
@@ -285,7 +291,7 @@ public class Fetcher
 
 			for (String arg : args)
 			{
-				if (!arg.equals("-delta") && (arg.indexOf("-subsystem") < 0))
+				if (!arg.equals("-delta") && !arg.equals("-no_check_exists") && (arg.indexOf("-subsystem") < 0))
 				{
 					String[] ss = arg.split("/");
 
@@ -321,7 +327,7 @@ public class Fetcher
 
 						}
 
-						prepare_documents_of_type(0, from, to, start_timestamp, ba_id);
+						prepare_documents_of_type(0, from, to, start_timestamp, ba_id, true);
 					} else
 						System.out.println("invalid argument: " + arg);
 
