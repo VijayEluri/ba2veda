@@ -1184,6 +1184,8 @@ public abstract class Ba2VedaTransform
 			long cur_id_count, long total_ids, String parent_veda_doc_id, String parent_ba_doc_id, ResultCode rc, boolean prepare_deleted,
 			boolean is_store_new_individuals) throws Exception
 	{
+		System.out.println ("prepare_document:" + from_ba_class + "->" + to_veda_class + ", ba_id=" + docId + ", prepare_deleted=" + prepare_deleted + ", is_store_new_individuals=" + is_store_new_individuals);
+
 		List<Individual> new_individuals = null;
 
 		String ba_docId = docId;
