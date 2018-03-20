@@ -1257,7 +1257,8 @@ public abstract class Ba2VedaTransform
 
 		for (Individual new_individual : new_individuals)
 		{
-			prepared_ids.put(docId, new_individual.getUri());
+			if (Fetcher.no_check_exists == false)
+				prepared_ids.put(docId, new_individual.getUri());
 
 			if (is_store_new_individuals)
 			{
