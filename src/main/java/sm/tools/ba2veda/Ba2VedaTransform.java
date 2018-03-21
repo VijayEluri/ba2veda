@@ -766,13 +766,13 @@ public abstract class Ba2VedaTransform
 	public Resources ba_field_to_veda(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path,
 			String parent_ba_id, String parent_veda_doc_uri, boolean is_deep) throws Exception
 	{
-		return ba_field_to_veda(level, att, veda_doc_id, ba_doc_id, doc, path, parent_ba_id, parent_veda_doc_uri, is_deep, false, null);
+		return ba_field_to_veda(level, att, veda_doc_id, ba_doc_id, doc, path, parent_ba_id, parent_veda_doc_uri, is_deep, true, null);
 	}
 
 	public Resources ba_field_to_veda_with_store_deep(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path,
 			String parent_ba_id, String parent_veda_doc_uri, boolean is_deep, boolean is_store_new_individuals) throws Exception
 	{
-		return ba_field_to_veda(level, att, veda_doc_id, ba_doc_id, doc, path, parent_ba_id, parent_veda_doc_uri, is_deep, true, null);
+		return ba_field_to_veda(level, att, veda_doc_id, ba_doc_id, doc, path, parent_ba_id, parent_veda_doc_uri, is_deep, is_store_new_individuals, null);
 	}
 
 	public Resources ba_field_to_veda(int level, XmlAttribute att, String veda_doc_id, String ba_doc_id, XmlDocument doc, String path,
