@@ -340,7 +340,7 @@ public class _a2137_mnd_s_TechnicalDocument extends Ba2VedaTransform
 			{
 				if (new_individual.getResources("mnd-s:hasMarkOfTechnicalDocuments") == null)
 					new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", 
-						new Resource("d:7d67bd472db4481db0f5511f37107cae", Type._Uri));
+						new Resource("d:6ba70b2261d4443e98d91452565d3b98", Type._Uri));
 				if (new_individual.getResources("v-s:hasDocumentKind") == null)
 					new_individual.addProperty("mnd-s:hasDocumentKind", new Resource("d:mqzlxqrejhhbod4ra42nq8cf", Type._Uri));
 			}
