@@ -137,7 +137,7 @@ public class _93469_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform {
 		Individual td = new Individual();
 		td.setUri(new_individual.getUri() + "_1");
 		td.setProperty("rdf:type", new Resource("mnd-s:TechnicalDocument", Type._Uri));
-		td.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
+//		td.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 		td.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 		td.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 		td.addProperty("mnd-s:technicalDocumentObject", new_individual.getResources("mnd-s:technicalDocumentObject"));
