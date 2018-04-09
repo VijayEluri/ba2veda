@@ -1,5 +1,6 @@
 package sm.tools.ba2veda;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -217,6 +218,26 @@ public class Fetcher
 		
 		trs.add(new _23784_mnd_s_ItObject(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
+		BufferedReader br = new BufferedReader(new FileReader("class_restrictions.conf"));
+		ArrayList<String> classRestrictions = new ArrayList<String>();
+		for(String line; (line = br.readLine()) != null; )
+			classRestrictions.add(line);
+		
+		for (int i = 0; i < trs.size(); i++) {
+			String to = trs.get(i).to_class;
+			Boolean found = false;
+			for (int j = 0; j < classRestrictions.size(); j++)
+				if (classRestrictions.get(j).equals(to)) {
+					found = true;
+					break;
+				}
+			
+			if (!found) {
+				trs.remove(i);
+				i--;
+			}
+		}
+		
 		for (Ba2VedaTransform tr : trs)
 		{
 			for (String key : Ba2VedaTransform.st_types_map.keySet())
@@ -225,6 +246,8 @@ public class Fetcher
 			}
 
 		}
+		
+		
 	}
 
 	public static void prepare_documents_of_type(int level, String from, String to, Date begin_time, String ba_id, boolean is_store_new_individuals) throws Exception
