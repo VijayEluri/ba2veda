@@ -39,6 +39,13 @@ public abstract class Ba2VedaTransform
 	static int count_put;
 	static boolean is_enable_store = true;
 	protected static int assignedSubsystems = 0;
+	protected static List<String> classRestrictions = new ArrayList<String>();
+	
+	public static void config_restrictions(String[] restrictions) {
+		classRestrictions.clear();
+		for (int i = 0; i < restrictions.length; i++)
+			classRestrictions.add(restrictions[i]);
+	}
 
 	public static void set_subsystems(int subsystems)
 	{
@@ -70,6 +77,14 @@ public abstract class Ba2VedaTransform
 	{
 		if (is_enable_store == false)
 			return 200;
+		
+		if (classRestrictions.size() > 0) {
+			String rdfType = indv.getResources("rdf:type").resources.get(0).getData();
+			if (!classRestrictions.contains(rdfType)) {
+					System.out.printf("[%s] rdf:type %s is not permitted, cotinue\n", indv.getUri(), rdfType);
+				return 200;
+			}
+		}
 
 		//Resources types = indv.getResources("rdf:type");
 

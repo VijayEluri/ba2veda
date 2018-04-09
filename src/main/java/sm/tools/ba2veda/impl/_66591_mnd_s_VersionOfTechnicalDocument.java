@@ -62,6 +62,7 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 		Resources vstr = null;
 
 		Resources shortLabel = null;
+		int linkCount = 1;
 		for (XmlAttribute att : atts)
 		{
 			String code = att.getCode();
@@ -128,7 +129,8 @@ public class _66591_mnd_s_VersionOfTechnicalDocument extends Ba2VedaTransform
 					String to = new_individual.getUri();
 					Individual link = new Individual();
 					link.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
-					link.setUri(new_individual.getUri());
+					link.setUri(String.format("%s_link%d", new_individual.getUri(), linkCount));
+					linkCount++;
 					link.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 					link.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));

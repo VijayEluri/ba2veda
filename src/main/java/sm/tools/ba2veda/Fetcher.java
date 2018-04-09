@@ -217,27 +217,7 @@ public class Fetcher
 		trs.add(new _b163ab_mnd_s_TechnicalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		trs.add(new _23784_mnd_s_ItObject(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
-		BufferedReader br = new BufferedReader(new FileReader("class_restrictions.conf"));
-		ArrayList<String> classRestrictions = new ArrayList<String>();
-		for(String line; (line = br.readLine()) != null; )
-			classRestrictions.add(line);
-		
-		for (int i = 0; i < trs.size(); i++) {
-			String to = trs.get(i).to_class;
-			Boolean found = false;
-			for (int j = 0; j < classRestrictions.size(); j++)
-				if (classRestrictions.get(j).equals(to)) {
-					found = true;
-					break;
-				}
-			
-			if (!found) {
-				trs.remove(i);
-				i--;
-			}
-		}
-		
+				
 		for (Ba2VedaTransform tr : trs)
 		{
 			for (String key : Ba2VedaTransform.st_types_map.keySet())
@@ -310,13 +290,18 @@ public class Fetcher
 					assignedSubsystem = Integer.parseInt(arg.replace("-subsystem", ""));
 					Ba2VedaTransform.set_subsystems(assignedSubsystem);
 				}
+				else if (arg.indexOf("-restrictions:") >= 0)
+				{
+					Ba2VedaTransform.config_restrictions(arg.replace("-restrictions:", "").split("/"));
+				}
 			}
 
 			Date start_timestamp = new Date(Byte.MIN_VALUE);
 
 			for (String arg : args)
 			{
-				if (!arg.equals("-delta") && !arg.equals("-no_check_exists") && (arg.indexOf("-subsystem") < 0))
+				if (!arg.equals("-delta") && !arg.equals("-no_check_exists") && (arg.indexOf("-subsystem") < 0) && 
+						(arg.indexOf("-restrictions:") < 0))
 				{
 					String[] ss = arg.split("/");
 
