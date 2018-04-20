@@ -8,6 +8,7 @@ import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
 import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
+import sm.tools.ba2veda.Pair;
 import sm.tools.ba2veda.Replacer;
 import sm.tools.veda_client.Individual;
 import sm.tools.veda_client.Resource;
@@ -166,7 +167,13 @@ public class _4748a_mnd_s_ItRequest extends Ba2VedaTransform {
 								
 								reqAction2.addProperty("v-s:timeEffort", rss2);		
 							} else if (att2.getCode().equals("object_it")) {
-								XmlDocument doc3 = ba.getActualDocument(att2.getLinkValue()).getLeft();
+								String linkStr = att2.getLinkValue();
+								if (linkStr == null)
+									continue;
+								Pair<XmlDocument, Long> pair = ba.getActualDocument(linkStr);
+								if (pair == null)
+									continue;
+								XmlDocument doc3 = pair.getLeft();
 								if (doc3 != null) {
 									if (reqAction2 == null)
 										reqAction2 = new Individual();
