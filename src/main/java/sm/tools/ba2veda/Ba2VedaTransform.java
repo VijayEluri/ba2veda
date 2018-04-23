@@ -553,9 +553,23 @@ public abstract class Ba2VedaTransform
 			// System.out.println("user " + person_id + ", not content tabnumber");
 			return "d:" + person_id;
 		}
+		
+		boolean repeat = true;
+		while (repeat) {
+			repeat = false;
+			try {
+				String[] queryResult = st_veda.query("'v-s:deleted' == true && 'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'");
+				res.addAll(new ArrayList<String>(
+						Arrays.asList(queryResult)));
+			} catch (Exception e) {
+				System.err.println("Err doing appointment query, repeat later");
+				repeat = true;
+				Thread.sleep(20000);
+			}
+		}
 
-		res.addAll(new ArrayList<String>(Arrays.asList(
-				st_veda.query(("'v-s:deleted' == true && 'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'")))));
+//		res.addAll(new ArrayList<String>(Arrays.asList(
+//				st_veda.query(("'v-s:deleted' == true && 'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='d:mondi_employee_" + str_pid + "'")))));
 
 		if (res.size() == 0)
 		{
