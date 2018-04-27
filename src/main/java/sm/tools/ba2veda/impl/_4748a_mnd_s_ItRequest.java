@@ -142,7 +142,14 @@ public class _4748a_mnd_s_ItRequest extends Ba2VedaTransform {
 					
 					reqAction.addProperty("v-s:datePlan", rss);
 				} else if (code.equals("work")) {
-					XmlDocument doc2 = ba.getActualDocument(att.getLinkValue()).getLeft();
+					String linkStr = att.getLinkValue();
+					if (linkStr == null)
+						continue;
+					Pair<XmlDocument, Long> pair = ba.getActualDocument(linkStr);
+					if (pair == null)
+						continue;
+					
+					XmlDocument doc2 = pair.getLeft();
 					if (doc2 != null) {
 						Individual reqAction2 = null;
 						
@@ -167,10 +174,10 @@ public class _4748a_mnd_s_ItRequest extends Ba2VedaTransform {
 								
 								reqAction2.addProperty("v-s:timeEffort", rss2);		
 							} else if (att2.getCode().equals("object_it")) {
-								String linkStr = att2.getLinkValue();
+								linkStr = att2.getLinkValue();
 								if (linkStr == null)
 									continue;
-								Pair<XmlDocument, Long> pair = ba.getActualDocument(linkStr);
+								pair = ba.getActualDocument(linkStr);
 								if (pair == null)
 									continue;
 								XmlDocument doc3 = pair.getLeft();
