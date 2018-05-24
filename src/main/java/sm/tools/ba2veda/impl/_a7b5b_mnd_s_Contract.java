@@ -14,9 +14,9 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _110fa_mnd_s_Contract extends Ba2VedaTransform{
-	public _110fa_mnd_s_Contract(BaSystem _ba, VedaConnection _veda, Replacer replacer)  {
-		super(_ba, _veda, replacer, "110fa1f351e24a2bbc187c872b114ea4", "mnd-s:Contract");
+public class _a7b5b_mnd_s_Contract extends Ba2VedaTransform{
+	public _a7b5b_mnd_s_Contract(BaSystem _ba, VedaConnection _veda, Replacer replacer)  {
+		super(_ba, _veda, replacer, "a7b5b15a99704c9481f777fa941506c0", "mnd-s:Contract");
 	}
 	
 	public void inital_set() {
@@ -36,7 +36,7 @@ public class _110fa_mnd_s_Contract extends Ba2VedaTransform{
 				"mnd-s:executorSpecialistOfContract");
 		fields_map.put("support_specialist_of_contract", "mnd-s:supportSpecialistOfContract");
 		fields_map.put("name", "rdfs:label");
-		fields_map.put("add_doc", "v-s:hasLink");
+		
 		
 		fields_map.put("kind_pr", "?");
 		fields_map.put("inherit_rights_from", "?");
@@ -61,8 +61,7 @@ public class _110fa_mnd_s_Contract extends Ba2VedaTransform{
 		set_basic_fields(level, new_individual, doc);
 		
 		new_individual.addProperty("rdf:type", new Resource(to_class, Type._Uri));
-		new_individual.addProperty("v-s:customer", "d:org_RU1121020998"
-				+ "", Type._Uri);
+		new_individual.addProperty("v-s:customer", "d:org_RU6674128343", Type._Uri);
 		
 		String kind_pr = "";
 		String irf = null;

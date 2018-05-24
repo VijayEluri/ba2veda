@@ -16,9 +16,9 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _d539b_mnd_s_AdditionalAgreement extends Ba2VedaTransform {
-	public _d539b_mnd_s_AdditionalAgreement(BaSystem _ba, VedaConnection _veda, Replacer replacer)  {
-		super(_ba, _veda, replacer, "d539b253cb6247a381fb51f4ee34b9d8", "mnd-s:AdditionalAgreement");
+public class _110fa_mnd_s_AdditionalAgreement extends Ba2VedaTransform {
+	public _110fa_mnd_s_AdditionalAgreement(BaSystem _ba, VedaConnection _veda, Replacer replacer)  {
+		super(_ba, _veda, replacer, "110fa1f351e24a2bbc187c872b114ea4", "mnd-s:AdditionalAgreement");
 	}
 	
 	public void inital_set() {
@@ -64,7 +64,7 @@ public class _d539b_mnd_s_AdditionalAgreement extends Ba2VedaTransform {
 			set_basic_fields(level, new_individual, doc);
 			
 			new_individual.addProperty("rdf:type", new Resource(to_class, Type._Uri));
-			new_individual.addProperty("v-s:customer", "d:org_RU1121021007", Type._Uri);
+			new_individual.addProperty("v-s:customer", "d:org_RU1121020998", Type._Uri);
 			
 			String kind_pr = "";
 			String irf = null;

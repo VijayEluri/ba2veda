@@ -2,6 +2,8 @@ package sm.tools.ba2veda.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
@@ -21,7 +23,7 @@ public class _71e38_mnd_s_AdditionalAgreement extends Ba2VedaTransform {
 	
 	public void inital_set() {
 		fields_map.put("add_to_contract", "v-s:hasContract");
-		fields_map.put("number", "v-s:registrationNumber");
+//		fields_map.put("number", "v-s:registrationNumber");
 		fields_map.put("number_by_contractor", "v-s:registrationNumberIn");
 		fields_map.put("date", "v-s:registrationDate");
 //		fields_map.put("subject_type", "v-s:hasContractScope");
@@ -47,6 +49,7 @@ public class _71e38_mnd_s_AdditionalAgreement extends Ba2VedaTransform {
 		fields_map.put("summ", "?");
 		fields_map.put("currency", "?");
 		fields_map.put("comment", "?");
+		fields_map.put("number", "?");
 	}
 	
 	@Override
@@ -129,6 +132,25 @@ public class _71e38_mnd_s_AdditionalAgreement extends Ba2VedaTransform {
 							new_individual.addProperty("v-s:hasObligationKind", new Resource("d:" + prev_id, Type._Uri));
 						else
 							new_individual.addProperty("v-s:hasObligationKind", rss1);
+					} else if (code.equals("number")) {
+						new_individual.addProperty("v-s:registrationNumber", rss);
+						String data = rss.resources.get(0).getData();
+						Pattern pattern = Pattern.compile("[0-9]{6}[.][0-9]{2}?");
+						Pattern pattern2 = Pattern.compile("[0-9]{6}[.][0-9]{1}?");
+				        Matcher matcher = pattern.matcher(data);
+				        Matcher matcher2 = pattern2.matcher(data);
+				        String extract = null;
+						if (matcher.find())
+							extract = matcher.group();
+						else if (matcher2.find())
+							extract = matcher2.group();
+						
+						if (extract != null) {
+							String[] parts = extract.split("[.]");
+							new_individual.addProperty("v-s:registrationNumberAdd", 
+								parts[1], Type._String);
+						}
+						
 					}
 				}
 			}
