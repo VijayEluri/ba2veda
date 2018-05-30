@@ -34,6 +34,13 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 		fields_map.put("comment", "?");
 		fields_map.put("sender", "?");
 		fields_map.put("addressee", "?");
+
+		
+		employee_prefix = "d:employee_";
+		appointment_prefix = "d:";
+		stand_prefix = "d:";
+		department_prefix = "department";
+		is_mondi = false;
 	}
 
 	@Override
