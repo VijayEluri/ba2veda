@@ -623,19 +623,22 @@ public abstract class Ba2VedaTransform
 
 				Individual unit = st_veda.getIndividual(id_ap);
 
-				if (unit != null)
+				if (is_mondi == true)
 				{
-					Resources origin = unit.getResources("v-s:origin");
-					if (origin != null && origin.resources.size() > 0)
+					if (unit != null)
 					{
-						if (origin.resources.get(0).getData().equals("SAP HR") == false)
+						Resources origin = unit.getResources("v-s:origin");
+						if (origin != null && origin.resources.size() > 0)
 						{
+							if (origin.resources.get(0).getData().equals("SAP HR") == false)
+							{
+								continue;
+							}
+						} else
 							continue;
-						}
 					} else
 						continue;
-				} else
-					continue;
+				}
 
 				res_ap = id_ap;
 				break;
