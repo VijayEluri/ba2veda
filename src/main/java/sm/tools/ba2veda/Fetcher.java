@@ -1,6 +1,5 @@
 package sm.tools.ba2veda;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -16,7 +15,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import sm.tools.ba2veda.impl.*;
+import sm.tools.ba2veda.impl_mnd.*;
+import sm.tools.ba2veda.impl_stg.*;
 import sm.tools.veda_client.VedaConnection;
 
 public class Fetcher
