@@ -70,8 +70,8 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 			{
 				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
-				//if (predicate.equals("?") == false)
-				//	new_individual.addProperty(predicate, rss);
+				if (predicate.equals("?") == false)
+					new_individual.addProperty(predicate, rss);
 
 				if (rss == null)
 					continue;

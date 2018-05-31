@@ -714,7 +714,7 @@ public abstract class Ba2VedaTransform
 
 		if (in_position_id == null)
 		{
-			position_id = "d:position_" + user.getDepartmentId().toString().toLowerCase().hashCode() + "-"
+			position_id = "d:position-" + user.getDepartmentId().toString().toLowerCase().hashCode()
 					+ new StringBuilder().append(user.getPosition("Ru")).append("").toString().toLowerCase().hashCode();
 		} else
 		{
@@ -805,7 +805,11 @@ public abstract class Ba2VedaTransform
 				System.out.println("ERR:" + res + "\n" + ii);
 				return null;
 			}
+		} else
+		{
+			System.out.println("INFO:found position " + position_id);
 		}
+
 		// //////////////////////////////////////////////////////////////////////////////////////
 		Individual iiap = new Individual();
 
