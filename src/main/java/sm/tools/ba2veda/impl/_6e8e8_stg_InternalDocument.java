@@ -7,7 +7,6 @@ import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
 import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
-import sm.tools.ba2veda.Pair;
 import sm.tools.ba2veda.Replacer;
 import sm.tools.veda_client.Individual;
 import sm.tools.veda_client.Resource;
@@ -34,7 +33,6 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 		fields_map.put("comment", "?");
 		fields_map.put("sender", "?");
 		fields_map.put("addressee", "?");
-
 		
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
@@ -57,6 +55,8 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 		Resources from_comment = null;
 		Resources to_comment = null;
 
+		ArrayList<Object> comment_parts = new ArrayList<Object>();
+
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 
 		List<XmlAttribute> atts = doc.getAttributes();
@@ -70,8 +70,8 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 			{
 				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
-				if (predicate.equals("?") == false)
-					new_individual.addProperty(predicate, rss);
+				//if (predicate.equals("?") == false)
+				//	new_individual.addProperty(predicate, rss);
 
 				if (rss == null)
 					continue;
@@ -111,16 +111,15 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 					if (ii != null)
 					{
 						from_comment = ii.getResources("rdfs:label");
-						new_individual.addProperty("v-s:initiator", ii.getValue("rdfs:label"), Type._String);
+						new_individual.addProperty("v-s:initiator", ii.getUri(), Type._Uri);
 					}
-
 				} else if (code.equals("addressee"))
 				{
 					Individual ii = veda.getIndividual(rss.resources.get(0).getData());
 					if (ii != null)
 					{
 						to_comment = ii.getResources("rdfs:label");
-						new_individual.addProperty("v-s:responsibleDepartment", ii.getValue("rdfs:label"), Type._String);
+						new_individual.addProperty("v-s:responsibleDepartment", ii.getUri(), Type._Uri);
 					}
 
 				}
@@ -128,12 +127,16 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 			}
 		}
 
-		ArrayList<Object> comment_parts = new ArrayList<Object>();
-		String comment = "";
-		if (comment != null)
+		if (from_comment != null)
 		{
-			comment_parts.add(comment);
+			comment_parts.add("От кого");
+			comment_parts.add(from_comment);
 			comment_parts.add("\n");
+		}
+		if (to_comment != null)
+		{
+			comment_parts.add("Кому");
+			comment_parts.add(to_comment);
 		}
 
 		if (comment_parts.size() > 0)

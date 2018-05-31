@@ -24,6 +24,7 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 import sm.tools.veda_client.util;
+import sm.tools.ba2veda.Translit;
 
 public abstract class Ba2VedaTransform
 {
@@ -396,6 +397,9 @@ public abstract class Ba2VedaTransform
 		HashMap<String, String> res = new HashMap<String, String>();
 		for (Resource el : rss.resources)
 		{
+			if (el.getData() == null)
+				continue;
+
 			if (el.getType() == Type._Datetime)
 			{
 				String tmp = el.getData();
@@ -698,7 +702,7 @@ public abstract class Ba2VedaTransform
 		if (is_mondi == false)
 		{
 			appointment_id = "d:" + account_id.replace("zdb:doc_", "");
-			account_id = "d:account_" + account_id.replace("zdb:doc_", "");
+			account_id = "d:account_" + Translit.cyr2lat(user.getLogin());
 		} else
 		{
 			account_id = "d:" + account_id.replace("zdb:doc_", "");
@@ -710,8 +714,8 @@ public abstract class Ba2VedaTransform
 
 		if (in_position_id == null)
 		{
-			position_id = "d:a" + new StringBuilder().append(user.getPosition("Ru")).append("").toString().toLowerCase().hashCode() + "-"
-					+ new StringBuilder().append(user.getPosition("En")).append("").toString().toLowerCase().hashCode();
+			position_id = "d:position_" + user.getDepartmentId().toString().toLowerCase().hashCode() + "-"
+					+ new StringBuilder().append(user.getPosition("Ru")).append("").toString().toLowerCase().hashCode();
 		} else
 		{
 			position_id = in_position_id;
@@ -777,10 +781,22 @@ public abstract class Ba2VedaTransform
 			Individual ii = new Individual();
 
 			ii.addProperty("rdf:type", new Resources().add("v-s:Position", 1));
-			ii.addProperty("rdfs:label", new Resources().add(user.getPosition("Ru"), "RU").add(user.getPosition("En"), "EN"));
 
-			FIOD_RU += " " + user.getPosition("Ru");
-			FIOD_EN += " " + user.getPosition("En");
+			Resources trss = new Resources();
+
+			if (user.getPosition("Ru") != null)
+			{
+				trss.add(user.getPosition("Ru"), "RU");
+				FIOD_RU += " " + user.getPosition("Ru");
+			}
+
+			if (user.getPosition("En") != null)
+			{
+				trss.add(user.getPosition("En"), "EN");
+				FIOD_EN += " " + user.getPosition("En");
+			}
+
+			ii.addProperty("rdfs:label", trss);
 
 			ii.setUri(position_id);
 			res = putIndividual(level, ii, null);
@@ -798,7 +814,15 @@ public abstract class Ba2VedaTransform
 		{
 			iiap.addProperty("v-s:deleted", new Resources().add("true", 64));
 		}
-		iiap.addProperty("rdfs:label", new Resources().add(FIOD_RU, "RU").add(FIOD_EN, "EN"));
+
+		Resources trss = new Resources();
+		if (FIOD_RU != null)
+			trss.add(FIOD_RU, "RU");
+
+		if (FIOD_EN != null)
+			trss.add(FIOD_EN, "EN");
+
+		iiap.addProperty("rdfs:label", trss);
 		iiap.addProperty("v-s:occupation", new Resources().add(position_id, 1));
 		iiap.addProperty("v-s:employee", new Resources().add(person_id, 1));
 
@@ -909,7 +933,7 @@ public abstract class Ba2VedaTransform
 			String link = att.getOrganizationValue();
 			String new_link = null;
 
-			prepare_org_id(link, code, level);
+			new_link = prepare_org_id(link, code, level);
 
 			if (new_link != null)
 				res.add(new_link, Type._Uri);
