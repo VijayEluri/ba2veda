@@ -38,6 +38,7 @@ public class _f9410_stg_Decree extends Ba2VedaTransform
 		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("reg_note", "stg:hasDecreeRegistrationRecord");
 		fields_map.put("link_document", "?");
+		fields_map.put("status", "v-s:hasStatus");		
 
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
@@ -133,7 +134,7 @@ public class _f9410_stg_Decree extends Ba2VedaTransform
 			}
 		}
 
-		new_individual.addProperty("stg:hasDecreeKind", "d:f4b896d9dd5b4e63b044a29f0ee76c25", Type._Uri);
+		new_individual.addProperty("stg:hasDecreeKind", "d:6e2c0d2bad144e04a5ddd8b6ba5d0535", Type._Uri);
 
 		res.add(new_individual);
 		return res;

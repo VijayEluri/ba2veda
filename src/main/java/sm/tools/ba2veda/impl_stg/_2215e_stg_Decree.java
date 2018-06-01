@@ -36,6 +36,7 @@ public class _2215e_stg_Decree extends Ba2VedaTransform {
 		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("reg_note", "stg:hasDecreeRegistrationRecord");
 		fields_map.put("link_document", "?");
+		fields_map.put("status", "v-s:hasStatus");
 
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";

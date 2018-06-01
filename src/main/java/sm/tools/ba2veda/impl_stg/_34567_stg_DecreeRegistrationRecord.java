@@ -76,7 +76,7 @@ public class _34567_stg_DecreeRegistrationRecord extends Ba2VedaTransform
 
 				if (code.equals("nomenclature"))
 				{
-					new_individual.addProperty("stg:hasDecreeKind", new Resource("d:3c5d0a103a484620b90f26cf79310d15", Type._Uri));
+					new_individual.addProperty("stg:hasDecreeKind", new Resource("d:6e2c0d2bad144e04a5ddd8b6ba5d0535", Type._Uri));
 				} else if (code.equals("add_to_doc"))
 				{
 					new_individual.addProperty("v-s:backwardTarget", new Resource(parent_veda_doc_uri, Type._Uri));
