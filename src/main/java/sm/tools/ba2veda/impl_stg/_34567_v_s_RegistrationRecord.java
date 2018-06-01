@@ -14,11 +14,11 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _71e44_v_s_RegistrationRecord extends Ba2VedaTransform
+public class _34567_v_s_RegistrationRecord extends Ba2VedaTransform
 {
-	public _71e44_v_s_RegistrationRecord(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _34567_v_s_RegistrationRecord(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "71e449ca6998403e8f8116f302a32f9a", "v-s:RegistrationRecord");
+		super(_ba, _veda, replacer, "3456788cda534e52b63be863ecf90185", "v-s:RegistrationRecord");
 	}
 
 	public void inital_set()

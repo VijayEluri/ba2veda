@@ -15,11 +15,11 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _e1c2e_v_s_Decree extends Ba2VedaTransform
+public class _e1c2e_stg_Decree extends Ba2VedaTransform
 {
-	public _e1c2e_v_s_Decree(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _e1c2e_stg_Decree(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "e1c2e9b2150344b4aa57e672c2dbdac1", "v-s:Decree");
+		super(_ba, _veda, replacer, "e1c2e9b2150344b4aa57e672c2dbdac1", "stg:Decree");
 	}
 
 	public void inital_set()
@@ -35,7 +35,7 @@ public class _e1c2e_v_s_Decree extends Ba2VedaTransform
 		fields_map.put("display_requisite", "rdfs:label");
 		fields_map.put("class", "v-s:isFixedTerm");
 		fields_map.put("add_info", "v-s:hasComment");
-		fields_map.put("reg_note", "mnd-s:hasDecreeRegistrationRecord");
+		fields_map.put("reg_note", "stg:hasDecreeRegistrationRecord");
 		fields_map.put("link_document", "?");
 		fields_map.put("", "");
 		fields_map.put("", "");
