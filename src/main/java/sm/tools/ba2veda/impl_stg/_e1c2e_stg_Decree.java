@@ -26,20 +26,18 @@ public class _e1c2e_stg_Decree extends Ba2VedaTransform
 	{
 		fields_map.put("owner", "v-s:owner");
 		fields_map.put("subject", "v-s:title");
-		fields_map.put("content", "v-s:description");
+		fields_map.put("type", "stg:hasDecreeKind");
+		fields_map.put("class", "?");
+		fields_map.put("content", "?");
 		fields_map.put("initiator", "v-s:initiator");
 		fields_map.put("signer", "v-s:signedBy");
 		fields_map.put("responsible_person", "v-s:responsible");
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("file", "v-s:attachment");
 		fields_map.put("display_requisite", "rdfs:label");
-		fields_map.put("class", "v-s:isFixedTerm");
 		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("reg_note", "stg:hasDecreeRegistrationRecord");
 		fields_map.put("link_document", "?");
-		fields_map.put("", "");
-		fields_map.put("", "");
-		fields_map.put("", "");
 
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
@@ -78,9 +76,6 @@ public class _e1c2e_stg_Decree extends Ba2VedaTransform
 
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
-
-				if (code.equals("importance") && (rss == null || rss.resources.size() < 1))
-					new_individual.addProperty("v-s:isActivityAccidental", new Resource(true, Type._Bool));
 
 				if (rss == null)
 					continue;
@@ -123,11 +118,23 @@ public class _e1c2e_stg_Decree extends Ba2VedaTransform
 					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
 					putIndividual(level, link, ba_id);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
+				} else if (code.equals("content"))
+				{
+					new_individual.addProperty("v-s:description", new Resource(rss.resources.get(0).getData().replaceAll("\t", " "), Type._String));
+				} else if (code.equals("class"))
+				{
+					String ttt = rss.resources.get(0).getData();
+
+					if (ttt.equals("d:59b93765df9f4d548e3409752b925770") || ttt.equals("d:6e4d20f71ccc43678b76b924e7436994"))
+						new_individual.addProperty("v-s:isFixedTerm", new Resource(true, Type._Bool));
+					else
+						new_individual.addProperty("v-s:isFixedTerm", new Resource(false, Type._Bool));
 				}
 			}
 		}
 
-		new_individual.addProperty("rdf:type", to_class, Type._Uri);
+		//new_individual.addProperty("stg:hasDecreeKind", "d:3c5d0a103a484620b90f26cf79310d15", Type._Uri);
+
 		res.add(new_individual);
 		return res;
 	}

@@ -79,12 +79,12 @@ public class _34567_v_s_RegistrationRecord extends Ba2VedaTransform
 				{
 					String val = att.getRecordIdValue();
 
-					new_individual.addProperty("mnd-s:hasDecreeKind", new Resource(val, Type._Uri));
+					new_individual.addProperty("stg:hasDecreeKind", new Resource(val, Type._Uri));
 				} else if (code.equals("add_to_doc"))
 				{
 					String val = att.getRecordIdValue();
 					new_individual.addProperty("v-s:backwardTarget", new Resource(val, Type._Uri));
-					new_individual.addProperty("v-s:backwardProperty", new Resource("v-s:hasDecreeRegistrationRecord", Type._Uri));
+					new_individual.addProperty("v-s:backwardProperty", new Resource("stg:hasDecreeRegistrationRecord", Type._Uri));
 				}
 			}
 		}

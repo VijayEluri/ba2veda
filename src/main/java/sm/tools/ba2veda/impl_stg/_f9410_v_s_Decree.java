@@ -15,8 +15,10 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _f9410_v_s_Decree extends Ba2VedaTransform {
-	public _f9410_v_s_Decree(BaSystem _ba, VedaConnection _veda, Replacer replacer) {
+public class _f9410_v_s_Decree extends Ba2VedaTransform
+{
+	public _f9410_v_s_Decree(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	{
 		super(_ba, _veda, replacer, "f941006b96064c4cace673b0d740b034", "v-s:Decree");
 	}
 
@@ -24,7 +26,7 @@ public class _f9410_v_s_Decree extends Ba2VedaTransform {
 	{
 		fields_map.put("owner", "v-s:owner");
 		fields_map.put("subject", "v-s:title");
-		fields_map.put("content", "v-s:description");
+		fields_map.put("content", "?");
 		fields_map.put("initiator", "v-s:initiator");
 		fields_map.put("signer", "v-s:signedBy");
 		fields_map.put("responsible_person", "v-s:responsible");
@@ -35,9 +37,6 @@ public class _f9410_v_s_Decree extends Ba2VedaTransform {
 		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("reg_note", "mnd-s:hasDecreeRegistrationRecord");
 		fields_map.put("link_document", "?");
-		fields_map.put("", "");
-		fields_map.put("", "");
-		fields_map.put("", "");
 
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
@@ -121,6 +120,9 @@ public class _f9410_v_s_Decree extends Ba2VedaTransform {
 					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
 					putIndividual(level, link, ba_id);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
+				} else if (code.equals("content"))
+				{
+					new_individual.addProperty("v-s:description", new Resource(rss.resources.get(0).getData().replaceAll("\t", " "), Type._String));
 				}
 			}
 		}
