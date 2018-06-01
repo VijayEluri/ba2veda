@@ -565,7 +565,13 @@ public abstract class Ba2VedaTransform
 		} else
 		{
 			// System.out.println("user " + person_id + ", not content tabnumber");
-			return "d:" + person_id;
+			if (is_mondi == false)
+			{
+			}
+			else
+			{
+				return "d:" + person_id;
+			}
 		}
 
 		boolean repeat = true;

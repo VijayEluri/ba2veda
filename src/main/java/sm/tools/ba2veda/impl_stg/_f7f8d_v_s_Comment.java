@@ -15,18 +15,18 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _f5fe8_v_s_Comment extends Ba2VedaTransform
+public class _f7f8d_v_s_Comment extends Ba2VedaTransform
 {
-	public _f5fe8_v_s_Comment(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _f7f8d_v_s_Comment(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "f5fe89070d834a31a3cd7079c8c2374d", "v-s:Comment");
+		super(_ba, _veda, replacer, "f7f8ddda4ba1468baa748a3160250b6f", "v-s:Comment");
 	}
 
 	public void inital_set()
 	{
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("add_doc", "v-s:linkedObject");
-		fields_map.put("comment", "?");
+		fields_map.put("comment", "rdfs:label");
 		fields_map.put("kind", "?");
 		
 		employee_prefix = "d:employee_";

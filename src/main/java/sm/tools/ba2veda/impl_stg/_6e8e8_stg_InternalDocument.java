@@ -93,7 +93,8 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
 					putIndividual(level, link, ba_id);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
-				} else if (code.equals("add_info"))
+				}
+/*				else if (code.equals("add_info"))
 				{
 					Individual comment = new Individual();
 					comment.setUri(new_individual.getUri() + "_comment");
@@ -105,7 +106,8 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 					comment.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 					putIndividual(level, comment, ba_id);
 					new_individual.addProperty("v-s:hasComment", comment.getUri(), Type._Uri);
-				} else if (code.equals("sender"))
+				} */
+				 else if (code.equals("sender"))
 				{
 					Individual ii = veda.getIndividual(rss.resources.get(0).getData());
 					if (ii != null)
