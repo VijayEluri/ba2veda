@@ -15,17 +15,19 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _f9410_v_s_Decree extends Ba2VedaTransform
+public class _f9410_stg_Decree extends Ba2VedaTransform
 {
-	public _f9410_v_s_Decree(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _f9410_stg_Decree(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "f941006b96064c4cace673b0d740b034", "v-s:Decree");
+		super(_ba, _veda, replacer, "f941006b96064c4cace673b0d740b034", "stg:Decree");
 	}
 
 	public void inital_set()
 	{
 		fields_map.put("owner", "v-s:owner");
 		fields_map.put("subject", "v-s:title");
+		//fields_map.put("type", "stg:hasDecreeKind");
+		fields_map.put("class", "?");
 		fields_map.put("content", "?");
 		fields_map.put("initiator", "v-s:initiator");
 		fields_map.put("signer", "v-s:signedBy");
@@ -33,9 +35,8 @@ public class _f9410_v_s_Decree extends Ba2VedaTransform
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("file", "v-s:attachment");
 		fields_map.put("display_requisite", "rdfs:label");
-		fields_map.put("class", "v-s:isFixedTerm");
 		fields_map.put("add_info", "v-s:hasComment");
-		fields_map.put("reg_note", "mnd-s:hasDecreeRegistrationRecord");
+		fields_map.put("reg_note", "stg:hasDecreeRegistrationRecord");
 		fields_map.put("link_document", "?");
 
 		employee_prefix = "d:employee_";
@@ -75,9 +76,6 @@ public class _f9410_v_s_Decree extends Ba2VedaTransform
 
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
-
-				if (code.equals("importance") && (rss == null || rss.resources.size() < 1))
-					new_individual.addProperty("v-s:isActivityAccidental", new Resource(true, Type._Bool));
 
 				if (rss == null)
 					continue;
@@ -123,11 +121,20 @@ public class _f9410_v_s_Decree extends Ba2VedaTransform
 				} else if (code.equals("content"))
 				{
 					new_individual.addProperty("v-s:description", new Resource(rss.resources.get(0).getData().replaceAll("\t", " "), Type._String));
+				} else if (code.equals("class"))
+				{
+					String ttt = rss.resources.get(0).getData();
+
+					if (ttt.equals("d:59b93765df9f4d548e3409752b925770") || ttt.equals("d:6e4d20f71ccc43678b76b924e7436994"))
+						new_individual.addProperty("v-s:isFixedTerm", new Resource(true, Type._Bool));
+					else
+						new_individual.addProperty("v-s:isFixedTerm", new Resource(false, Type._Bool));
 				}
 			}
 		}
 
-		new_individual.addProperty("rdf:type", to_class, Type._Uri);
+		new_individual.addProperty("stg:hasDecreeKind", "d:f4b896d9dd5b4e63b044a29f0ee76c25", Type._Uri);
+
 		res.add(new_individual);
 		return res;
 	}

@@ -14,11 +14,11 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _34567_v_s_RegistrationRecord extends Ba2VedaTransform
+public class _34567_stg_DecreeRegistrationRecord extends Ba2VedaTransform
 {
-	public _34567_v_s_RegistrationRecord(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _34567_stg_DecreeRegistrationRecord(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "3456788cda534e52b63be863ecf90185", "v-s:RegistrationRecord");
+		super(_ba, _veda, replacer, "3456788cda534e52b63be863ecf90185", "stg:DecreeRegistrationRecord");
 	}
 
 	public void inital_set()
@@ -30,7 +30,6 @@ public class _34567_v_s_RegistrationRecord extends Ba2VedaTransform
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("name", "rdfs:label");
 		fields_map.put("nomenclature", "?");
-		fields_map.put("", "");
 
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
@@ -77,13 +76,10 @@ public class _34567_v_s_RegistrationRecord extends Ba2VedaTransform
 
 				if (code.equals("nomenclature"))
 				{
-					String val = att.getRecordIdValue();
-
-					new_individual.addProperty("stg:hasDecreeKind", new Resource(val, Type._Uri));
+					new_individual.addProperty("stg:hasDecreeKind", new Resource("d:3c5d0a103a484620b90f26cf79310d15", Type._Uri));
 				} else if (code.equals("add_to_doc"))
 				{
-					String val = att.getRecordIdValue();
-					new_individual.addProperty("v-s:backwardTarget", new Resource(val, Type._Uri));
+					new_individual.addProperty("v-s:backwardTarget", new Resource(parent_veda_doc_uri, Type._Uri));
 					new_individual.addProperty("v-s:backwardProperty", new Resource("stg:hasDecreeRegistrationRecord", Type._Uri));
 				}
 			}
