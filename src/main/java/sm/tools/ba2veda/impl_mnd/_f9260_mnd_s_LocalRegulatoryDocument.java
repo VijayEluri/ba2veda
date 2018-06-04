@@ -75,6 +75,8 @@ public class _f9260_mnd_s_LocalRegulatoryDocument extends Ba2VedaTransform {
 		Resources titleRss = null;
 		Resources periodProvision = null, scope = null;
 		
+		int linkCount = 0;
+		
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts) {
 			String code = att.getCode();
@@ -123,7 +125,25 @@ public class _f9260_mnd_s_LocalRegulatoryDocument extends Ba2VedaTransform {
 					version.addProperty("v-s:registrationNumber",  number + ".1", Type._String);
 				} else if (code.equals("title")) {
 					titleRss = rss;
-					new_individual.addProperty("v-s:title", rss);
+					
+					
+					ArrayList<Object> parts = new ArrayList<Object>();
+					parts.add("Показатель премирования. KPI - ");
+					parts.add(rss);
+					//parts.add(titleRss);
+					
+					String[] langs_out1 = { "EN", "RU" };
+					String[] langs_out2 = { "NONE" };
+					
+					Resources rss1 = rs_assemble(parts.toArray(), langs_out1);
+					if (rss1.resources.size() == 0)
+						rss1 = rs_assemble(parts.toArray(), langs_out2);
+						
+					if (rss.resources.size() > 0) {
+						new_individual.addProperty("v-s:title", rss1);
+						version.addProperty("v-s:title", rss1);
+					}
+					//new_individual.addProperty("v-s:title", rss);
 					version.addProperty("v-s:title", rss);
 				} else if (code.equals("period_provision"))
 					periodProvision = rss;
@@ -140,8 +160,9 @@ public class _f9260_mnd_s_LocalRegulatoryDocument extends Ba2VedaTransform {
 				else if (code.equals("description"))
 					version.addProperty("v-s:comment", rss);
 				else if (code.equals("kpi")) {
+					linkCount++;
 					Individual link = new Individual();
-					link.setUri(new_individual.getUri()+ "_link");
+					link.setUri(new_individual.getUri()+ "_link" + linkCount);
 					link.addProperty("rdf:type", "v-s:Link", Type._Uri);
 					link.addProperty("v-s:from", new_individual.getUri(), Type._Uri);
 					link.addProperty("v-s:to", rss);
@@ -180,9 +201,12 @@ public class _f9260_mnd_s_LocalRegulatoryDocument extends Ba2VedaTransform {
 			comment.addProperty("v-s:parent", new_individual.getUri(), Type._Uri);
 			
 			ArrayList<Object> parts = new ArrayList<Object>();
+			parts.add("Сроки предоставления: ");
 			parts.add(periodProvision);
-			parts.add(".");
+			parts.add("\n");
+			parts.add("Группа сотрудников: ");
 			parts.add(scope);
+			parts.add("\n");
 			//parts.add(titleRss);
 			String[] langs_out1 = { "EN", "RU" };
 			String[] langs_out2 = { "NONE" };
