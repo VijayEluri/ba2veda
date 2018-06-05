@@ -16,6 +16,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import sm.tools.ba2veda.impl_mnd.*;
+import sm.tools.ba2veda.impl_mnd._252bf_mnd_s_LocalRegulatoryDocument;
+import sm.tools.ba2veda.impl_mnd._d6e6d_mnd_s_VersionOfLocalRegulatoryDocument;
 import sm.tools.ba2veda.impl_stg.*;
 import sm.tools.veda_client.VedaConnection;
 
@@ -245,6 +247,9 @@ public class Fetcher
 		trs.add(new _e1c2e_stg_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _2215e_stg_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _f9410_stg_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _05ba2_stg_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _40612_stg_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _07958_stg_PositionDictionary(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		for (Ba2VedaTransform tr : trs)
 		{

@@ -59,7 +59,7 @@ public abstract class Ba2VedaTransform
 		assignedSubsystems = subsystems;
 	}
 
-	private static long get_count_of_queue(String queue_name)
+	public static long get_count_of_queue(String queue_name)
 	{
 		long res = 9999999999L;
 		try
@@ -161,26 +161,28 @@ public abstract class Ba2VedaTransform
 
 							if (to != null)
 							{
-								Individual new_permission = new Individual();
-
 								String right_uri = util.get_hashed_uri(indv.getUri().hashCode() + "_" + to.hashCode() + "_prm");
 
-								new_permission.setUri(right_uri);
-								new_permission.addProperty("rdf:type", new Resource("v-s:PermissionStatement", Type._Uri));
-								new_permission.addProperty("v-s:permissionSubject", new Resource(to, Type._Uri));
-								new_permission.addProperty("v-s:permissionObject", new Resource(indv.getUri(), Type._Uri));
+								if (veda.getIndividual(right_uri) == null)
+								{
+									Individual new_permission = new Individual();
+									new_permission.setUri(right_uri);
+									new_permission.addProperty("rdf:type", new Resource("v-s:PermissionStatement", Type._Uri));
+									new_permission.addProperty("v-s:permissionSubject", new Resource(to, Type._Uri));
+									new_permission.addProperty("v-s:permissionObject", new Resource(indv.getUri(), Type._Uri));
 
-								if (right.isCreate == true)
-									new_permission.addProperty("v-s:canCreate", new Resource("true", Type._Bool));
-								if (right.isRead == true)
-									new_permission.addProperty("v-s:canRead", new Resource("true", Type._Bool));
-								if (right.isUpdate == true)
-									new_permission.addProperty("v-s:canUpdate", new Resource("true", Type._Bool));
-								if (right.isDelete == true)
-									new_permission.addProperty("v-s:canDelete", new Resource("true", Type._Bool));
+									if (right.isCreate == true)
+										new_permission.addProperty("v-s:canCreate", new Resource("true", Type._Bool));
+									if (right.isRead == true)
+										new_permission.addProperty("v-s:canRead", new Resource("true", Type._Bool));
+									if (right.isUpdate == true)
+										new_permission.addProperty("v-s:canUpdate", new Resource("true", Type._Bool));
+									if (right.isDelete == true)
+										new_permission.addProperty("v-s:canDelete", new Resource("true", Type._Bool));
 
-								st_veda.putIndividual(new_permission, true, assignedSubsystems);
-								System.out.println("ADD RIGHT:" + new_permission.getUri() + ", TO:" + indv.getUri());
+									st_veda.putIndividual(new_permission, true, assignedSubsystems);
+									System.out.println("ADD RIGHT:" + new_permission.getUri() + ", TO:" + indv.getUri());
+								}
 							} else
 							{
 								System.out.println("ERR: fail add right, not found occupation in appointment : " + veda_user_uri);
@@ -518,6 +520,11 @@ public abstract class Ba2VedaTransform
 	{
 		String res_ap = null;
 
+		Individual unit1 = st_veda.getIndividual("d:" + person_id);
+
+		if (unit1 != null)
+			return unit1.getUri();
+
 		//		if (person_id.equals("47a03c80-5f04-425b-80d7-1562bd4a0a6c"))
 		//			person_id.length();
 
@@ -538,6 +545,7 @@ public abstract class Ba2VedaTransform
 		List<String> res = new ArrayList<String>();
 
 		String str_pid = null;
+		boolean repeat = true;
 
 		if (pid > 0)
 		{
@@ -546,8 +554,7 @@ public abstract class Ba2VedaTransform
 			if (str_pid.length() < 8)
 				str_pid = "00000000".substring(0, 8 - ("" + pid).length()) + pid;
 
-			System.out.println("'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='" + employee_prefix + str_pid + "'");
-			boolean repeat = true;
+			//System.out.println("'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='" + employee_prefix + str_pid + "'");
 			while (repeat)
 			{
 				repeat = false;
@@ -555,6 +562,7 @@ public abstract class Ba2VedaTransform
 				{
 					String[] queryResult = st_veda.query("'rdf:type'=='v-s:Appointment' && 'v-s:employee'=='" + employee_prefix + str_pid + "'");
 					res.addAll(new ArrayList<String>(Arrays.asList(queryResult)));
+					repeat = false;
 				} catch (Exception e)
 				{
 					System.err.println("Err doing appointment query, repeat later");
@@ -567,14 +575,12 @@ public abstract class Ba2VedaTransform
 			// System.out.println("user " + person_id + ", not content tabnumber");
 			if (is_mondi == false)
 			{
-			}
-			else
+			} else
 			{
 				return "d:" + person_id;
 			}
 		}
 
-		boolean repeat = true;
 		while (repeat)
 		{
 			repeat = false;
@@ -708,7 +714,11 @@ public abstract class Ba2VedaTransform
 		if (is_mondi == false)
 		{
 			appointment_id = "d:" + account_id.replace("zdb:doc_", "");
-			account_id = "d:account_" + Translit.cyr2lat(user.getLogin());
+			String login = user.getLogin();
+			if (login != null)
+				account_id = "d:account_" + Translit.cyr2lat(user.getLogin());
+			else
+				account_id = "d:account_" + user.getId();
 		} else
 		{
 			account_id = "d:" + account_id.replace("zdb:doc_", "");
