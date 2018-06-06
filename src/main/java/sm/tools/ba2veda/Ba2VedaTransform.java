@@ -520,6 +520,9 @@ public abstract class Ba2VedaTransform
 	{
 		String res_ap = null;
 
+		if (person_id == null)
+			return null;
+		
 		Individual unit1 = st_veda.getIndividual("d:" + person_id);
 
 		if (unit1 != null)

@@ -9,6 +9,7 @@ import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
 import sm.tools.ba2veda.Replacer;
 import sm.tools.veda_client.Individual;
+import sm.tools.veda_client.Resource;
 import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
@@ -23,19 +24,19 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 
 	public void inital_set()
 	{
-		fields_map.put("name", "rdfs:label");
-		fields_map.put("name_short", "v-s:shortLabel");
+		fields_map.put("c_code", "?");
+		fields_map.put("short_name_contractor", "v-s:shortLabel");
+		fields_map.put("full_name_contractor", "rdfs:label");
+		fields_map.put("low_adress", "v-s:legalAddress");
+		fields_map.put("post_adress", "v-s:postalAddress");
 		fields_map.put("inn", "v-s:taxId");
-		fields_map.put("address_legal", "v-s:legalAddress");
-		fields_map.put("address_postal", "v-s:postalAddress");
 		fields_map.put("kpp", "v-s:taxRegistrationCause");
-		fields_map.put("contractor", "v-s:hasContractor");
-		
+
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
 		stand_prefix = "d:";
 		department_prefix = "department";
-		is_mondi = false;						
+		is_mondi = false;
 	}
 
 	@Override
@@ -52,6 +53,8 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 
+		Resources c_code = null;
+
 		String org_uri = null;
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts)
@@ -64,7 +67,7 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 
 				if (org_uri != null)
 				{
-					return res;
+					//return res;
 				} else
 				{
 					String inn = att.getTextValue();
@@ -94,14 +97,40 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 			{
 				Resources rss;
 
-				if (code.equals("contractor"))
-					rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
-				else
-					rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+				rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
-				new_individual.addProperty(predicate, rss);
+				if (predicate.equals("?") == false)
+					new_individual.addProperty(predicate, rss);
+
+				if (rss.resources.size() < 1)
+					continue;
+
+				if (code.equals("c_code"))
+				{
+					c_code = rss;
+				}
 			}
 
+		}
+
+		if (c_code != null)
+		{
+			Individual contractor = new Individual();
+			contractor.setUri(new_individual.getUri());
+			contractor.addProperty("rdf:type", new Resource("v-s:Contractor", Type._Uri));
+			contractor.addProperty("v-s:linkedOrganization", new Resource(org_uri, Type._Uri));
+			contractor.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+			contractor.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+			contractor.addProperty("v-s:shortLabel", new_individual.getResources("v-s:shortLabel"));
+			contractor.addProperty("rdfs:label", new_individual.getResources("rdfs:label"));
+			contractor.addProperty("v-s:legalAddress", new_individual.getResources("v-s:legalAddress"));
+			contractor.addProperty("v-s:taxId", new_individual.getResources("v-s:taxId"));
+
+			contractor.addProperty("v-s:backwardTarget", new Resource(org_uri, Type._Uri));
+			contractor.addProperty("v-s:backwardProperty", new Resource("v-s:hasContractor"));
+
+			contractor.addProperty("v-s:registrationNumber", c_code);
+			putIndividual(level, contractor, ba_id);
 		}
 
 		if (org_uri != null)
