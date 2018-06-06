@@ -27,6 +27,12 @@ public class _c2dd5_stg_ClaimReport extends Ba2VedaTransform
 		fields_map.put("comment", "rdfs:comment");
 		fields_map.put("resolution", "v-s:hasDecision");
 		fields_map.put("file", "v-s:attachment");
+		
+		employee_prefix = "d:employee_";
+		appointment_prefix = "d:";
+		stand_prefix = "d:";
+		department_prefix = "department";
+		is_mondi = false;		
 	}
 
 	@Override

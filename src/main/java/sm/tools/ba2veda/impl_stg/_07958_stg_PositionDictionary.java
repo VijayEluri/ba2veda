@@ -15,6 +15,12 @@ public class _07958_stg_PositionDictionary extends Ba2VedaTransform
 	public void inital_set()
 	{
 		fields_map.put("profession_value", "rdfs:label");
+
+		employee_prefix = "d:employee_";
+		appointment_prefix = "d:";
+		stand_prefix = "d:";
+		department_prefix = "department";
+		is_mondi = false;
 	}
 
 }

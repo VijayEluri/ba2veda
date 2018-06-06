@@ -23,6 +23,9 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 
 	public void inital_set()
 	{
+		fields_map.put("contractor", "?");
+		
+		
 		fields_map.put("cmt_number", "stg:registrationNumberCMT");
 		fields_map.put("stage", "v-s:hasStatus");
 		fields_map.put("department", "v-s:responsibleDepartment");
@@ -63,7 +66,6 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 		fields_map.put("date_to", "?");
 		fields_map.put("number_to", "?");
 
-		fields_map.put("customer", "?");
 		fields_map.put("executor", "?");
 		fields_map.put("department", "?");
 		fields_map.put("contacts", "?");
@@ -75,6 +77,12 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 		fields_map.put("resolution", "?");
 
 		fields_map.put("other_sides", "?");
+		
+		employee_prefix = "d:employee_";
+		appointment_prefix = "d:";
+		stand_prefix = "d:";
+		department_prefix = "department";
+		is_mondi = false;		
 	}
 
 	public Individual createRequirementSum(String uri)
@@ -254,7 +262,7 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 					}
 
 					has_letter_registration_record_recipient.addProperty("v-s:registrationDate", rss);
-				} else if (code.equals("customer"))
+				} else if (code.equals("contractor"))
 				{
 					organization = att.getLinkValue();
 				} else if (code.equals("executor"))
