@@ -99,7 +99,7 @@ public class Fetcher
 		trs.add(new _a96be_v_s_Comment(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _7be2d_mnd_s_ContractPassport(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _5fcfb_mnd_s_PurchaseOrder(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-//		trs.add(new _dabb6_v_s_MaterialGroup(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		//		trs.add(new _dabb6_v_s_MaterialGroup(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _bdc96_mnd_s_AuditInternal(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _7ab24_mnd_s_AuditInternalAction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _c8a33_mnd_s_AuditInternalObject(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
@@ -141,22 +141,22 @@ public class Fetcher
 		trs.add(new _52e5c_mnd_s_Claim(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _3369e_mnd_s_BusinessTrip(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _5c2ce_mnd_s_Building(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _22701_mnd_s_ClaimReport(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _7bd88_mnd_s_PassRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _050ce_mnd_s_Pass(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _2bace_mnd_s_ActOfViolation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _451f2_mnd_s_RepresentativeCosts(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _d0072_v_s_Correspodent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _2fe65_mnd_s_RepresentativeCostsEvent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _d5c66_mnd_s_RepresentativeCostsForEvent(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _b243a_mnd_s_DismantlingProject(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _5d588_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _bfb8d_mnd_s_DecreeRegistrationRecord(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _09969_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _e85f6_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _fcb4a_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
@@ -166,62 +166,62 @@ public class Fetcher
 		trs.add(new _3b538_mnd_s_Decree(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 
 		trs.add(new _dabb6_mnd_s_MaterialGroup(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _53ba3_mnd_s_MaterialRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _270b9_mnd_s_ProjectCapex(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _d1191_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _0d138_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _38851_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _c6c99_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _fb3d8_v_s_Link(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _7a775_mnd_s_ProjectCapexRequestChange(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _3afd6_mnd_s_ForestryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _b4a29_mnd_s_ConatractDirection(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _f025ba_mnd_s_IncomingLetter(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _d1191_mnd_s_InternalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _0d138_mnd_s_InternalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _2806b_mnd_s_EnergyResourceRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _8aa42_mnd_s_PpeDestructionRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
-//		trs.add(new _73d7c_mnd_s_Equipmentlocation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+
+		//		trs.add(new _73d7c_mnd_s_Equipmentlocation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _73d7c_mnd_s_EquipmentPiece(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _1d28e_v_s_Cost(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _24b39_mnd_s_RepairInformation(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _e5312_mnd_s_ActFailureReason(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		//trs.add(new _57da5_mnd_s_ActFailureAction(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-	//	trs.add(new _da0e6_mnd_s_ActFailure(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+		//	trs.add(new _da0e6_mnd_s_ActFailure(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+
 		trs.add(new _cdaa9_mnd_s_PowerOfAttorney(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _252bf_mnd_s_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _d6e6d_mnd_s_VersionOfLocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _a5931_mnd_s_DescriptionOfChange(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _689c5_mnd_s_Addendum(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _38851_mnd_s_InternalAccountingDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _c7977_mnd_s_ContractorCreateChangeRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _da0e6_v_s_Comment(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _bcc80_mnd_s_AuditSafetyRating(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _fb3d8_mnd_s_EngineeringRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _93469_mnd_s_VersionOfTechnicalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _a2137_mnd_s_TechnicalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _66591_mnd_s_VersionOfTechnicalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _b163ab_mnd_s_TechnicalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _23784_mnd_s_ItObject(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _4748a_mnd_s_ItRequest(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _71e38_mnd_s_Contract(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _71e38_mnd_s_AdditionalAgreement(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _d539b_mnd_s_Contract(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
@@ -230,12 +230,12 @@ public class Fetcher
 		trs.add(new _110fa_mnd_s_AdditionalAgreement(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _a7b5b_mnd_s_Contract(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _a7b5b_mnd_s_AdditionalAgreement(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _135fd_mnd_s_AccountingDoc(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _97da9_mnd_s_AccountingDoc(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _f9260_mnd_s_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		// STG
 		trs.add(new _6e8e8_stg_InternalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _f7f8d_v_s_Comment(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
@@ -250,7 +250,9 @@ public class Fetcher
 		trs.add(new _05ba2_stg_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _40612_stg_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _07958_stg_PositionDictionary(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+		trs.add(new _8b937_stg_Claim(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _c2dd5_stg_ClaimReport(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+
 		for (Ba2VedaTransform tr : trs)
 		{
 			for (String key : Ba2VedaTransform.st_types_map.keySet())
@@ -259,11 +261,11 @@ public class Fetcher
 			}
 
 		}
-		
-		
+
 	}
 
-	public static void prepare_documents_of_type(int level, String from, String to, Date begin_time, String ba_id, boolean is_store_new_individuals) throws Exception
+	public static void prepare_documents_of_type(int level, String from, String to, Date begin_time, String ba_id, boolean is_store_new_individuals)
+			throws Exception
 	{
 		String templateId = from;
 		System.out.println("prepare_documents_of_type: " + templateId + "->" + to);
@@ -312,18 +314,15 @@ public class Fetcher
 				{
 					no_check_exists = true;
 					System.out.println("no check exists");
-				}
-				else if (arg.equals("-delta"))
+				} else if (arg.equals("-delta"))
 				{
 					is_delta = true;
 					System.out.println("use delta");
-				}
-				else if (arg.indexOf("-subsystem") >= 0)
+				} else if (arg.indexOf("-subsystem") >= 0)
 				{
 					assignedSubsystem = Integer.parseInt(arg.replace("-subsystem", ""));
 					Ba2VedaTransform.set_subsystems(assignedSubsystem);
-				}
-				else if (arg.indexOf("-restrictions:") >= 0)
+				} else if (arg.indexOf("-restrictions:") >= 0)
 				{
 					Ba2VedaTransform.config_restrictions(arg.replace("-restrictions:", "").split("/"));
 				}
@@ -333,8 +332,8 @@ public class Fetcher
 
 			for (String arg : args)
 			{
-				if (!arg.equals("-delta") && !arg.equals("-no_check_exists") && (arg.indexOf("-subsystem") < 0) && 
-						(arg.indexOf("-restrictions:") < 0))
+				if (!arg.equals("-delta") && !arg.equals("-no_check_exists") && (arg.indexOf("-subsystem") < 0)
+						&& (arg.indexOf("-restrictions:") < 0))
 				{
 					String[] ss = arg.split("/");
 
