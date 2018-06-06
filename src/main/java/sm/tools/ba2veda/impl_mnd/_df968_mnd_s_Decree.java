@@ -25,6 +25,7 @@ public class _df968_mnd_s_Decree extends Ba2VedaTransform{
 		fields_map.put("Подписывающий", "v-s:signedBy");
 		
 		fields_map.put("Регистрационный номер 1", "?");
+		fields_map.put("Регистрационный номер", "?");
 		fields_map.put("Дата регистрации", "?");
 		
 		fields_map.put("Ключевые слова", "?");
@@ -72,7 +73,8 @@ public class _df968_mnd_s_Decree extends Ba2VedaTransform{
 				if (rss.resources.size() < 1)
 					continue;
 				
-				if (code.equals("Регистрационный номер 1")) {
+				if (code.equals("Регистрационный номер 1") ||
+						code.equals("Регистрационный номер")) {
 					String data = rss.resources.get(0).getData();
 					if (data.equals(""))
 						continue;
@@ -139,11 +141,16 @@ public class _df968_mnd_s_Decree extends Ba2VedaTransform{
 		
 		if (drtr != null) {
 			drtr.setUri(new_individual.getUri() + "_registration_record");
+			drtr.addProperty("v-s:canRead", "true", Type._Bool);
 			drtr.addProperty("v-s:author", new Resource("d:rimert_DocRegistrator_SLPK", Type._Uri));
 			drtr.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			drtr.addProperty("rdf:type", new Resource("mnd-s:DecreeRegistrationRecord", Type._Uri));
 			new_individual.addProperty("mnd-s:hasDecreeRegistrationRecord", new Resource(drtr.getUri(), Type._Uri));
-//			drtr.addProperty("mnd-s:hasDecreeKind", new Resource("d:e5753b58168843e28ad73855c07b8cff", Type._Uri));
+			drtr.addProperty("mnd-s:hasDecreeKind", new Resource("d:e5753b58168843e28ad73855c07b8cff", Type._Uri));
+			drtr.addProperty("v-s:backwardProperty", "mnd-s:hasDecreeRegistrationRecord",
+				Type._Uri);
+			drtr.addProperty("v-s:backwardReplace", "mnd-s:hasDecreeKind", Type._Uri);
+			drtr.addProperty("v-s:backwardTarget", new_individual.getUri(), Type._Uri);
 			putIndividual(level, drtr, ba_id);
 		}
 		

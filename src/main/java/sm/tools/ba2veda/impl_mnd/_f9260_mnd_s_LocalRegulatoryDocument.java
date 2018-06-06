@@ -27,7 +27,6 @@ public class _f9260_mnd_s_LocalRegulatoryDocument extends Ba2VedaTransform {
 	{
 		fields_map.put("department", "mnd-s:appliesTo");
 		
-		fields_map.put("date_to", "?");
 		fields_map.put("number", "?");
 		fields_map.put("title", "?");
 		fields_map.put("period_provision", "?");
@@ -99,6 +98,8 @@ public class _f9260_mnd_s_LocalRegulatoryDocument extends Ba2VedaTransform {
 				
 				
 				if (code.equals("date_to")) {
+					version.addProperty("v-s:dateTo", rss);
+					
 					Date now = new Date();
 					Date dateTo = att.getDateValue();
 					if (dateTo == null) {
@@ -152,9 +153,7 @@ public class _f9260_mnd_s_LocalRegulatoryDocument extends Ba2VedaTransform {
 				else if (code.equals("initiator"))
 					version.addProperty("v-s:initiator", rss);
 				else if (code.equals("date_from"))
-					version.addProperty("v-s:dateFrom", rss);
-				else if (code.equals("date_to"))
-					version.addProperty("v-s:dateTo", rss);
+					version.addProperty("v-s:dateFrom", rss);			
 				else if (code.equals("attachment"))
 					version.addProperty("v-s:attachment", rss);
 				else if (code.equals("description"))

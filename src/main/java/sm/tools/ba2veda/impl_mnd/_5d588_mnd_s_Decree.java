@@ -35,8 +35,21 @@ public class _5d588_mnd_s_Decree extends Ba2VedaTransform {
 //		fields_map.put("status", "v-s:hasStatus");
 		fields_map.put("add_info", "v-s:hasComment");
 		
+		fields_map.put("Ключевые слова", "?");
+		fields_map.put("Приказ/распоряжение", "?");
+		fields_map.put("Вид документа", "?");
+		fields_map.put("Контроль исполнения возложен на", "?");
+		fields_map.put("file", "?");
+		fields_map.put("Вложения", "?");
+		
 		fields_map.put("Связанные документы", "?");
 		fields_map.put("nomenclature", "?");
+		
+		fields_map.put("Регистрационный номер 1", "?");
+		fields_map.put("Регистрационный номер", "?");
+		fields_map.put("Дата регистрации", "?");
+		
+		fields_map.put("Содержание", "?");
 	}
 	
 	@Override
@@ -54,6 +67,12 @@ public class _5d588_mnd_s_Decree extends Ba2VedaTransform {
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		int link_count = 0;
 		int ncomments = 1;
+		Individual drtr = null;
+		Individual comment = null;
+		ArrayList<Object> comment_parts = new ArrayList<Object>();
+		
+		Resources content = null;
+		
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts) {
 			String code = att.getCode();
@@ -781,10 +800,107 @@ public class _5d588_mnd_s_Decree extends Ba2VedaTransform {
 					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
 					putIndividual(level, link, ba_id);
 					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
+				} if (code.equals("Регистрационный номер 1") ||
+						code.equals("Регистрационный номер")) {
+					String data = rss.resources.get(0).getData();
+					if (data.equals(""))
+						continue;
+					if (drtr == null)
+						drtr = new Individual();
+					
+					drtr.addProperty("v-s:registrationNumber", rss);
+				} else if (code.equals("Дата регистрации")) {
+					String data = rss.resources.get(0).getData();
+					if (data.equals(""))
+						continue;
+					if (drtr == null)
+						drtr = new Individual();
+					
+					drtr.addProperty("v-s:registrationDate", rss);
+				} else if (code.equals("Содержание"))
+					content = rss;
+				else if (code.equals("file") || code.equals("Вложения")) {
+					if (comment == null)
+						comment = new Individual();
+					comment.addProperty("v-s:attachment", rss);
+				} else if (code.equals("Ключевые слова")) {
+					if (comment_parts.size() > 0) {
+						comment_parts.add("\n");
+					}
+					
+					String elem = code + ": " + rss.resources.get(0).getData();
+					Resources elem_resource = new Resources();
+					elem_resource.add(new Resource(elem, Type._String));
+					comment_parts.add(elem_resource);									
+				} else if (code.equals("Приказ/распоряжение")) {
+					if (comment_parts.size() > 0) {
+						comment_parts.add("\n");
+					}
+					
+					String elem = code + ": " + rss.resources.get(0).getData();
+					Resources elem_resource = new Resources();
+					elem_resource.add(new Resource(elem, Type._String));
+					comment_parts.add(elem_resource);									
+				} else if (code.equals("Вид документа")) {
+					if (comment_parts.size() > 0) {
+						comment_parts.add("\n");
+					}
+					
+					String elem = code + ": " + rss.resources.get(0).getData();
+					Resources elem_resource = new Resources();
+					elem_resource.add(new Resource(elem, Type._String));
+					comment_parts.add(elem_resource);									
+				} else if (code.equals("Контроль исполнения возложен на")) {
+					if (comment_parts.size() > 0) {
+						comment_parts.add("\n");
+					}
+					
+					String elem = code + ": " + rss.resources.get(0).getData();
+					Resources elem_resource = new Resources();
+					elem_resource.add(new Resource(elem, Type._String));
+					comment_parts.add(elem_resource);									
 				}
 			}
 		}
+		
+		if (new_individual.getResources("v-s:description") == null)
+			new_individual.addProperty("v-s:description", content);
+		
+		if (drtr != null && new_individual.getResources("mnd-s:hasDecreeRegistrationRecord") == null) {
+			drtr.setUri(new_individual.getUri() + "_registration_record");
+			drtr.addProperty("v-s:canRead", "true", Type._Bool);
+			drtr.addProperty("v-s:author", new Resource("d:rimert_DocRegistrator_SLPK", Type._Uri));
+			drtr.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+			drtr.addProperty("rdf:type", new Resource("mnd-s:DecreeRegistrationRecord", Type._Uri));
+			new_individual.addProperty("mnd-s:hasDecreeRegistrationRecord", new Resource(drtr.getUri(), Type._Uri));
+			drtr.addProperty("mnd-s:hasDecreeKind", new Resource("d:e5753b58168843e28ad73855c07b8cff", Type._Uri));
+			drtr.addProperty("v-s:backwardProperty", "mnd-s:hasDecreeRegistrationRecord",
+				Type._Uri);
+			drtr.addProperty("v-s:backwardReplace", "mnd-s:hasDecreeKind", Type._Uri);
+			drtr.addProperty("v-s:backwardTarget", new_individual.getUri(), Type._Uri);
+			putIndividual(level, drtr, ba_id);
+		}
 			
+		
+		String[] langs_out1 = { "EN", "RU" };
+		String[] langs_out2 = { "NONE" };
+		
+		Resources rss = rs_assemble(comment_parts.toArray(), langs_out1);
+		if (rss.resources.size() == 0)
+			rss = rs_assemble(comment_parts.toArray(), langs_out2);
+			
+		if (rss.resources.size() > 0 || comment != null) {
+			if (comment == null)
+				comment = new Individual();
+			comment.setUri(new_individual.getUri() + "_comment");
+			comment.addProperty("rdf:type", new Resource("v-s:Comment", Type._Uri));
+			comment.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+			comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+			comment.addProperty("rdfs:label", rss);
+			new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
+			putIndividual(level, comment, ba_id);
+		}
+		
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		res.add(new_individual);
 		return res;
