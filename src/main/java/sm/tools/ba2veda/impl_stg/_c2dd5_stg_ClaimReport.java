@@ -25,14 +25,16 @@ public class _c2dd5_stg_ClaimReport extends Ba2VedaTransform
 	{
 		fields_map.put("stage", "v-s:hasStatus");
 		fields_map.put("comment", "rdfs:comment");
-		fields_map.put("resolution", "v-s:hasDecision");
-		fields_map.put("file", "v-s:attachment");
-		
+		fields_map.put("resolution", "stg:hasClaimDecision");
+		fields_map.put("attachment", "v-s:attachment");
+		fields_map.put("add_doc", "?");
+		fields_map.put("claim_sum_to", "?");
+
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
 		stand_prefix = "d:";
 		department_prefix = "department";
-		is_mondi = false;		
+		is_mondi = false;
 	}
 
 	@Override
@@ -51,7 +53,7 @@ public class _c2dd5_stg_ClaimReport extends Ba2VedaTransform
 
 		new_individual.addProperty("v-s:backwardTarget", new Resource(parent_veda_doc_uri, Type._Uri));
 		new_individual.addProperty("v-s:parent", new Resource(parent_veda_doc_uri, Type._Uri));
-		new_individual.addProperty("v-s:backwardProperty", new Resource("stg:hasAuditQualityReport"));
+		new_individual.addProperty("v-s:backwardProperty", new Resource("stg:hasClaimReport"));
 
 		XmlDocument parent = ba.getActualDocument(parent_ba_doc_id).getLeft();
 		ArrayList<Object> label = new ArrayList<Object>();
@@ -78,6 +80,40 @@ public class _c2dd5_stg_ClaimReport extends Ba2VedaTransform
 				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
+
+				if (rss.resources.size() < 1)
+					continue;
+
+				if (code.equals("add_doc"))
+				{
+					String irf = att.getLinkValue();
+					if (irf == null)
+						continue;
+					String link_to = irf;
+
+					Individual link = new Individual();
+					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
+					link.setUri("d:link_" + ba_id + "_" + link_to);
+					link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
+					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
+
+					putIndividual(level, link, ba_id);
+
+					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
+				} else if (code.equals("claim_sum_to"))
+				{
+					Individual price = new Individual();
+					price.setUri(new_individual.getUri() + "_price");
+					price.addProperty("rdf:type", new Resource("v-s:Price", Type._Uri));
+					price.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
+					price.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+					price.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+					price.addProperty("v-s:sum", rss);
+					price.addProperty("v-s:hasCurrency", new Resource("d:currency_rub", Type._Uri));
+					//eomr.addProperty("v-s:hasPrice", new Resource(price.getUri(), Type._Uri));
+					putIndividual(level, price, ba_id);
+				}
+
 			}
 		}
 

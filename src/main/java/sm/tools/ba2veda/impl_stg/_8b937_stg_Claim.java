@@ -24,65 +24,66 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 	public void inital_set()
 	{
 		fields_map.put("contractor", "?");
-		
-		
-		fields_map.put("cmt_number", "stg:registrationNumberCMT");
-		fields_map.put("stage", "v-s:hasStatus");
-		fields_map.put("department", "v-s:responsibleDepartment");
-		fields_map.put("contacts", "v-s:contactInfo");
-		fields_map.put("object_claim_kind", "v-s:hasClaimObject");
-		fields_map.put("Тема", "v-s:claimObjectDescription");
-		fields_map.put("claim_class", "v-s:hasClaimCircumstance");
-		fields_map.put("date_claim_from", "v-s:dateFrom");
-		fields_map.put("date_claim_to", "v-s:dateTo");
-		fields_map.put("object_claim_amount", "v-s:claimVolume");
-		fields_map.put("edizm", "v-s:hasUnitOfMeasure");
-		fields_map.put("date_plan", "v-s:datePlan");
-		fields_map.put("Срок рассмотрения", "v-s:datePlan");
-		fields_map.put("compound_title", "rdfs:label");
-		fields_map.put("position_send", "v-s:hasDelivery");
-
-		fields_map.put("resolution", "?");
-
-		fields_map.put("claim_class_description", "?");
-		fields_map.put("Содержание", "?");
-
-		fields_map.put("claim_request", "?");
-		fields_map.put("Требование претензии", "?");
-
-		fields_map.put("inherit_rights_from", "?");
-		// fields_map.put("name_short", "v-s:shortLabel");
-
-		fields_map.put("claim_sum_from", "?");
-		fields_map.put("Сумма претензии (руб.)", "?");
-		fields_map.put("claim_sum_to", "?");
-		fields_map.put("currency_to", "?");
-
-		fields_map.put("comment", "?");
-		fields_map.put("add_doc", "?");
-		fields_map.put("Связанный документ", "?");
-		fields_map.put("Вложение", "?");
-
-		fields_map.put("date_to", "?");
-		fields_map.put("number_to", "?");
-
-		fields_map.put("executor", "?");
-		fields_map.put("department", "?");
-		fields_map.put("contacts", "?");
-		fields_map.put("contacts2", "?");
-
 		fields_map.put("number_from", "?");
 		fields_map.put("date_from", "?");
-
-		fields_map.put("resolution", "?");
-
+		fields_map.put("executor", "?");
+		fields_map.put("number_to", "?");
+		fields_map.put("date_to", "?");
 		fields_map.put("other_sides", "?");
+		fields_map.put("department", "v-s:responsibleDepartment");
+		fields_map.put("department", "?");
+		fields_map.put("prodect_kind", "v-s:hasClaimObject");
+		fields_map.put("claim_content", "v-s:claimObjectDescription");
+		fields_map.put("claim_class", "v-s:hasClaimCircumstance");
+		fields_map.put("claim_class_description", "?");
+		fields_map.put("object_claim_amount", "v-s:claimVolume");
+		fields_map.put("edizm", "v-s:hasUnitOfMeasure");
+		fields_map.put("claim_sum_from", "?");
+		fields_map.put("date_plan", "v-s:datePlan");
+		fields_map.put("resolution", "?");
+		fields_map.put("claim_sum_to", "?");
+		fields_map.put("currency_to", "?");
+		fields_map.put("stage", "v-s:hasStatus");
+		fields_map.put("comment", "?");
+		fields_map.put("display_requisite", "rdfs:label");
+		fields_map.put("org_reason", "stg:organizationReasonOfClaim");
+		fields_map.put("tech_reason", "stg:technicalReasonOfClaim");
+		fields_map.put("final_resolution", "?");
+		fields_map.put("object_claim_amount_to", "stg:claimVolumeCompensation");
+		fields_map.put("edizm_1", "stg:hasUnitOfMeasure");
+		fields_map.put("link_document", "?");
+
+		/*						
+				fields_map.put("cmt_number", "stg:registrationNumberCMT");
+				fields_map.put("contacts", "v-s:contactInfo");
+				fields_map.put("date_claim_from", "v-s:dateFrom");
+				fields_map.put("date_claim_to", "v-s:dateTo");
+				fields_map.put("Срок рассмотрения", "v-s:datePlan");
+				fields_map.put("position_send", "v-s:hasDelivery");
 		
+				fields_map.put("Содержание", "?");
+		
+				fields_map.put("claim_request", "?");
+				fields_map.put("Требование претензии", "?");
+		
+				fields_map.put("inherit_rights_from", "?");
+				// fields_map.put("name_short", "v-s:shortLabel");
+		
+				fields_map.put("Сумма претензии (руб.)", "?");
+		
+				fields_map.put("add_doc", "?");
+				fields_map.put("Связанный документ", "?");
+				fields_map.put("Вложение", "?");
+		
+				fields_map.put("contacts", "?");
+				fields_map.put("contacts2", "?");
+		*/
+
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
 		stand_prefix = "d:";
 		department_prefix = "department";
-		is_mondi = false;		
+		is_mondi = false;
 	}
 
 	public Individual createRequirementSum(String uri)
@@ -198,44 +199,23 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 						comment = new Individual();
 
 					comment.addProperty("v-s:attachment", rss);
-				} else if (code.equals("add_doc") || code.equals("Связанный документ"))
+				} else if (code.equals("linked_documents"))
 				{
-					if (comment == null)
-						comment = new Individual();
+					String irf = att.getLinkValue();
+					if (irf == null)
+						continue;
+					String link_to = irf;
 
-					if (code.equals("add_doc") || code.equals("Связанный документ"))
-					{
-						String irf = att.getLinkValue();
-						XmlDocument irf_doc = ba.getActualDocument(irf).getLeft();
-						String inherit_rights_from = ba.get_first_value_of_field(irf_doc, "inherit_rights_from");
+					Individual link = new Individual();
+					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
+					link.setUri("d:link_" + ba_id + "_" + link_to);
+					link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
+					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
 
-						if (inherit_rights_from == null)
-						{
-							comment.addProperty("v-s:linkedObject", new Resource("d:" + att.getLinkValue(), Type._Uri));
-						} else
-						{
-							if (irf_doc.getTypeId().equals("ead1b2fa113c45a8b79d093e8ec14728")
-									|| irf_doc.getTypeId().equals("15206d33eafa440c84c02c8d912bce7a")
-									|| irf_doc.getTypeId().equals("ec6d76a99d814d0496d5d879a0056428")
-									|| irf_doc.getTypeId().equals("a0e50600ebe9450e916469ee698e3faa")
-									|| irf_doc.getTypeId().equals("71e3890b3c77441bad288964bf3c3d6a")
-									|| irf_doc.getTypeId().equals("cab21bf8b68a4b87ac37a5b41adad8a8")
-									|| irf_doc.getTypeId().equals("110fa1f351e24a2bbc187c872b114ea4")
-									|| irf_doc.getTypeId().equals("d539b253cb6247a381fb51f4ee34b9d8")
-									|| irf_doc.getTypeId().equals("a7b5b15a99704c9481f777fa941506c0")
-									|| irf_doc.getTypeId().equals("67588724c4c54b25a2c84906613bd15a"))
-							{
-								att.setLinkValue(inherit_rights_from);
-								Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id,
-										parent_veda_doc_uri, true);
+					putIndividual(level, link, ba_id);
 
-								comment.addProperty("v-s:linkedObject", rss1);
-							} else
-							{
-								comment.addProperty("v-s:linkedObject", new Resource(att.getLinkValue(), Type._Uri));
-							}
-						}
-					}
+					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
+
 				} else if (code.equals("number_to"))
 				{
 					if (rss.resources.size() < 1)
@@ -271,9 +251,9 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 				} else if (code.equals("department"))
 				{
 					department.add(rss);
-				} else if (code.equals("contacts2"))
+				} else if (code.equals("final_resolution"))
 				{
-					contacts2.add(rss);
+					new_individual.addProperty("stg:hasClaimDecision", rss);
 				} else if (code.equals("contacts"))
 				{
 					contacts.add(rss);
