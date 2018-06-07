@@ -1,5 +1,6 @@
 package sm.tools.ba2veda.impl_mnd;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,15 @@ public class _df968_mnd_s_Decree extends Ba2VedaTransform{
 		fields_map.put("Связанные документы", "?");
 	}
 	
+	public Boolean need_transform(long time) throws Exception
+	{
+		long fixed = new SimpleDateFormat("dd.MM.yyyy").parse("26.06.2009").getTime();
+		if (time >= fixed)
+			return false;
+		
+		return true;
+	}
+	
 	@Override
 	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 			String parent_ba_doc_id, String path) throws Exception {
@@ -45,8 +55,14 @@ public class _df968_mnd_s_Decree extends Ba2VedaTransform{
 		new_individual.setUri(uri);
 
 		set_basic_fields(level, new_individual, doc);
+		
+		if (!need_transform(doc.getDateCreated().getTime()))
+			return res;
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
+
+		new_individual.addProperty("rdf:type", to_class, Type._Uri);
+		
 		
 //		new_individual.addProperty("mnd-s:hasDecreeKind", new Resource("d:e5753b58168843e28ad73855c07b8cff", Type._Uri));
 		
@@ -146,11 +162,13 @@ public class _df968_mnd_s_Decree extends Ba2VedaTransform{
 			drtr.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 			drtr.addProperty("rdf:type", new Resource("mnd-s:DecreeRegistrationRecord", Type._Uri));
 			new_individual.addProperty("mnd-s:hasDecreeRegistrationRecord", new Resource(drtr.getUri(), Type._Uri));
-			drtr.addProperty("mnd-s:hasDecreeKind", new Resource("d:e5753b58168843e28ad73855c07b8cff", Type._Uri));
+			//	drtr.addProperty("mnd-s:hasDecreeKind", new Resource("d:e5753b58168843e28ad73855c07b8cff", Type._Uri));
 			drtr.addProperty("v-s:backwardProperty", "mnd-s:hasDecreeRegistrationRecord",
 				Type._Uri);
 			drtr.addProperty("v-s:backwardReplace", "mnd-s:hasDecreeKind", Type._Uri);
 			drtr.addProperty("v-s:backwardTarget", new_individual.getUri(), Type._Uri);
+			if (drtr.getResources("v-s:registrationNumber") == null)
+				drtr.addProperty("v-s:registrationNumber", "", Type._String);
 			putIndividual(level, drtr, ba_id);
 		}
 		

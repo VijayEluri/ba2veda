@@ -1,5 +1,6 @@
 package sm.tools.ba2veda.impl_mnd;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +53,15 @@ public class _5d588_mnd_s_Decree extends Ba2VedaTransform {
 		fields_map.put("Содержание", "?");
 	}
 	
+	public Boolean need_transform(long time) throws Exception
+	{
+		long fixed = new SimpleDateFormat("dd.MM.yyyy").parse("02.09.2012").getTime();
+		if (time >= fixed)
+			return false;
+		
+		return true;
+	}
+	
 	@Override
 	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
 		String parent_ba_doc_id, String path) throws Exception {
@@ -63,6 +73,9 @@ public class _5d588_mnd_s_Decree extends Ba2VedaTransform {
 		new_individual.setUri(uri);
 
 		set_basic_fields(level, new_individual, doc);
+		
+		if (!need_transform(doc.getDateCreated().getTime()))
+			return res;
 		
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		int link_count = 0;
@@ -878,6 +891,8 @@ public class _5d588_mnd_s_Decree extends Ba2VedaTransform {
 				Type._Uri);
 			drtr.addProperty("v-s:backwardReplace", "mnd-s:hasDecreeKind", Type._Uri);
 			drtr.addProperty("v-s:backwardTarget", new_individual.getUri(), Type._Uri);
+			if (drtr.getResources("v-s:registrationNumber") == null)
+				drtr.addProperty("v-s:registrationNumber", "", Type._String);	
 			putIndividual(level, drtr, ba_id);
 		}
 			
