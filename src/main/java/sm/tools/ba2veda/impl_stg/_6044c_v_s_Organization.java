@@ -87,7 +87,7 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 						}
 					} else
 					{
-						org_uri = null;
+						org_uri = "d:org_" + ba_id;
 					}
 				}
 			}
