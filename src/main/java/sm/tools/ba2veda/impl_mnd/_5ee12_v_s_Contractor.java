@@ -27,7 +27,7 @@ public class _5ee12_v_s_Contractor extends Ba2VedaTransform
 		fields_map.put("code", "v-s:shortLabel");
 		fields_map.put("number", "v-s:registrationNumber");
 		fields_map.put("inn", "v-s:taxId");
-		fields_map.put("owner", "mnd-s:forOrganization");
+		fields_map.put("owner", "v-s:forOrganization");
 	}
 
 	@Override
