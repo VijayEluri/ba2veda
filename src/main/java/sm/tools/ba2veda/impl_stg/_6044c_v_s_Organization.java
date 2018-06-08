@@ -31,18 +31,18 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 		fields_map.put("post_adress", "v-s:postalAddress");
 		fields_map.put("inn", "v-s:taxId");
 		fields_map.put("kpp", "v-s:taxRegistrationCause");
-
-		employee_prefix = "d:employee_";
-		appointment_prefix = "d:";
-		stand_prefix = "d:";
-		department_prefix = "department";
-		is_mondi = false;
 	}
 
 	@Override
 	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
+		employee_prefix = "d:employee_";
+		appointment_prefix = "d:";
+		stand_prefix = "d:";
+		department_prefix = "department";
+		is_mondi = false;
+		
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 

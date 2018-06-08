@@ -32,19 +32,19 @@ public class _6e8e8_stg_InternalDocument extends Ba2VedaTransform
 		fields_map.put("link_document", "?");
 		fields_map.put("comment", "?");
 		fields_map.put("sender", "?");
-		fields_map.put("addressee", "?");
-		
-		employee_prefix = "d:employee_";
-		appointment_prefix = "d:";
-		stand_prefix = "d:";
-		department_prefix = "department";
-		is_mondi = false;
+		fields_map.put("addressee", "?");		
 	}
 
 	@Override
 	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
+		employee_prefix = "d:employee_";
+		appointment_prefix = "d:";
+		stand_prefix = "d:";
+		department_prefix = "department";
+		is_mondi = false;
+		
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 

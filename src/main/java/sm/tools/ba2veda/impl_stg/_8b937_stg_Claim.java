@@ -78,12 +78,6 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 				fields_map.put("contacts", "?");
 				fields_map.put("contacts2", "?");
 		*/
-
-		employee_prefix = "d:employee_";
-		appointment_prefix = "d:";
-		stand_prefix = "d:";
-		department_prefix = "department";
-		is_mondi = false;
 	}
 
 	public Individual createRequirementSum(String uri)
@@ -108,6 +102,12 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
+		employee_prefix = "d:employee_";
+		appointment_prefix = "d:";
+		stand_prefix = "d:";
+		department_prefix = "department";
+		is_mondi = false;
+		
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 

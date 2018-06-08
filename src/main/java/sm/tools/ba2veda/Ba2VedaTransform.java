@@ -41,6 +41,7 @@ public abstract class Ba2VedaTransform
 	static boolean is_enable_store = true;
 	protected static int assignedSubsystems = 0;
 	protected static List<String> classRestrictions = new ArrayList<String>();
+	
 	public static String employee_prefix = "d:mondi_employee_";
 	public static String appointment_prefix = "d:mondi_appointment_";
 	public static String department_prefix = "mondi_department";
@@ -522,11 +523,11 @@ public abstract class Ba2VedaTransform
 
 		if (person_id == null)
 			return null;
-		
-		Individual unit1 = st_veda.getIndividual("d:" + person_id);
 
-		if (unit1 != null)
-			return unit1.getUri();
+		//Individual unit1 = st_veda.getIndividual("d:" + person_id);
+
+		//if (unit1 != null)
+		//	return unit1.getUri();
 
 		//		if (person_id.equals("47a03c80-5f04-425b-80d7-1562bd4a0a6c"))
 		//			person_id.length();
@@ -614,11 +615,15 @@ public abstract class Ba2VedaTransform
 				res = new ArrayList<String>(Arrays.asList(st_veda.query("'v-s:login'=='" + domain_name + "'")));
 				if (res.size() == 0)
 				{
-					if (is_mondi == false)
+					res = new ArrayList<String>(Arrays.asList(st_veda.query("'v-s:deleted' == true && 'v-s:login'=='" + domain_name + "'")));
+					if (res.size() == 0)
 					{
-						return createUserToVeda(level, uu, null, null, uu.isActive());
-					} else
-						return createUserToVeda(level, uu, "dismissed", stand_prefix + "position_dismissed", false);
+						if (is_mondi == false)
+						{
+							return createUserToVeda(level, uu, null, null, uu.isActive());
+						} else
+							return createUserToVeda(level, uu, "dismissed", stand_prefix + "position_dismissed", false);
+					}
 
 				} else
 				{
@@ -626,8 +631,23 @@ public abstract class Ba2VedaTransform
 
 					Individual jsno_account = st_veda.getIndividual(account_id);
 
-					String owner = jsno_account.getValue("v-s:owner");
-					return owner;
+					if (jsno_account != null)
+					{
+						String owner = jsno_account.getValue("v-s:owner");
+
+						if (owner != null)
+						{
+							Individual jsno_empl = st_veda.getIndividual(owner);
+
+							if (jsno_empl != null)
+							{
+								String appnt = jsno_empl.getValue("v-s:hasAppointment");
+
+								if (appnt != null)
+									return appnt;
+							}
+						}
+					}
 				}
 
 			}
