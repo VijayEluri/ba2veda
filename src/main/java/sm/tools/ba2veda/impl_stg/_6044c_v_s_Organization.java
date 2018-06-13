@@ -43,6 +43,8 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 		department_prefix = "department";
 		is_mondi = false;
 
+		Individual contractor = null;
+
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 
@@ -115,7 +117,7 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 
 		if (c_code != null)
 		{
-			Individual contractor = new Individual();
+			contractor = new Individual();
 			contractor.setUri(new_individual.getUri());
 			contractor.addProperty("rdf:type", new Resource("v-s:Contractor", Type._Uri));
 			contractor.addProperty("v-s:linkedOrganization", new Resource(org_uri, Type._Uri));
@@ -129,7 +131,7 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 			contractor.addProperty("v-s:isDebitor", new Resource(true, Type._Bool));
 
 			contractor.addProperty("v-s:backwardTarget", new Resource(org_uri, Type._Uri));
-			contractor.addProperty("v-s:backwardProperty", new Resource("v-s:hasContractor"));
+			contractor.addProperty("v-s:backwardProperty", new Resource("v-s:hasContractor", Type._Uri));
 
 			contractor.addProperty("v-s:registrationNumber", c_code);
 			putIndividual(level, contractor, ba_id);
@@ -140,6 +142,9 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 			new_individual.setUri(org_uri);
 
 			res.add(new_individual);
+
+			if (contractor != null)
+				res.add(contractor);
 		}
 
 		return res;
