@@ -207,6 +207,24 @@
 {"if-equals":[{ "value":"92961848-b6b4-488f-a049-de7bd38a59b5"}],"set": [{"value":"d:org_RU7726531163",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"4f8f5870016c4e509e47d08d607713ae"}],"set": [{"value":"d:org_RU1121016110_2",  "type" : "Uri"}]}, 
 {"if-equals":[{ "value":"22dbc48300c74cafb8c0f7d4384c75f8"}],"set": [{"value":"d:org_RU1121016110_1",  "type" : "Uri"}]},
-{"if-equals":[{ "value":"df0ffa73-0740-4c3d-ae98-71b061bfca47"}],"set": [{"value":"d:org_RU7726531163_1",  "type" : "Uri"}]}
+{"if-equals":[{ "value":"df0ffa73-0740-4c3d-ae98-71b061bfca47"}],"set": [{"value":"d:org_RU7726531163_1",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"48002588-aeba-49ac-b96e-0afc4e09649e"}],"set": [{"value":"d:org_RU1121016110_1_department_2_1_2",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"c5d6855d-c7c5-4e15-92dc-2378e7d1f014"}],"set": [{"value":"d:org_RU1121016110_1_department_2_1_1",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"9e7435cf-7698-4a18-a2db-4d2a463a0226"}],"set": [{"value":"d:org_RU1121016110_1_department_2_1_3",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"dfbe1549-bbbc-432c-8038-60297d764613"}],"set": [{"value":"d:org_RU1121016110_1_department_2_1_4",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"0ee8a430-e3c6-4a5e-836d-ebaff459f7f1"}],"set": [{"value":"d:org_RU1121016110_1_department_2_1_5",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"ec724f77-2d63-40af-9000-4c5136623ff6"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_1",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"84608487-3a4b-45c2-8fc4-372a3bc07448"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_2",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"c114ddb3-eb76-4d2b-89d2-53c4661601d0"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_3",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"0c43d353-01cc-4595-9f91-3cddf85a7aa2"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_4",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"cf699bea-5b71-47e9-9b38-6ccfdafdce9f"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_5",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"6770cef5-4547-461f-9ced-3040695e6e08"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_5",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"d5f42789-e8ef-41c6-b0c8-0095c6e43f5d"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_5",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"7f321957-db6f-4dbc-9063-eb7d1baf8faf"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_5",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"548659c4-0cb4-4fa1-8cdd-cbe6eb1a2072"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_6",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"d6ce9e3d-b471-47ef-93b2-13ada9eedacb"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_7",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"a860e221-e163-4b9c-8614-a46f51d58acf"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_8",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"9e239f4d-6d8b-463a-9a59-d4e2151111d4"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_9",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"15d8a8d8-d96a-43dd-84a2-890d48071a84"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_9",  "type" : "Uri"}]}
 ]
 }

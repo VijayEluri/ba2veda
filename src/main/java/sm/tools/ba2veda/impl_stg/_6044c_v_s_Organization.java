@@ -42,7 +42,7 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 		stand_prefix = "d:";
 		department_prefix = "department";
 		is_mondi = false;
-		
+
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 
@@ -125,6 +125,8 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 			contractor.addProperty("rdfs:label", new_individual.getResources("rdfs:label"));
 			contractor.addProperty("v-s:legalAddress", new_individual.getResources("v-s:legalAddress"));
 			contractor.addProperty("v-s:taxId", new_individual.getResources("v-s:taxId"));
+			contractor.addProperty("v-s:isCreditor", new Resource(true, Type._Bool));
+			contractor.addProperty("v-s:isDebitor", new Resource(true, Type._Bool));
 
 			contractor.addProperty("v-s:backwardTarget", new Resource(org_uri, Type._Uri));
 			contractor.addProperty("v-s:backwardProperty", new Resource("v-s:hasContractor"));
