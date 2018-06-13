@@ -23,27 +23,30 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 
 	public void inital_set()
 	{
+		fields_map.put("owner", "v-s:owner");
+		fields_map.put("register_number_1", "?");
+		fields_map.put("register_date_1", "?");
+		fields_map.put("sender_number", "?");
+		fields_map.put("sender_date", "?");
+		fields_map.put("type_corresp", "v-s:hasDocumentKind");
+		fields_map.put("sender", "?");
+		fields_map.put("addressee", "?");
+		fields_map.put("content", "v-s:description");
+		fields_map.put("page_amount", "v-s:sheetsCount");
+		fields_map.put("date_execute", "v-s:dueDate");
+		fields_map.put("office_marks", "rdfs:comment");
+		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("add_info", "v-s:hasComment");
-		fields_map.put("name", "rdfs:label");
-		fields_map.put("Вид документа", "v-s:hasDocumentKind");
-		fields_map.put("Количество листов", "v-s:sheetsCount");
-		fields_map.put("Срок исполнения", "v-s:dueDate");
-		fields_map.put("Краткое содержание", "v-s:description");
-		fields_map.put("Вложения", "v-s:attachment");
-		fields_map.put("name", "rdfs:label");
-		fields_map.put("Связанные документы", "v-s:hasLink");
+		fields_map.put("display_requisite", "rdfs:label");
+		fields_map.put("link_document", "v-s:hasRelatedLetter");
 
-		fields_map.put("Регистрационный номер", "?");
-		fields_map.put("Исходящий номер", "?");
-		fields_map.put("Дата регистрации", "?");
-		fields_map.put("Исходящая дата", "?");
-		fields_map.put("Адресат", "?");
-		fields_map.put("Вид доставки", "?");
-		fields_map.put("Служебные отметки", "?");
-		fields_map.put("Ключевые слова", "?");
-		fields_map.put("addresse_from", "?");
-		fields_map.put("Подписавший", "?");
-		fields_map.put("Корреспондент", "?");		
+		//fields_map.put("Адресат", "?");
+		//fields_map.put("Вид доставки", "?");
+		//fields_map.put("Служебные отметки", "?");
+		//fields_map.put("Ключевые слова", "?");
+		//fields_map.put("addresse_from", "?");
+		//fields_map.put("Подписавший", "?");
+		//fields_map.put("Корреспондент", "?");		
 	}
 
 	@Override
@@ -54,8 +57,8 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 		appointment_prefix = "d:";
 		stand_prefix = "d:";
 		department_prefix = "department";
-		is_mondi = false;				
-		
+		is_mondi = false;
+
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 
@@ -173,17 +176,17 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 				{
 					rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
-					if (code.equals("Регистрационный номер"))
+					if (code.equals("register_number_1"))
 						_registrationNumber = rss;
-					else if (code.equals("Исходящий номер"))
+					else if (code.equals("sender_number"))
 						_registrationOutNumber = rss;
-					else if (code.equals("Дата регистрации"))
+					else if (code.equals("register_date_1"))
 						_registrationDate = rss;
-					else if (code.equals("Исходящая дата"))
+					else if (code.equals("sender_date"))
 						_registrationOutDate = rss;
 					else if (code.equals("Адресат"))
 						_addressee = rss;
-					else if (code.equals("addresse_from"))
+					else if (code.equals("addressee"))
 						_addressee_from = rss;
 					else if (code.equals("Подписавший"))
 						_signer = rss;
@@ -193,7 +196,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 						_c1 = rss;
 					else if (code.equals("Ключевые слова"))
 						_c2 = rss;
-					else if (code.equals("Корреспондент"))
+					else if (code.equals("sender"))
 						_correspondent = rss;
 					else
 						new_individual.addProperty(predicate, rss);
@@ -226,7 +229,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 			addressee_from.addProperty("v-s:edited", _edited);
 			res.add(addressee_from);
 
-			new_individual.addProperty("v-s:sender", addressee_from.getUri(), Type._Uri);
+			//new_individual.addProperty("v-s:sender", addressee_from.getUri(), Type._Uri);
 
 			_addressee_from_uri = _addressee_from.resources.get(0).getData();
 			Individual indv_addressee_from = veda.getIndividual(_addressee_from_uri);
@@ -252,7 +255,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 		if (_addressee != null)
 			addressee.addProperty("v-s:correspondentPerson", _addressee);
 
-		addressee.addProperty("v-s:correspondentOrganization", "d:org_RU1121003135", Type._Uri);
+		addressee.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
 
 		delivery.addProperty("v-s:date", _registrationDate);
 		delivery.addProperty("v-s:deliverBy", _type_delivery);
@@ -340,7 +343,8 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 
 		{
 			Object[] ff =
-			{ sender_shl, " (№", _registrationOutNumber, " ", _registrationOutDate, ") -> ", corr_sl, " (№", _registrationNumber, " ", _registrationDate, ")"};
+			{ sender_shl, " (№", _registrationOutNumber, " ", _registrationOutDate, ") -> ", corr_sl, " (№", _registrationNumber, " ",
+					_registrationDate, ")" };
 			String[] langs_out =
 			{ "EN", "RU" };
 			Resources rss = rs_assemble(ff, langs_out);
