@@ -105,7 +105,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 
 		Individual addressee = new Individual();
 		addressee.setUri(uri + "_4");
-		addressee.addProperty("rdf:type", "mnd-s:Correspondent", Type._Uri);
+		addressee.addProperty("rdf:type", "v-s:Correspondent", Type._Uri);
 		addressee.addProperty("v-s:parent", uri, Type._Uri);
 		addressee.addProperty("v-s:creator", _creator);
 		addressee.addProperty("v-s:created", _created);
@@ -222,7 +222,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 		{
 			Individual addressee_from = new Individual();
 			addressee_from.setUri(uri + "_3");
-			addressee_from.addProperty("rdf:type", "mnd-s:Correspondent", Type._Uri);
+			addressee_from.addProperty("rdf:type", "v-s:Correspondent", Type._Uri);
 			addressee_from.addProperty("v-s:parent", uri, Type._Uri);
 			addressee_from.addProperty("v-s:creator", _creator);
 			addressee_from.addProperty("v-s:created", _created);
@@ -273,7 +273,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 
 			Individual corr = new Individual();
 			corr.setUri(uri + "_0");
-			corr.addProperty("rdf:type", "mnd-s:Correspondent", Type._Uri);
+			corr.addProperty("rdf:type", "v-s:Correspondent", Type._Uri);
 			corr.addProperty("v-s:creator", _creator);
 			corr.addProperty("v-s:created", _created);
 			corr.addProperty("v-s:edited", _edited);

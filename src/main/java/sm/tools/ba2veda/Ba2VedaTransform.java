@@ -504,7 +504,7 @@ public abstract class Ba2VedaTransform
 		else
 			author_ap = findAppointmentFromVeda(level, doc.getAuthorId());
 
-		if (author_ap != null)
+		if (author_ap != null && author_ap.length() > 0)
 			new_individual.addProperty("v-s:creator", author_ap, Type._Uri);
 
 		for (String pp : default_values_map.keySet())
