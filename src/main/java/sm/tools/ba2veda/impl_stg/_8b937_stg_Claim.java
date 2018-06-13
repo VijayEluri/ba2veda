@@ -23,6 +23,9 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 
 	public void inital_set()
 	{
+		fields_map.put("claim_type", "stg:claimRequirement");
+		fields_map.put("smena", "?");
+		fields_map.put("currency_from", "?");
 		fields_map.put("contractor", "?");
 		fields_map.put("number_from", "?");
 		fields_map.put("date_from", "?");
@@ -32,6 +35,7 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 		fields_map.put("other_sides", "?");
 		fields_map.put("department", "v-s:responsibleDepartment");
 		fields_map.put("department", "?");
+		fields_map.put("invoice", "stg:invoiceForClaim");
 		fields_map.put("prodect_kind", "v-s:hasClaimObject");
 		fields_map.put("claim_content", "v-s:claimObjectDescription");
 		fields_map.put("claim_class", "v-s:hasClaimCircumstance");
@@ -52,6 +56,7 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 		fields_map.put("object_claim_amount_to", "stg:claimVolumeCompensation");
 		fields_map.put("edizm_1", "stg:hasUnitOfMeasure");
 		fields_map.put("link_document", "?");
+		fields_map.put("contacts", "?");
 
 		/*						
 				fields_map.put("cmt_number", "stg:registrationNumberCMT");
@@ -75,7 +80,6 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 				fields_map.put("Связанный документ", "?");
 				fields_map.put("Вложение", "?");
 		
-				fields_map.put("contacts", "?");
 				fields_map.put("contacts2", "?");
 		*/
 	}
@@ -107,7 +111,7 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 		stand_prefix = "d:";
 		department_prefix = "department";
 		is_mondi = false;
-		
+
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 
@@ -125,8 +129,10 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 		Individual requirement_sum = null;
 		Individual compensation_sum = null;
 
-		String organization = null;
-		String organization2 = null;
+		Resources organization = null;
+		Resources organization2 = null;
+		Resources currency_from = null;
+
 		Individual has_letter_registration_record_recipient = null;
 		Individual has_letter_registration_record_sender = null;
 
@@ -178,6 +184,9 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 						compensation_sum = createCompensationSum(uri);
 
 					compensation_sum.addProperty("v-s:sum", rss);
+				} else if (code.equals("currency_from"))
+				{
+					currency_from = rss;
 				} else if (code.equals("currency_to"))
 				{
 					if (requirement_sum == null)
@@ -199,7 +208,7 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 						comment = new Individual();
 
 					comment.addProperty("v-s:attachment", rss);
-				} else if (code.equals("linked_documents"))
+				} else if (code.equals("link_document"))
 				{
 					String irf = att.getLinkValue();
 					if (irf == null)
@@ -244,10 +253,10 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 					has_letter_registration_record_recipient.addProperty("v-s:registrationDate", rss);
 				} else if (code.equals("contractor"))
 				{
-					organization = att.getLinkValue();
+					organization = rss;
 				} else if (code.equals("executor"))
 				{
-					organization2 = att.getLinkValue();
+					organization2 = rss;
 				} else if (code.equals("department"))
 				{
 					department.add(rss);
@@ -286,7 +295,19 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 					new_individual.addProperty("stg:hasClaimReport", rss);
 				} else if (code.equals("other_sides"))
 				{
-					new_individual.addProperty("v-s:stakeholder", veda.getIndividual("d:" + att.getLinkValue()).getResources("v-s:backwardTarget"));
+					new_individual.addProperty("v-s:stakeholder", rss);
+				} else if (code.equals("smena"))
+				{
+					Individual comment1 = new Individual();
+					comment1.setUri(new_individual.getUri() + "_comment");
+					comment1.addProperty("rdf:type", "v-s:Comment", Type._Uri);
+					comment1.addProperty("rdfs:label", rss);
+					comment1.addProperty("v-s:backwardTarget", new_individual.getUri(), Type._Uri);
+					comment1.addProperty("v-s:backwardProperty", "v-s:hasComment", Type._Uri);
+					comment1.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+					comment1.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+					putIndividual(level, comment1, ba_id);
+					new_individual.addProperty("v-s:hasComment", comment1.getUri(), Type._Uri);
 				}
 
 				if (rss.resources.size() > 0)
@@ -330,30 +351,27 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 
 		if (organization != null)
 		{
+			String org_uri = organization.resources.get(0).getData();
+
 			Individual correspondent_organization = new Individual();
 			correspondent_organization.setUri(uri + "_correspondent_organization_sender");
-			if (organization.equals("9076b375bf4a468289dbd0c2db886256"))
-			{
-				correspondent_organization.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
-				for (Resources r : department)
-					correspondent_organization.addProperty("v-s:correspondentDepartment", r);
 
-				for (Resources r : contacts2)
-					correspondent_organization.addProperty("v-s:correspondentPerson", r);
-			} else
-			{
-				Individual org_indiv = veda.getIndividual("d:" + organization);
-				if (org_indiv != null)
-					correspondent_organization.addProperty("v-s:correspondentOrganization", org_indiv.getResources("v-s:backwardTarget"));
-
-				for (Resources r : contacts)
-					correspondent_organization.addProperty("v-s:correspondentPersonDescription", r);
-			}
+			correspondent_organization.addProperty("v-s:correspondentOrganization", new Resource(org_uri, Type._Uri));
 
 			correspondent_organization.addProperty("rdf:type", new Resource("v-s:Correspondent", Type._Uri));
 			correspondent_organization.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 			correspondent_organization.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			correspondent_organization.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+
+			if (org_uri.equals("d:org_RU1121016110_1") || org_uri.equals("d:org_RU1121016110_2"))
+			{
+				for (Resources r : department)
+					correspondent_organization.addProperty("v-s:correspondentDepartment", r);
+			} else
+			{
+				for (Resources r : contacts)
+					correspondent_organization.addProperty("v-s:correspondentPersonDescription", r);
+			}
 
 			new_individual.addProperty("v-s:sender", new Resource(correspondent_organization.getUri(), Type._Uri));
 			putIndividual(level, correspondent_organization, ba_id);
@@ -361,30 +379,27 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 
 		if (organization2 != null)
 		{
+			String org_uri = organization2.resources.get(0).getData();
+
 			Individual correspondent_organization = new Individual();
-			correspondent_organization.setUri(uri + "_correspondent_organization_recipient");
-			if (!organization.equals("9076b375bf4a468289dbd0c2db886256"))
-			{
-				correspondent_organization.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
-				for (Resources r : department)
-					correspondent_organization.addProperty("v-s:correspondentDepartment", r);
+			correspondent_organization.setUri(uri + "_correspondent_organization_recepient");
 
-				for (Resources r : contacts2)
-					correspondent_organization.addProperty("v-s:correspondentPerson", r);
-			} else
-			{
-				Individual org_indiv = veda.getIndividual("d:" + organization2);
-				if (org_indiv != null)
-					correspondent_organization.addProperty("v-s:correspondentOrganization", org_indiv.getResources("v-s:backwardTarget"));
-
-				for (Resources r : contacts)
-					correspondent_organization.addProperty("v-s:correspondentPersonDescription", r);
-			}
+			correspondent_organization.addProperty("v-s:correspondentOrganization", new Resource(org_uri, Type._Uri));
 
 			correspondent_organization.addProperty("rdf:type", new Resource("v-s:Correspondent", Type._Uri));
 			correspondent_organization.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 			correspondent_organization.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			correspondent_organization.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+
+			if (org_uri.equals("d:org_RU1121016110_1") || org_uri.equals("d:org_RU1121016110_2"))
+			{
+				for (Resources r : department)
+					correspondent_organization.addProperty("v-s:correspondentDepartment", r);
+			} else
+			{
+				for (Resources r : contacts)
+					correspondent_organization.addProperty("v-s:correspondentPersonDescription", r);
+			}
 
 			new_individual.addProperty("v-s:recipient", new Resource(correspondent_organization.getUri(), Type._Uri));
 			putIndividual(level, correspondent_organization, ba_id);
@@ -393,6 +408,7 @@ public class _8b937_stg_Claim extends Ba2VedaTransform
 		if (requirement_sum != null)
 		{
 			new_individual.addProperty("v-s:requirementSum", new Resource(requirement_sum.getUri(), Type._Uri));
+			requirement_sum.addProperty("v-s:hasCurrency", currency_from);
 			requirement_sum.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 			requirement_sum.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			requirement_sum.addProperty("v-s:created", new_individual.getResources("v-s:created"));
