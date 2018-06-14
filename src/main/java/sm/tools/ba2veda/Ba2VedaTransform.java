@@ -41,7 +41,7 @@ public abstract class Ba2VedaTransform
 	static boolean is_enable_store = true;
 	protected static int assignedSubsystems = 0;
 	protected static List<String> classRestrictions = new ArrayList<String>();
-	
+
 	public static String employee_prefix = "d:mondi_employee_";
 	public static String appointment_prefix = "d:mondi_appointment_";
 	public static String department_prefix = "mondi_department";
@@ -431,7 +431,12 @@ public abstract class Ba2VedaTransform
 
 				if (inn.indexOf('/') >= 0 || inn.indexOf(' ') >= 0 || inn.indexOf('\\') >= 0 || inn.indexOf('+') >= 0 || inn.indexOf('"') >= 0
 						|| inn.indexOf('\'') >= 0 || inn.indexOf('	') >= 0)
+				{
 					System.out.println("WARN:invalid inn:" + inn);
+
+					docId = "d:org_" + inn.replace('/', '_').replace(' ', '_').replace('\\', '_').replace('+', '_').replace('"', '_')
+							.replace('\'', '_').replace('	', '_');
+				}
 			}
 		} else
 		{
