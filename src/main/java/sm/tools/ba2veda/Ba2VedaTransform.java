@@ -427,15 +427,15 @@ public abstract class Ba2VedaTransform
 				docId = "d:org_RU" + inn;
 			else
 			{
-				docId = "d:org_" + inn;
+				String cc[] = inn.split("\\W");
 
-				if (inn.indexOf('/') >= 0 || inn.indexOf(' ') >= 0 || inn.indexOf('\\') >= 0 || inn.indexOf('+') >= 0 || inn.indexOf('"') >= 0
-						|| inn.indexOf('\'') >= 0 || inn.indexOf('	') >= 0)
+				if (cc.length > 0)
 				{
-					System.out.println("WARN:invalid inn:" + inn);
-
-					docId = "d:org_" + inn.replace('/', '_').replace(' ', '_').replace('\\', '_').replace('+', '_').replace('"', '_')
-							.replace('\'', '_').replace('	', '_');
+					System.out.println("WARN:get_OrgUri_of_inn:invalid inn:" + inn);
+					docId = "d:org_" + cc[0];
+				} else
+				{
+					docId = "d:org_" + inn;
 				}
 			}
 		} else

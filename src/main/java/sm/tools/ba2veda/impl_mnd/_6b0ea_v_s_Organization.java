@@ -70,11 +70,16 @@ public class _6b0ea_v_s_Organization extends Ba2VedaTransform
 							org_uri = "d:org_RU" + inn;
 						else
 						{
-							org_uri = "d:org_" + inn;
+							String cc[] = inn.split("\\W");
 
-							if (inn.indexOf('/') >= 0 || inn.indexOf(' ') >= 0 || inn.indexOf('\\') >= 0 || inn.indexOf('+') >= 0
-									|| inn.indexOf('"') >= 0 || inn.indexOf('\'') >= 0 || inn.indexOf('	') >= 0)
-								System.out.println("WARN:invalid inn:" + inn);
+							if (cc.length > 0)
+							{
+								System.out.println("WARN:get_OrgUri_of_inn:invalid inn:" + inn);
+								org_uri = "d:org_" + cc[0];
+							} else
+							{
+								org_uri = "d:org_" + inn;
+							}
 						}
 					} else
 					{
