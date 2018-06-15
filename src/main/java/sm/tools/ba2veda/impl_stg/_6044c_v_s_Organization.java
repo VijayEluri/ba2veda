@@ -24,12 +24,12 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 
 	public void inital_set()
 	{
-		fields_map.put("c_code", "?");
+		fields_map.put("c_code", "v-s:registrationNumber");
 		fields_map.put("short_name_contractor", "v-s:shortLabel");
 		fields_map.put("full_name_contractor", "rdfs:label");
 		fields_map.put("low_adress", "v-s:legalAddress");
 		fields_map.put("post_adress", "v-s:postalAddress");
-		fields_map.put("inn", "v-s:taxId");
+		fields_map.put("inn", "?");
 		fields_map.put("kpp", "v-s:taxRegistrationCause");
 	}
 
@@ -43,8 +43,6 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 		department_prefix = "department";
 		is_mondi = false;
 
-		Individual contractor = null;
-
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 
@@ -54,10 +52,9 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
+		String new_id = null;
+		String kpp = null;
 
-		Resources c_code = null;
-
-		String org_uri = null;
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts)
 		{
@@ -65,39 +62,29 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 
 			if (code.equals("inn"))
 			{
-				org_uri = get_OrgUri_of_inn(att.getTextValue());
+				String inn = att.getTextValue();
 
-				if (org_uri != null)
+				String[] res1 = prepare_inn(inn);
+
+				inn = res1[0];
+
+				if (inn == null)
 				{
-					//return res;
-				} else
-				{
-					String inn = att.getTextValue();
-					if (inn != null && inn.length() > 0)
-					{
-						inn = inn.trim();
-
-						if (util.isNumeric(inn)/* && inn.length() == 10 || inn.length() == 12 */)
-							org_uri = "d:org_RU" + inn;
-						else
-						{
-							String cc[] = inn.split("\\W");
-
-							if (cc.length > 0)
-							{
-								System.out.println("WARN:get_OrgUri_of_inn:invalid inn:" + inn);
-								org_uri = "d:org_" + cc[0];
-							} else
-							{
-								org_uri = "d:org_" + inn;
-							}
-						}
-					} else
-					{
-						org_uri = "d:org_" + ba_id;
-					}
+					System.out.println("WARN:empty inn:skip:ba_id=" + ba_id);
+					return res;
 				}
+
+				kpp = res1[1];
+
+				new_id = res1[2];
+
+				if (inn != null && inn.length() > 0)
+					new_individual.addProperty("v-s:taxId", new Resource(inn, Type._String));
+
+				//org_uri = get_OrgUri_of_inn(inn);
+
 			}
+
 			String predicate = fields_map.get(code);
 
 			if (predicate != null)
@@ -111,46 +98,19 @@ public class _6044c_v_s_Organization extends Ba2VedaTransform
 
 				if (rss.resources.size() < 1)
 					continue;
-
-				if (code.equals("c_code"))
-				{
-					c_code = rss;
-				}
 			}
 
 		}
 
-		if (c_code != null)
+		if (kpp != null && kpp.length() > 0)
+			new_individual.setProperty("v-s:taxRegistrationCause", new Resource(kpp, Type._String));
+
+		if (new_id != null)
 		{
-			contractor = new Individual();
-			contractor.setUri(new_individual.getUri());
-			contractor.addProperty("rdf:type", new Resource("v-s:Contractor", Type._Uri));
-			contractor.addProperty("v-s:linkedOrganization", new Resource(org_uri, Type._Uri));
-			contractor.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
-			contractor.addProperty("v-s:created", new_individual.getResources("v-s:created"));
-			contractor.addProperty("v-s:shortLabel", new_individual.getResources("v-s:shortLabel"));
-			contractor.addProperty("rdfs:label", new_individual.getResources("rdfs:label"));
-			contractor.addProperty("v-s:legalAddress", new_individual.getResources("v-s:legalAddress"));
-			contractor.addProperty("v-s:taxId", new_individual.getResources("v-s:taxId"));
-			contractor.addProperty("v-s:isCreditor", new Resource(true, Type._Bool));
-			contractor.addProperty("v-s:isDebitor", new Resource(true, Type._Bool));
-
-			contractor.addProperty("v-s:backwardTarget", new Resource(org_uri, Type._Uri));
-			contractor.addProperty("v-s:backwardProperty", new Resource("v-s:hasContractor", Type._Uri));
-
-			contractor.addProperty("v-s:registrationNumber", c_code);
-			putIndividual(level, contractor, ba_id);
+			new_individual.setUri(new_id);
 		}
 
-		if (org_uri != null)
-		{
-			new_individual.setUri(org_uri);
-
-			res.add(new_individual);
-
-			if (contractor != null)
-				res.add(contractor);
-		}
+		res.add(new_individual);
 
 		return res;
 	}

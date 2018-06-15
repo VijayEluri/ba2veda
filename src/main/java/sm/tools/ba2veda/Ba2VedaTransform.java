@@ -421,23 +421,8 @@ public abstract class Ba2VedaTransform
 
 		if (inn != null && inn.length() > 0)
 		{
-			inn = inn.trim();
-
-			if (util.isNumeric(inn)/* && inn.length() == 10 || inn.length() == 12 */)
-				docId = "d:org_RU" + inn;
-			else
-			{
-				String cc[] = inn.split("\\W");
-
-				if (cc.length > 0)
-				{
-					System.out.println("WARN:get_OrgUri_of_inn:invalid inn:" + inn);
-					docId = "d:org_" + cc[0];
-				} else
-				{
-					docId = "d:org_" + inn;
-				}
-			}
+			String[] res = prepare_inn(inn);
+			docId = res[2];
 		} else
 		{
 			return null;
@@ -455,6 +440,42 @@ public abstract class Ba2VedaTransform
 		}
 
 		return null;
+	}
+
+	public String[] prepare_inn(String inn)
+	{
+		String[] res = new String[3];
+
+		inn = inn.trim();
+
+		if (util.isNumeric(inn))
+		{
+			if (inn.length() > 9 && inn.length() < 13)
+			{
+				res[2] = "d:org_RU" + inn;
+				res[0] = inn;
+			}
+		} else
+		{
+			String cc[] = inn.split("\\W");
+
+			if (cc.length > 0)
+			{
+				System.out.println("WARN:prepare_inn:invalid inn:" + inn);
+
+				if (cc.length == 2)
+				{
+					res[2] = "d:org_RU" + cc[0];
+					res[0] = cc[0];
+					res[1] = cc[1];
+				}
+			} else
+			{
+				res[2] = "d:org_" + inn;
+				res[0] = cc[0];
+			}
+		}
+		return res;
 	}
 
 	public String prepare_uri(String docId)

@@ -51,7 +51,7 @@
 {"if-equals":[{ "value":"20870b3fbf594302a0dc78d5ea85d8fa"}],"set": [{"value":"d:28c2f3899c174412a33c5512ac1fa10b",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"445cb9a92ddb4e3b93738d2aabf83729"}],"set": [{"value":"d:c9e0a1dd43d943ed87f5072a6790d5c2",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"f268f0a83d594b5f94c3a039ef38204b"}],"set": [{"value":"d:ce0724eb71a546f48048c229739ec914",  "type" : "Uri"}]},
-{"if-equals":[{ "value":"541e2793-abc4-437a-9c71-6a1ac0434acf"}],"set": [{"value":"d:SYK-PORTALMS_appointment",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"541e2793-abc4-437a-9c71-6a1ac0434acf"}],"set": [{"value":"cfg:AdministratorAppointment",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"067038cf-7e24-429d-ab7e-208526272b7a"}],"set": [{"value":"cfg:AdministratorAppointment",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"133df44b-b67f-4b8b-aa3a-1265a6273f64"}],"set": [{"value":"cfg:AdministratorAppointment",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"cd7dba37-f24c-4ec5-ad88-283f2148d4e1"}],"set": [{"value":"cfg:AdministratorAppointment",  "type" : "Uri"}]},
@@ -225,6 +225,7 @@
 {"if-equals":[{ "value":"d6ce9e3d-b471-47ef-93b2-13ada9eedacb"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_7",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"a860e221-e163-4b9c-8614-a46f51d58acf"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_8",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"9e239f4d-6d8b-463a-9a59-d4e2151111d4"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_9",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"b374f8af-8f75-4ecf-91c1-0df90523f6f7"}],"set": [{"value":"cfg:AdministratorAppointment",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"15d8a8d8-d96a-43dd-84a2-890d48071a84"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_9",  "type" : "Uri"}]}
 ]
 }
