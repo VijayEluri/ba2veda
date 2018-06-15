@@ -482,7 +482,10 @@ public abstract class Ba2VedaTransform
 	{
 		HashMap<String, Resource> rules_of_id = replacer.get_replace("@", docId, null);
 		if (rules_of_id != null)
-			docId = rules_of_id.get("@").getData();
+		{
+			if (rules_of_id.get("@") != null)
+				docId = rules_of_id.get("@").getData();
+		}
 
 		docId = "d:" + docId;
 		return docId;
