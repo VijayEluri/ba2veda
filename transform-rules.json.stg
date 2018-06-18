@@ -226,6 +226,12 @@
 {"if-equals":[{ "value":"a860e221-e163-4b9c-8614-a46f51d58acf"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_8",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"9e239f4d-6d8b-463a-9a59-d4e2151111d4"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_9",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"b374f8af-8f75-4ecf-91c1-0df90523f6f7"}],"set": [{"value":"cfg:AdministratorAppointment",  "type" : "Uri"}]},
-{"if-equals":[{ "value":"15d8a8d8-d96a-43dd-84a2-890d48071a84"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_9",  "type" : "Uri"}]}
+{"if-equals":[{ "value":"15d8a8d8-d96a-43dd-84a2-890d48071a84"}],"set": [{"value":"d:org_RU1121016110_1_department_2_2_9",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"b4126a0b3549490da9617519b43fb900"}],"set": [{"value":"d:d3aa7b7fbdcb462288ec04d67cd64a7c",  "type" : "Uri"}]}, 
+{"if-equals":[{ "value":"82722e4bea404e95a207904921ae33f4"}],"set": [{"value":"d:5b0979990bc54f7b8482571378d34ca3",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"6689e990d6944f3cabb2f3187c0ec766"}],"set": [{"value":"d:5b0979990bc54f7b8482571378d34ca3",  "type" : "Uri"}]}, 
+{"if-equals":[{ "value":"7b264f600a3d4f7289cc5470acc981e8"}],"set": [{"value":"d:5b0979990bc54f7b8482571378d34ca3",  "type" : "Uri"}]}, 
+{"if-equals":[{ "value":"edbd5879bfb4418d8915dbf9be145edd"}],"set": [{"value":"d:5b0979990bc54f7b8482571378d34ca3",  "type" : "Uri"}]}, 
+{"if-equals":[{ "value":"3b46c0e5bd3140dfac36a0b250590e82"}],"set": [{"value":"d:4413fbc9ca2649699663eb46e107090a",  "type" : "Uri"}]}
 ]
 }
