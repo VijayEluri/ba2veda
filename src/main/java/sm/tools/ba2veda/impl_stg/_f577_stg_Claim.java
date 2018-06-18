@@ -325,8 +325,8 @@ public class _f577_stg_Claim extends Ba2VedaTransform {
 			String inn = indv.getValue("v-s:taxId");
 
 			Individual correspondent_organization2 = new Individual();
-			correspondent_organization2.setUri(uri + "_correspondent_organization_recepient");
 			correspondent_organization2.addProperty("rdf:type", new Resource("v-s:Correspondent", Type._Uri));
+			correspondent_organization2.setUri(uri + "_correspondent_organization_recepient");
 			correspondent_organization2.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 			correspondent_organization2.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 			correspondent_organization2.addProperty("v-s:created", new_individual.getResources("v-s:created"));
@@ -335,11 +335,6 @@ public class _f577_stg_Claim extends Ba2VedaTransform {
 
 			if (inn != null) {
 				String org_uri = get_OrgUri_of_inn(inn);
-
-				// Individual org = veda.getIndividual(org_uri);
-
-				// if (org != null) {
-
 				correspondent_organization2.addProperty("v-s:correspondentOrganization",
 						new Resource(org_uri, Type._Uri));
 
