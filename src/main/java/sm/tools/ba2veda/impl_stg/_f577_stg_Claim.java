@@ -324,32 +324,36 @@ public class _f577_stg_Claim extends Ba2VedaTransform {
 
 			String inn = indv.getValue("v-s:taxId");
 
+			Individual correspondent_organization2 = new Individual();
+			correspondent_organization2.setUri(uri + "_correspondent_organization_recepient");
+			correspondent_organization2.addProperty("rdf:type", new Resource("v-s:Correspondent", Type._Uri));
+			correspondent_organization2.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
+			correspondent_organization2.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+			correspondent_organization2.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+
+			new_individual.addProperty("v-s:recipient", new Resource(correspondent_organization2.getUri(), Type._Uri));
+
 			if (inn != null) {
 				String org_uri = get_OrgUri_of_inn(inn);
 
-				Individual org = veda.getIndividual(org_uri);
+				// Individual org = veda.getIndividual(org_uri);
 
-				if (org != null) {
-					Individual correspondent_organization2 = new Individual();
-					correspondent_organization2.setUri(uri + "_correspondent_organization_recepient");
+				// if (org != null) {
 
-					correspondent_organization2.addProperty("v-s:correspondentOrganization",
-							new Resource(org_uri, Type._Uri));
+				correspondent_organization2.addProperty("v-s:correspondentOrganization",
+						new Resource(org_uri, Type._Uri));
 
-					correspondent_organization2.addProperty("rdf:type", new Resource("v-s:Correspondent", Type._Uri));
-					correspondent_organization2.addProperty("v-s:parent",
-							new Resource(new_individual.getUri(), Type._Uri));
-					correspondent_organization2.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
-					correspondent_organization2.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+			} else {
+				correspondent_organization2.addProperty("v-s:hasContractor", new Resource(indv_uri, Type._Uri));
 
-					new_individual.addProperty("v-s:recipient",
-							new Resource(correspondent_organization2.getUri(), Type._Uri));
-					putIndividual(level, correspondent_organization2, ba_id);
-				}
 			}
+
+			putIndividual(level, correspondent_organization2, ba_id);
 		}
 
-		if (requirement_sum != null) {
+		if (requirement_sum != null)
+
+		{
 			new_individual.addProperty("v-s:requirementSum", new Resource(requirement_sum.getUri(), Type._Uri));
 			requirement_sum.addProperty("v-s:hasCurrency", currency_from);
 			requirement_sum.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
