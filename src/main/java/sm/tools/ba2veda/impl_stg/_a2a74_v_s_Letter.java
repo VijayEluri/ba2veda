@@ -22,6 +22,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 	public void inital_set() {
 		fields_map.put("owner", "v-s:owner");
 		fields_map.put("register_number_1", "?");
+		fields_map.put("type_receive_comment", "?");
 		fields_map.put("register_date_1", "?");
 		fields_map.put("sender_number", "?");
 		fields_map.put("sender_date", "?");
@@ -67,7 +68,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 		Resources _registrationDate = null;
 		Resources _registrationOutDate = null;
 		Resources _addressee = null;
-		Resources _addressee_from = null;
+		Resources _type_receive_comment = null;
 		Resources _signer = null;
 		Resources _type_delivery = null;
 		Resources _c1 = null;
@@ -109,7 +110,6 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 		addressee.addProperty("v-s:creator", _creator);
 		addressee.addProperty("v-s:created", _created);
 		addressee.addProperty("v-s:edited", _edited);
-		res.add(addressee);
 
 		new_individual.addProperty("v-s:recipient", addressee.getUri(), Type._Uri);
 
@@ -134,68 +134,49 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 
 			String predicate = fields_map.get(code);
 
-			if (code.equals("Связанные документы"))
-				code.length();
-
 			if (predicate != null) {
 				Resources rss = null;
 
-				if (code.equals("Связанные документы")) {
-					rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
-							false);
+				rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
-					if (rss != null) {
-						int ii = 0;
-						for (Resource rsc : rss.resources) {
-							ii++;
-							String link_id = rsc.getData();
+				if (code.equals("owner")) {
+					// если owner = 53343a30-449b-4e71-9103-2fcd4bdaafd1, то
+					// v-s:correspondentOrganization = d:org_RU1121016110_1
+					// если owner = ecae5139-5aca-41dc-923d-c0aecc941424, то
+					// v-s:correspondentOrganization = d:org_RU1121016110_2
 
-							// if (veda.getIndividual(link_id) == null)
-							// {
-							String new_link_id = link_id + "_l_" + ii;
-							Individual link = new Individual();
-							link.setUri(new_link_id);
-							link.addProperty("rdf:type", "v-s:Link", Type._Uri);
-							link.addProperty("v-s:from", link_id, Type._Uri);
-							link.addProperty("v-s:to", uri, Type._Uri);
-							link.addProperty("v-s:creator", _creator);
-							link.addProperty("v-s:created", _created);
-							link.addProperty("v-s:edited", _edited);
-							res.add(link);
-							// }
-							new_individual.addProperty("v-s:hasLink", new_link_id, Type._Uri);
+					String crss = att.getOrganizationValue();
 
-						}
-					}
-				} else {
-					rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
-							true);
+					if (crss.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
+						addressee.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
+					else if (crss.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
+						addressee.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_2", Type._Uri);
 
-					if (code.equals("register_number_1"))
-						_registrationNumber = rss;
-					else if (code.equals("sender_number"))
-						_registrationOutNumber = rss;
-					else if (code.equals("register_date_1"))
-						_registrationDate = rss;
-					else if (code.equals("sender_date"))
-						_registrationOutDate = rss;
-					else if (code.equals("addressee"))
-						_addressee = rss;
-					// else if (code.equals("addressee"))
-					// _addressee_from = rss;
-					else if (code.equals("Подписавший"))
-						_signer = rss;
-					else if (code.equals("type_receive"))
-						_type_delivery = rss;
-					else if (code.equals("Служебные отметки"))
-						_c1 = rss;
-					else if (code.equals("Ключевые слова"))
-						_c2 = rss;
-					else if (code.equals("sender"))
-						_correspondent = rss;
-					else
-						new_individual.addProperty(predicate, rss);
-				}
+				} else if (code.equals("register_number_1"))
+					_registrationNumber = rss;
+				else if (code.equals("sender_number"))
+					_registrationOutNumber = rss;
+				else if (code.equals("register_date_1"))
+					_registrationDate = rss;
+				else if (code.equals("sender_date"))
+					_registrationOutDate = rss;
+				else if (code.equals("addressee"))
+					_addressee = rss;
+				else if (code.equals("type_receive_comment"))
+					_type_receive_comment = rss;
+				else if (code.equals("Подписавший"))
+					_signer = rss;
+				else if (code.equals("type_receive"))
+					_type_delivery = rss;
+				else if (code.equals("Служебные отметки"))
+					_c1 = rss;
+				else if (code.equals("Ключевые слова"))
+					_c2 = rss;
+				else if (code.equals("sender"))
+					_correspondent = rss;
+				else
+					new_individual.addProperty(predicate, rss);
+
 			}
 		}
 
@@ -243,10 +224,12 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 		if (_addressee != null)
 			addressee.addProperty("v-s:correspondentPerson", _addressee);
 
-		addressee.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
-
 		delivery.addProperty("v-s:date", _registrationDate);
 		delivery.addProperty("v-s:deliverBy", _type_delivery);
+
+		if (_type_receive_comment != null)
+			delivery.addProperty("rdfs:comment", _type_receive_comment);
+
 		// delivery.addProperty("v-s:backwardTarget", uri, Type._Uri);
 		// delivery.addProperty("v-s:hasDelivery", "v-s:backwardProperty", Type._Uri);
 
@@ -320,6 +303,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 				new_individual.addProperty("rdfs:label", rss);
 		}
 
+		res.add(addressee);
 		res.add(new_individual);
 
 		return res;

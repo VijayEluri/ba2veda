@@ -68,6 +68,8 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 		new_individual.setUri(uri);
 		set_basic_fields(level, new_individual, doc);
 
+		String owner = null;
+		
 		Resources _addressee = null;
 		Resources _addressee_to = null;
 		Resources _sender = null;
@@ -175,6 +177,8 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 						}
 					} else
 					{
+						if (code.equals("owner"))
+							owner = att.getOrganizationValue();
 						if (code.equals("addresse"))
 							_addressee = rss;
 						else if (code.equals("send_position"))
@@ -201,7 +205,13 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 			sender_wrap.addProperty("v-s:creator", _creator);
 			sender_wrap.addProperty("v-s:created", _created);
 			sender_wrap.addProperty("v-s:edited", _edited);
-			sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
+			
+			if (owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
+				sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
+			else if (owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
+				sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_2", Type._Uri);
+			else
+				sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
 			res.add(sender_wrap);
 
 			new_individual.addProperty("v-s:sender", sender_wrap.getUri(), Type._Uri);
