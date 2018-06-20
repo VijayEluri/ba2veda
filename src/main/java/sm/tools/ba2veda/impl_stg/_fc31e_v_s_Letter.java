@@ -39,6 +39,7 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 		fields_map.put("link_document", "v-s:hasLink");
 		fields_map.put("view_number", "rdfs:label");
 		fields_map.put("comment", "rdfs:comment");
+		fields_map.put("signer", "?");
 
 		//		fields_map.put("Подписывающий", "?");
 		//		fields_map.put("addresse_to", "?");
@@ -69,7 +70,7 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 		set_basic_fields(level, new_individual, doc);
 
 		String owner = null;
-		
+
 		Resources _addressee = null;
 		Resources _addressee_to = null;
 		Resources _sender = null;
@@ -78,9 +79,13 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 		//Resources _date_reg = null;
 		Resources _reg_note = null;
 
+		Resources _registrationNumber = null;
+		Resources _registrationDate = null;
+
 		Resources _creator = new_individual.getResources("v-s:creator");
 		Resources _created = new_individual.getResources("v-s:created");
 		Resources _edited = new_individual.getResources("v-s:edited");
+		Individual comment = null;
 
 		Individual indv_recepient = new Individual();
 		Individual lrrs = null;
@@ -179,7 +184,13 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 					{
 						if (code.equals("owner"))
 							owner = att.getOrganizationValue();
-						if (code.equals("addresse"))
+						else if (code.equals("signer"))
+						{
+							if (comment == null)
+								comment = new Individual();
+
+							comment.addProperty("rdfs:label", new Resource(att.getTextValue()));
+						} else if (code.equals("addresse"))
 							_addressee = rss;
 						else if (code.equals("send_position"))
 							_addressee_to = rss;
@@ -189,6 +200,10 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 							_signer = rss;
 						else if (code.equals("send_type"))
 							_type_send = rss;
+						else if (code.equals("send_number"))
+							_registrationNumber = rss;
+						else if (code.equals("send_date"))
+							_registrationDate = rss;
 						else
 							new_individual.addProperty(predicate, rss);
 					}
@@ -205,7 +220,7 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 			sender_wrap.addProperty("v-s:creator", _creator);
 			sender_wrap.addProperty("v-s:created", _created);
 			sender_wrap.addProperty("v-s:edited", _edited);
-			
+
 			if (owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
 				sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
 			else if (owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
@@ -298,8 +313,8 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 			if (_type_send != null)
 				indv_delivery.addProperty("v-s:deliverBy", _type_send);
 
-			indv_delivery.addProperty("v-s:backwardTarget", uri, Type._Uri);
-			indv_delivery.addProperty("v-s:hasDelivery", "v-s:backwardProperty", Type._Uri);
+			//indv_delivery.addProperty("v-s:backwardTarget", uri, Type._Uri);
+			//indv_delivery.addProperty("v-s:hasDelivery", "v-s:backwardProperty", Type._Uri);
 
 			res.add(indv_delivery);
 			new_individual.addProperty("v-s:hasDelivery", indv_delivery.getUri(), Type._Uri);
@@ -350,6 +365,35 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 			new_individual.addProperty("v-s:hasLetterRegistrationRecordSender", new Resource(lrrs.getUri(), Type._Uri));
 			putIndividual(level, lrrs, null);
 		}
+
+		if (comment != null)
+		{
+			comment.setUri(uri + "_comment");
+			comment.addProperty("rdf:type", new Resource("v-s:Comment", Type._Uri));
+			comment.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+			comment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+			putIndividual(level, comment, ba_id);
+			new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
+		}
+
+		Individual hasLetterRegistrationRecordRecipient = new Individual();
+		hasLetterRegistrationRecordRecipient.setUri(uri + "_1");
+		hasLetterRegistrationRecordRecipient.addProperty("rdf:type", "v-s:LetterRegistrationRecordRecipient", Type._Uri);
+		hasLetterRegistrationRecordRecipient.addProperty("v-s:parent", uri, Type._Uri);
+		hasLetterRegistrationRecordRecipient.addProperty("v-s:creator", _creator);
+		hasLetterRegistrationRecordRecipient.addProperty("v-s:created", _created);
+		hasLetterRegistrationRecordRecipient.addProperty("v-s:edited", _edited);
+		if (_registrationNumber != null)
+			hasLetterRegistrationRecordRecipient.addProperty("v-s:registrationNumber", _registrationNumber);
+
+		if (_registrationDate != null)
+			hasLetterRegistrationRecordRecipient.addProperty("v-s:registrationDate", _registrationDate);
+		else
+			new_individual.addProperty("v-s:date", new_individual.getResources("v-s:created"));
+
+		res.add(hasLetterRegistrationRecordRecipient);
+
+		new_individual.addProperty("v-s:hasLetterRegistrationRecordRecipient", hasLetterRegistrationRecordRecipient.getUri(), Type._Uri);
 
 		res.add(new_individual);
 
