@@ -26,6 +26,7 @@ public class _65703_v_s_Delivery extends Ba2VedaTransform
 		fields_map.put("name", "rdfs:label");
 		fields_map.put("add_to_doc", "?");
 		fields_map.put("send_date", "v-s:date");
+		fields_map.put("send_number", "v-s:registrationNumber");
 		fields_map.put("send_type", "v-s:deliverBy");
 		fields_map.put("comment", "rdfs:comment");
 		fields_map.put("compound_title", "rdfs:label");

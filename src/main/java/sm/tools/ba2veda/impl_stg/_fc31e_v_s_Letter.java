@@ -39,6 +39,7 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 		fields_map.put("link_document", "v-s:hasLink");
 		fields_map.put("view_number", "rdfs:label");
 		fields_map.put("comment", "rdfs:comment");
+		fields_map.put("execute_department", "?");
 		fields_map.put("signer", "?");
 
 		//		fields_map.put("Подписывающий", "?");
@@ -204,7 +205,7 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 						{
 							_addressee_to = rss;
 							new_individual.addProperty(predicate, rss);
-						} else if (code.equals("department"))
+						} else if (code.equals("department") || code.equals("execute_department"))
 							_sender = rss;
 						else if (code.equals("Подписывающий"))
 							_signer = rss;
@@ -277,12 +278,31 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 		if (_addressee != null)
 			indv_recepient.addProperty("v-s:correspondentPersonDescription", _addressee);
 
+		Individual hasLetterRegistrationRecordRecipient = new Individual();
+		hasLetterRegistrationRecordRecipient.setUri(uri + "_letter_recipient");
+		hasLetterRegistrationRecordRecipient.addProperty("rdf:type", "v-s:LetterRegistrationRecordRecipient", Type._Uri);
+		hasLetterRegistrationRecordRecipient.addProperty("v-s:parent", uri, Type._Uri);
+		hasLetterRegistrationRecordRecipient.addProperty("v-s:creator", _creator);
+		hasLetterRegistrationRecordRecipient.addProperty("v-s:created", _created);
+		hasLetterRegistrationRecordRecipient.addProperty("v-s:edited", _edited);
+		if (_registrationNumber != null)
+			hasLetterRegistrationRecordRecipient.addProperty("v-s:registrationNumber", _registrationNumber);
+
+		if (_registrationDate != null)
+			hasLetterRegistrationRecordRecipient.addProperty("v-s:registrationDate", _registrationDate);
+
 		if (_addressee_to != null)
 		{
 			String _addressee_to_uri = _addressee_to.resources.get(0).getData();
 			Individual indv_sender = veda.getIndividual(_addressee_to_uri);
 			if (indv_sender != null)
 			{
+				if (indv_sender.getResources("v-s:registrationNumber") != null)
+					hasLetterRegistrationRecordRecipient.addProperty("v-s:registrationNumber", indv_sender.getResources("v-s:registrationNumber"));
+
+				if (indv_sender.getResources("v-s:date") != null)
+					hasLetterRegistrationRecordRecipient.addProperty("v-s:registrationDate", indv_sender.getResources("v-s:date"));
+
 				Resources rcs = indv_sender.getResources("v-s:hasContractor");
 				if (rcs != null && rcs.resources.size() > 0)
 				{
@@ -385,19 +405,6 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 			putIndividual(level, comment, ba_id);
 			new_individual.addProperty("v-s:hasComment", new Resource(comment.getUri(), Type._Uri));
 		}
-
-		Individual hasLetterRegistrationRecordRecipient = new Individual();
-		hasLetterRegistrationRecordRecipient.setUri(uri + "_letter_recipient");
-		hasLetterRegistrationRecordRecipient.addProperty("rdf:type", "v-s:LetterRegistrationRecordRecipient", Type._Uri);
-		hasLetterRegistrationRecordRecipient.addProperty("v-s:parent", uri, Type._Uri);
-		hasLetterRegistrationRecordRecipient.addProperty("v-s:creator", _creator);
-		hasLetterRegistrationRecordRecipient.addProperty("v-s:created", _created);
-		hasLetterRegistrationRecordRecipient.addProperty("v-s:edited", _edited);
-		if (_registrationNumber != null)
-			hasLetterRegistrationRecordRecipient.addProperty("v-s:registrationNumber", _registrationNumber);
-
-		if (_registrationDate != null)
-			hasLetterRegistrationRecordRecipient.addProperty("v-s:registrationDate", _registrationDate);
 
 		res.add(hasLetterRegistrationRecordRecipient);
 

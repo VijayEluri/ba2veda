@@ -14,12 +14,15 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _a2a74_v_s_Letter extends Ba2VedaTransform {
-	public _a2a74_v_s_Letter(BaSystem _ba, VedaConnection _veda, Replacer replacer) {
+public class _a2a74_v_s_Letter extends Ba2VedaTransform
+{
+	public _a2a74_v_s_Letter(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	{
 		super(_ba, _veda, replacer, "a2a743242cd64b3183191658f1166e8a", "v-s:Letter");
 	}
 
-	public void inital_set() {
+	public void inital_set()
+	{
 		fields_map.put("owner", "v-s:owner");
 		fields_map.put("register_number_1", "?");
 		fields_map.put("type_receive_comment", "?");
@@ -48,8 +51,9 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 	}
 
 	@Override
-	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
-			String parent_ba_doc_id, String path) throws Exception {
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+			throws Exception
+	{
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
 		stand_prefix = "d:";
@@ -80,16 +84,14 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 
 		Individual hasLetterRegistrationRecordRecipient = new Individual();
 		hasLetterRegistrationRecordRecipient.setUri(uri + "_1");
-		hasLetterRegistrationRecordRecipient.addProperty("rdf:type", "v-s:LetterRegistrationRecordRecipient",
-				Type._Uri);
+		hasLetterRegistrationRecordRecipient.addProperty("rdf:type", "v-s:LetterRegistrationRecordRecipient", Type._Uri);
 		hasLetterRegistrationRecordRecipient.addProperty("v-s:parent", uri, Type._Uri);
 		hasLetterRegistrationRecordRecipient.addProperty("v-s:creator", _creator);
 		hasLetterRegistrationRecordRecipient.addProperty("v-s:created", _created);
 		hasLetterRegistrationRecordRecipient.addProperty("v-s:edited", _edited);
 		res.add(hasLetterRegistrationRecordRecipient);
 
-		new_individual.addProperty("v-s:hasLetterRegistrationRecordRecipient",
-				hasLetterRegistrationRecordRecipient.getUri(), Type._Uri);
+		new_individual.addProperty("v-s:hasLetterRegistrationRecordRecipient", hasLetterRegistrationRecordRecipient.getUri(), Type._Uri);
 
 		Individual hasLetterRegistrationRecordSender = new Individual();
 		hasLetterRegistrationRecordSender.setUri(uri + "_2");
@@ -100,8 +102,7 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 		hasLetterRegistrationRecordSender.addProperty("v-s:edited", _edited);
 		res.add(hasLetterRegistrationRecordSender);
 
-		new_individual.addProperty("v-s:hasLetterRegistrationRecordSender", hasLetterRegistrationRecordSender.getUri(),
-				Type._Uri);
+		new_individual.addProperty("v-s:hasLetterRegistrationRecordSender", hasLetterRegistrationRecordSender.getUri(), Type._Uri);
 
 		Individual addressee = new Individual();
 		addressee.setUri(uri + "_4");
@@ -129,17 +130,20 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		List<XmlAttribute> atts = doc.getAttributes();
-		for (XmlAttribute att : atts) {
+		for (XmlAttribute att : atts)
+		{
 			String code = att.getCode();
 
 			String predicate = fields_map.get(code);
 
-			if (predicate != null) {
+			if (predicate != null)
+			{
 				Resources rss = null;
 
 				rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
-				if (code.equals("owner")) {
+				if (code.equals("owner"))
+				{
 					// если owner = 53343a30-449b-4e71-9103-2fcd4bdaafd1, то
 					// v-s:correspondentOrganization = d:org_RU1121016110_1
 					// если owner = ecae5139-5aca-41dc-923d-c0aecc941424, то
@@ -233,45 +237,56 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 		// delivery.addProperty("v-s:backwardTarget", uri, Type._Uri);
 		// delivery.addProperty("v-s:hasDelivery", "v-s:backwardProperty", Type._Uri);
 
-		if (_correspondent != null && _correspondent.resources.size() > 0) {
+		if (_correspondent != null && _correspondent.resources.size() > 0)
+		{
 			String indv_uri = _correspondent.resources.get(0).getData();
 
 			Individual indv = veda.getIndividual(indv_uri);
 
-			String inn = indv.getValue("v-s:taxId");
+			if (indv != null)
+			{
 
-			Individual corr = new Individual();
-			corr.setUri(uri + "_0");
-			corr.addProperty("rdf:type", "v-s:Correspondent", Type._Uri);
-			corr.addProperty("v-s:creator", _creator);
-			corr.addProperty("v-s:created", _created);
-			corr.addProperty("v-s:edited", _edited);
+				String inn = indv.getValue("v-s:taxId");
 
-			if (inn != null) {
-				String org_uri = get_OrgUri_of_inn(inn);
-				corr.addProperty("v-s:correspondentOrganization", new Resource(org_uri, Type._Uri));
+				Individual corr = new Individual();
+				corr.setUri(uri + "_0");
+				corr.addProperty("rdf:type", "v-s:Correspondent", Type._Uri);
+				corr.addProperty("v-s:creator", _creator);
+				corr.addProperty("v-s:created", _created);
+				corr.addProperty("v-s:edited", _edited);
 
-			} else {
-				corr.addProperty("v-s:hasContractor", new Resource(indv_uri, Type._Uri));
+				if (inn != null)
+				{
+					String org_uri = get_OrgUri_of_inn(inn);
+					corr.addProperty("v-s:correspondentOrganization", new Resource(org_uri, Type._Uri));
 
+				} else
+				{
+					corr.addProperty("v-s:hasContractor", new Resource(indv_uri, Type._Uri));
+
+				}
+
+				if (_signer != null)
+					corr.addProperty("v-s:correspondentPersonDescription", _signer);
+
+				corr.addProperty("v-s:parent", uri, Type._Uri);
+
+				new_individual.addProperty("v-s:sender", corr.getUri(), Type._Uri);
+
+				res.add(corr);
 			}
-
-			if (_signer != null)
-				corr.addProperty("v-s:correspondentPersonDescription", _signer);
-
-			corr.addProperty("v-s:parent", uri, Type._Uri);
-
-			new_individual.addProperty("v-s:sender", corr.getUri(), Type._Uri);
-
-			res.add(corr);
 		}
 
 		{
-			Object[] ff = { _c1, ", ", _c2 };
-			String[] langs_out = { "EN", "RU" };
+			Object[] ff =
+			{ _c1, ", ", _c2 };
+			String[] langs_out =
+			{ "EN", "RU" };
 			Resources rss = rs_assemble(ff, langs_out);
-			if (rss.resources.size() == 0) {
-				String[] langs_out2 = { "NONE" };
+			if (rss.resources.size() == 0)
+			{
+				String[] langs_out2 =
+				{ "NONE" };
 				rss = rs_assemble(ff, langs_out2);
 			}
 			if (rss.resources.size() > 0)
@@ -279,24 +294,31 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform {
 		}
 
 		Resources correspondentOrganization = addressee.getResources("v-s:correspondentOrganization");
-		if (correspondentOrganization != null && correspondentOrganization.resources.size() > 0) {
+		if (correspondentOrganization != null && correspondentOrganization.resources.size() > 0)
+		{
 			String correspondentOrganization_uri = correspondentOrganization.resources.get(0).getData();
 
-			if (correspondentOrganization_uri != null) {
+			if (correspondentOrganization_uri != null)
+			{
 				Individual indv = veda.getIndividual(correspondentOrganization_uri);
-				if (indv != null) {
+				if (indv != null)
+				{
 					corr_sl = indv.getResources("v-s:shortLabel");
 				}
 			}
 		}
 
 		{
-			Object[] ff = { sender_shl, " (№", _registrationOutNumber, " ", _registrationOutDate, ") -> ", corr_sl,
-					" (№", _registrationNumber, " ", _registrationDate, ")" };
-			String[] langs_out = { "EN", "RU" };
+			Object[] ff =
+			{ sender_shl, " (№", _registrationOutNumber, " ", _registrationOutDate, ") -> ", corr_sl, " (№", _registrationNumber, " ",
+					_registrationDate, ")" };
+			String[] langs_out =
+			{ "EN", "RU" };
 			Resources rss = rs_assemble(ff, langs_out);
-			if (rss.resources.size() == 0) {
-				String[] langs_out2 = { "NONE" };
+			if (rss.resources.size() == 0)
+			{
+				String[] langs_out2 =
+				{ "NONE" };
 				rss = rs_assemble(ff, langs_out2);
 			}
 			if (rss.resources.size() > 0)
