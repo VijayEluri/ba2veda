@@ -31,7 +31,7 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 		fields_map.put("content", "v-s:description");
 		fields_map.put("incoming_link", "v-s:hasRelatedLetter");
 		fields_map.put("department", "?");
-		fields_map.put("send_position", "?");
+		fields_map.put("send_position", "v-s:hasDelivery");
 		fields_map.put("send_type", "?");
 		fields_map.put("page_amount", "v-s:sheetsCount");
 		fields_map.put("office_marks", "rdfs:comment");
@@ -201,8 +201,10 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 						} else if (code.equals("addresse"))
 							_addressee = rss;
 						else if (code.equals("send_position"))
+						{
 							_addressee_to = rss;
-						else if (code.equals("department"))
+							new_individual.addProperty(predicate, rss);
+						} else if (code.equals("department"))
 							_sender = rss;
 						else if (code.equals("Подписывающий"))
 							_signer = rss;
@@ -308,26 +310,26 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 
 		if (_type_send != null)
 			new_individual.addProperty("v-s:deliverBy", _type_send);
-
-		{
-			Individual indv_delivery = new Individual();
-			indv_delivery.setUri(uri + "_5");
-			indv_delivery.addProperty("rdf:type", "v-s:Delivery", Type._Uri);
-			indv_delivery.addProperty("v-s:parent", uri, Type._Uri);
-			indv_delivery.addProperty("v-s:creator", _creator);
-			indv_delivery.addProperty("v-s:created", _created);
-			indv_delivery.addProperty("v-s:edited", _edited);
-
-			if (_type_send != null)
-				indv_delivery.addProperty("v-s:deliverBy", _type_send);
-
-			//indv_delivery.addProperty("v-s:backwardTarget", uri, Type._Uri);
-			//indv_delivery.addProperty("v-s:hasDelivery", "v-s:backwardProperty", Type._Uri);
-
-			res.add(indv_delivery);
-			new_individual.addProperty("v-s:hasDelivery", indv_delivery.getUri(), Type._Uri);
-		}
-
+		/*
+				{
+					Individual indv_delivery = new Individual();
+					indv_delivery.setUri(uri + "_5");
+					indv_delivery.addProperty("rdf:type", "v-s:Delivery", Type._Uri);
+					indv_delivery.addProperty("v-s:parent", uri, Type._Uri);
+					indv_delivery.addProperty("v-s:creator", _creator);
+					indv_delivery.addProperty("v-s:created", _created);
+					indv_delivery.addProperty("v-s:edited", _edited);
+		
+					if (_type_send != null)
+						indv_delivery.addProperty("v-s:deliverBy", _type_send);
+		
+					//indv_delivery.addProperty("v-s:backwardTarget", uri, Type._Uri);
+					//indv_delivery.addProperty("v-s:hasDelivery", "v-s:backwardProperty", Type._Uri);
+		
+					res.add(indv_delivery);
+					new_individual.addProperty("v-s:hasDelivery", indv_delivery.getUri(), Type._Uri);
+				}
+		*/
 		{
 			Individual reg_rec = null;
 			Resources rrn = null;
@@ -365,7 +367,7 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 
 		if (lrrs != null)
 		{
-			lrrs.setUri(new_individual.getUri() + "_" + "letter_registration_record_recipient");
+			lrrs.setUri(new_individual.getUri() + "_letter_sender");
 			lrrs.addProperty("rdf:type", new Resource("v-s:LetterRegistrationRecordRecipient", Type._Uri));
 			lrrs.addProperty("v-s:parent", new Resource(new_individual.getUri(), Type._Uri));
 			lrrs.addProperty("v-s:created", new_individual.getResources("v-s:created"));
@@ -385,7 +387,7 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 		}
 
 		Individual hasLetterRegistrationRecordRecipient = new Individual();
-		hasLetterRegistrationRecordRecipient.setUri(uri + "_1");
+		hasLetterRegistrationRecordRecipient.setUri(uri + "_letter_recipient");
 		hasLetterRegistrationRecordRecipient.addProperty("rdf:type", "v-s:LetterRegistrationRecordRecipient", Type._Uri);
 		hasLetterRegistrationRecordRecipient.addProperty("v-s:parent", uri, Type._Uri);
 		hasLetterRegistrationRecordRecipient.addProperty("v-s:creator", _creator);

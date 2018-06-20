@@ -68,7 +68,7 @@ public class _65703_v_s_Delivery extends Ba2VedaTransform
 			}
 		}
 
-		if (send_date == null)
+		if (send_date == null || send_date.resources.size() == 0)
 			new_individual.addProperty("v-s:date", new_individual.getResources("v-s:created"));
 
 		if (_add_to_doc != null)
