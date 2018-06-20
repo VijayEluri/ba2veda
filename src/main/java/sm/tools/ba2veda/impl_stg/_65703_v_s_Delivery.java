@@ -25,8 +25,8 @@ public class _65703_v_s_Delivery extends Ba2VedaTransform
 	{
 		fields_map.put("name", "rdfs:label");
 		fields_map.put("add_to_doc", "?");
-		fields_map.put("date_send", "v-s:date");
-		fields_map.put("type_send", "v-s:deliverBy");
+		fields_map.put("send_date", "v-s:date");
+		fields_map.put("send_type", "v-s:deliverBy");
 		fields_map.put("comment", "rdfs:comment");
 		fields_map.put("compound_title", "rdfs:label");
 		fields_map.put("addressee", "v-s:hasContractor");
@@ -38,6 +38,8 @@ public class _65703_v_s_Delivery extends Ba2VedaTransform
 	{
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
+
+		Resources send_date = null;
 
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
@@ -59,9 +61,15 @@ public class _65703_v_s_Delivery extends Ba2VedaTransform
 				if (code.equals("add_to_doc"))
 					_add_to_doc = rss;
 
+				if (code.equals("send_date"))
+					send_date = rss;
+
 				new_individual.addProperty(predicate, rss);
 			}
 		}
+
+		if (send_date == null)
+			new_individual.addProperty("v-s:date", new_individual.getResources("v-s:created"));
 
 		if (_add_to_doc != null)
 		{
@@ -75,7 +83,7 @@ public class _65703_v_s_Delivery extends Ba2VedaTransform
 		}
 
 		new_individual.addProperty("v-s:parent", new Resource(parent_veda_doc_uri, Type._Uri));
-		
+
 		res.add(new_individual);
 		return res;
 	}

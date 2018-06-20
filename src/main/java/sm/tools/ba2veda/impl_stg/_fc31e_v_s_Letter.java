@@ -189,7 +189,15 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 							if (comment == null)
 								comment = new Individual();
 
-							comment.addProperty("rdfs:label", new Resource(att.getTextValue()));
+							if (rss != null)
+							{
+								String iiu = rss.resources.get(0).getData();
+								Individual ii = veda.getIndividual(iiu);
+								if (ii != null)
+								{
+									comment.addProperty("rdfs:label", "Подписывающий:" + ii.getValue("rdfs:label"), Type._String);
+								}
+							}
 						} else if (code.equals("addresse"))
 							_addressee = rss;
 						else if (code.equals("send_position"))
@@ -388,8 +396,6 @@ public class _fc31e_v_s_Letter extends Ba2VedaTransform
 
 		if (_registrationDate != null)
 			hasLetterRegistrationRecordRecipient.addProperty("v-s:registrationDate", _registrationDate);
-		else
-			new_individual.addProperty("v-s:date", new_individual.getResources("v-s:created"));
 
 		res.add(hasLetterRegistrationRecordRecipient);
 
