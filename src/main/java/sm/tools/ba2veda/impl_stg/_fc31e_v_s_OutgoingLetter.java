@@ -15,11 +15,11 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _fc31e_v_s_Letter extends Ba2VedaTransform
+public class _fc31e_v_s_OutgoingLetter extends Ba2VedaTransform
 {
-	public _fc31e_v_s_Letter(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _fc31e_v_s_OutgoingLetter(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "fc31e1a6f86f436b9c39f451a49afd67", "v-s:Letter");
+		super(_ba, _veda, replacer, "fc31e1a6f86f436b9c39f451a49afd67", "v-s:OutgoingLetter");
 	}
 
 	public void inital_set()

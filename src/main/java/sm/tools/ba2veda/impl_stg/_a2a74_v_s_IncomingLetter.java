@@ -14,11 +14,11 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _a2a74_v_s_Letter extends Ba2VedaTransform
+public class _a2a74_v_s_IncomingLetter extends Ba2VedaTransform
 {
-	public _a2a74_v_s_Letter(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _a2a74_v_s_IncomingLetter(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "a2a743242cd64b3183191658f1166e8a", "v-s:Letter");
+		super(_ba, _veda, replacer, "a2a743242cd64b3183191658f1166e8a", "v-s:IncomingLetter");
 	}
 
 	public void inital_set()
@@ -243,38 +243,37 @@ public class _a2a74_v_s_Letter extends Ba2VedaTransform
 
 			Individual indv = veda.getIndividual(indv_uri);
 
+			String inn = null;
+
 			if (indv != null)
+				inn = indv.getValue("v-s:taxId");
+
+			Individual corr = new Individual();
+			corr.setUri(uri + "_0");
+			corr.addProperty("rdf:type", "v-s:Correspondent", Type._Uri);
+			corr.addProperty("v-s:creator", _creator);
+			corr.addProperty("v-s:created", _created);
+			corr.addProperty("v-s:edited", _edited);
+
+			if (inn != null)
 			{
+				String org_uri = get_OrgUri_of_inn(inn);
+				corr.addProperty("v-s:correspondentOrganization", new Resource(org_uri, Type._Uri));
 
-				String inn = indv.getValue("v-s:taxId");
-
-				Individual corr = new Individual();
-				corr.setUri(uri + "_0");
-				corr.addProperty("rdf:type", "v-s:Correspondent", Type._Uri);
-				corr.addProperty("v-s:creator", _creator);
-				corr.addProperty("v-s:created", _created);
-				corr.addProperty("v-s:edited", _edited);
-
-				if (inn != null)
-				{
-					String org_uri = get_OrgUri_of_inn(inn);
-					corr.addProperty("v-s:correspondentOrganization", new Resource(org_uri, Type._Uri));
-
-				} else
-				{
-					corr.addProperty("v-s:hasContractor", new Resource(indv_uri, Type._Uri));
-
-				}
-
-				if (_signer != null)
-					corr.addProperty("v-s:correspondentPersonDescription", _signer);
-
-				corr.addProperty("v-s:parent", uri, Type._Uri);
-
-				new_individual.addProperty("v-s:sender", corr.getUri(), Type._Uri);
-
-				res.add(corr);
+			} else
+			{
+				corr.addProperty("v-s:hasContractor", new Resource(indv_uri, Type._Uri));
 			}
+
+			if (_signer != null)
+				corr.addProperty("v-s:correspondentPersonDescription", _signer);
+
+			corr.addProperty("v-s:parent", uri, Type._Uri);
+
+			new_individual.addProperty("v-s:sender", corr.getUri(), Type._Uri);
+
+			res.add(corr);
+
 		}
 
 		{
