@@ -66,7 +66,7 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 
 		Individual inin1 = null;
 
-		if (kind_pr != null && (kind_pr.equals(kpr1) || kind_pr.equals(kpr2)))
+		if (kind_pr != null && (kind_pr.equals(kpr1) || kind_pr.equals(kpr2) || kind_pr.equals(kpr3) || kind_pr.equals(kpr4)))
 		{
 			for (XmlAttribute att : atts)
 			{
@@ -106,8 +106,8 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 							} else
 							{
 								att.setLinkValue(inherit_rights_from);
-								Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
-										true);
+								Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id,
+										parent_veda_doc_uri, true);
 
 								new_individual.addProperty(predicate, rss1);
 							}
@@ -116,6 +116,23 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 						{
 							kind_pr = att.getRecordIdValue();
 							new_individual.addProperty(predicate, rss);
+						} else if (code.equals("link_document"))
+						{
+							String irf = att.getLinkValue();
+							if (irf == null)
+								continue;
+							String link_to = irf;
+
+							Individual link = new Individual();
+							link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
+							link.setUri("d:link_" + ba_id + "_" + link_to);
+							link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
+							link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
+
+							putIndividual(level, link, ba_id);
+
+							new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
+
 						} else if (code.equals("add_doc"))
 						{
 							if (inin1 == null)
@@ -149,8 +166,8 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 								{
 
 									att.setLinkValue(inherit_rights_from);
-									Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id, parent_veda_doc_uri,
-											true);
+									Resources rss1 = ba_field_to_veda(level, att, uri, inherit_rights_from, doc, path, parent_ba_doc_id,
+											parent_veda_doc_uri, true);
 
 									inin1.addProperty(predicate, rss1);
 								} else
@@ -174,7 +191,7 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 							if (price == null)
 								price = createPrice(uri);
 							price.setProperty("v-s:hasCurrency", rss);
-						} else if (code.equals("comment"))
+						} else if (code.equals("comment") || code.equals("add_info"))
 						{
 							Individual inin2 = new Individual();
 							inin2.setUri(uri + "_" + code);
