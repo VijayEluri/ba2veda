@@ -13,14 +13,17 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _98d7e_stg_Contract extends _xxxxx_x_Contract
+public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 {
 	public _98d7e_stg_Contract(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
 		super(_ba, _veda, replacer, "98d7e7a4bb3e4e7192595aa39db326d9", "stg:Contract");
 
-		kpr1 = "cc87e0778a864272b1b8d366f591da88";
-		kpr2 = "fecef6b8058549cfb0203b55bd2425de";
+		kpr1 = "0670456ffce8475e9879d03852da2752";
+		kpr2 = "30d691b8dffa46a099f1f92a42c28cf6";
+		kpr3 = "8f5d41ff3f63463096ebf8c72f1734b6";
+		kpr4 = "2ec8cebaa2014998901d285801695cd1";
+
 	}
 
 	public void inital_set()
@@ -63,7 +66,7 @@ public class _98d7e_stg_Contract extends _xxxxx_x_Contract
 
 		String inherit_rights_from = ba.get_first_value_of_field(doc, "inherit_rights_from");
 		String kind_pr = ba.get_first_value_of_field(doc, "kind_pr");
-		if (kind_pr != null && (kind_pr.equals(kpr1) || kind_pr.equals(kpr2)))
+		if (kind_pr != null && (kind_pr.equals(kpr1) || kind_pr.equals(kpr2) || kind_pr.equals(kpr3) || kind_pr.equals(kpr4)))
 		{
 
 			if (inherit_rights_from == null || inherit_rights_from.length() == 0)

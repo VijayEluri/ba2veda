@@ -13,12 +13,14 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public abstract class _xxxxx_x_Contract extends Ba2VedaTransform
+public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 {
 	public String kpr1 = null;
 	public String kpr2 = null;
+	public String kpr3 = null;
+	public String kpr4 = null;
 
-	public _xxxxx_x_Contract(BaSystem _ba, VedaConnection _veda, Replacer replacer, String from, String to)
+	public _xxxxx_stg_Contract(BaSystem _ba, VedaConnection _veda, Replacer replacer, String from, String to)
 	{
 		super(_ba, _veda, replacer, from, to);
 		fields_map.put("number_auto_2", "v-s:registrationNumberAdd");
