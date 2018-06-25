@@ -65,16 +65,24 @@ public class _f16b2_stg_BudjetItem extends Ba2VedaTransform
 
 				if (code.equals("indicator_active"))
 				{
-
+					String tt = att.getTextValue();
+					if (tt.equals("X") || tt.equals("x"))
+						new_individual.addProperty("v-s:valid", new Resource(true, Type._Bool));
+					else
+						new_individual.addProperty("v-s:valid", new Resource(false, Type._Bool));
 				}
-
 				if (code.equals("indicator_blocked"))
 				{
-
+					String tt = att.getTextValue();
+					if (tt.equals("X") || tt.equals("x"))
+						new_individual.addProperty("v-s:locked", new Resource(true, Type._Bool));
+					else
+						new_individual.addProperty("v-s:locked", new Resource(false, Type._Bool));
 				}
+
 			}
 		}
-
+		res.add(new_individual);
 		return res;
 	}
 
