@@ -323,6 +323,20 @@
 {"if-equals":[{ "value":"9cb05dc6be8644999d03bae2db675dc2"}],"set": [{"value":"d:a1ff805754004cdea5782e286d9754ac",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"9a7cbc0833074bc8a108be091333fc97"}],"set": [{"value":"d:a1ff805754004cdea5782e286d9754ac",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"7cb22f6e6d5c4de5ac07adee27d2c67c"}],"set": [{"value":"d:5026ea45f86d49df8d6a1fabc6a3446b",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"04eb779f882b47b09a17c4f4cb46a823"}],"set": [{"value":"d:org_RU1121016110_1_department_1_11",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"a698e6b107da44dabcc172842839be27"}],"set": [{"value":"d:org_RU1121016110_1",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"8f24fb7e1a6946e59c6292cfb2d52b3e"}],"set": [{"value":"d:org_RU1121016110_1_department_3_11",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"d8956d5368a742c8a2abafa0fc9b75f7"}],"set": [{"value":"d:org_RU1121016110_1_department_1_17",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"09a3c4b880284322aa8e85b786245aae"}],"set": [{"value":"d:org_RU1121016110_1_department_3_7",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"a470ceafa09d4283953c6c5599669f31"}],"set": [{"value":"d:org_RU1121016110_1_department_1_2",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"a6158c93abc6433aab2697040f911e19"}],"set": [{"value":"d:org_RU1121016110_1_department_1_7",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"9fddb195bff94ea79f1990e77cd5e676"}],"set": [{"value":"d:org_RU1121016110_1_department_3_10",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"696731ebbbab4dc8aa7dff88950f0cdd"}],"set": [{"value":"d:org_RU1121016110_1_department_3_5",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"49a5fd06aa194eda9586a3ac28a400d5"}],"set": [{"value":"d:org_RU1121016110_1_department_1_6",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"fa3944a7af1d4d2bb65577b39380f64b"}],"set": [{"value":"d:org_RU1121016110_1_department_1_8",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"e95d7d26e46340cd91ee071622e40c2d"}],"set": [{"value":"d:org_RU1121016110_1_department_3_9",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"2312f4e8c72749bbb6cb88049b377e44"}],"set": [{"value":"d:org_RU1121016110_1_department_3_12",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"7455b3e064b74a3fb7aabbdaac16a12b"}],"set": [{"value":"d:org_RU1121016110_1_department_1_15",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"d4416bd032ee4726bbe938ac46890973"}],"set": [{"value":"d:700",  "type" : "Uri"}]}
 ]
 }
