@@ -262,9 +262,10 @@ public class Fetcher
 		
 		trs.add(new _aefb1_v_s_UnitOfMeasure(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _f577_stg_Claim(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _f5fe8_v_s_Comment(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		
 		trs.add(new _98d7e_stg_Contract(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _f16b2_stg_BudjetItem(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		trs.add(new _f5fe8_v_s_Comment(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		
 		
 		for (Ba2VedaTransform tr : trs)
