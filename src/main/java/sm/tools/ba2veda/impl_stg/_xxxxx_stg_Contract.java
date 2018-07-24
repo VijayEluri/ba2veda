@@ -191,7 +191,7 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 							if (price == null)
 								price = createPrice(uri);
 							price.setProperty("v-s:hasCurrency", rss);
-						} else if (code.equals("comment") || code.equals("add_info"))
+						} else if (code.equals("comment")/* || code.equals("add_info")*/)
 						{
 							Individual inin2 = new Individual();
 							inin2.setUri(uri + "_" + code);
@@ -212,7 +212,7 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 							new_individual.addProperty(predicate, rss);
 						}
 					}
-
+/*
 					if (code.equals("type_contract"))
 					{
 						String prev_id = att.getRecordIdValue();
@@ -225,7 +225,7 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 						else
 							new_individual.addProperty("v-s:hasObligationKind", rss1);
 					}
-
+*/
 				}
 			}
 

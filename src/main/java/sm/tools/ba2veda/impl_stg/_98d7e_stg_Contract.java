@@ -53,10 +53,10 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 		fields_map.put("support_specialist_of_contract", "v-s:supportSpecialistOfContract");
 		fields_map.put("chief_preparation_specialist_of_contract", "stg:chiefOfSupportSpecialistOfContract");
 		fields_map.put("attachment", "v-s:attachment");
-		fields_map.put("add_info", "?");
+		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("comment", "?");
 		fields_map.put("link_document", "?");
-		fields_map.put("display_requisite", "rdfs:label");
+		fields_map.put("name", "rdfs:label");
 		fields_map.put("", "");
 		fields_map.put("", "");
 		fields_map.put("", "");
@@ -76,6 +76,12 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
 			throws Exception
 	{
+		employee_prefix = "d:employee_";
+		appointment_prefix = "d:";
+		stand_prefix = "d:";
+		department_prefix = "department";
+		is_mondi = false;
+		
 		fields_map.clear();
 		inital_set();
 
@@ -104,7 +110,7 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 
 				if (new_individual.getUri() != null)
 				{
-					if (register_type.equals("8cf061a51fe44ae5b70bf0ae6447d9a4"))
+/*					if (register_type.equals("8cf061a51fe44ae5b70bf0ae6447d9a4"))
 					{
 						Individual inin1 = new Individual();
 						inin1.setUri("d:" + ba_id + "_CPC");
@@ -181,8 +187,8 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 
 						new_individual.addProperty("v-s:hasContractParticipantCustomer", inin1.getUri(), Type._Uri);
 					}
-
-					new_individual.addProperty("v-s:customer", new Resource("d:org_RU1121003135", Type._Uri));
+*/
+					//new_individual.addProperty("v-s:customer", new Resource("d:org_RU1121003135", Type._Uri));
 
 					Resources supplierContractor_lnk = new_individual.getResources("v-s:supplierContractor");
 

@@ -259,17 +259,17 @@ public class Fetcher
 		trs.add(new _07958_stg_PositionDictionary(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _8b937_stg_Claim(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _c2dd5_stg_ClaimReport(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _aefb1_v_s_UnitOfMeasure(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _f577_stg_Claim(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _f5fe8_v_s_Comment(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _98d7e_stg_Contract(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _f16b2_stg_BudjetItem(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _98d7e_stg_AdditionalAgreement(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
-		
+		trs.add(new _98d7e_v_s_ContractParticipantCustomer(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+
 		for (Ba2VedaTransform tr : trs)
 		{
 			for (String key : Ba2VedaTransform.st_types_map.keySet())
@@ -314,6 +314,7 @@ public class Fetcher
 		Ba2VedaTransform.st_ba = new BaSystem();
 		Ba2VedaTransform.st_veda = new VedaConnection(destination, "ImportDMSToVeda",
 				"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3");
+		
 		if (Ba2VedaTransform.st_veda.isOk() == false)
 			return;
 
