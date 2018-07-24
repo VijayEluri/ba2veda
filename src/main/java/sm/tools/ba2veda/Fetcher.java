@@ -269,6 +269,7 @@ public class Fetcher
 
 		trs.add(new _98d7e_stg_AdditionalAgreement(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _98d7e_v_s_ContractParticipantCustomer(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _98d7e_v_s_ContractParticipantSupplier(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 
 		for (Ba2VedaTransform tr : trs)
 		{
