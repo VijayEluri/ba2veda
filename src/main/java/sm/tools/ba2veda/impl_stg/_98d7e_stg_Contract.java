@@ -30,7 +30,7 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 	{
 		fields_map.put("owner", "v-s:owner");
 		fields_map.put("kind_pr", "v-s:hasDocumentKind");
-		fields_map.put("register_type", "?");
+		//fields_map.put("register_type", "?");
 		fields_map.put("number_auto", "v-s:registrationNumber");
 		fields_map.put("contractor_number", "v-s:registrationNumberIn");
 		fields_map.put("subject", "v-s:theme");
@@ -61,15 +61,15 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 		fields_map.put("", "");
 		fields_map.put("", "");
 
-//		fields_map.put("date", "v-s:registrationDate");
-//		fields_map.put("contractor", "v-s:stakeholder");
-//		fields_map.put("executant_department", "v-s:responsibleDepartment");
-//		fields_map.put("type_contract", "v-s:hasContractObject");
-//		fields_map.put("kind", "v-s:hasBudgetCategory");
-//		fields_map.put("direct", "mnd-s:hasContractDirection");
-//		fields_map.put("comment", "rdfs:comment");
-//		fields_map.put("origiral_source", "mnd-s:hasOriginalSource");
-//		fields_map.put("pass", "mnd-s:hasContractPassport");
+		//		fields_map.put("date", "v-s:registrationDate");
+		//		fields_map.put("contractor", "v-s:stakeholder");
+		//		fields_map.put("executant_department", "v-s:responsibleDepartment");
+		//		fields_map.put("type_contract", "v-s:hasContractObject");
+		//		fields_map.put("kind", "v-s:hasBudgetCategory");
+		//		fields_map.put("direct", "mnd-s:hasContractDirection");
+		//		fields_map.put("comment", "rdfs:comment");
+		//		fields_map.put("origiral_source", "mnd-s:hasOriginalSource");
+		//		fields_map.put("pass", "mnd-s:hasContractPassport");
 	}
 
 	@Override
@@ -80,6 +80,12 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 		inital_set();
 
 		List<Individual> res = new ArrayList<Individual>();
+
+		String add_to_contract = ba.get_first_value_of_field(doc, "add_to_contract");
+		if (add_to_contract != null)
+		{
+			return new ArrayList<Individual>();
+		}
 
 		String inherit_rights_from = ba.get_first_value_of_field(doc, "inherit_rights_from");
 		String kind_pr = ba.get_first_value_of_field(doc, "kind_pr");
@@ -147,7 +153,7 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 						inin1.addProperty("v-s:hasRoleInContract", "d:dsxyd1uxsxuui6f1t3s4ki3rdp", Type._Uri);
 
 						//get_OrgUri_of_inn
-						
+
 						if (owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
 							inin1.addProperty("v-s:hasOrganization", "d:org_RU1121016110_1", Type._Uri);
 
@@ -175,8 +181,7 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 
 						new_individual.addProperty("v-s:hasContractParticipantCustomer", inin1.getUri(), Type._Uri);
 					}
-					
-					
+
 					new_individual.addProperty("v-s:customer", new Resource("d:org_RU1121003135", Type._Uri));
 
 					Resources supplierContractor_lnk = new_individual.getResources("v-s:supplierContractor");

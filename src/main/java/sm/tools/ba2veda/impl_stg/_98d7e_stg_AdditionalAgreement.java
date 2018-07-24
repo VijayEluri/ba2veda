@@ -28,15 +28,14 @@ public class _98d7e_stg_AdditionalAgreement extends Ba2VedaTransform
 		fields_map.put("owner", "v-s:owner");
 		fields_map.put("kind_pr", "?");
 		fields_map.put("add_to_contract", "?");
-		fields_map.put("number_auto_2", "v-s:registrationNumberAdd");	
+		fields_map.put("number_auto_2", "v-s:registrationNumberAdd");
 		fields_map.put("number", "v-s:registrationNumber");
 		fields_map.put("contractor_number", "v-s:registrationNumberIn");
-
 		fields_map.put("subject", "v-s:theme");
 		fields_map.put("subject_type", "v-s:hasContractScope");
 		fields_map.put("initiator_person", "v-s:initiator");
 		fields_map.put("initiator", "stg:hasCFOStructure");
-		fields_map.put("contractor", "v-s:hasContractParticipantCustomer");
+		//fields_map.put("contractor", "v-s:hasContractParticipantCustomer");
 		fields_map.put("type_contract", "v-s:hasObligationKind");
 		fields_map.put("payment_order", "v-s:hasPaymentForm");
 		fields_map.put("summ", "?");
@@ -52,7 +51,7 @@ public class _98d7e_stg_AdditionalAgreement extends Ba2VedaTransform
 		fields_map.put("date_to", "v-s:dateTo");
 		fields_map.put("support_specialist_of_contract", "v-s:supportSpecialistOfContract");
 		fields_map.put("chief_preparation_specialist_of_contract", "stg:chiefOfSupportSpecialistOfContract");
-		fields_map.put("add_agreement", "stg:hasAdditionalAgreement");
+		//fields_map.put("add_agreement", "stg:hasAdditionalAgreement");
 		fields_map.put("attachment", "?");
 		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("display_requisite", "rdfs:label");
@@ -98,11 +97,8 @@ public class _98d7e_stg_AdditionalAgreement extends Ba2VedaTransform
 
 				if (code.equals("add_to_contract"))
 				{
-					new_individual.addProperty("v-s:parent", rss);
-					new_individual.addProperty("v-s:backwardTarget", rss);
-					new_individual.addProperty("v-s:backwardProperty", new Resource("stg:hasAdditionalAgreement", Type._Uri));
-
-					kind_pr = att.getRecordIdValue();
+					if (rss == null)
+						return new ArrayList<Individual>();
 				} else if (code.equals("kind_pr"))
 				{
 					new_individual.addProperty("v-s:hasDocumentKind", rss);
