@@ -191,6 +191,19 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 							if (price == null)
 								price = createPrice(uri);
 							price.setProperty("v-s:hasCurrency", rss);
+						} else if (code.equals("budget_limit"))
+						{
+							if (rss.resources.size() > 0)
+							{
+								Individual inin2 = new Individual();
+								inin2.setUri(uri + "_" + code);
+								inin2.setProperty("rdf:type", new Resource("v-s:Comment", Type._Uri));
+								inin2.setProperty("rdfs:label", new Resource("Лимит статьи бюджета: " + rss.resources.get(0).getData(), Type._String));
+								inin2.addProperty("v-s:creator", author);
+								inin2.addProperty("v-s:created", created);
+								putIndividual(level, inin2, ba_id);
+								new_individual.addProperty("v-s:hasComment", new Resource(inin2.getUri(), Type._Uri));
+							}
 						} else if (code.equals("comment")/* || code.equals("add_info")*/)
 						{
 							Individual inin2 = new Individual();
@@ -212,20 +225,20 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 							new_individual.addProperty(predicate, rss);
 						}
 					}
-/*
-					if (code.equals("type_contract"))
-					{
-						String prev_id = att.getRecordIdValue();
-						String f_id = "_" + prev_id;
-						att.setRecordIdValue(f_id);
-						Resources rss1 = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
-						String fc_id = rss1.resources.get(0).getData();
-						if (fc_id.equals("d:" + f_id))
-							new_individual.addProperty("v-s:hasObligationKind", new Resource("d:" + prev_id, Type._Uri));
-						else
-							new_individual.addProperty("v-s:hasObligationKind", rss1);
-					}
-*/
+					/*
+										if (code.equals("type_contract"))
+										{
+											String prev_id = att.getRecordIdValue();
+											String f_id = "_" + prev_id;
+											att.setRecordIdValue(f_id);
+											Resources rss1 = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, false);
+											String fc_id = rss1.resources.get(0).getData();
+											if (fc_id.equals("d:" + f_id))
+												new_individual.addProperty("v-s:hasObligationKind", new Resource("d:" + prev_id, Type._Uri));
+											else
+												new_individual.addProperty("v-s:hasObligationKind", rss1);
+										}
+					*/
 				}
 			}
 

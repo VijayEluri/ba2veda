@@ -58,18 +58,6 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 		fields_map.put("link_document", "?");
 		fields_map.put("name", "rdfs:label");
 		fields_map.put("", "");
-		fields_map.put("", "");
-		fields_map.put("", "");
-
-		//		fields_map.put("date", "v-s:registrationDate");
-		//		fields_map.put("contractor", "v-s:stakeholder");
-		//		fields_map.put("executant_department", "v-s:responsibleDepartment");
-		//		fields_map.put("type_contract", "v-s:hasContractObject");
-		//		fields_map.put("kind", "v-s:hasBudgetCategory");
-		//		fields_map.put("direct", "mnd-s:hasContractDirection");
-		//		fields_map.put("comment", "rdfs:comment");
-		//		fields_map.put("origiral_source", "mnd-s:hasOriginalSource");
-		//		fields_map.put("pass", "mnd-s:hasContractPassport");
 	}
 
 	@Override
@@ -97,8 +85,6 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 		String kind_pr = ba.get_first_value_of_field(doc, "kind_pr");
 		if (kind_pr != null && (kind_pr.equals(kpr1) || kind_pr.equals(kpr2) || kind_pr.equals(kpr3) || kind_pr.equals(kpr4)))
 		{
-			String register_type = ba.get_first_value_of_field(doc, "register_type");
-			String owner = ba.get_first_value_of_field(doc, "owner");
 
 			if (inherit_rights_from == null || inherit_rights_from.length() == 0)
 			{

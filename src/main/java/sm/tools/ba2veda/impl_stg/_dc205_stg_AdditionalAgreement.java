@@ -16,11 +16,11 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _98d7e_stg_AdditionalAgreement extends Ba2VedaTransform
+public class _dc205_stg_AdditionalAgreement extends Ba2VedaTransform
 {
-	public _98d7e_stg_AdditionalAgreement(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _dc205_stg_AdditionalAgreement(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "98d7e7a4bb3e4e7192595aa39db326d9", "stg:AdditionalAgreement");
+		super(_ba, _veda, replacer, "dc205f55fd8f435da8968e6cbbcd4149", "stg:AdditionalAgreement");
 	}
 
 	public void inital_set()
@@ -80,6 +80,18 @@ public class _98d7e_stg_AdditionalAgreement extends Ba2VedaTransform
 		new_individual.addProperty("rdf:type", new Resource(to_class, Type._Uri));
 		new_individual.addProperty("v-s:customer", "d:org_RU6674128343", Type._Uri);
 
+		String add_to_contract = ba.get_first_value_of_field(doc, "add_to_contract");
+		if (add_to_contract == null)
+		{
+			return new ArrayList<Individual>();
+		}
+
+		String inherit_rights_from = ba.get_first_value_of_field(doc, "inherit_rights_from");
+		if (inherit_rights_from != null)
+		{
+			return new ArrayList<Individual>();
+		}
+		
 		String kind_pr = "";
 		String irf = null;
 

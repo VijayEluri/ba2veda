@@ -104,10 +104,10 @@ public class _98d7e_v_s_ContractParticipantCustomer extends Ba2VedaTransform
 
 		if (register_type.equals("8cf061a51fe44ae5b70bf0ae6447d9a4"))
 		{
-			if (owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
+			if (owner == null || owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
 				new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_1", Type._Uri));
 
-			if (owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
+			if (owner != null && owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
 				new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_2", Type._Uri));
 		}
 

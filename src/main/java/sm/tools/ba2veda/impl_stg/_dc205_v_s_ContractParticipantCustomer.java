@@ -15,32 +15,34 @@ import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
 /*
- * если register_type = 2c4fc8846cb24609bb4f9134d2833991 (Продажа)
-1. Создаем индивид класса v-s:ContractParticipantSupplier.
-2. Дата и автор совпадают
-3. в поле v-s:parent - текщий индивид
-4. в поле v-s:backwardTarget - текщий индивид
-5. поле v-s:backwardProperty - константа v-s:hasContractParticipantSupplier
-6. в поле v-s:hasRoleInContract d:wws2oz313z6xpl1hd4u3laxzfg (Исполнитель)
-7.  в поле  v-s:hasOrganization = d:org_RU1121016110_1 (если owner = 53343a30-449b-4e71-9103-2fcd4bdaafd1)
-8. в поле  v-s:hasOrganization = d:org_RU1121016110_2 (если owner = ecae5139-5aca-41dc-923d-c0aecc941424)
 
 если register_type = 8cf061a51fe44ae5b70bf0ae6447d9a4 (Закупка) 
-1. Создаем индивид класса v-s:ContractParticipantSupplier
+1.Создаем индивид класса v-s:ContractParticipantCustomer
+2. Дата и автор совпадают с текущим индивидом
+3. в поле v-s:parent - текщий индивид
+4. в поле v-s:backwardTarget - текщий индивид
+5. поле v-s:backwardProperty - константа v-s:hasContractParticipantCustomer
+6. в поле v-s:hasRoleInContract d:dsxyd1uxsxuui6f1t3s4ki3rdp (Заказчик)
+7. в поле  v-s:hasOrganization = d:org_RU1121016110_1 (если owner = 53343a30-449b-4e71-9103-2fcd4bdaafd1)
+8. в поле  v-s:hasOrganization = d:org_RU1121016110_2 (если owner = ecae5139-5aca-41dc-923d-c0aecc941424)
+
+если register_type = 2c4fc8846cb24609bb4f9134d2833991 (Продажа)
+1.Создаем индивид класса v-s:ContractParticipantCustomer
 2 Дата и автор совпадают
 3. в поле v-s:parent - текщий индивид
 4. в поле v-s:backwardTarget - текщий индивид
-5. поле v-s:backwardProperty - константа v-s:hasContractParticipantSupplier
-5. в поле v-s:hasRoleInContract d:wws2oz313z6xpl1hd4u3laxzfg (Исполнитель)
-6. из индивида в поле contractor берем поле inn - по нему выполняем в OF поиск по всем индивидам класса v-s:Organization - находим тот у которого поле v-s:taxId совпадает. Вписываем в поле v-s:hasOrganization
-7. индивид из поля contractor помещаем в поле v-s:hasContractor + d: 
+5. поле v-s:backwardProperty - константа v-s:hasContractParticipantCustomer
+6. в поле v-s:hasRoleInContract d:dsxyd1uxsxuui6f1t3s4ki3rdp (Заказчик)
+7. из индивида в поле contractor берем поле inn - по нему выполняем в OF поиск по всем индивидам класса v-s:Organization - находим тот у которого поле v-s:taxId совпадает. Вписываем в поле v-s:hasOrganization
+8. индивид из поля contractor помещаем в поле v-s:hasContractor + d: 
+
  */
 
-public class _98d7e_v_s_ContractParticipantSupplier extends Ba2VedaTransform
+public class _dc205_v_s_ContractParticipantCustomer extends Ba2VedaTransform
 {
-	public _98d7e_v_s_ContractParticipantSupplier(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _dc205_v_s_ContractParticipantCustomer(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "98d7e7a4bb3e4e7192595aa39db326d9", "v-s:ContractParticipantSupplier");
+		super(_ba, _veda, replacer, "dc205f55fd8f435da8968e6cbbcd4149", "v-s:ContractParticipantCustomer");
 	}
 
 	public void inital_set()
@@ -60,7 +62,7 @@ public class _98d7e_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 		is_mondi = false;
 
 		String uri0 = prepare_uri(ba_id);
-		String uri = uri0 + "_cps";
+		String uri = uri0 + "_cpc";
 		List<Individual> res = new ArrayList<Individual>();
 
 		Individual new_individual = new Individual();
@@ -98,9 +100,9 @@ public class _98d7e_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 			}
 		}
 
-		new_individual.addProperty("v-s:hasRoleInContract", new Resource("d:wws2oz313z6xpl1hd4u3laxzfg", Type._Uri));
+		new_individual.addProperty("v-s:hasRoleInContract", new Resource("d:dsxyd1uxsxuui6f1t3s4ki3rdp", Type._Uri));
 
-		if (register_type.equals("2c4fc8846cb24609bb4f9134d2833991"))
+		if (register_type.equals("8cf061a51fe44ae5b70bf0ae6447d9a4"))
 		{
 			if (owner == null || owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
 				new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_1", Type._Uri));
@@ -110,7 +112,7 @@ public class _98d7e_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 		}
 
 		new_individual.addProperty("v-s:backwardTarget", new Resource(uri0, Type._Uri));
-		new_individual.addProperty("v-s:backwardProperty", new Resource("v-s:hasContractParticipantSupplier", Type._Uri));
+		new_individual.addProperty("v-s:backwardProperty", new Resource("v-s:hasContractParticipantCustomer", Type._Uri));
 
 		res.add(new_individual);
 		return res;

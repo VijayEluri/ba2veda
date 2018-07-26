@@ -36,11 +36,11 @@ import sm.tools.veda_client.VedaConnection;
 7. индивид из поля contractor помещаем в поле v-s:hasContractor + d: 
  */
 
-public class _98d7e_v_s_ContractParticipantSupplier extends Ba2VedaTransform
+public class _dc205_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 {
-	public _98d7e_v_s_ContractParticipantSupplier(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _dc205_v_s_ContractParticipantSupplier(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "98d7e7a4bb3e4e7192595aa39db326d9", "v-s:ContractParticipantSupplier");
+		super(_ba, _veda, replacer, "dc205f55fd8f435da8968e6cbbcd4149", "v-s:ContractParticipantSupplier");
 	}
 
 	public void inital_set()
