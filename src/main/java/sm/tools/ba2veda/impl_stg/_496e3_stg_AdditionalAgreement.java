@@ -27,13 +27,14 @@ public class _496e3_stg_AdditionalAgreement extends Ba2VedaTransform
 	{
 		fields_map.put("owner", "v-s:owner");
 		fields_map.put("kind_pr", "?");
-		fields_map.put("add_to_contract", "?");
-		fields_map.put("number_auto_2", "v-s:registrationNumberAdd");
-		fields_map.put("number", "v-s:registrationNumber");
-		fields_map.put("contractor_number", "v-s:registrationNumberIn");
+		fields_map.put("contract", "?");
+		fields_map.put("add_agreement_contractor_number", "v-s:registrationNumberAdd");
+		fields_map.put("number", "v-s:registrationNumber");		
+		fields_map.put("agreement_register_date", "v-s:registrationDate");
+		fields_map.put("add_agreement_number", "v-s:registrationNumberIn");
 		fields_map.put("subject", "v-s:theme");
 		fields_map.put("subject_type", "v-s:hasContractScope");
-		fields_map.put("initiator_person", "v-s:initiator");
+		fields_map.put("initiator", "v-s:initiator");
 		fields_map.put("initiator", "stg:hasCFOStructure");
 		//fields_map.put("contractor", "v-s:hasContractParticipantCustomer");
 		fields_map.put("type_contract", "v-s:hasObligationKind");
@@ -49,14 +50,14 @@ public class _496e3_stg_AdditionalAgreement extends Ba2VedaTransform
 		fields_map.put("budget_item", "stg:hasBudjetItem");
 		fields_map.put("budget_limit", "?");
 		fields_map.put("date_from", "v-s:dateFrom");
-		fields_map.put("date_to", "v-s:dateTo");
+		fields_map.put("agreement_validity_period", "v-s:dateTo");
 		fields_map.put("support_specialist_of_contract", "v-s:supportSpecialistOfContract");
 		fields_map.put("chief_preparation_specialist_of_contract", "stg:chiefOfSupportSpecialistOfContract");
 		//fields_map.put("add_agreement", "stg:hasAdditionalAgreement");
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("comment", "?");		
-		fields_map.put("name", "rdfs:label");
+		fields_map.put("display_requisite", "rdfs:label");
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class _496e3_stg_AdditionalAgreement extends Ba2VedaTransform
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
 
-				if (code.equals("add_to_contract"))
+				if (code.equals("contract"))
 				{
 					if (rss == null)
 						return new ArrayList<Individual>();
