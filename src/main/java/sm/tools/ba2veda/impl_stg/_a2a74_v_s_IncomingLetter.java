@@ -151,10 +151,16 @@ public class _a2a74_v_s_IncomingLetter extends Ba2VedaTransform
 
 					String crss = att.getOrganizationValue();
 
-					if (crss.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
-						addressee.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
-					else if (crss.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
-						addressee.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_2", Type._Uri);
+					if (crss != null)
+					{
+						if (crss.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
+							addressee.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
+						else if (crss.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
+							addressee.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_2", Type._Uri);
+					} else
+					{
+						System.out.println("WARN! ORGANIZATION NOT FOUND, SRC=" + att.toString());
+					}
 
 				} else if (code.equals("register_number_1"))
 					_registrationNumber = rss;

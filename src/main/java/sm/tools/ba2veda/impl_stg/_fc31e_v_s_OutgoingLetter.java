@@ -232,12 +232,20 @@ public class _fc31e_v_s_OutgoingLetter extends Ba2VedaTransform
 			sender_wrap.addProperty("v-s:created", _created);
 			sender_wrap.addProperty("v-s:edited", _edited);
 
-			if (owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
+			if (owner != null)
+			{
+				if (owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
+					sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
+				else if (owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
+					sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_2", Type._Uri);
+				else
+					sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
+			} else
+			{
+				System.out.println("WARN! OWNER IS NULL !!!");
 				sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
-			else if (owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
-				sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_2", Type._Uri);
-			else
-				sender_wrap.addProperty("v-s:correspondentOrganization", "d:org_RU1121016110_1", Type._Uri);
+			}
+
 			res.add(sender_wrap);
 
 			new_individual.addProperty("v-s:sender", sender_wrap.getUri(), Type._Uri);
