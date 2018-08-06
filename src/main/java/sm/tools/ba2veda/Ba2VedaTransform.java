@@ -641,39 +641,44 @@ public abstract class Ba2VedaTransform
 			{
 				domain_name = domain_name.replace("-", " +");
 
-				res = new ArrayList<String>(Arrays.asList(st_veda.query("'v-s:login'=='" + domain_name + "'")));
-				if (res.size() == 0)
+				String[] aaa = st_veda.query("'v-s:login'=='" + domain_name + "'");
+
+				if (aaa != null)
 				{
-					res = new ArrayList<String>(Arrays.asList(st_veda.query("'v-s:deleted' == true && 'v-s:login'=='" + domain_name + "'")));
+					res = new ArrayList<String>(Arrays.asList(aaa));
 					if (res.size() == 0)
 					{
-						if (is_mondi == false)
+						res = new ArrayList<String>(Arrays.asList(st_veda.query("'v-s:deleted' == true && 'v-s:login'=='" + domain_name + "'")));
+						if (res.size() == 0)
 						{
-							return createUserToVeda(level, uu, null, null, uu.isActive());
-						} else
-							return createUserToVeda(level, uu, "dismissed", stand_prefix + "position_dismissed", false);
-					}
-
-				} else
-				{
-					String account_id = (String) res.get(0);
-
-					Individual jsno_account = st_veda.getIndividual(account_id);
-
-					if (jsno_account != null)
-					{
-						String owner = jsno_account.getValue("v-s:owner");
-
-						if (owner != null)
-						{
-							Individual jsno_empl = st_veda.getIndividual(owner);
-
-							if (jsno_empl != null)
+							if (is_mondi == false)
 							{
-								String appnt = jsno_empl.getValue("v-s:hasAppointment");
+								return createUserToVeda(level, uu, null, null, uu.isActive());
+							} else
+								return createUserToVeda(level, uu, "dismissed", stand_prefix + "position_dismissed", false);
+						}
 
-								if (appnt != null)
-									return appnt;
+					} else
+					{
+						String account_id = (String) res.get(0);
+
+						Individual jsno_account = st_veda.getIndividual(account_id);
+
+						if (jsno_account != null)
+						{
+							String owner = jsno_account.getValue("v-s:owner");
+
+							if (owner != null)
+							{
+								Individual jsno_empl = st_veda.getIndividual(owner);
+
+								if (jsno_empl != null)
+								{
+									String appnt = jsno_empl.getValue("v-s:hasAppointment");
+
+									if (appnt != null)
+										return appnt;
+								}
 							}
 						}
 					}
