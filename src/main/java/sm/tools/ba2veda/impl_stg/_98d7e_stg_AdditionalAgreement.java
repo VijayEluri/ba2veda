@@ -16,7 +16,7 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _98d7e_stg_AdditionalAgreement extends Ba2VedaTransform
+public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 {
 	public _98d7e_stg_AdditionalAgreement(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{

@@ -16,7 +16,7 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _496e3_stg_AdditionalAgreement extends Ba2VedaTransform
+public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 {
 	public _496e3_stg_AdditionalAgreement(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
@@ -57,6 +57,7 @@ public class _496e3_stg_AdditionalAgreement extends Ba2VedaTransform
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("comment", "?");		
+		fields_map.put("contract", "?");
 		fields_map.put("display_requisite", "rdfs:label");
 	}
 

@@ -16,7 +16,7 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _dc205_stg_AdditionalAgreement extends Ba2VedaTransform
+public class _dc205_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 {
 	public _dc205_stg_AdditionalAgreement(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
@@ -114,7 +114,7 @@ public class _dc205_stg_AdditionalAgreement extends Ba2VedaTransform
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
 
-				if (code.equals("add_to_contract"))
+				if(code.equals("add_to_contract"))
 				{
 					if (rss == null)
 						return new ArrayList<Individual>();
