@@ -190,7 +190,7 @@ public class _fc31e_v_s_OutgoingLetter extends Ba2VedaTransform
 							if (comment == null)
 								comment = new Individual();
 
-							if (rss != null)
+							if (rss != null && rss.resources != null && rss.resources.size() > 0)
 							{
 								String iiu = rss.resources.get(0).getData();
 								Individual ii = veda.getIndividual(iiu);
