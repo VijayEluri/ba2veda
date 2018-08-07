@@ -7,6 +7,7 @@ import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
 import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
+import sm.tools.ba2veda.Pair;
 import sm.tools.ba2veda.Replacer;
 import sm.tools.veda_client.Individual;
 import sm.tools.veda_client.Resource;
@@ -71,8 +72,16 @@ public class _496e3_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 		//new_individual.addProperty("v-s:omitBackwardTarget", new Resource(false, Type._Bool));
 		//new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasDecreeRegistrationRecord", Type._Uri));
 
-		String register_type = ba.get_first_value_of_field(doc, "register_type");
+		String register_type = null;
+
+		String contract = ba.get_first_value_of_field(doc, "contract");
+		Pair<XmlDocument, Long> contract_doc = ba.getActualDocument(contract);
+
+		if (contract_doc != null)
+			register_type = ba.get_first_value_of_field(contract_doc.getLeft(), "register_type");
+
 		String owner = ba.get_first_value_of_field(doc, "owner");
+		String contractor = null;
 
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts)
@@ -84,6 +93,11 @@ public class _496e3_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 			if (predicate != null)
 			{
 				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+
+				if (code.equals("contractor"))
+				{
+					contractor = att.getRecordIdValue();
+				}
 
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
@@ -106,6 +120,9 @@ public class _496e3_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 
 			if (owner != null && owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
 				new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_2", Type._Uri));
+		} else
+		{
+			new_individual.setProperty("v-s:hasContractor", new Resource("d:" + contractor, Type._Uri));
 		}
 
 		new_individual.addProperty("v-s:backwardTarget", new Resource(uri0, Type._Uri));
