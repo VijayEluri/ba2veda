@@ -16,12 +16,15 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
-	public _496e3_stg_AdditionalAgreement(BaSystem _ba, VedaConnection _veda, Replacer replacer) {
+public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract
+{
+	public _496e3_stg_AdditionalAgreement(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	{
 		super(_ba, _veda, replacer, "496e359316334e47b87af4576d36d27c", "stg:AdditionalAgreement");
 	}
 
-	public void inital_set() {
+	public void inital_set()
+	{
 		fields_map.put("owner", "v-s:owner");
 		fields_map.put("kind_pr", "?");
 		fields_map.put("contract", "?");
@@ -55,12 +58,14 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
 		fields_map.put("add_info", "v-s:hasComment");
 		fields_map.put("comment", "?");
 		fields_map.put("contract", "?");
+		fields_map.put("link_document", "?");
 		fields_map.put("display_requisite", "rdfs:label");
 	}
 
 	@Override
-	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri,
-			String parent_ba_doc_id, String path) throws Exception {
+	public List<Individual> transform(int level, XmlDocument doc, String ba_id, String parent_veda_doc_uri, String parent_ba_doc_id, String path)
+			throws Exception
+	{
 		employee_prefix = "d:employee_";
 		appointment_prefix = "d:";
 		stand_prefix = "d:";
@@ -77,6 +82,7 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
 
 		new_individual.addProperty("rdf:type", new Resource(to_class, Type._Uri));
 		new_individual.addProperty("v-s:customer", "d:org_RU6674128343", Type._Uri);
+		new_individual.addProperty("v-s:owner", "d:org_RU1121016110_1", Type._Uri);
 
 		String kind_pr = "";
 		String irf = null;
@@ -86,20 +92,22 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
 		Resources comment = null;
 
 		List<XmlAttribute> atts = doc.getAttributes();
-		for (XmlAttribute att : atts) {
+		for (XmlAttribute att : atts)
+		{
 			String code = att.getCode();
 
 			String predicate = fields_map.get(code);
 			System.out.println("CODE: " + code);
 
-			if (predicate != null) {
-				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id,
-						parent_veda_doc_uri, true);
+			if (predicate != null)
+			{
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
 				if (predicate.equals("?") == false)
 					new_individual.addProperty(predicate, rss);
 
-				if (code.equals("contract")) {
+				if (code.equals("contract"))
+				{
 					if (rss == null)
 						return new ArrayList<Individual>();
 
@@ -107,7 +115,8 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
 					new_individual.addProperty("v-s:parent", rss);
 					new_individual.addProperty("v-s:backwardProperty", "stg:hasAdditionalAgreement", Type._Uri);
 
-				} else if (code.equals("kind_pr")) {
+				} else if (code.equals("kind_pr"))
+				{
 					// new_individual.addProperty("v-s:hasDocumentKind", new
 					// Resource("d:fbf562d8a6a04d72b1034f7f7e4d21de", Type._Uri));
 					new_individual.addProperty("v-s:hasDocumentKind", rss);
@@ -118,15 +127,18 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
 					attachment = rss;
 				else if (code.equals("origiral_source"))
 					original_source = rss;
-				else if (code.equals("contractor")) {
+				else if (code.equals("contractor"))
+				{
 					new_individual.addProperty("v-s:supplierContractor", rss);
-					while (true) {
-						try {
+					while (true)
+					{
+						try
+						{
 							Individual indiv = veda.getIndividual("d:" + irf);
 							if (indiv != null)
-								new_individual.addProperty("v-s:supplier",
-										indiv.getResources("v-s:linkedOrganization"));
-						} catch (Exception e) {
+								new_individual.addProperty("v-s:supplier", indiv.getResources("v-s:linkedOrganization"));
+						} catch (Exception e)
+						{
 							System.err.println("Err getting individual, retry later");
 							e.printStackTrace();
 							Thread.sleep(5000);
@@ -142,7 +154,8 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
 					currency = rss;
 				else if (code.equals("budget_limit"))
 					comment = rss;
-				else if (code.equals("number")) {
+				else if (code.equals("number"))
+				{
 					new_individual.addProperty("v-s:registrationNumber", rss);
 					String data = rss.resources.get(0).getData();
 					Pattern pattern = Pattern.compile("[0-9]{6}[.][0-9]{2}?");
@@ -155,10 +168,28 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
 					else if (matcher2.find())
 						extract = matcher2.group();
 
-					if (extract != null) {
+					if (extract != null)
+					{
 						String[] parts = extract.split("[.]");
 						new_individual.addProperty("v-s:registrationNumberAdd", parts[1], Type._String);
 					}
+
+				} else if (code.equals("link_document"))
+				{
+					String irf1 = att.getLinkValue();
+					if (irf1 == null)
+						continue;
+					String link_to = irf1;
+
+					Individual link = new Individual();
+					link.addProperty("rdf:type", new Resource("v-s:Link", Type._Uri));
+					link.setUri("d:link_" + ba_id + "_" + link_to);
+					link.addProperty("v-s:from", new Resource(new_individual.getUri(), Type._Uri));
+					link.addProperty("v-s:to", new Resource("d:" + link_to, Type._Uri));
+
+					putIndividual(level, link, ba_id);
+
+					new_individual.addProperty("v-s:hasLink", new Resource(link.getUri(), Type._Uri));
 
 				}
 			}
@@ -192,7 +223,8 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
 		 * 
 		 * break; } }
 		 */
-		if (currency != null && summ != null) {
+		if (currency != null && summ != null)
+		{
 			Individual price = new Individual();
 			price.setUri(new_individual.getUri() + "_price");
 			price.addProperty("rdf:type", "v-s:Price", Type._Uri);
@@ -203,28 +235,27 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract {
 			new_individual.addProperty("v-s:hasPrice", price.getUri(), Type._Uri);
 			putIndividual(level, price, ba_id);
 		}
-		/*
-		 * if (original_source != null || contractor != null || attachment != null) {
-		 * Individual regRecord = new Individual();
-		 * regRecord.setUri(new_individual.getUri() + "_registration_record");
-		 * regRecord.addProperty("rdf:type", "stg:ContractRegistrationRecord",
-		 * Type._Uri); regRecord.addProperty("v-s:creator",
-		 * new_individual.getResources("v-s:creator"));
-		 * regRecord.addProperty("v-s:created",
-		 * new_individual.getResources("v-s:created"));
-		 * regRecord.addProperty("v-s:attachment", attachment);
-		 * regRecord.addProperty("stg:hasOriginalSource", original_source); //
-		 * regRecord.addProperty("v-s:supplierContractor", contractor);
-		 * regRecord.addProperty("v-s:backwardTarget", new_individual.getUri(),
-		 * Type._Uri); regRecord.addProperty("v-s:backwardProperty",
-		 * "v-s:hasRegistrationRecord", Type._Uri); regRecord.addProperty("v-s:parent",
-		 * new_individual.getUri(), Type._Uri); regRecord.addProperty("v-s:canRead",
-		 * "true", Type._Bool); putIndividual(level, regRecord, ba_id);
-		 * new_individual.addProperty("v-s:hasRegistrationRecord", regRecord.getUri(),
-		 * Type._Uri); }
-		 */
 
-		if (comment != null) {
+		if (original_source != null || contractor != null || attachment != null)
+		{
+			Individual regRecord = new Individual();
+			regRecord.setUri(new_individual.getUri() + "_registration_record");
+			regRecord.addProperty("rdf:type", "stg:ContractRegistrationRecord", Type._Uri);
+			regRecord.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+			regRecord.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+			regRecord.addProperty("v-s:attachment", attachment);
+			regRecord.addProperty("stg:hasOriginalSource", original_source); //
+			//regRecord.addProperty("v-s:supplierContractor", contractor);
+			regRecord.addProperty("v-s:backwardTarget", new_individual.getUri(), Type._Uri);
+			regRecord.addProperty("v-s:backwardProperty", "v-s:hasRegistrationRecord", Type._Uri);
+			regRecord.addProperty("v-s:parent", new_individual.getUri(), Type._Uri);
+			regRecord.addProperty("v-s:canRead", "true", Type._Bool);
+			putIndividual(level, regRecord, ba_id);
+			new_individual.addProperty("v-s:hasRegistrationRecord", regRecord.getUri(), Type._Uri);
+		}
+
+		if (comment != null)
+		{
 			Individual commentIndiv = new Individual();
 			commentIndiv.setUri(new_individual.getUri() + "_comment");
 			commentIndiv.addProperty("rdf:type", "v-s:Comment", Type._Uri);
