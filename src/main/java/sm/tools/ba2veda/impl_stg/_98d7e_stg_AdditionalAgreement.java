@@ -55,7 +55,7 @@ public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 		//fields_map.put("add_agreement", "stg:hasAdditionalAgreement");
 		fields_map.put("attachment", "v-s:attachment");
 		fields_map.put("add_info", "v-s:hasComment");
-		fields_map.put("comment", "?");		
+		fields_map.put("comment", "?");
 		fields_map.put("name", "rdfs:label");
 	}
 
@@ -150,68 +150,72 @@ public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 					comment = rss;
 				else if (code.equals("number"))
 				{
-					new_individual.addProperty("v-s:registrationNumber", rss);
-					String data = rss.resources.get(0).getData();
-					Pattern pattern = Pattern.compile("[0-9]{6}[.][0-9]{2}?");
-					Pattern pattern2 = Pattern.compile("[0-9]{6}[.][0-9]{1}?");
-					Matcher matcher = pattern.matcher(data);
-					Matcher matcher2 = pattern2.matcher(data);
-					String extract = null;
-					if (matcher.find())
-						extract = matcher.group();
-					else if (matcher2.find())
-						extract = matcher2.group();
-
-					if (extract != null)
+					if (rss.resources.size() > 0)
 					{
-						String[] parts = extract.split("[.]");
-						new_individual.addProperty("v-s:registrationNumberAdd", parts[1], Type._String);
-					}
+						new_individual.addProperty("v-s:registrationNumber", rss);
+						String data = rss.resources.get(0).getData();
+						Pattern pattern = Pattern.compile("[0-9]{6}[.][0-9]{2}?");
+						Pattern pattern2 = Pattern.compile("[0-9]{6}[.][0-9]{1}?");
+						Matcher matcher = pattern.matcher(data);
+						Matcher matcher2 = pattern2.matcher(data);
+						String extract = null;
+						if (matcher.find())
+							extract = matcher.group();
+						else if (matcher2.find())
+							extract = matcher2.group();
+
+						if (extract != null)
+						{
+							String[] parts = extract.split("[.]");
+							new_individual.addProperty("v-s:registrationNumberAdd", parts[1], Type._String);
+						}
+					} else 
+						System.err.println("Err, code [number] is empty");						
 
 				}
 			}
 		}
-/*
-		if ((kind_pr.equals("fbf562d8a6a04d72b1034f7f7e4d21de") || kind_pr.equals("074d6f4add1b4aebaf1cf7bc0332eb3d")) && irf != null)
-		{
-
-			while (true)
-			{
-				try
+		/*
+				if ((kind_pr.equals("fbf562d8a6a04d72b1034f7f7e4d21de") || kind_pr.equals("074d6f4add1b4aebaf1cf7bc0332eb3d")) && irf != null)
 				{
-					Individual indiv = veda.getIndividual("d:" + irf);
-					if (indiv != null)
+		
+					while (true)
 					{
-						Individual regRecord = new Individual();
-						regRecord.setUri(new_individual.getUri());
-						regRecord.addProperty("rdf:type", "stg:ContractRegistrationRecord", Type._Uri);
-						regRecord.addProperty("v-s:creator", indiv.getResources("v-s:creator"));
-						regRecord.addProperty("v-s:created", indiv.getResources("v-s:created"));
-						regRecord.addProperty("v-s:attachment", attachment);
-						regRecord.addProperty("stg:hasOriginalSource", original_source);
-						regRecord.addProperty("v-s:backwardTarget", indiv.getUri(), Type._Uri);
-						regRecord.addProperty("v-s:parent", indiv.getUri(), Type._Uri);
-						regRecord.addProperty("v-s:backwardProperty", "v-s:hasRegistrationRecord", Type._Uri);
-						regRecord.addProperty("v-s:canRead", "true", Type._Bool);
-						putIndividual(level, regRecord, ba_id);
-						//indiv.addProperty("v-s:scanAttachment", attachment);
-						indiv.addProperty("stg:hasOriginalSource", original_source);
-						indiv.addProperty("v-s:supplierContractor", contractor);
-						indiv.addProperty("v-s:hasRegistrationRecord", regRecord.getUri(), Type._Uri);
-						putIndividual(level, indiv, ba_id);
-
+						try
+						{
+							Individual indiv = veda.getIndividual("d:" + irf);
+							if (indiv != null)
+							{
+								Individual regRecord = new Individual();
+								regRecord.setUri(new_individual.getUri());
+								regRecord.addProperty("rdf:type", "stg:ContractRegistrationRecord", Type._Uri);
+								regRecord.addProperty("v-s:creator", indiv.getResources("v-s:creator"));
+								regRecord.addProperty("v-s:created", indiv.getResources("v-s:created"));
+								regRecord.addProperty("v-s:attachment", attachment);
+								regRecord.addProperty("stg:hasOriginalSource", original_source);
+								regRecord.addProperty("v-s:backwardTarget", indiv.getUri(), Type._Uri);
+								regRecord.addProperty("v-s:parent", indiv.getUri(), Type._Uri);
+								regRecord.addProperty("v-s:backwardProperty", "v-s:hasRegistrationRecord", Type._Uri);
+								regRecord.addProperty("v-s:canRead", "true", Type._Bool);
+								putIndividual(level, regRecord, ba_id);
+								//indiv.addProperty("v-s:scanAttachment", attachment);
+								indiv.addProperty("stg:hasOriginalSource", original_source);
+								indiv.addProperty("v-s:supplierContractor", contractor);
+								indiv.addProperty("v-s:hasRegistrationRecord", regRecord.getUri(), Type._Uri);
+								putIndividual(level, indiv, ba_id);
+		
+							}
+						} catch (Exception e)
+						{
+							System.err.println("Err getting individual, retry later");
+							e.printStackTrace();
+							Thread.sleep(5000);
+						}
+		
+						break;
 					}
-				} catch (Exception e)
-				{
-					System.err.println("Err getting individual, retry later");
-					e.printStackTrace();
-					Thread.sleep(5000);
 				}
-
-				break;
-			}
-		}
-*/
+		*/
 		if (currency != null && summ != null)
 		{
 			Individual price = new Individual();
@@ -224,25 +228,25 @@ public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 			new_individual.addProperty("v-s:hasPrice", price.getUri(), Type._Uri);
 			putIndividual(level, price, ba_id);
 		}
-/*
-		if (original_source != null || contractor != null || attachment != null)
-		{
-			Individual regRecord = new Individual();
-			regRecord.setUri(new_individual.getUri() + "_registration_record");
-			regRecord.addProperty("rdf:type", "stg:ContractRegistrationRecord", Type._Uri);
-			regRecord.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
-			regRecord.addProperty("v-s:created", new_individual.getResources("v-s:created"));
-			regRecord.addProperty("v-s:attachment", attachment);
-			regRecord.addProperty("stg:hasOriginalSource", original_source);
-			//					regRecord.addProperty("v-s:supplierContractor", contractor);
-			regRecord.addProperty("v-s:backwardTarget", new_individual.getUri(), Type._Uri);
-			regRecord.addProperty("v-s:backwardProperty", "v-s:hasRegistrationRecord", Type._Uri);
-			regRecord.addProperty("v-s:parent", new_individual.getUri(), Type._Uri);
-			regRecord.addProperty("v-s:canRead", "true", Type._Bool);
-			putIndividual(level, regRecord, ba_id);
-			new_individual.addProperty("v-s:hasRegistrationRecord", regRecord.getUri(), Type._Uri);
-		}
-*/
+		/*
+				if (original_source != null || contractor != null || attachment != null)
+				{
+					Individual regRecord = new Individual();
+					regRecord.setUri(new_individual.getUri() + "_registration_record");
+					regRecord.addProperty("rdf:type", "stg:ContractRegistrationRecord", Type._Uri);
+					regRecord.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+					regRecord.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+					regRecord.addProperty("v-s:attachment", attachment);
+					regRecord.addProperty("stg:hasOriginalSource", original_source);
+					//					regRecord.addProperty("v-s:supplierContractor", contractor);
+					regRecord.addProperty("v-s:backwardTarget", new_individual.getUri(), Type._Uri);
+					regRecord.addProperty("v-s:backwardProperty", "v-s:hasRegistrationRecord", Type._Uri);
+					regRecord.addProperty("v-s:parent", new_individual.getUri(), Type._Uri);
+					regRecord.addProperty("v-s:canRead", "true", Type._Bool);
+					putIndividual(level, regRecord, ba_id);
+					new_individual.addProperty("v-s:hasRegistrationRecord", regRecord.getUri(), Type._Uri);
+				}
+		*/
 		if (comment != null)
 		{
 			Individual commentIndiv = new Individual();
