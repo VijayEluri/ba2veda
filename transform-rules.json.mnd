@@ -1544,6 +1544,9 @@
 {"if-equals":[{ "value":"f0ed32af627340ada9d7f3daab08729e"}],"set": [{"value":"d:org_RU1102005472",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"dff5fa580c4f4237b5d8eaa1055c62f9"}],"set": [{"value":"d:org_RU7841469072",  "type" : "Uri"}]},
 
+{"if-equals":[{ "value":"563eb12da4ab4ca28920796963815097"}],"set": [{"value":"d:187dafa2-a5c4-4122-a6ba-c990aa154a09",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"ff97995fb6e8429fb3ff924dba5af43d"}],"set": [{"value":"d:81f10208faae4c2ba7e2fd6812118070",  "type" : "Uri"}]},
+
 {
     "if-equals":[{ "value":"a9d6e546d5af4e90b46ecf74554e9abe"}],
     "set": [{"value":"d:yncyiggv8bmvzbb4qd6407ja",  "type" : "Uri"}]
@@ -2245,7 +2248,7 @@
 },
 {
     "if-equals":[{ "value":"29c1df12cb034732899acde5145019ac"}],
-    "set": [{"value":"d:sr5gdnqd0b6w59hjzxkl02gg",  "type" : "Uri"}]
+    "set": [{"value":"d:d74ecf7707894107aab07f7d8629df8e",  "type" : "Uri"}]
 },
 {
     "if-equals":[{ "value":"e4a5649d2f594fbaae7fe1d003d0689c"}],
@@ -2330,11 +2333,11 @@
 },
 {
     "if-equals":[{ "value":"debb405e63e74bc99487d1c626985d0e"}],
-    "set": [{"value":"d:332c11a413bb4e1b9e5ffaed12bc5ea7",  "type" : "Uri"}]
+    "set": [{"value":"d:1be747f77ef54cfd840aa3220046edb1",  "type" : "Uri"}]
 },
 {
     "if-equals":[{ "value":"07a35eec31a349e0be181c157080e6ee"}],
-    "set": [{"value":"d:332c11a413bb4e1b9e5ffaed12bc5ea7",  "type" : "Uri"}]
+    "set": [{"value":"d:1be747f77ef54cfd840aa3220046edb1",  "type" : "Uri"}]
 },
 
 {
