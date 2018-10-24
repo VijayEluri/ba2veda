@@ -1,16 +1,15 @@
-#source
 dbUser=ba
 dbPassword=,f,ehtxyfz69
-documents_dbUrl=127.0.0.1:3306/documents_db
-files_dbUrl=127.0.0.1:3306/fm_meta_db
-synchronization_dbUrl = 127.0.0.1:3306/synchronization
-mongodb=127.0.0.1:27517
-pacahon=tcp://127.0.0.1:5560
-authorization_db=127.0.0.1:27017
+documents_dbUrl=172.17.1.61:3306/documents_db
+files_dbUrl=172.17.1.61:3306/fm_meta_db
+mongodb=172.17.1.193:27517
+pacahon=tcp://172.17.1.61:5560
+authorization_db=172.17.1.61:27017
+synchronization_dbUrl = 172.17.1.61:3306/synchronization
 
 #destination=http://172.17.2.202:8080
 #destination=http://192.168.0.105:8080
 #destination=http://172.17.1.169:8080
-#destination=http://172.17.1.101:8083
-#destination=http://192.168.0.100:8080
-destination=http://127.0.0.1:8082
+destination=http://172.17.1.101:8080
+##destination=http://192.168.0.100:8080
+#destination=http://127.0.0.1:8080

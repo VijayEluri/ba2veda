@@ -648,14 +648,18 @@ public abstract class Ba2VedaTransform
 					res = new ArrayList<String>(Arrays.asList(aaa));
 					if (res.size() == 0)
 					{
-						res = new ArrayList<String>(Arrays.asList(st_veda.query("'v-s:deleted' == true && 'v-s:login'=='" + domain_name + "'")));
-						if (res.size() == 0)
+						String[] ss = st_veda.query("'v-s:deleted' == true && 'v-s:login'=='" + domain_name + "'");
+						if (ss != null)
 						{
-							if (is_mondi == false)
+							res = new ArrayList<String>(Arrays.asList(ss));
+							if (res.size() == 0)
 							{
-								return createUserToVeda(level, uu, null, null, uu.isActive());
-							} else
-								return createUserToVeda(level, uu, "dismissed", stand_prefix + "position_dismissed", false);
+								if (is_mondi == false)
+								{
+									return createUserToVeda(level, uu, null, null, uu.isActive());
+								} else
+									return createUserToVeda(level, uu, "dismissed", stand_prefix + "position_dismissed", false);
+							}
 						}
 
 					} else
