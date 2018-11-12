@@ -26,7 +26,7 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 	{
 		fields_map.put("Цех", "mnd-s:technicalDocumentObject");
 		fields_map.put("Инв.№", "v-s:shortLabel");
-		fields_map.put("Раздел", "mnd-s:hasMarkOfTechnicalDocuments");
+		fields_map.put("Раздел", "v-s:hasClassifierMarkOfWorkingDrawingsSet");
 		fields_map.put("Проект", "mnd-s:hasProject");
 		fields_map.put("Тип работ", "v-s:hasBudgetCategory");
 		fields_map.put("Дата получения", "v-s:registrationDate");
@@ -38,7 +38,7 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		
 		
 		fields_map.put("Родительский комплект", "v-s:backwardTarget");
-		fields_map.put("Объект ТОРО", "v-s:hasMaintainedObject");
+		//fields_map.put("Объект ТОРО", "v-s:hasMaintainedObject");
 		fields_map.put("Название", "v-s:title");
 		fields_map.put("Комментарий", "v-s:hasComment");
 		fields_map.put("Полное название", "rdfs:label");
@@ -68,6 +68,8 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		new_individual.addProperty("v-s:owner", "d:mondi_department_50003626", Type._Uri);
 		new_individual.addProperty("v-s:hasSector", "d:4775f24d50774505bc8279314557b19a", Type._Uri);
 		new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:uqocbblmycyot69lvvv44m9c28", Type._Uri));
+		new_individual.addProperty("v-s:hasMaintainedObject", new Resource("d:IF00000000000000196343", Type._Uri));
+		
 		int linksCount = 0;
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts)
@@ -162,14 +164,14 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 
 					//Resources rss1 = ba_field_to_veda(level, xat1, null, org, d1, path, parent_ba_doc_id, parent_veda_doc_uri, true);
 
-					if (is_mondi && is_departnment == false)
+					if (is_mondi == true && is_departnment == false)
 					{
 						dev.addProperty("v-s:correspondentPerson", rss);
 						dev.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
 						putIndividual(level, dev, ba_id);
 						new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
 					}
-					if (is_mondi && is_departnment == true)
+					if (is_mondi == true && is_departnment == true)
 					{
 						dev.addProperty("v-s:correspondentDepartment", rss);
 						dev.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
