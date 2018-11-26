@@ -115,6 +115,9 @@ public class _98d7e_v_s_ContractParticipantCustomer extends Ba2VedaTransform
 
 			if (owner != null && owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
 				new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_2", Type._Uri));
+			
+			if (owner != null && owner.equals("df0ffa73-0740-4c3d-ae98-71b061bfca47"))
+				new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU7726531163", Type._Uri));			
 
 		} else
 		{

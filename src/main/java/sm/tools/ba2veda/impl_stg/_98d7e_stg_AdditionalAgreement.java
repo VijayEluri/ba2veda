@@ -69,6 +69,12 @@ public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 		department_prefix = "department";
 		is_mondi = false;
 
+		String add_to_contract = ba.get_first_value_of_field(doc, "add_to_contract");
+		if (add_to_contract == null)
+		{
+			return new ArrayList<Individual>();
+		}
+
 		String uri = prepare_uri(ba_id);
 		List<Individual> res = new ArrayList<Individual>();
 
@@ -79,7 +85,7 @@ public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 
 		new_individual.addProperty("rdf:type", new Resource(to_class, Type._Uri));
 		new_individual.addProperty("v-s:customer", "d:org_RU6674128343", Type._Uri);
-
+		
 		String kind_pr = "";
 		String irf = null;
 

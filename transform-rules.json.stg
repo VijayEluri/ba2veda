@@ -422,6 +422,9 @@
 {"if-equals":[{ "value":"a860e221-e163-4b9c-8614-a46f51d58acf"}],"set": [{"value":"d:org_RU1121016110_1_department_33",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"9e239f4d-6d8b-463a-9a59-d4e2151111d4"}],"set": [{"value":"d:org_RU1121016110_1_department_37",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"15d8a8d8-d96a-43dd-84a2-890d48071a84"}],"set": [{"value":"d:org_RU1121016110_1_department_37",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"3af8ff59-a647-4d7c-a569-5f8d79a7357e"}],"set": [{"value":"d:org_RU1121016110",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"ecae5139-5aca-41dc-923d-c0aecc941424"}],"set": [{"value":"d:org_RU1121016110_1",  "type" : "Uri"}]},
+{"if-equals":[{ "value":"d:fcfd64f1-22f2-4857-a630-d12c0e0d3bf5"}],"set": [{"value":"d:edfe4609-475c-48e5-bf14-9702b56322e9",  "type" : "Uri"}]},
 {"if-equals":[{ "value":"d4416bd032ee4726bbe938ac46890973"}],"set": [{"value":"d:700",  "type" : "Uri"}]}
 ]
 }
