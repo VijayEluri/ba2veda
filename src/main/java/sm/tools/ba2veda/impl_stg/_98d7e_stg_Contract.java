@@ -83,7 +83,7 @@ public class _98d7e_stg_Contract extends _xxxxx_stg_Contract
 
 		String inherit_rights_from = ba.get_first_value_of_field(doc, "inherit_rights_from");
 		String kind_pr = ba.get_first_value_of_field(doc, "kind_pr");
-		if (kind_pr != null && (kind_pr.equals(kpr1) || kind_pr.equals(kpr2) || kind_pr.equals(kpr3) || kind_pr.equals(kpr4)))
+		//if (kind_pr != null && (kind_pr.equals(kpr1) || kind_pr.equals(kpr2) || kind_pr.equals(kpr3) || kind_pr.equals(kpr4)))
 		{
 
 			if (inherit_rights_from == null || inherit_rights_from.length() == 0)

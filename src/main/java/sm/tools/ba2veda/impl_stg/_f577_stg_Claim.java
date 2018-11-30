@@ -389,7 +389,8 @@ public class _f577_stg_Claim extends Ba2VedaTransform {
 			putIndividual(level, has_letter_registration_record_sender, ba_id);
 		}
 
-		if (comment != null) {
+		if (comment != null)
+		{
 			comment.setUri(uri + "_comment");
 			comment.addProperty("rdf:type", new Resource("v-s:Comment", Type._Uri));
 			comment.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));

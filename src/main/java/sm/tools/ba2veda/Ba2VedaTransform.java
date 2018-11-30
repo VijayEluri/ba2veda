@@ -608,6 +608,7 @@ public abstract class Ba2VedaTransform
 			// System.out.println("user " + person_id + ", not content tabnumber");
 			if (is_mondi == false)
 			{
+				return "d:" + person_id;
 			} else
 			{
 				return "d:" + person_id;
@@ -1404,8 +1405,8 @@ public abstract class Ba2VedaTransform
 		XmlDocument doc = doc_ts.getLeft();
 		long timestamp = doc_ts.getRight();
 
-		if (doc.isActive() == false && !prepare_deleted)
-			return null;
+		//if (doc.isActive() == false && !prepare_deleted)
+		//	return null;
 
 		long prev_timestamp = -1;
 		if (Fetcher.no_check_exists == false)

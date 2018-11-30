@@ -3,6 +3,7 @@ package sm.tools.ba2veda.impl_stg;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
 import sm.tools.ba2veda.BaSystem;
 import sm.tools.ba2veda.Pair;
@@ -54,8 +55,9 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 		fields_map.put("date_to", "v-s:dateTo");
 		fields_map.put("comment", "?");
 		fields_map.put("attachment", "v-s:attachment");
-		//fields_map.put("original_source", "v-s:hasRegistrationRecord");
-		fields_map.put("signed_document", "v-s:scanAttachment");
+
+		fields_map.put("original_source", "?");
+		fields_map.put("signed_document", "?");
 
 		fields_map.put("support_specialist_of_contract", "v-s:supportSpecialistOfContract");
 
@@ -64,6 +66,7 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 		fields_map.put("link_document", "?");
 		fields_map.put("display_requisite", "rdfs:label");
 		fields_map.put("budget_limit", "?");
+		fields_map.put("original_source", "?");
 		fields_map.put("", "");
 
 		//		fields_map.put("contractor", "v-s:stakeholder");
@@ -104,12 +107,12 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 
 		String register_number = ba.get_first_value_of_field(doc, "register_number");
 
+		Individual new_individual = new Individual();
 		//String kind_pr = ba.get_first_value_of_field(doc, "kind_pr");
 		//		if (kind_pr != null && (kind_pr.equals(kpr1) || kind_pr.equals(kpr2) || kind_pr.equals(kpr3) || kind_pr.equals(kpr4)))
 		{
 			if (inherit_rights_from == null || inherit_rights_from.length() == 0)
 			{
-				Individual new_individual = new Individual();
 				transform1(level, doc, new_individual, "", ba_id, parent_veda_doc_uri, parent_ba_doc_id, path);
 
 				if (new_individual.getUri() != null)
@@ -143,6 +146,51 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 					res.add(new_individual);
 				}
 			}
+		}
+
+		Resources signed_document = null, original_source = null;
+		String uri = new_individual.getUri();
+
+		List<XmlAttribute> atts = doc.getAttributes();
+		for (XmlAttribute att : atts)
+		{
+			String code = att.getCode();
+
+			String predicate = fields_map.get(code);
+			System.out.println("CODE: " + code);
+
+			if (predicate != null && (code.equals("signed_document") || code.equals("original_source")))
+			{
+				Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+
+				if (code.equals("signed_document"))
+					signed_document = rss;
+				else if (code.equals("original_source"))
+					original_source = rss;
+			}
+		}
+
+		new_individual.addProperty("v-s:hasDocumentKind", "d:2ec8cebaa2014998901d285801695cd1", Type._Uri);
+		new_individual.addProperty("v-s:hasContractScope", "d:c13aa6916114490185a9e6a93fde85f7", Type._Uri);
+		
+		if (signed_document != null)
+		{
+			Individual regRecord = new Individual();
+			regRecord.setUri(new_individual.getUri() + "_crr");
+			regRecord.addProperty("rdf:type", "stg:ContractRegistrationRecord", Type._Uri);
+			regRecord.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+			regRecord.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+			regRecord.addProperty("v-s:attachment", signed_document);
+
+			if (original_source != null)
+				regRecord.addProperty("stg:hasOriginalSource", original_source);
+			//                                      regRecord.addProperty("v-s:supplierContractor", contractor);
+			regRecord.addProperty("v-s:backwardTarget", new_individual.getUri(), Type._Uri);
+			regRecord.addProperty("v-s:backwardProperty", "v-s:hasRegistrationRecord", Type._Uri);
+			regRecord.addProperty("v-s:parent", new_individual.getUri(), Type._Uri);
+			regRecord.addProperty("v-s:canRead", "true", Type._Bool);
+			putIndividual(level, regRecord, ba_id);
+			new_individual.addProperty("v-s:hasRegistrationRecord", regRecord.getUri(), Type._Uri);
 		}
 
 		return res;

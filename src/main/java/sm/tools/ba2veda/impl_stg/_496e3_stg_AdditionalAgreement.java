@@ -84,6 +84,9 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 		new_individual.addProperty("v-s:customer", "d:org_RU6674128343", Type._Uri);
 		new_individual.addProperty("v-s:owner", "d:org_RU1121016110_1", Type._Uri);
 
+		new_individual.addProperty("v-s:hasDocumentKind", "d:fbf562d8a6a04d72b1034f7f7e4d21de", Type._Uri);
+		new_individual.addProperty("v-s:hasContractScope", "d:c13aa6916114490185a9e6a93fde85f7", Type._Uri);
+
 		String kind_pr = "";
 		String irf = null;
 
@@ -108,13 +111,18 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 
 				if (code.equals("contract"))
 				{
-					if (rss == null)
-						return new ArrayList<Individual>();
-
-					new_individual.addProperty("v-s:backwardTarget", rss);
-					new_individual.addProperty("v-s:parent", rss);
 					new_individual.addProperty("v-s:backwardProperty", "stg:hasAdditionalAgreement", Type._Uri);
+					String add_to_contract_link = att.getLinkValue();
+					XmlDocument add_to_contract1 = ba.getActualDocument(add_to_contract_link).getLeft();
+					String inherit_rights_from1 = ba.get_first_value_of_field(add_to_contract1, "inherit_rights_from");
 
+					if (inherit_rights_from1 == null)
+					{
+						new_individual.addProperty("v-s:backwardTarget", rss);
+					} else
+					{
+						new_individual.addProperty("v-s:backwardTarget", "d:" + inherit_rights_from1, Type._Uri);
+					}
 				} else if (code.equals("kind_pr"))
 				{
 					// new_individual.addProperty("v-s:hasDocumentKind", new
@@ -125,7 +133,7 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 					irf = att.getLinkValue();
 				else if (code.equals("attachment"))
 					attachment = rss;
-				else if (code.equals("origiral_source"))
+				else if (code.equals("original_source"))
 					original_source = rss;
 				else if (code.equals("contractor"))
 				{
@@ -254,7 +262,7 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 			new_individual.addProperty("v-s:hasRegistrationRecord", regRecord.getUri(), Type._Uri);
 		}
 
-		if (comment != null)
+		if (comment != null && comment.resources.size() > 0)
 		{
 			Individual commentIndiv = new Individual();
 			commentIndiv.setUri(new_individual.getUri() + "_comment");

@@ -85,7 +85,7 @@ public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 
 		new_individual.addProperty("rdf:type", new Resource(to_class, Type._Uri));
 		new_individual.addProperty("v-s:customer", "d:org_RU6674128343", Type._Uri);
-		
+
 		String kind_pr = "";
 		String irf = null;
 
@@ -110,11 +110,18 @@ public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 
 				if (code.equals("add_to_contract"))
 				{
-					if (rss == null)
-						return new ArrayList<Individual>();
-
-					new_individual.addProperty("v-s:backwardTarget", rss);
 					new_individual.addProperty("v-s:backwardProperty", "stg:hasAdditionalAgreement", Type._Uri);
+					String add_to_contract_link = att.getLinkValue();
+					XmlDocument add_to_contract1 = ba.getActualDocument(add_to_contract_link).getLeft();
+					String inherit_rights_from = ba.get_first_value_of_field(add_to_contract1, "inherit_rights_from");
+
+					if (inherit_rights_from == null)
+					{
+						new_individual.addProperty("v-s:backwardTarget", rss);
+					} else
+					{
+						new_individual.addProperty("v-s:backwardTarget", "d:" + inherit_rights_from, Type._Uri);
+					}
 
 				} else if (code.equals("kind_pr"))
 				{
@@ -175,8 +182,8 @@ public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 							String[] parts = extract.split("[.]");
 							new_individual.addProperty("v-s:registrationNumberAdd", parts[1], Type._String);
 						}
-					} else 
-						System.err.println("Err, code [number] is empty");						
+					} else
+						System.err.println("Err, code [number] is empty");
 
 				}
 			}
@@ -253,7 +260,7 @@ public class _98d7e_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 					new_individual.addProperty("v-s:hasRegistrationRecord", regRecord.getUri(), Type._Uri);
 				}
 		*/
-		if (comment != null)
+		if (comment != null && comment.resources.size() > 0)
 		{
 			Individual commentIndiv = new Individual();
 			commentIndiv.setUri(new_individual.getUri() + "_comment");

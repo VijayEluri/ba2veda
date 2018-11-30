@@ -222,7 +222,8 @@ public abstract class _xxxxx_stg_Contract extends Ba2VedaTransform
 								new_individual.addProperty(predicate, rss);
 						} else
 						{
-							new_individual.addProperty(predicate, rss);
+							if (predicate.equals("?") == false)
+								new_individual.addProperty(predicate, rss);
 						}
 					}
 					/*
