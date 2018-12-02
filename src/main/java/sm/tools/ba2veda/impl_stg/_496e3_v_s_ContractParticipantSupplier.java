@@ -113,7 +113,7 @@ public class _496e3_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 
 		new_individual.addProperty("v-s:hasRoleInContract", new Resource("d:wws2oz313z6xpl1hd4u3laxzfg", Type._Uri));
 
-		if (register_type.equals("2c4fc8846cb24609bb4f9134d2833991"))
+		if (register_type != null && register_type.equals("2c4fc8846cb24609bb4f9134d2833991"))
 		{
 			if (owner == null || owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
 				new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_1", Type._Uri));
