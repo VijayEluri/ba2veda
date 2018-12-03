@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlAttribute;
 import ru.mndsc.bigarchive.server.kernel.document.beans.XmlDocument;
-import sm.tools.ba2veda.Ba2VedaTransform;
 import sm.tools.ba2veda.BaSystem;
+import sm.tools.ba2veda.Pair;
 import sm.tools.ba2veda.Replacer;
 import sm.tools.veda_client.Individual;
 import sm.tools.veda_client.Resource;
@@ -113,15 +113,25 @@ public class _496e3_stg_AdditionalAgreement extends _xxxxx_stg_Contract
 				{
 					new_individual.addProperty("v-s:backwardProperty", "stg:hasAdditionalAgreement", Type._Uri);
 					String add_to_contract_link = att.getLinkValue();
-					XmlDocument add_to_contract1 = ba.getActualDocument(add_to_contract_link).getLeft();
-					String inherit_rights_from1 = ba.get_first_value_of_field(add_to_contract1, "inherit_rights_from");
 
-					if (inherit_rights_from1 == null)
+					if (add_to_contract_link != null)
 					{
-						new_individual.addProperty("v-s:backwardTarget", rss);
-					} else
-					{
-						new_individual.addProperty("v-s:backwardTarget", "d:" + inherit_rights_from1, Type._Uri);
+						Pair<XmlDocument, Long> doc_ts = ba.getActualDocument(add_to_contract_link);
+
+						if (doc_ts != null)
+						{
+							XmlDocument add_to_contract1 = doc_ts.getLeft();
+
+							String inherit_rights_from1 = ba.get_first_value_of_field(add_to_contract1, "inherit_rights_from");
+
+							if (inherit_rights_from1 == null)
+							{
+								new_individual.addProperty("v-s:backwardTarget", rss);
+							} else
+							{
+								new_individual.addProperty("v-s:backwardTarget", "d:" + inherit_rights_from1, Type._Uri);
+							}
+						}
 					}
 				} else if (code.equals("kind_pr"))
 				{
