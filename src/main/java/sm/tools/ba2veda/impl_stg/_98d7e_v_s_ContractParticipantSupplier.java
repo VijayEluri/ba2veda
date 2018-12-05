@@ -69,8 +69,6 @@ public class _98d7e_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 		set_basic_fields(level, new_individual, doc);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
-		//new_individual.addProperty("v-s:omitBackwardTarget", new Resource(false, Type._Bool));
-		//new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasDecreeRegistrationRecord", Type._Uri));
 
 		String register_type = ba.get_first_value_of_field(doc, "register_type");
 		String owner = ba.get_first_value_of_field(doc, "owner");

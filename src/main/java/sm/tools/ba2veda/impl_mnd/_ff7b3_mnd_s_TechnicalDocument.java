@@ -25,9 +25,9 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 	public void inital_set()
 	{
 		fields_map.put("Цех", "mnd-s:technicalDocumentObject");
-		fields_map.put("Инв.№", "v-s:shortLabel");
+		fields_map.put("Обозначение", "v-s:shortLabel");
 		fields_map.put("Раздел", "v-s:hasClassifierMarkOfWorkingDrawingsSet");
-		fields_map.put("Проект", "mnd-s:hasProject");
+		fields_map.put("Проект", "?");
 		fields_map.put("Тип работ", "v-s:hasBudgetCategory");
 		fields_map.put("Дата получения", "v-s:registrationDate");
 		fields_map.put("Разработчик", "?");
@@ -35,11 +35,12 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		fields_map.put("Конструкторская заявка", "mnd-s:hasEngineeringRequest");
 		fields_map.put("Связанные документы", "?");
 		// // //
-		
-		
+
 		fields_map.put("Родительский комплект", "v-s:backwardTarget");
-		//fields_map.put("Объект ТОРО", "v-s:hasMaintainedObject");
-		fields_map.put("Название", "v-s:title");
+		fields_map.put("Инв.№", "?");
+		fields_map.put("Название", "?");
+		fields_map.put("Комментарий", "?");
+
 		fields_map.put("Комментарий", "v-s:hasComment");
 		fields_map.put("Полное название", "rdfs:label");
 
@@ -69,8 +70,15 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		new_individual.addProperty("v-s:hasSector", "d:4775f24d50774505bc8279314557b19a", Type._Uri);
 		new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:uqocbblmycyot69lvvv44m9c28", Type._Uri));
 		new_individual.addProperty("v-s:hasMaintainedObject", new Resource("d:IF00000000000000196343", Type._Uri));
-		
+
 		int linksCount = 0;
+
+		Resources nnn = null;
+		Resources project = null;
+		Resources inm = null;
+		Resources cod = null;
+		Resources comment = null;
+
 		List<XmlAttribute> atts = doc.getAttributes();
 		for (XmlAttribute att : atts)
 		{
@@ -91,7 +99,40 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 				if (rss.resources.size() < 1)
 					continue;
 
-				if (code.equals("Раздел"))
+				if (code.equals("Комментарий"))
+				{
+					comment = rss;
+				} else if (code.equals("Инв.№"))
+				{
+					inm = rss;
+				} else if (code.equals("Проект"))
+				{
+					String link = att.getRecordIdValue();
+					if (link != null)
+					{
+						XmlDocument linkDoc = ba.getActualDocument(link).getLeft();
+						if (linkDoc != null)
+						{
+							List<XmlAttribute> linkAtts = linkDoc.getAttributes();
+							for (XmlAttribute linkAtt : linkAtts)
+							{
+								String linkCode = linkAtt.getCode();
+								if (linkCode.equals("Наименование"))
+								{
+									Resources rssLink = ba_field_to_veda(level, linkAtt, null, null, linkDoc, path, null, null, true);
+									project = rssLink;
+								} else if (linkCode.equals("Код"))
+								{
+									Resources rssLink = ba_field_to_veda(level, linkAtt, null, null, linkDoc, path, null, null, true);
+									cod = rssLink;
+								}
+							}
+						}
+					}
+				} else if (code.equals("Название"))
+				{
+					nnn = rss;
+				} else if (code.equals("Раздел"))
 				{
 					String recordId = att.getRecordIdValue();
 					if (recordId != null)
@@ -139,8 +180,34 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 					}
 				} else if (code.equals("Разработчик"))
 				{
-					String org = att.getOrganizationValue();
-					Department dp = ba.getPacahon().getDepartmentByUid(org, "RU", "");
+					Resources code1 = null;
+					Resources otvl1 = null;
+					Resources rss1 = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+
+					String link = att.getRecordIdValue();
+					if (link != null)
+					{
+						XmlDocument linkDoc = ba.getActualDocument(link).getLeft();
+						if (linkDoc != null)
+						{
+
+							List<XmlAttribute> linkAtts = linkDoc.getAttributes();
+							for (XmlAttribute linkAtt : linkAtts)
+							{
+								String linkCode = linkAtt.getCode();
+								if (linkCode.equals("Код"))
+								{
+									Resources rssLink = ba_field_to_veda(level, linkAtt, null, null, linkDoc, path, null, null, true);
+									code1 = rssLink;
+								} else if (linkCode.equals("Ответственное лицо"))
+								{
+									Resources rssLink = ba_field_to_veda(level, linkAtt, null, null, linkDoc, path, null, null, true);
+									otvl1 = rssLink;
+								}
+
+							}
+						}
+					}
 
 					Individual dev = new Individual();
 					dev.setUri(new_individual.getUri() + "_correspondent");
@@ -148,43 +215,17 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 					dev.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 					dev.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 
-					boolean is_mondi = true;
-					boolean is_departnment = false;
+					if (otvl1 != null)
+						dev.addProperty("v-s:correspondentPerson", otvl1);
 
-					if (dp != null)
-					{
-						String iid = dp.getInternalId();
-						if (iid.length() == 8 && iid.charAt(0) == '5')
-							is_mondi = true;
-						else
-							is_mondi = false;
+					if (rss1 != null)
+						dev.addProperty("v-s:correspondentOrganization", rss1);
 
-						is_departnment = true;
-					}
+					if (code1 != null)
+						dev.addProperty("v-s:correspondentDepartment", code1);
 
-					//Resources rss1 = ba_field_to_veda(level, xat1, null, org, d1, path, parent_ba_doc_id, parent_veda_doc_uri, true);
-
-					if (is_mondi == true && is_departnment == false)
-					{
-						dev.addProperty("v-s:correspondentPerson", rss);
-						dev.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
-						putIndividual(level, dev, ba_id);
-						new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
-					}
-					if (is_mondi == true && is_departnment == true)
-					{
-						dev.addProperty("v-s:correspondentDepartment", rss);
-						dev.addProperty("v-s:correspondentOrganization", new Resource("d:org_RU1121003135", Type._Uri));
-						putIndividual(level, dev, ba_id);
-						new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
-					}
-
-					if (is_mondi == false && is_departnment == true)
-					{
-						dev.addProperty("v-s:correspondentOrganization", rss);
-						putIndividual(level, dev, ba_id);
-						new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
-					}
+					putIndividual(level, dev, ba_id);
+					new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
 
 				} else if (code.equals("Сопровождающие документы"))
 				{
@@ -237,6 +278,20 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 				}
 			}
 		}
+
+		Object[] ff =
+		{ nnn, " ", inm, " ", comment, " ", cod, " ", project };
+		String[] langs_out =
+		{ "EN", "RU" };
+		Resources rss = rs_assemble(ff, langs_out);
+		if (rss.resources.size() == 0)
+		{
+			String[] langs_out2 =
+			{ "NONE" };
+			rss = rs_assemble(ff, langs_out2);
+		}
+		if (rss.resources.size() > 0)
+			new_individual.addProperty("v-s:title", rss);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		res.add(new_individual);
