@@ -41,7 +41,7 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		fields_map.put("Название", "?");
 		fields_map.put("Комментарий", "?");
 
-		fields_map.put("Комментарий", "v-s:hasComment");
+		//fields_map.put("Комментарий", "v-s:hasComment");
 		fields_map.put("Полное название", "rdfs:label");
 
 		fields_map.put("Раздел", "?");
@@ -205,7 +205,7 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 									otvl1 = rssLink;
 								}
 
-							}
+							}http://172.17.1.169:8080/#/d:ac2ea66e6ba743528561a85836c1f6ef//v-ui:ttl
 						}
 					}
 
