@@ -205,24 +205,24 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 									otvl1 = rssLink;
 								}
 
-							}http://172.17.1.169:8080/#/d:ac2ea66e6ba743528561a85836c1f6ef//v-ui:ttl
+							}
 						}
 					}
 
 					Individual dev = new Individual();
 					dev.setUri(new_individual.getUri() + "_correspondent");
-					dev.addProperty("rdf:type", new Resource("v-s:Correspondent", Type._Uri));
+					dev.addProperty("rdf:type", new Resource("mnd-s:Correspondent", Type._Uri));
 					dev.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
 					dev.addProperty("v-s:created", new_individual.getResources("v-s:created"));
 
 					if (otvl1 != null)
-						dev.addProperty("v-s:correspondentPerson", otvl1);
+						dev.addProperty("v-s:correspondentPersonDescription", otvl1);
 
 					if (rss1 != null)
 						dev.addProperty("v-s:correspondentOrganization", rss1);
 
 					if (code1 != null)
-						dev.addProperty("v-s:correspondentDepartment", code1);
+						dev.addProperty("v-s:correspondentDepartmentDescription", code1);
 
 					putIndividual(level, dev, ba_id);
 					new_individual.addProperty("v-s:developer", new Resource(dev.getUri(), Type._Uri));
