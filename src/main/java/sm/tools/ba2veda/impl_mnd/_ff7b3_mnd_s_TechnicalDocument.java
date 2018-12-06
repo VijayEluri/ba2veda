@@ -28,6 +28,7 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		fields_map.put("Обозначение", "v-s:shortLabel");
 		fields_map.put("Раздел", "v-s:hasClassifierMarkOfWorkingDrawingsSet");
 		fields_map.put("Проект", "?");
+		fields_map.put("Контракт", "?");
 		fields_map.put("Тип работ", "v-s:hasBudgetCategory");
 		fields_map.put("Дата получения", "v-s:registrationDate");
 		fields_map.put("Разработчик", "?");
@@ -75,6 +76,7 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 
 		Resources nnn = null;
 		Resources project = null;
+		Resources contract = null;
 		Resources inm = null;
 		Resources cod = null;
 		Resources comment = null;
@@ -107,10 +109,10 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 					inm = rss;
 				} else if (code.equals("Проект"))
 				{
-					String link = att.getRecordIdValue();
-					if (link != null)
+					String link1 = att.getRecordIdValue();
+					if (link1 != null)
 					{
-						XmlDocument linkDoc = ba.getActualDocument(link).getLeft();
+						XmlDocument linkDoc = ba.getActualDocument(link1).getLeft();
 						if (linkDoc != null)
 						{
 							List<XmlAttribute> linkAtts = linkDoc.getAttributes();
@@ -129,6 +131,26 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 							}
 						}
 					}
+				} else if (code.equals("Контракт"))
+				{
+					String link1 = att.getRecordIdValue();
+					if (link1 != null)
+					{
+						XmlDocument linkDoc = ba.getActualDocument(link1).getLeft();
+						if (linkDoc != null)
+						{
+							List<XmlAttribute> linkAtts = linkDoc.getAttributes();
+							for (XmlAttribute linkAtt : linkAtts)
+							{
+								String linkCode = linkAtt.getCode();
+								if (linkCode.equals("Наименование"))
+								{
+									Resources rssLink = ba_field_to_veda(level, linkAtt, null, null, linkDoc, path, null, null, true);
+									contract = rssLink;
+								}
+							}
+						}
+					}
 				} else if (code.equals("Название"))
 				{
 					nnn = rss;
@@ -143,40 +165,7 @@ public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
 							recordId2 = ba.get_first_value_of_field(recordDoc, "Раздел");
 						if (recordId2 == null)
 							recordId2 = "";
-						if (recordId.equals("69ca82170be24d41b32fc9033a2574f5") || recordId2.equals("69ca82170be24d41b32fc9033a2574f5"))
-						{
-							new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", rss);
-							//		new_individual.addProperty("v-s:hasDocumentKind", 
-							//		new Resource("d:afc1a827f2ac47a9bd19b6db910dfc13", Type._Uri));
-						} else if (recordId2.equals("4f391bc4b9434d619ea95396cd0faba7"))
-						{
-							new_individual.addProperty("mnd-s:hasSectionOfProjectDocumentation", rss);
-							//								new_individual.addProperty("v-s:hasDocumentKind", 
-							//									new Resource("d:kqyyu62f90hy89wh188664bxwl", Type._Uri));
-						} else if (recordId.equals("7d67bd472db4481db0f5511f37107cae") || recordId.equals("db6c04d678c849859295f65efce1de76"))
-						{
-							new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments",
-									new Resource("d:6ba70b2261d4443e98d91452565d3b98", Type._Uri));
-							//								new_individual.addProperty("v-s:hasDocumentKind", 
-							//									new Resource("d:mqzlxqrejhhbod4ra42nq8cf", Type._Uri));
-						} else if (recordId.equals("6ba70b2261d4443e98d91452565d3b98"))
-						{
-							//								new_individual.addProperty("v-s:hasDocumentKind", 
-							//									new Resource("d:afc1a827f2ac47a9bd19b6db910dfc13", Type._Uri));
-							new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments",
-									new Resource("d:6ba70b2261d4443e98d91452565d3b98", Type._Uri));
-						} else if (recordId.equals("584e7ef299b14bec89c516b311472ba5"))
-						{
-							//								new_individual.addProperty("v-s:hasDocumentKind", 
-							//									new Resource("d:99d3887ae22d439c9fe77a10ff5a4b0d", Type._Uri));
-							new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments",
-									new Resource("d:6ba70b2261d4443e98d91452565d3b98", Type._Uri));
-						} else if (recordId.equals("41b925655c8a44a8b34ab3b1894bebd0"))
-						{
-							//								new_individual.addProperty("v-s:hasDocumentKind", 
-							//									new Resource("d:41b925655c8a44a8b34ab3b1894bebd0", Type._Uri));
-							new_individual.addProperty("mnd-s:hasMarkOfTechnicalDocuments", new Resource("d:zn8jlec6ma6x28fsgp6lyw49zo", Type._Uri));
-						}
+							new_individual.addProperty("v-s:hasClassifierMarkOfWorkingDrawingsSet", rss);
 					}
 				} else if (code.equals("Разработчик"))
 				{

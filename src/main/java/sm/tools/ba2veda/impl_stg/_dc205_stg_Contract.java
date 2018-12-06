@@ -24,7 +24,6 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 		kpr2 = "";
 		kpr3 = "";
 		kpr4 = "";
-
 	}
 
 	public void inital_set()
@@ -39,7 +38,6 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 		fields_map.put("initiator", "stg:hasCFOStructure");
 		fields_map.put("initiator_person", "v-s:initiator");
 		fields_map.put("type_contract", "v-s:hasObligationKind");
-		fields_map.put("contract_date", "v-s:registrationDate");
 		fields_map.put("type_contract", "v-s:hasObligationKind");
 		fields_map.put("payment_order", "v-s:hasPaymentForm");
 		fields_map.put("payment_terms", "v-s:hasPaymentConditions");
@@ -53,6 +51,7 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 		fields_map.put("budget_item", "stg:hasBudjetItem");
 		fields_map.put("date_from", "v-s:dateFrom");
 		fields_map.put("date_to", "v-s:dateTo");
+		fields_map.put("contract_date", "v-s:registrationDate");
 		fields_map.put("comment", "?");
 		fields_map.put("attachment", "v-s:attachment");
 
@@ -89,7 +88,6 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 		is_mondi = false;
 
 		fields_map.clear();
-		inital_set();
 
 		List<Individual> res = new ArrayList<Individual>();
 
@@ -102,9 +100,40 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 		String inherit_rights_from = ba.get_first_value_of_field(doc, "inherit_rights_from");
 		if (inherit_rights_from != null)
 		{
-			return new ArrayList<Individual>();
+			fields_map.put("date_from", "v-s:dateFrom");
+			fields_map.put("date_to", "v-s:dateTo");
+			fields_map.put("contract_date", "v-s:registrationDate");
+
+			String uri = "d:" + inherit_rights_from;
+
+			Individual prev_indv = veda.getIndividual(uri);
+
+			if (prev_indv != null)
+			{
+				List<XmlAttribute> atts = doc.getAttributes();
+				for (XmlAttribute att : atts)
+				{
+					String code = att.getCode();
+
+					String predicate = fields_map.get(code);
+					System.out.println("CODE: " + code);
+
+					if (predicate != null)
+					{
+						Resources rss = ba_field_to_veda(level, att, uri, ba_id, doc, path, parent_ba_doc_id, parent_veda_doc_uri, true);
+
+						if (predicate.equals("?") == false)
+							prev_indv.setProperty(predicate, rss);
+					}
+				}
+
+				putIndividual(level, prev_indv, ba_id);
+			}
+
+			return res;
 		}
 
+		inital_set();
 		String register_number = ba.get_first_value_of_field(doc, "register_number");
 
 		Individual new_individual = new Individual();
@@ -172,7 +201,7 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 
 		new_individual.addProperty("v-s:hasDocumentKind", "d:2ec8cebaa2014998901d285801695cd1", Type._Uri);
 		new_individual.addProperty("v-s:hasContractScope", "d:c13aa6916114490185a9e6a93fde85f7", Type._Uri);
-		
+
 		if (signed_document != null)
 		{
 			Individual regRecord = new Individual();
@@ -194,6 +223,7 @@ public class _dc205_stg_Contract extends _xxxxx_stg_Contract
 		}
 
 		return res;
+		
 	}
 
 }

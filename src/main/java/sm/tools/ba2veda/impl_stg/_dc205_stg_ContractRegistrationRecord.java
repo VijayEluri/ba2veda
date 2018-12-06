@@ -50,18 +50,20 @@ public class _dc205_stg_ContractRegistrationRecord extends Ba2VedaTransform
 		department_prefix = "department";
 		is_mondi = false;
 
+		List<Individual> res = new ArrayList<Individual>();
+
 		String inherit_rights_from = ba.get_first_value_of_field(doc, "inherit_rights_from");
 		//if (inherit_rights_from == null)
 		//	return new ArrayList<Individual>();
 
 		//		String uri0 = prepare_uri(ba_id);
 		String uri0 = "d:" + inherit_rights_from;
-		
+
 		if (inherit_rights_from == null)
-			uri0 = prepare_uri(ba_id);
-		
+			return res;
+		//			uri0 = prepare_uri(ba_id);
+
 		String uri = uri0 + "_crr";
-		List<Individual> res = new ArrayList<Individual>();
 
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
