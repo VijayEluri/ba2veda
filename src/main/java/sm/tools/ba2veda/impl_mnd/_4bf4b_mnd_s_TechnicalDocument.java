@@ -15,11 +15,11 @@ import sm.tools.veda_client.Resources;
 import sm.tools.veda_client.Type;
 import sm.tools.veda_client.VedaConnection;
 
-public class _ff7b3_mnd_s_TechnicalDocument extends Ba2VedaTransform
+public class _4bf4b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 {
-	public _ff7b3_mnd_s_TechnicalDocument(BaSystem _ba, VedaConnection _veda, Replacer replacer)
+	public _4bf4b_mnd_s_TechnicalDocument(BaSystem _ba, VedaConnection _veda, Replacer replacer)
 	{
-		super(_ba, _veda, replacer, "ff7b326d38b74b639c23ad198b8bd8b1", "mnd-s:TechnicalDocument");
+		super(_ba, _veda, replacer, "4bf4bc7e18ed4ea18e2b1a15a80db2af", "mnd-s:TechnicalDocument");
 	}
 
 	public void inital_set()

@@ -236,6 +236,7 @@ public class Fetcher
 
 		trs.add(new _f9260_mnd_s_LocalRegulatoryDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _ff7b3_mnd_s_TechnicalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
+		trs.add(new _4bf4b_mnd_s_TechnicalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 
 		// STG
 		trs.add(new _6e8e8_stg_InternalDocument(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
