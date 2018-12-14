@@ -35,9 +35,10 @@ public class _4bf4b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		fields_map.put("Сопровождающие документы", "?");
 		fields_map.put("Конструкторская заявка", "mnd-s:hasEngineeringRequest");
 		fields_map.put("Связанные документы", "?");
+		fields_map.put("Вложение", "v-s:attachment");
 		// // //
 
-		fields_map.put("Родительский комплект", "v-s:backwardTarget");
+		fields_map.put("Комплект", "v-s:backwardTarget");
 		fields_map.put("Инв.№", "?");
 		fields_map.put("Название", "?");
 		fields_map.put("Комментарий", "?");
@@ -65,12 +66,12 @@ public class _4bf4b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		new_individual.addProperty("v-s:canRead", new Resource(true, Type._Bool));
 		new_individual.addProperty("v-s:hasLifecycleStage", new Resource("d:yzukiatavri0xticlw3xax2qeg", Type._Uri));
 		new_individual.addProperty("v-s:valid", "true", Type._Bool);
-		new_individual.addProperty("mnd-s:appliesTo", "d:org_RU1121003135", Type._Uri);
+		//new_individual.addProperty("mnd-s:appliesTo", "d:org_RU1121003135", Type._Uri);
 		new_individual.addProperty("mnd-s:isAccessLimited", "false", Type._Bool);
-		new_individual.addProperty("v-s:owner", "d:mondi_department_50003626", Type._Uri);
-		new_individual.addProperty("v-s:hasSector", "d:4775f24d50774505bc8279314557b19a", Type._Uri);
-		new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:uqocbblmycyot69lvvv44m9c28", Type._Uri));
-		new_individual.addProperty("v-s:hasMaintainedObject", new Resource("d:IF00000000000000196343", Type._Uri));
+		//new_individual.addProperty("v-s:owner", "d:mondi_department_50003626", Type._Uri);
+		//new_individual.addProperty("v-s:hasSector", "d:4775f24d50774505bc8279314557b19a", Type._Uri);
+		new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:08ecfbc56afc4ac99d0527b3754e2916", Type._Uri));
+		new_individual.addProperty("v-s:hasMaintainedObject", new Resource("const d:IF00000000000000196343", Type._Uri));
 
 		int linksCount = 0;
 
@@ -283,7 +284,7 @@ public class _4bf4b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 			new_individual.addProperty("v-s:title", rss);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
-		new_individual.addProperty("v-s:registrationNumber", "10200000", Type._String); 
+		new_individual.addProperty("v-s:registrationNumber", "10300000", Type._String); 
 		res.add(new_individual);
 		return res;
 	}
