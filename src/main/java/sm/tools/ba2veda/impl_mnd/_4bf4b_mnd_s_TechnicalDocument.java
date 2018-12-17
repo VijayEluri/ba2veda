@@ -71,7 +71,7 @@ public class _4bf4b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		//new_individual.addProperty("v-s:owner", "d:mondi_department_50003626", Type._Uri);
 		//new_individual.addProperty("v-s:hasSector", "d:4775f24d50774505bc8279314557b19a", Type._Uri);
 		new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:08ecfbc56afc4ac99d0527b3754e2916", Type._Uri));
-		new_individual.addProperty("v-s:hasMaintainedObject", new Resource("const d:IF00000000000000196343", Type._Uri));
+		new_individual.addProperty("v-s:hasMaintainedObject", new Resource("d:IF00000000000000196343", Type._Uri));
 
 		int linksCount = 0;
 
