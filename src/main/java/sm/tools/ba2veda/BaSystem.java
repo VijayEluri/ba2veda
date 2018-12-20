@@ -147,7 +147,7 @@ public class BaSystem
 			{
 				if (type.equals("LINK"))
 					return att.getLinkValue();
-				 else if (type.equals("DICTIONARY"))
+				else if (type.equals("DICTIONARY"))
 					return att.getRecordIdValue();
 				else if (type.equals("ORGANIZATION"))
 					return att.getOrganizationValue();
@@ -171,9 +171,9 @@ public class BaSystem
 			PreparedStatement ps = documents_db_connection.prepareStatement(queryStr);
 			ps.setString(1, id);
 			// ps.setLong(2, timestamp);
-			
-			System.out.println ("QUERY:" + ps);
-			
+
+			System.out.println("QUERY:" + ps);
+
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 			{
@@ -204,7 +204,7 @@ public class BaSystem
 			PreparedStatement ps = documents_db_connection.prepareStatement(queryStr);
 			ps.setString(1, id);
 			// ps.setLong(2, timestamp);
-			System.out.println ("QUERY:" + ps);
+			System.out.println("QUERY:" + ps);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 			{
@@ -224,21 +224,21 @@ public class BaSystem
 		return res;
 	}
 
-	public ResultSet getBAObjOnTemplateId(String templateId, Date begin_time, String ba_id)
+	public ResultSet getBAObjOnTemplateId(String templateId, Date begin_time, Date end_time, String ba_id)
 	{
 		String queryStr;
 
-//		if (templateId.equals("63a4aa872c0d49a6a857060b9632a17e"))
-//		{
-//			queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND actual = 1 AND LOCATE('<recordIdValue>bab2548e97bd4623826aa33021e103a9', content)>0 AND timestamp>(?-5000000000)";
-//		} else
-//		{
-			queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND actual = 1";
-//		}
+		//		if (templateId.equals("63a4aa872c0d49a6a857060b9632a17e"))
+		//		{
+		//			queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND actual = 1 AND LOCATE('<recordIdValue>bab2548e97bd4623826aa33021e103a9', content)>0 AND timestamp>(?-5000000000)";
+		//		} else
+		//		{
+		queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND timestamp < ? AND actual = 1";
+		//		}
 
 		//		String id = "fd24bf8fbc244282b293d53c75f9e2b4";
 		if (ba_id != null)
-			queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND actual = 1 AND objectId = '"
+			queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND timestamp < ? actual = 1 AND objectId = '"
 					+ ba_id + "'";
 		try
 		{
@@ -246,8 +246,10 @@ public class BaSystem
 			ps.setString(1, templateId);
 			long tt = begin_time.getTime();
 			ps.setLong(2, tt);
+			long tt1 = end_time.getTime();
+			ps.setLong(3, tt1);
 			if (ba_id == null)
-				System.out.println ("QUERY:" + ps);
+				System.out.println("QUERY:" + ps);
 			ResultSet rs = ps.executeQuery();
 
 			//ps.close();
@@ -268,13 +270,13 @@ public class BaSystem
 		return null;
 	}
 
-	public Long getCountBAObjOnTemplateId(String templateId, Date begin_time, String ba_id)
+	public Long getCountBAObjOnTemplateId(String templateId, Date begin_time, Date end_time, String ba_id)
 	{
 		Long res = null;
-		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND actual = 1";
+		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND timestamp < ? AND actual = 1";
 		if (ba_id != null)
-			queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND actual = 1 AND objectId = '" + ba_id
-					+ "'";
+			queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND timestamp < ? AND actual = 1 AND objectId = '"
+					+ ba_id + "'";
 		//		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1";
 		//		String id = "fd24bf8fbc244282b293d53c75f9e2b4";
 		//		String queryStr = "SELECT COUNT(*) FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp > ? AND actual = 1 AND objectId = '"+ id + "'";
@@ -285,7 +287,9 @@ public class BaSystem
 			ps.setString(1, templateId);
 			long tt = begin_time.getTime();
 			ps.setLong(2, tt);
-			System.out.println ("QUERY:" + ps);
+			long tt1 = end_time.getTime();
+			ps.setLong(3, tt1);
+			System.out.println("QUERY:" + ps);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 			{

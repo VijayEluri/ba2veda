@@ -33,6 +33,7 @@ public class Fetcher
 	public static boolean no_check_exists = false;
 	public static String delta_properties_fname;
 	public static Properties delta_properties = new Properties();
+	static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 	static SimpleDateFormat sdf0 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS'Z'");
 
@@ -273,18 +274,18 @@ public class Fetcher
 		trs.add(new _98d7e_v_s_ContractParticipantCustomer(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _98d7e_v_s_ContractParticipantSupplier(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _dc205_stg_ContractRegistrationRecord(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _dc205_v_s_ContractParticipantCustomer(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _dc205_v_s_ContractParticipantSupplier(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _dc205_stg_Contract(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _dc205_stg_AdditionalAgreement(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _496e3_stg_AdditionalAgreement(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		trs.add(new _496e3_v_s_ContractParticipantSupplier(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _496e3_v_s_ContractParticipantCustomer(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _dc205_v_s_ContractParticipantStakeholder(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
 		trs.add(new _496e3_v_s_ContractParticipantStakeholder(Ba2VedaTransform.st_ba, Ba2VedaTransform.st_veda, Ba2VedaTransform.st_replacer));
-		
+
 		for (Ba2VedaTransform tr : trs)
 		{
 			for (String key : Ba2VedaTransform.st_types_map.keySet())
@@ -296,16 +297,16 @@ public class Fetcher
 
 	}
 
-	public static void prepare_documents_of_type(int level, String from, String to, Date begin_time, String ba_id, boolean is_store_new_individuals)
-			throws Exception
+	public static void prepare_documents_of_type(int level, String from, String to, Date begin_time, Date end_time, String ba_id,
+			boolean is_store_new_individuals) throws Exception
 	{
 		String templateId = from;
 		System.out.println("prepare_documents_of_type: " + templateId + "->" + to);
 		// List<Pair<String, Long>> elements =
 		// Ba2VedaTransform.st_ba.getBAObjOnTemplateId(templateId, begin_time);		
-		long count = Ba2VedaTransform.st_ba.getCountBAObjOnTemplateId(templateId, begin_time, ba_id);
+		long count = Ba2VedaTransform.st_ba.getCountBAObjOnTemplateId(templateId, begin_time, end_time, ba_id);
 		System.out.println("found records: " + count);
-		ResultSet rs = Ba2VedaTransform.st_ba.getBAObjOnTemplateId(templateId, begin_time, ba_id);
+		ResultSet rs = Ba2VedaTransform.st_ba.getBAObjOnTemplateId(templateId, begin_time, end_time, ba_id);
 
 		long idx = 0;
 		while (rs.next())
@@ -329,7 +330,7 @@ public class Fetcher
 		Ba2VedaTransform.st_ba = new BaSystem();
 		Ba2VedaTransform.st_veda = new VedaConnection(destination, "ImportDMSToVeda",
 				"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3");
-		
+
 		if (Ba2VedaTransform.st_veda.isOk() == false)
 			return;
 
@@ -339,6 +340,9 @@ public class Fetcher
 		// fetchOrganization();
 		int assignedSubsystem = 0;
 		Ba2VedaTransform.set_subsystems(0);
+		Date start_timestamp = new Date(Byte.MIN_VALUE);
+		Date stop_timestamp = new Date(Byte.MAX_VALUE);
+
 		if (args.length > 0)
 		{
 			for (String arg : args)
@@ -358,10 +362,49 @@ public class Fetcher
 				} else if (arg.indexOf("-restrictions:") >= 0)
 				{
 					Ba2VedaTransform.config_restrictions(arg.replace("-restrictions:", "").split("/"));
+				} else if (arg.indexOf("-start_date=") >= 0)
+				{
+					String[] aa = arg.split("=");
+
+					String s_time = aa[1];
+
+					try
+					{
+						start_timestamp = sdf0.parse(s_time);
+					} catch (Exception ex)
+					{
+						try
+						{
+							start_timestamp = sdf.parse(s_time);
+						} catch (Exception ex1)
+						{
+							start_timestamp = sdf1.parse(s_time);
+						}
+					}
+
+					System.out.println("start_timestamp: " + start_timestamp);
+				} else if (arg.indexOf("-end_date=") >= 0)
+				{
+					String[] aa = arg.split("=");
+
+					String s_time = aa[1];
+
+					try
+					{
+						stop_timestamp = sdf0.parse(s_time);
+					} catch (Exception ex)
+					{
+						try
+						{
+							stop_timestamp = sdf.parse(s_time);
+						} catch (Exception ex1)
+						{
+							stop_timestamp = sdf1.parse(s_time);
+						}
+					}
+					System.out.println("stop_timestamp: " + stop_timestamp);
 				}
 			}
-
-			Date start_timestamp = new Date(Byte.MIN_VALUE);
 
 			for (String arg : args)
 			{
@@ -402,7 +445,7 @@ public class Fetcher
 
 						}
 
-						prepare_documents_of_type(0, from, to, start_timestamp, ba_id, true);
+						prepare_documents_of_type(0, from, to, start_timestamp, stop_timestamp, ba_id, true);
 					} else
 						System.out.println("invalid argument: " + arg);
 
