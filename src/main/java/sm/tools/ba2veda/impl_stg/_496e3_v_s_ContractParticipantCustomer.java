@@ -72,13 +72,12 @@ public class _496e3_v_s_ContractParticipantCustomer extends Ba2VedaTransform
 
 		String id_1c = null;
 		if (contract_doc != null)
-		{
-			id_1c = ba.get_first_value_of_field(doc, "id_1c");
 			register_type = ba.get_first_value_of_field(contract_doc.getLeft(), "register_type");
+		else
+			id_1c = ba.get_first_value_of_field(doc, "id_1c");
 
-			if (register_type == null && id_1c == null)
-				return res;
-		}
+		if (register_type == null && id_1c == null)
+			return res;
 
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
