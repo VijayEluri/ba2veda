@@ -61,7 +61,19 @@ public class _496e3_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 
 		String uri0 = prepare_uri(ba_id);
 		String uri = uri0 + "_cps";
+		String register_type = null;
 		List<Individual> res = new ArrayList<Individual>();
+
+		String contract = ba.get_first_value_of_field(doc, "contract");
+		Pair<XmlDocument, Long> contract_doc = ba.getActualDocument(contract);
+
+		if (contract_doc != null)
+			register_type = ba.get_first_value_of_field(contract_doc.getLeft(), "register_type");
+
+		String id_1c = ba.get_first_value_of_field(doc, "id_1c");
+
+		if (register_type == null && id_1c == null)
+			return res;
 
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
@@ -71,14 +83,6 @@ public class _496e3_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		//new_individual.addProperty("v-s:omitBackwardTarget", new Resource(false, Type._Bool));
 		//new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasDecreeRegistrationRecord", Type._Uri));
-
-		String register_type = null;
-
-		String contract = ba.get_first_value_of_field(doc, "contract");
-		Pair<XmlDocument, Long> contract_doc = ba.getActualDocument(contract);
-
-		if (contract_doc != null)
-			register_type = ba.get_first_value_of_field(contract_doc.getLeft(), "register_type");
 
 		String owner = ba.get_first_value_of_field(doc, "owner");
 		String contractor = null;
@@ -120,13 +124,28 @@ public class _496e3_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 
 			if (owner != null && owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
 				new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_2", Type._Uri));
-			
+
 			if (owner != null && owner.equals("df0ffa73-0740-4c3d-ae98-71b061bfca47"))
 				new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU7726531163", Type._Uri));
-			
+
 		} else
 		{
-			new_individual.setProperty("v-s:hasContractor", new Resource("d:" + contractor, Type._Uri));
+			// если register_type пусто, то смотрим поле id_1c. В нем текст такой структуры СПоставщиком-17380 или СПокупателем-2898.
+			// если id_1c = СПоставщиком*, то действуем как в ветке  register_type = 8cf061a51fe44ae5b70bf0ae6447d9a4 (Закупка)
+			// если id_1c = СПокупателем*, то действуем как в ветке  register_type = 2c4fc8846cb24609bb4f9134d2833991 (Продажа)
+
+			if (id_1c != null && id_1c.indexOf("СПокупателем") == 0)
+			{
+				if (owner == null || owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
+					new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_1", Type._Uri));
+
+				if (owner != null && owner.equals("ecae5139-5aca-41dc-923d-c0aecc941424"))
+					new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_2", Type._Uri));
+
+				if (owner != null && owner.equals("df0ffa73-0740-4c3d-ae98-71b061bfca47"))
+					new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU7726531163", Type._Uri));
+			} else
+				new_individual.setProperty("v-s:hasContractor", new Resource("d:" + contractor, Type._Uri));
 		}
 
 		new_individual.addProperty("v-s:backwardTarget", new Resource(uri0, Type._Uri));
