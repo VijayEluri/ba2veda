@@ -63,6 +63,13 @@ public class _dc205_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 		String uri = uri0 + "_cps";
 		List<Individual> res = new ArrayList<Individual>();
 
+		String register_type = ba.get_first_value_of_field(doc, "register_type");
+		String owner = ba.get_first_value_of_field(doc, "owner");
+		String id_1c = ba.get_first_value_of_field(doc, "id_1c");
+
+		if (register_type == null && id_1c == null)
+			return res;
+
 		Individual new_individual = new Individual();
 		new_individual.setUri(uri);
 
@@ -71,10 +78,6 @@ public class _dc205_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
 		//new_individual.addProperty("v-s:omitBackwardTarget", new Resource(false, Type._Bool));
 		//new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasDecreeRegistrationRecord", Type._Uri));
-
-		String register_type = ba.get_first_value_of_field(doc, "register_type");
-		String owner = ba.get_first_value_of_field(doc, "owner");
-		String id_1c = ba.get_first_value_of_field(doc, "id_1c");
 
 		String contractor = null;
 
@@ -125,7 +128,7 @@ public class _dc205_v_s_ContractParticipantSupplier extends Ba2VedaTransform
 			// если id_1c = СПоставщиком*, то действуем как в ветке  register_type = 8cf061a51fe44ae5b70bf0ae6447d9a4 (Закупка)
 			// если id_1c = СПокупателем*, то действуем как в ветке  register_type = 2c4fc8846cb24609bb4f9134d2833991 (Продажа)
 
-			if (id_1c != null && id_1c.equals("СПокупателем-2898"))
+			if (id_1c != null && id_1c.indexOf("СПокупателем") == 0)
 			{
 				if (owner == null || owner.equals("53343a30-449b-4e71-9103-2fcd4bdaafd1"))
 					new_individual.setProperty("v-s:hasOrganization", new Resource("d:org_RU1121016110_1", Type._Uri));
