@@ -60,7 +60,7 @@ public class _496e3_v_s_ContractParticipantStakeholder extends Ba2VedaTransform
 		is_mondi = false;
 
 		String uri0 = prepare_uri(ba_id);
-		String uri = uri0 + "_cps";
+		String uri = uri0 + "_cph";
 		String register_type = null;
 		List<Individual> res = new ArrayList<Individual>();
 
