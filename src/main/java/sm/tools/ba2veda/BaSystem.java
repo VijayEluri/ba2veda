@@ -238,7 +238,7 @@ public class BaSystem
 
 		//		String id = "fd24bf8fbc244282b293d53c75f9e2b4";
 		if (ba_id != null)
-			queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND timestamp < ? actual = 1 AND objectId = '"
+			queryStr = "SELECT recordId, objectId, timestamp FROM objects WHERE isDraft = 0 AND templateId = ? AND timestamp >= ? AND timestamp < ? AND actual = 1 AND objectId = '"
 					+ ba_id + "'";
 		try
 		{

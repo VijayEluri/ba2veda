@@ -341,7 +341,7 @@ public class Fetcher
 		int assignedSubsystem = 0;
 		Ba2VedaTransform.set_subsystems(0);
 		Date start_timestamp = new Date(Byte.MIN_VALUE);
-		Date stop_timestamp = new Date(Byte.MAX_VALUE);
+		Date stop_timestamp = new Date(Long.MAX_VALUE);
 
 		if (args.length > 0)
 		{

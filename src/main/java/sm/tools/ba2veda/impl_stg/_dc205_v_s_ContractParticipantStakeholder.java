@@ -45,7 +45,7 @@ public class _dc205_v_s_ContractParticipantStakeholder extends Ba2VedaTransform
 		String owner = ba.get_first_value_of_field(doc, "owner");
 		String id_1c = ba.get_first_value_of_field(doc, "id_1c");
 
-		if (register_type != null && id_1c != null)
+		if (register_type != null || id_1c != null)
 			return res;
 
 		Individual new_individual = new Individual();
