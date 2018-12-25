@@ -26,7 +26,7 @@ public class _98183_mnd_s_TechnicalDocument extends Ba2VedaTransform
 	{
 		fields_map.put("Наименование", "?");
 		fields_map.put("Содержание", "?");
-		fields_map.put("Инв.№", "?");
+		fields_map.put("Инв. №", "?");
 		fields_map.put("Номер в журнале", "?");
 		fields_map.put("Местонахождение бумажной копии", "?");
 		fields_map.put("Комментарий", "?");
@@ -35,7 +35,7 @@ public class _98183_mnd_s_TechnicalDocument extends Ba2VedaTransform
 		fields_map.put("Справочник", "mnd-s:hasMarkOfTechnicalDocuments");
 		//fields_map.put("Стадия", "v-s:LifecycleStage");
 		fields_map.put("Разработчик", "?");
-		fields_map.put("Шифр от разработчика", "v-s:shortLabel");
+		fields_map.put("Шифр от Разработчика", "v-s:shortLabel");
 		fields_map.put("Прилагаемые документы", "v-s:attachment");
 		fields_map.put("Сопровождающий документ", "v-s:attachment");
 		fields_map.put("Чертежи", "v-s:attachment");
@@ -65,7 +65,7 @@ public class _98183_mnd_s_TechnicalDocument extends Ba2VedaTransform
 
 		set_basic_fields(level, new_individual, doc);
 
-		new_individual.addProperty("v-s:LifecycleStage", new Resource("d:yzukiatavri0xticlw3xax2qeg", Type._Uri));
+		new_individual.addProperty("v-s:hasLifecycleStage", new Resource("d:yzukiatavri0xticlw3xax2qeg", Type._Uri));
 		new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:uqocbblmycyot69lvvv44m9c28", Type._Uri));
 		new_individual.addProperty("v-s:hasSector", "d:698a3a5cda374a46894334f6329f7cc0", Type._Uri);
 		new_individual.addProperty("v-s:hasSector", "d:4775f24d50774505bc8279314557b19a", Type._Uri);
@@ -122,7 +122,7 @@ public class _98183_mnd_s_TechnicalDocument extends Ba2VedaTransform
 				} else if (code.equals("Содержание"))
 				{
 					sod = rss;
-				} else if (code.equals("Инв.№"))
+				} else if (code.equals("Инв. №"))
 				{
 					inm = rss;
 				} else if (code.equals("Проект"))
@@ -302,7 +302,7 @@ public class _98183_mnd_s_TechnicalDocument extends Ba2VedaTransform
 			new_individual.addProperty("v-s:title", rss);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
-		new_individual.addProperty("v-s:registrationNumber", "10300000", Type._String);
+		new_individual.addProperty("v-s:registrationNumber", "10400000", Type._String);
 		res.add(new_individual);
 		return res;
 	}
