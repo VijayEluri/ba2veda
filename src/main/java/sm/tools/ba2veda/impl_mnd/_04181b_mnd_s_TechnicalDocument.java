@@ -24,27 +24,31 @@ public class _04181b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 
 	public void inital_set()
 	{
-		fields_map.put("Наименование", "?");
+		fields_map.put("Цех", "mnd-s:technicalDocumentObject");
+		fields_map.put("Обозначение", "v-s:shortLabel");
+		fields_map.put("Название", "?");
+		fields_map.put("Проект", "?");
+		fields_map.put("Инв.№", "?");
+		fields_map.put("Комментарий", "?");
+		fields_map.put("Тип работ", "v-s:hasBudgetCategory");
+		fields_map.put("Разработчик", "?");
+		fields_map.put("Дата получения", "v-s:registrationDate");
+		fields_map.put("Вложение", "v-s:attachment");
+
+		/////////////////////////////////////
+
 		fields_map.put("Содержание", "?");
-		fields_map.put("Инв. №", "?");
 		fields_map.put("Номер в журнале", "?");
 		fields_map.put("Местонахождение бумажной копии", "?");
-		fields_map.put("Комментарий", "?");
 
-		fields_map.put("Объект", "mnd-s:technicalDocumentObject");
 		fields_map.put("Справочник", "mnd-s:hasMarkOfTechnicalDocuments");
 		//fields_map.put("Стадия", "v-s:LifecycleStage");
-		fields_map.put("Разработчик", "?");
-		fields_map.put("Шифр от Разработчика", "v-s:shortLabel");
 		fields_map.put("Прилагаемые документы", "v-s:attachment");
 		fields_map.put("Сопровождающий документ", "v-s:attachment");
 		fields_map.put("Чертежи", "v-s:attachment");
 
 		//fields_map.put("Раздел", "v-s:hasClassifierMarkOfWorkingDrawingsSet");
-		//fields_map.put("Проект", "?");
 		//fields_map.put("Контракт", "?");
-		//fields_map.put("Тип работ", "v-s:hasBudgetCategory");
-		//fields_map.put("Дата получения", "v-s:registrationDate");
 		//fields_map.put("Сопровождающие документы", "?");
 		//fields_map.put("Конструкторская заявка", "mnd-s:hasEngineeringRequest");
 		//fields_map.put("Связанные документы", "?");
@@ -65,14 +69,14 @@ public class _04181b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 
 		set_basic_fields(level, new_individual, doc);
 
-		new_individual.addProperty("v-s:hasLifecycleStage", new Resource("d:yzukiatavri0xticlw3xax2qeg", Type._Uri));
-		new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:uqocbblmycyot69lvvv44m9c28", Type._Uri));
-		new_individual.addProperty("v-s:hasSector", "d:698a3a5cda374a46894334f6329f7cc0", Type._Uri);
-		new_individual.addProperty("v-s:hasSector", "d:4775f24d50774505bc8279314557b19a", Type._Uri);
-		new_individual.addProperty("v-s:hasSector", "d:831daafd86d9489ebb458450a49998a2", Type._Uri);
+		new_individual.addProperty("v-s:hasLifecycleStage", new Resource("d:lq47gp7z6dg6e7xeuv2p6l1rvj", Type._Uri));
+		new_individual.addProperty("v-s:hasDocumentKind", new Resource("d:d74ecf7707894107aab07f7d8629df8e", Type._Uri));
+		//new_individual.addProperty("v-s:hasSector", "d:698a3a5cda374a46894334f6329f7cc0", Type._Uri);
+		//new_individual.addProperty("v-s:hasSector", "d:4775f24d50774505bc8279314557b19a", Type._Uri);
+		//new_individual.addProperty("v-s:hasSector", "d:831daafd86d9489ebb458450a49998a2", Type._Uri);
 		new_individual.addProperty("v-s:hasMaintainedObject", new Resource("d:IF00000000000000196343", Type._Uri));
-		new_individual.addProperty("v-s:valid", "true", Type._Bool);
-		new_individual.addProperty("mnd-s:appliesTo", "d:org_RU1121003135", Type._Uri);
+		//new_individual.addProperty("v-s:valid", "true", Type._Bool);
+		//new_individual.addProperty("mnd-s:appliesTo", "d:org_RU1121003135", Type._Uri);
 
 		//new_individual.addProperty("v-s:backwardProperty", new Resource("mnd-s:hasTechnicalDocument", Type._Uri));
 		//new_individual.addProperty("v-s:canRead", new Resource(true, Type._Bool));
@@ -113,6 +117,19 @@ public class _04181b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 				if (code.equals("Комментарий"))
 				{
 					comment = rss;
+
+					if (rss.resources.size() > 0)
+					{
+						Individual icomment = new Individual();
+						icomment.setUri(new_individual.getUri() + "_comment");
+						icomment.addProperty("rdf:type", new Resource("v-s:Comment", Type._Uri));
+						icomment.addProperty("v-s:creator", new_individual.getResources("v-s:creator"));
+						icomment.addProperty("v-s:created", new_individual.getResources("v-s:created"));
+						icomment.addProperty("rdfs:label", rss);
+						new_individual.addProperty("v-s:hasComment", new Resource(icomment.getUri(), Type._Uri));
+						putIndividual(level, icomment, ba_id);
+					}
+
 				} else if (code.equals("Номер в журнале"))
 				{
 					nj = rss;
@@ -122,7 +139,7 @@ public class _04181b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 				} else if (code.equals("Содержание"))
 				{
 					sod = rss;
-				} else if (code.equals("Инв. №"))
+				} else if (code.equals("Инв.№"))
 				{
 					inm = rss;
 				} else if (code.equals("Проект"))
@@ -169,7 +186,7 @@ public class _04181b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 							}
 						}
 					}
-				} else if (code.equals("Наименование"))
+				} else if (code.equals("Название"))
 				{
 					nnn = rss;
 				} else if (code.equals("Раздел"))
@@ -286,9 +303,9 @@ public class _04181b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 			}
 		}
 
-		//Наименование+Содержание+Инв. №+Номер в журнале+'Местонахождение бумажной копии:'+Местонахождение бумажной копии+Комментарий
+		//"Сконкатенировать Название+Инв.№+Проект/Код+Проект/Наименование+Комментарий"		
 		Object[] ff =
-		{ nnn, " ", sod, " ", inm, " ", nj, " Местонахождение бумажной копии:", mbc, " ", comment };
+		{ nnn, " ", inm, " ", cod, " ", project, " ", comment };
 		String[] langs_out =
 		{ "EN", "RU" };
 		Resources rss = rs_assemble(ff, langs_out);
@@ -302,8 +319,9 @@ public class _04181b_mnd_s_TechnicalDocument extends Ba2VedaTransform
 			new_individual.addProperty("v-s:title", rss);
 
 		new_individual.addProperty("rdf:type", to_class, Type._Uri);
-		new_individual.addProperty("v-s:registrationNumber", "10400000", Type._String);
+		new_individual.addProperty("v-s:registrationNumber", "10500000", Type._String);
 		res.add(new_individual);
 		return res;
 	}
+
 }
