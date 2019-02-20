@@ -221,6 +221,15 @@ public abstract class Ba2VedaTransform
 			Class.forName("org.h2.Driver").newInstance();
 			transfer_info_conn = DriverManager.getConnection("jdbc:h2:./transfer_info", "sa", "");
 			st = transfer_info_conn.createStatement();
+		} catch (Exception ex)
+		{
+			System.out.println(ex);
+			System.out.println("EXIT");
+			System.exit(-1);
+		}
+
+		try
+		{
 			st.execute(
 					"CREATE TABLE IF NOT EXISTS PREPARED_IDS(src_id VARCHAR(255), dest_id VARCHAR(255), timestamp BIGINT(20), dest_type VARCHAR(255))");
 
